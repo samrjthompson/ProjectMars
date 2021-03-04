@@ -3,10 +3,27 @@
 
 #include "ProjectMars/Controllers/BasePlayerController.h"
 
+#include "ProjectMars/UI/BaseHUD.h"
+
 ABasePlayerController::ABasePlayerController()
 {
 	bShowMouseCursor = true;
 	bEnableMouseOverEvents = true;
+}
+
+void ABasePlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+
+	InputComponent->BindAction("LeftMouseClick", IE_Pressed, this, &ABasePlayerController::SelectionPressed);
+	InputComponent->BindAction("LeftMouseClick", IE_Released, this, &ABasePlayerController::SelectionReleased);
+}
+
+void ABasePlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	HUD = Cast<ABaseHUD>(GetHUD());
 }
 
 void ABasePlayerController::Tick(float DeltaSeconds)
@@ -15,8 +32,20 @@ void ABasePlayerController::Tick(float DeltaSeconds)
 	
 }
 
-void ABasePlayerController::BeginPlay()
+void ABasePlayerController::SelectionPressed()
 {
-	Super::BeginPlay();
-	
+	if(HUD)
+	{
+		HUD->bHasStartedSelecting = true;
+		
+		HUD->InitialSelectionPoint = HUD->GetMousePosition2D();
+	}
+}
+
+void ABasePlayerController::SelectionReleased()
+{
+	if(HUD)
+	{
+		HUD->bHasStartedSelecting = false;
+	}
 }

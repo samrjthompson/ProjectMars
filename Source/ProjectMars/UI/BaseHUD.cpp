@@ -3,9 +3,12 @@
 
 #include "ProjectMars/UI/BaseHUD.h"
 
+#define OUT
+
 ABaseHUD::ABaseHUD()
 {
-	
+	bHasStartedSelecting = false;
+	SelectionBoxColor = FLinearColor(0.f, 1.f, 0.2f, 0.15f);
 }
 
 void ABaseHUD::BeginPlay()
@@ -46,8 +49,28 @@ FVector2D ABaseHUD::GetCenterOfScreen()
 	return ScreenCentre;
 }
 
+FVector2D ABaseHUD::GetMousePosition2D() const
+{
+	FVector2D MousePos{};
+	
+	GetOwningPlayerController()->GetMousePosition(OUT MousePos.X, OUT MousePos.Y);
+
+	return MousePos;
+}
+
+void ABaseHUD::DrawSelectionBox()
+{
+	DrawRect(SelectionBoxColor, InitialSelectionPoint.X, InitialSelectionPoint.Y,
+		CurrentSelectionPoint.X - InitialSelectionPoint.X, CurrentSelectionPoint.Y - InitialSelectionPoint.Y);
+}
+
 void ABaseHUD::DrawHUD()
 {
 	Super::DrawHUD();
-	
+
+	if(bHasStartedSelecting)
+	{
+		CurrentSelectionPoint = GetMousePosition2D();
+		DrawSelectionBox();
+	}	
 }

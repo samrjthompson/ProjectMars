@@ -27,4 +27,14 @@ public:
 	static FVector2D GetViewportResolution();
 	static FVector2D GetCenterOfScreen();
 	
+	FVector2D GetMousePosition2D() const;
+
+	FVector2D InitialSelectionPoint{};
+	FVector2D CurrentSelectionPoint{};
+
+	void DrawSelectionBox();
+	bool bHasStartedSelecting;
+
+	UPROPERTY(EditAnywhere, Category = "SelectionBox")
+	FLinearColor SelectionBoxColor{};
 };

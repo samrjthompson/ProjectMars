@@ -19,7 +19,15 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
+	virtual void SetupInputComponent() override;
+
 protected:
 	virtual void BeginPlay() override;
-	
+
+private:
+	void SelectionPressed();
+	void SelectionReleased();
+
+	UPROPERTY()
+	class ABaseHUD* HUD{ nullptr };
 };
