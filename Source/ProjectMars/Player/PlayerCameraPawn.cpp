@@ -41,11 +41,7 @@ void APlayerCameraPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(!MovementDirection.IsZero())
-	{
-		const FVector NewLocation = GetActorLocation() + (MovementDirection * DeltaTime * MovementSpeed);
-		SetActorLocation(NewLocation);
-	}
+	PawnMovement(DeltaTime);
 }
 
 // Called to bind functionality to input
@@ -61,6 +57,15 @@ void APlayerCameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	}
 }
 
+void APlayerCameraPawn::PawnMovement(float DeltaTime)
+{
+	if(!MovementDirection.IsZero())
+	{
+		const FVector NewLocation = GetActorLocation() + (MovementDirection * DeltaTime * MovementSpeed);
+		SetActorLocation(NewLocation);
+	}
+}
+
 void APlayerCameraPawn::MoveForward(float Val)
 {
 	// The FMath::Clamp helps to prevent higher speeds when pressing two keyboard keys at once
@@ -69,5 +74,6 @@ void APlayerCameraPawn::MoveForward(float Val)
 
 void APlayerCameraPawn::MoveRight(float Val)
 {
+	// The FMath::Clamp helps to prevent higher speeds when pressing two keyboard keys at once
 	MovementDirection.Y = FMath::Clamp(Val, -1.f, 1.f);
 }

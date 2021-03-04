@@ -36,6 +36,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
+	void PawnMovement(float DeltaTime);
+	
 	FVector MovementDirection{};
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
