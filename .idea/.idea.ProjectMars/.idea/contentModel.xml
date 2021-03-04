@@ -49367,6 +49367,7 @@
       <e p="UE4Game.Target.cs" t="Include" />
     </e>
     <e p="E:\Unreal\Unreal Projects\ProjectMars" t="IncludeFlat">
+      <e p=".gitignore" t="Include" />
       <e p="Config" t="Include">
         <e p="DefaultEditor.ini" t="Include" />
         <e p="DefaultEngine.ini" t="Include" />
@@ -49382,8 +49383,17 @@
       <e p="packages" t="ExcludeRecursive" />
       <e p="ProjectMars.sln" t="IncludeFlat" />
       <e p="ProjectMars.uproject" t="Include" />
+      <e p="README.md" t="Include" />
       <e p="Source" t="Include">
         <e p="ProjectMars" t="Include">
+          <e p="Controllers" t="Include">
+            <e p="BasePlayerController.cpp" t="Include" />
+            <e p="BasePlayerController.h" t="Include" />
+          </e>
+          <e p="Framework" t="Include">
+            <e p="MarsGameModeBase.cpp" t="Include" />
+            <e p="MarsGameModeBase.h" t="Include" />
+          </e>
           <e p="Player" t="Include">
             <e p="PlayerCameraPawn.cpp" t="Include" />
             <e p="PlayerCameraPawn.h" t="Include" />
@@ -49393,6 +49403,10 @@
           <e p="ProjectMars.h" t="Include" />
           <e p="ProjectMarsGameModeBase.cpp" t="Include" />
           <e p="ProjectMarsGameModeBase.h" t="Include" />
+          <e p="UI" t="Include">
+            <e p="BaseHUD.cpp" t="Include" />
+            <e p="BaseHUD.h" t="Include" />
+          </e>
         </e>
         <e p="ProjectMars.Target.cs" t="Include" />
         <e p="ProjectMarsEditor.Target.cs" t="Include" />
