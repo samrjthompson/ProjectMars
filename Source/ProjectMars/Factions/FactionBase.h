@@ -11,6 +11,8 @@ enum class EFaction : uint8;
 enum class ECultureGroup : uint8;
 enum class ECulture : uint8;
 
+struct FBaseFactionData;
+
 UENUM()
 enum class EFaction : uint8
 {
@@ -23,22 +25,30 @@ USTRUCT()
 struct FBaseFactionData
 {
 	GENERATED_BODY()
+	
 	FBaseFactionData()
 	{
 		FactionName = "NONE";
+		StartingTreasury = 5000.00f;
 	}
 
 	// Name
 	FName FactionName{};
 
 	// Economy
+	float StartingTreasury{};
 	float Treasury{};
-	float Income{};
+	float GrossIncome{};
+	float NetIncome{};
 	float Expenses{};
 	float TaxIncome{};
 	float TotalValueOfExports{};
 	float TotalValueOfImports{};
 	float LootingIncome{};
+	float TributeIncome{};
+	float StateMaintenance{};
+	float FortMaintenance{};
+	float OutgoingTributes{};
 
 	// Population
 	int32 TotalPopulation{};
@@ -77,10 +87,23 @@ public:
 
 	inline FName GetBaseFactionName() const { return FactionName; }
 
+	// Economy
+	virtual void UpdateCurrentIncome();
+
+	virtual FBaseFactionData GetRefToFactionData();
+
 protected:
 	FName FactionName{};
 
 	EFaction FactionType;
 	ECultureGroup CultureGroup;
 	ECulture Culture;
+
+
+	FBaseFactionData BaseFactionData;
+	
+	float CurrentFactionGrossIncome{};
+    float CurrentFactionExpenses{};
+    float CurrentFactionNetIncome{};
+
 };

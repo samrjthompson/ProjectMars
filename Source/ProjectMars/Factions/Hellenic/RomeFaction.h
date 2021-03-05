@@ -20,5 +20,10 @@ public:
 
 private:	
 	FBaseFactionData RomeFactionData;
+
+protected:
+	virtual void UpdateCurrentIncome() override;
+	virtual FBaseFactionData GetRefToFactionData() override;
+	
 	
 };

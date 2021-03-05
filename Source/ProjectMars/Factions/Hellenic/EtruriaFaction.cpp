@@ -16,3 +16,10 @@ UEtruriaFaction::UEtruriaFaction()
 	this->CultureGroup = ECultureGroup::Italic;
 	this->Culture = ECulture::Etruscan;
 }
+
+void UEtruriaFaction::UpdateCurrentIncome()
+{
+	Super::UpdateCurrentIncome();
+
+	UE_LOG(LogTemp, Warning, TEXT("ETRUSCAN MONEYYYYY!"));
+}

@@ -12,6 +12,8 @@
 UCLASS()
 class PROJECTMARS_API UBaseGameplayWidget : public UUserWidget
 {
+	friend class ABaseHUD;
+	
 	GENERATED_BODY()
 
 public:
@@ -20,5 +22,9 @@ public:
 	virtual void NativeConstruct() override;
 
 	virtual void NativeOnInitialized() override;
+
+private:
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* EconomyText{ nullptr };
 	
 };

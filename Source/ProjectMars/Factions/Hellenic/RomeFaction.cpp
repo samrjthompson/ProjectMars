@@ -18,3 +18,17 @@ URomeFaction::URomeFaction()
 	this->CultureGroup = ECultureGroup::Italic;
 	this->Culture = ECulture::Roman;
 }
+
+void URomeFaction::UpdateCurrentIncome()
+{
+	Super::UpdateCurrentIncome();
+
+	UE_LOG(LogTemp, Warning, TEXT("ROMAN MONEYYYYY!"));
+}
+
+FBaseFactionData URomeFaction::GetRefToFactionData()
+{
+	Super::GetRefToFactionData();
+
+	return RomeFactionData;
+}

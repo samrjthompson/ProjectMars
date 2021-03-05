@@ -15,6 +15,7 @@ class PROJECTMARS_API URomanCulture : public UItalicCultureGroup
 	GENERATED_BODY()
 
 public:
-	URomanCulture();	
+	URomanCulture();
+	
 	
 };

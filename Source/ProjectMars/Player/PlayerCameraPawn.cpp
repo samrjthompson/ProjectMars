@@ -11,6 +11,7 @@
 #include "ProjectMars/Factions/Punic/CarthageFaction.h"
 #include "ProjectMars/UI/BaseHUD.h"
 
+
 // Sets default values
 APlayerCameraPawn::APlayerCameraPawn()
 {
@@ -35,11 +36,28 @@ APlayerCameraPawn::APlayerCameraPawn()
 	bHasChosenFaction = false;
 }
 
+void APlayerCameraPawn::SetTreasury()
+{
+	if(BaseFactionData)
+	{
+		PlayerEconomy.Treasury = BaseFactionData->Treasury;
+	}
+}
+
 // Called when the game starts or when spawned
 void APlayerCameraPawn::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
+	BasePlayerController = Cast<ABasePlayerController>(GetController());
+	if(BasePlayerController)
+	{
+		BaseHUD = Cast<ABaseHUD>(BasePlayerController->GetHUD());
+	}
+	if(!BasePlayerController)
+	{
+		UE_LOG(LogTemp, Error, TEXT("BasePlayerController is nullptr - APlayerCameraPawn::BeginPlay"));
+	}
 }
 
 // Called every frame
@@ -48,6 +66,8 @@ void APlayerCameraPawn::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	PawnMovement(DeltaTime);
+	UpdatePlayerIncome();
+	
 }
 
 // Called to bind functionality to input
@@ -64,6 +84,8 @@ void APlayerCameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		PlayerInputComponent->BindAction("Rome", IE_Pressed, this, &APlayerCameraPawn::ChooseRome);
 		PlayerInputComponent->BindAction("Etruria", IE_Pressed, this, &APlayerCameraPawn::ChooseEtruria);
 		PlayerInputComponent->BindAction("Carthage", IE_Pressed, this, &APlayerCameraPawn::ChooseCarthage);
+
+		PlayerInputComponent->BindAction("Money", IE_Pressed, this, &APlayerCameraPawn::AddMoney);
 	}
 }
 
@@ -125,7 +147,40 @@ void APlayerCameraPawn::SetPlayerFaction(const EFaction Faction)
 	if(PlayerAssignedFaction)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Faction Name: %s"), *PlayerAssignedFaction->GetBaseFactionName().ToString());
+		InitialiseHUD(PlayerAssignedFaction);
+		FBaseFactionData BFD = PlayerAssignedFaction->GetRefToFactionData();
+		BaseFactionData = &BFD;
 	}
 
 	bHasChosenFaction = true;
+}
+
+void APlayerCameraPawn::InitialiseHUD(class UFactionBase* FactionBase)
+{
+	if(BaseHUD)
+	{
+		BaseHUD->InitialiseFactionBase(FactionBase);
+	}
+	if(!BaseHUD)
+	{
+		UE_LOG(LogTemp, Error, TEXT("BaseHUD is nullptr - APlayerCameraPawn::InitialiseHUD"));
+	}
+}
+
+void APlayerCameraPawn::UpdatePlayerIncome()
+{
+	if(PlayerAssignedFaction)
+	{
+		PlayerAssignedFaction->UpdateCurrentIncome();
+		SetTreasury();
+	}
+}
+
+void APlayerCameraPawn::AddMoney()
+{
+	if(BaseFactionData)
+	{
+		// BUG: This not adding 10 everytime I press space - number flickers at 0.
+		BaseFactionData->Treasury += 10.f;
+	}
 }

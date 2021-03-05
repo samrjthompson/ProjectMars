@@ -4,6 +4,8 @@
 #include "ProjectMars/UI/BaseHUD.h"
 
 #include "Engine.h"
+#include "Components/TextBlock.h"
+#include "ProjectMars/Player/PlayerCameraPawn.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
 
 #define OUT
@@ -17,6 +19,8 @@ ABaseHUD::ABaseHUD()
 void ABaseHUD::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Player = Cast<APlayerCameraPawn>(GetOwningPlayerController()->GetPawn());
 
 	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(GetOwningPlayerController(), BaseGameplayWidgetClass);
 	if(BaseGameplayWidget)
@@ -73,6 +77,20 @@ void ABaseHUD::DrawSelectionBox()
 		CurrentSelectionPoint.X - InitialSelectionPoint.X, CurrentSelectionPoint.Y - InitialSelectionPoint.Y);
 }
 
+void ABaseHUD::InitialiseFactionBase(UFactionBase* InitFactionBase)
+{
+	FactionBase = InitFactionBase;
+}
+
+void ABaseHUD::DrawPlayerTreasury()
+{
+	if(BaseGameplayWidget && Player)
+	{
+		FString FloatString = FString::SanitizeFloat(Player->PlayerEconomy.Treasury);
+		BaseGameplayWidget->EconomyText->SetText(FText::FromString(FloatString));
+	}
+}
+
 void ABaseHUD::DrawHUD()
 {
 	Super::DrawHUD();
@@ -81,5 +99,7 @@ void ABaseHUD::DrawHUD()
 	{
 		CurrentSelectionPoint = GetMousePosition2D();
 		DrawSelectionBox();
-	}	
+	}
+
+	DrawPlayerTreasury();
 }

@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "ProjectMars/Factions/FactionBase.h"
+
 #include "BaseHUD.generated.h"
 
 /**
@@ -23,6 +25,9 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
+	UPROPERTY()
+	class APlayerCameraPawn* Player{ nullptr };
 
 public:
 	static FVector2D GetMonitorResolution();
@@ -47,4 +52,12 @@ public:
 	
 	UPROPERTY()
 	class UBaseGameplayWidget* BaseGameplayWidget{ nullptr };
+
+	UPROPERTY()
+	UFactionBase* FactionBase{ nullptr };
+
+	void InitialiseFactionBase(UFactionBase* InitFactionBase);
+
+/* --- ECONOMY --- */
+	void DrawPlayerTreasury();
 };

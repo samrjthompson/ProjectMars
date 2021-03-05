@@ -17,5 +17,7 @@ public:
 	UEtruriaFaction();
 	
 	FBaseFactionData EtruriaFactionData;
+
+	virtual void UpdateCurrentIncome() override;
 	
 };

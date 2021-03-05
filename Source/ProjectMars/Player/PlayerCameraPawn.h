@@ -7,10 +7,46 @@
 #include "PlayerCameraPawn.generated.h"
 
 enum class EFaction : uint8;
+struct FBaseFactionData;
+
+USTRUCT()
+struct FPlayerEconomy
+{
+	GENERATED_BODY()
+
+	FPlayerEconomy()
+	{
+		StartingTreasury = 5000.00f;
+		Treasury = 0.00f;
+	}
+
+	// Economy
+	float StartingTreasury{};
+	float Treasury{};
+	float GrossIncome{};
+	float NetIncome{};
+	float Expenses{};
+	float TaxIncome{};
+	float TotalValueOfExports{};
+	float TotalValueOfImports{};
+	float LootingIncome{};
+	float TributeIncome{};
+	float StateMaintenance{};
+	float FortMaintenance{};
+	float OutgoingTributes{};
+
+	// Maintenance
+	float ArmyMaintenance{};
+	float FleetMaintenance{};
+	float Wages{};
+
+};
 
 UCLASS()
 class PROJECTMARS_API APlayerCameraPawn : public APawn
 {
+	friend class ABaseHUD;
+	
 	GENERATED_BODY()
 
 public:
@@ -27,10 +63,17 @@ public:
 	class UCameraComponent* Camera{ nullptr };
 
 	TSubclassOf<class URomeFaction> RomeClass;
+	
+	void SetTreasury();	
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	// Cache a ref to FPlayerEconomy
+	FPlayerEconomy PlayerEconomy;
+		
+	FBaseFactionData* BaseFactionData{ nullptr };
 
 public:	
 	// Called every frame
@@ -38,9 +81,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
+	// The faction the player will be playing as
 	UPROPERTY()
-	class UFactionBase* PlayerAssignedFaction;
+	class UFactionBase* PlayerAssignedFaction{ nullptr };
 
 private:
 	void PawnMovement(float DeltaTime);
@@ -56,8 +100,26 @@ private:
 	void ChooseRome();
 	void ChooseEtruria();
 	void ChooseCarthage();
-	
+
+	// Sets the player's faction 
 	void SetPlayerFaction(const EFaction Faction);
 
 	bool bHasChosenFaction;
+
+	// Initialises a pointer (stored in the ABaseHUD class) to a faction class object
+	void InitialiseHUD(class UFactionBase* FactionBase);
+
+	UPROPERTY()
+	class ABasePlayerController* BasePlayerController{ nullptr };
+
+	UPROPERTY()
+	class ABaseHUD* BaseHUD{ nullptr };
+
+	
+	// ECONOMY
+
+	// Updates the player income each month
+	void UpdatePlayerIncome();
+
+	void AddMoney();
 };
