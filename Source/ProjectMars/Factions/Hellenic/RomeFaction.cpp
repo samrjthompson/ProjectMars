@@ -3,6 +3,9 @@
 
 #include "ProjectMars/Factions/Hellenic/RomeFaction.h"
 
+#include "ProjectMars/Cultures/CultureBase.h"
+#include "ProjectMars/Cultures/Italic/ItalicCultureGroup.h"
+
 URomeFaction::URomeFaction()
 {
 	// FBaseFactionData Setup
@@ -10,4 +13,8 @@ URomeFaction::URomeFaction()
 
 	// Initialise Variables
 	FactionName = RomeFactionData.FactionName;
+
+	this->FactionType = EFaction::Rome;
+	this->CultureGroup = ECultureGroup::Italic;
+	this->Culture = ECulture::Roman;
 }

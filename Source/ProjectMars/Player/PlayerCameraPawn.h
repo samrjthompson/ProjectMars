@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "PlayerCameraPawn.generated.h"
 
+enum class EFaction : uint8;
+
 UCLASS()
 class PROJECTMARS_API APlayerCameraPawn : public APawn
 {
@@ -36,6 +38,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	UPROPERTY()
+	class UFactionBase* PlayerAssignedFaction;
 
 private:
 	void PawnMovement(float DeltaTime);
@@ -48,4 +53,11 @@ private:
 	void MoveForward(float Val);	
 	void MoveRight(float Val);
 
+	void ChooseRome();
+	void ChooseEtruria();
+	void ChooseCarthage();
+	
+	void SetPlayerFaction(const EFaction Faction);
+
+	bool bHasChosenFaction;
 };

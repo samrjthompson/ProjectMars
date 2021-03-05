@@ -6,6 +6,19 @@
 #include "UObject/NoExportTypes.h"
 #include "FactionBase.generated.h"
 
+// Seem to have to forward declare the enums
+enum class EFaction : uint8;
+enum class ECultureGroup : uint8;
+enum class ECulture : uint8;
+
+UENUM()
+enum class EFaction : uint8
+{
+	Rome	UMETA(DisplayName = "Rome"),
+	Etruria		UMETA(DisplayName = "Etruria"),
+	Carthage	UMETA(DisplayName = "Carthage")
+};
+
 USTRUCT()
 struct FBaseFactionData
 {
@@ -62,8 +75,12 @@ class PROJECTMARS_API UFactionBase : public UObject
 public:
 	UFactionBase();
 
+	inline FName GetBaseFactionName() const { return FactionName; }
+
 protected:
 	FName FactionName{};
-	
-	
+
+	EFaction FactionType;
+	ECultureGroup CultureGroup;
+	ECulture Culture;
 };

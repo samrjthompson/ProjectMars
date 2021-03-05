@@ -5,11 +5,24 @@
     <projectFile>Intermediate/ProjectFiles/UE4.vcxproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Trialing structs for data about factions">
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/RomeFaction.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/RomeFaction.h" afterDir="false" />
+    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Successfully created a NewObject instance of URomeFaction in PlayerCameraPawn BeginPlay function.">
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Cultures/CultureBase.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Cultures/CultureBase.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/EtruscanCulture.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/EtruscanCulture.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/ItalicCultureGroup.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/ItalicCultureGroup.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/RomanCulture.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/RomanCulture.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/EtruriaFaction.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/EtruriaFaction.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Factions/Punic/CarthageFaction.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Factions/Punic/CarthageFaction.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultInput.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultInput.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Factions/FactionBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Factions/FactionBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/RomeFaction.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/RomeFaction.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/RomeFaction.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/RomeFaction.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" afterDir="false" />
     </list>
@@ -37,12 +50,12 @@
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/Math/Color.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/CoreUObject/Public/UObject/Object.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/CoreUObject/Public/UObject/UObjectBaseUtility.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/Components/InputComponent.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameModeBase.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/ProjectMars.Build.cs" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/UI/Widgets/BaseGameplayWidget.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/UI/Widgets/BaseGameplayWidget.cpp" />
@@ -52,9 +65,22 @@
       <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerStateBase.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/FactionBase.cpp" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/FactionBase.h" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/RomeFaction.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/Punic/CarthageFaction.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/Punic/CarthageFaction.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/CultureBase.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/ItalicCultureGroup.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/RomeFaction.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/ItalicCultureGroup.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/CultureBase.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/RomanCulture.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/RomanCulture.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/EtruscanCulture.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/EtruscanCulture.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/RomeFaction.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/EtruriaFaction.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/EtruriaFaction.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/FactionBase.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" />
     </changedPaths>
@@ -432,7 +458,8 @@
       <workItem from="1614885352814" duration="511000" />
       <workItem from="1614897660394" duration="1846000" />
       <workItem from="1614899664916" duration="4161000" />
-      <workItem from="1614903955719" duration="619000" />
+      <workItem from="1614903955719" duration="785000" />
+      <workItem from="1614950892114" duration="4848000" />
     </task>
     <task id="LOCAL-00005" summary="Trialing structs for data about factions">
       <created>1614902585052</created>
@@ -441,7 +468,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614902585052</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Successfully created a NewObject instance of URomeFaction in PlayerCameraPawn BeginPlay function.">
+      <created>1614904731580</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1614904731581</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -467,6 +501,7 @@
     <MESSAGE value="Added UMG module to build.cs file" />
     <MESSAGE value="Added Slate modules to build.cs file" />
     <MESSAGE value="Trialing structs for data about factions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Trialing structs for data about factions" />
+    <MESSAGE value="Successfully created a NewObject instance of URomeFaction in PlayerCameraPawn BeginPlay function." />
+    <option name="LAST_COMMIT_MESSAGE" value="Successfully created a NewObject instance of URomeFaction in PlayerCameraPawn BeginPlay function." />
   </component>
 </project>

@@ -4,21 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "ProjectMars/Factions/FactionBase.h"
-#include "RomeFaction.generated.h"
+#include "EtruriaFaction.generated.h"
 
 struct FBaseFactionData;
 
 UCLASS()
-class PROJECTMARS_API URomeFaction : public UFactionBase
+class PROJECTMARS_API UEtruriaFaction : public UFactionBase
 {
 	GENERATED_BODY()
-	
+
 public:
-	URomeFaction();
-
-	inline FName GetFactionName() const { return FactionName; };
-
-private:	
-	FBaseFactionData RomeFactionData;
+	UEtruriaFaction();
+	
+	FBaseFactionData EtruriaFactionData;
 	
 };
