@@ -2,10 +2,10 @@
 
 
 #include "ProjectMars/Player/PlayerCameraPawn.h"
-
-
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "ProjectMars/Controllers/BasePlayerController.h"
+#include "ProjectMars/UI/BaseHUD.h"
 
 // Sets default values
 APlayerCameraPawn::APlayerCameraPawn()
@@ -33,7 +33,7 @@ APlayerCameraPawn::APlayerCameraPawn()
 void APlayerCameraPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame

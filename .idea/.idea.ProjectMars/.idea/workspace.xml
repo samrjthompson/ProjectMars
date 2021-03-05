@@ -5,8 +5,22 @@
     <projectFile>Intermediate/ProjectFiles/UE4.vcxproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Setup movement of camera">
-      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/ProjectMars.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/ProjectMars.Build.cs" afterDir="false" />
+    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Added Slate modules to build.cs file">
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Factions/FactionBase.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Factions/FactionBase.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerStateBase.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerStateBase.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/UI/Widgets/BaseGameplayWidget.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/UI/Widgets/BaseGameplayWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/contentModel.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/riderModule.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectMars.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectMars.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,23 +36,46 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://E:/Unreal/Unreal Projects/ProjectMars/Source/ProjectMars/UI/BaseHUD.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/Unreal/Unreal Projects/ProjectMars/Source/ProjectMars/Player/PlayerCameraPawn.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/CoreUObject/Public/UObject/UObjectBase.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/Engine/EngineTypes.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/HAL/LowLevelMemTracker.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/CoreMinimal.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/GameFramework/HUD.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/UObject/NameTypes.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/Math/Color.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/CoreUObject/Public/UObject/Object.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/CoreUObject/Public/UObject/UObjectBaseUtility.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameModeBase.cpp" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.h" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/ProjectMars.Build.cs" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/UI/Widgets/BaseGameplayWidget.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/UI/Widgets/BaseGameplayWidget.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Faction/FactionBase.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Faction/FactionBase.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerStateBase.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/FactionBase.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/FactionBase.h" />
     </changedPaths>
   </component>
+  <component name="ProjectId" id="1pIql2f20KP7AmgWxuOUIYPC8O3" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -46,6 +83,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="C++ Project.ProjectMars">
     <configuration name="ProjectMars" type="CppProject" factoryName="C++ Project">
@@ -361,6 +399,7 @@
       </method>
     </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task id="LOCAL-00001" summary="Setup movement of camera">
       <created>1614874330740</created>
@@ -376,8 +415,36 @@
       <option name="project" value="LOCAL" />
       <updated>1614876076473</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added UMG module to build.cs file">
+      <created>1614876569824</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1614876569824</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added Slate modules to build.cs file">
+      <created>1614876602125</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1614876602125</updated>
+    </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Added Slate modules to build.cs file" />
+      <created>1614881110019</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1614881110019</updated>
+      <workItem from="1614881153372" duration="2329000" />
+      <workItem from="1614885352814" duration="511000" />
+      <workItem from="1614897660394" duration="1846000" />
+      <workItem from="1614899664916" duration="2613000" />
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
@@ -396,6 +463,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Setup movement of camera" />
     <MESSAGE value="Implemented HUD selection box" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented HUD selection box" />
+    <MESSAGE value="Added UMG module to build.cs file" />
+    <MESSAGE value="Added Slate modules to build.cs file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Slate modules to build.cs file" />
   </component>
 </project>

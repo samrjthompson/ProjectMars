@@ -19,6 +19,8 @@ public:
 
 	virtual void DrawHUD() override;
 
+	FString HUDName = "Bob";
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -37,4 +39,12 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "SelectionBox")
 	FLinearColor SelectionBoxColor{};
+
+/* --- WIDGETS --- */
+public:
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<class UBaseGameplayWidget> BaseGameplayWidgetClass;
+	
+	UPROPERTY()
+	class UBaseGameplayWidget* BaseGameplayWidget{ nullptr };
 };

@@ -3,6 +3,9 @@
 
 #include "ProjectMars/UI/BaseHUD.h"
 
+#include "Engine.h"
+#include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
+
 #define OUT
 
 ABaseHUD::ABaseHUD()
@@ -14,7 +17,13 @@ ABaseHUD::ABaseHUD()
 void ABaseHUD::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(GetOwningPlayerController(), BaseGameplayWidgetClass);
+	if(BaseGameplayWidget)
+	{
+		BaseGameplayWidget->AddToViewport();
+		UE_LOG(LogTemp, Warning, TEXT("BaseGameplayWidget is valid"));
+	}
 }
 
 FVector2D ABaseHUD::GetMonitorResolution()
