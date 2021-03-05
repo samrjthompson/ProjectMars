@@ -59,7 +59,11 @@ class PROJECTMARS_API UFactionBase : public UObject
 {
 	GENERATED_BODY()
 
+public:
 	UFactionBase();
 
-	FBaseFactionData BaseFactionData;
+protected:
+	FName FactionName{};
+	
+	
 };

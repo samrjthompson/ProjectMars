@@ -24,6 +24,8 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UCameraComponent* Camera{ nullptr };
 
+	TSubclassOf<class URomeFaction> RomeClass;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

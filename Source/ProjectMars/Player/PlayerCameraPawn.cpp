@@ -5,6 +5,8 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
+#include "ProjectMars/Factions/FactionBase.h"
+#include "ProjectMars/Factions/Hellenic/RomeFaction.h"
 #include "ProjectMars/UI/BaseHUD.h"
 
 // Sets default values
@@ -33,6 +35,17 @@ APlayerCameraPawn::APlayerCameraPawn()
 void APlayerCameraPawn::BeginPlay()
 {
 	Super::BeginPlay();
+
+	URomeFaction* Rome = NewObject<URomeFaction>();
+
+	if(Rome)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Faction Name: %s"), *Rome->GetFactionName().ToString());
+	}
+	else if(!Rome)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Rome is NULL"));
+	}
 
 }
 
