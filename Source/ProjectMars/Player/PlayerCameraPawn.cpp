@@ -40,7 +40,7 @@ void APlayerCameraPawn::SetTreasury()
 {
 	if(BaseFactionData)
 	{
-		PlayerEconomy.Treasury = BaseFactionData->Treasury;
+		PlayerEconomy.Treasury = FactionEconomics->Treasury;
 	}
 }
 
@@ -112,20 +112,20 @@ void APlayerCameraPawn::MoveRight(float Val)
 
 void APlayerCameraPawn::ChooseRome()
 {
-	SetPlayerFaction(EFaction::Rome);
+	InitialisePlayerFaction(EFaction::Rome);
 }
 
 void APlayerCameraPawn::ChooseEtruria()
 {
-	SetPlayerFaction(EFaction::Etruria);
+	InitialisePlayerFaction(EFaction::Etruria);
 }
 
 void APlayerCameraPawn::ChooseCarthage()
 {
-	SetPlayerFaction(EFaction::Carthage);
+	InitialisePlayerFaction(EFaction::Carthage);
 }
 
-void APlayerCameraPawn::SetPlayerFaction(const EFaction Faction)
+void APlayerCameraPawn::InitialisePlayerFaction(const EFaction Faction)
 {
 	if(bHasChosenFaction) { return; }
 	
@@ -148,11 +148,13 @@ void APlayerCameraPawn::SetPlayerFaction(const EFaction Faction)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Faction Name: %s"), *PlayerAssignedFaction->GetBaseFactionName().ToString());
 		InitialiseHUD(PlayerAssignedFaction);
-		FBaseFactionData BFD = PlayerAssignedFaction->GetRefToFactionData();
-		BaseFactionData = &BFD;
-	}
 
-	bHasChosenFaction = true;
+		// This is a pointer to the address of the faction data object 
+		BaseFactionData = &PlayerAssignedFaction->GetRefToFactionData();
+		FactionEconomics = &PlayerAssignedFaction->GetRefToEconomicsData();
+
+		bHasChosenFaction = true;
+	}
 }
 
 void APlayerCameraPawn::InitialiseHUD(class UFactionBase* FactionBase)
@@ -169,18 +171,17 @@ void APlayerCameraPawn::InitialiseHUD(class UFactionBase* FactionBase)
 
 void APlayerCameraPawn::UpdatePlayerIncome()
 {
-	if(PlayerAssignedFaction)
+	if(PlayerAssignedFaction && FactionEconomics)
 	{
-		PlayerAssignedFaction->UpdateCurrentIncome();
+		PlayerAssignedFaction->FactionEconomics.Treasury;
 		SetTreasury();
 	}
 }
 
 void APlayerCameraPawn::AddMoney()
 {
-	if(BaseFactionData)
+	if(FactionEconomics)
 	{
-		// BUG: This not adding 10 everytime I press space - number flickers at 0.
-		BaseFactionData->Treasury += 10.f;
+		FactionEconomics->Treasury += 10.f;
 	}
 }

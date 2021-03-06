@@ -8,6 +8,7 @@
 
 enum class EFaction : uint8;
 struct FBaseFactionData;
+struct FFactionEconomics;
 
 USTRUCT()
 struct FPlayerEconomy
@@ -17,7 +18,7 @@ struct FPlayerEconomy
 	FPlayerEconomy()
 	{
 		StartingTreasury = 5000.00f;
-		Treasury = 0.00f;
+		Treasury = StartingTreasury;
 	}
 
 	// Economy
@@ -74,6 +75,7 @@ protected:
 	FPlayerEconomy PlayerEconomy;
 		
 	FBaseFactionData* BaseFactionData{ nullptr };
+	FFactionEconomics* FactionEconomics{ nullptr };
 
 public:	
 	// Called every frame
@@ -102,7 +104,7 @@ private:
 	void ChooseCarthage();
 
 	// Sets the player's faction 
-	void SetPlayerFaction(const EFaction Faction);
+	void InitialisePlayerFaction(const EFaction Faction);
 
 	bool bHasChosenFaction;
 

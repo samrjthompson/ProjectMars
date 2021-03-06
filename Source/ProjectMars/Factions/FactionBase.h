@@ -22,18 +22,15 @@ enum class EFaction : uint8
 };
 
 USTRUCT()
-struct FBaseFactionData
+struct FFactionEconomics
 {
 	GENERATED_BODY()
-	
-	FBaseFactionData()
-	{
-		FactionName = "NONE";
-		StartingTreasury = 5000.00f;
-	}
 
-	// Name
-	FName FactionName{};
+	FFactionEconomics()
+	{
+		StartingTreasury = 5000.00f;
+		Treasury = StartingTreasury;
+	}
 
 	// Economy
 	float StartingTreasury{};
@@ -49,6 +46,34 @@ struct FBaseFactionData
 	float StateMaintenance{};
 	float FortMaintenance{};
 	float OutgoingTributes{};
+	
+	// Maintenance
+	float ArmyMaintenance{};
+	float FleetMaintenance{};
+	float Wages{};
+
+	// Economic Calculations
+	float GetNetIncome();
+	float GetGrossIncome();
+	float GetTotalOutgoings();
+};
+
+USTRUCT()
+struct FBaseFactionData
+{
+	GENERATED_BODY()
+	
+	FBaseFactionData()
+	{
+		FactionName = "NONE";
+	}
+
+	// Name
+	FName FactionName{};
+
+	// Economy
+	float StartingTreasury{};
+	float Treasury{};
 
 	// Population
 	int32 TotalPopulation{};
@@ -70,10 +95,7 @@ struct FBaseFactionData
 	float TotalMilitaryXP{};
 	float MilitaryXPChange{};
 
-	// Maintenance
-	float ArmyMaintenance{};
-	float FleetMaintenance{};
-	float Wages{};
+
 	
 };
 
@@ -82,15 +104,16 @@ class PROJECTMARS_API UFactionBase : public UObject
 {
 	GENERATED_BODY()
 
+	friend class APlayerCameraPawn;
+	friend class ABaseHUD;
+
 public:
 	UFactionBase();
 
 	inline FName GetBaseFactionName() const { return FactionName; }
 
-	// Economy
-	virtual void UpdateCurrentIncome();
-
-	virtual FBaseFactionData GetRefToFactionData();
+	virtual FBaseFactionData& GetRefToFactionData();
+	virtual FFactionEconomics& GetRefToEconomicsData();
 
 protected:
 	FName FactionName{};
@@ -99,11 +122,7 @@ protected:
 	ECultureGroup CultureGroup;
 	ECulture Culture;
 
-
+	// Objects by value of faction data structs
 	FBaseFactionData BaseFactionData;
-	
-	float CurrentFactionGrossIncome{};
-    float CurrentFactionExpenses{};
-    float CurrentFactionNetIncome{};
-
+	FFactionEconomics FactionEconomics;
 };

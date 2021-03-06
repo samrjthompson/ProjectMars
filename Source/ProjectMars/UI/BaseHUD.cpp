@@ -86,8 +86,7 @@ void ABaseHUD::DrawPlayerTreasury()
 {
 	if(BaseGameplayWidget && Player)
 	{
-		FString FloatString = FString::SanitizeFloat(Player->PlayerEconomy.Treasury);
-		BaseGameplayWidget->EconomyText->SetText(FText::FromString(FloatString));
+		BaseGameplayWidget->EconomyText->SetText(FText::FromString(FString::SanitizeFloat(Player->PlayerEconomy.Treasury)));
 	}
 }
 

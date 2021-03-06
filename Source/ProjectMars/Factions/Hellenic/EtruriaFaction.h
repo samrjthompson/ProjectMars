@@ -16,8 +16,5 @@ class PROJECTMARS_API UEtruriaFaction : public UFactionBase
 public:
 	UEtruriaFaction();
 	
-	FBaseFactionData EtruriaFactionData;
-
-	virtual void UpdateCurrentIncome() override;
-	
+	FBaseFactionData EtruriaFactionData;	
 };

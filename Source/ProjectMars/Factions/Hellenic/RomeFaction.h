@@ -7,6 +7,7 @@
 #include "RomeFaction.generated.h"
 
 struct FBaseFactionData;
+struct FFactionEconomics;
 
 UCLASS()
 class PROJECTMARS_API URomeFaction : public UFactionBase
@@ -20,10 +21,10 @@ public:
 
 private:	
 	FBaseFactionData RomeFactionData;
+	FFactionEconomics RomeFactionEconomy;
 
 protected:
-	virtual void UpdateCurrentIncome() override;
-	virtual FBaseFactionData GetRefToFactionData() override;
-	
-	
+	virtual FBaseFactionData& GetRefToFactionData() override;
+	virtual FFactionEconomics& GetRefToEconomicsData() override;
+		
 };

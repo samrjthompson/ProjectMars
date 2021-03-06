@@ -17,18 +17,20 @@ URomeFaction::URomeFaction()
 	this->FactionType = EFaction::Rome;
 	this->CultureGroup = ECultureGroup::Italic;
 	this->Culture = ECulture::Roman;
+
+	RomeFactionEconomy.Wages = 150.64f;
 }
 
-void URomeFaction::UpdateCurrentIncome()
-{
-	Super::UpdateCurrentIncome();
-
-	UE_LOG(LogTemp, Warning, TEXT("ROMAN MONEYYYYY!"));
-}
-
-FBaseFactionData URomeFaction::GetRefToFactionData()
+FBaseFactionData& URomeFaction::GetRefToFactionData()
 {
 	Super::GetRefToFactionData();
 
 	return RomeFactionData;
+}
+
+FFactionEconomics& URomeFaction::GetRefToEconomicsData()
+{
+	Super::GetRefToEconomicsData();
+
+	return RomeFactionEconomy;
 }
