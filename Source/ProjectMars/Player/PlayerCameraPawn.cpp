@@ -34,11 +34,14 @@ APlayerCameraPawn::APlayerCameraPawn()
 	MovementSpeed = 500.f;
 
 	bHasChosenFaction = false;
+
+	UpdateCheckFrequency = 5.f;
+	LastUpdateCheckTime = UpdateCheckFrequency;
 }
 
 void APlayerCameraPawn::SetTreasury()
 {
-	if(BaseFactionData)
+	if(FactionEconomics)
 	{
 		PlayerEconomy.Treasury = FactionEconomics->Treasury;
 	}
@@ -66,8 +69,8 @@ void APlayerCameraPawn::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	PawnMovement(DeltaTime);
-	UpdatePlayerIncome();
-	
+
+	UpdatePlayerFactionInfo();
 }
 
 // Called to bind functionality to input
@@ -95,6 +98,17 @@ void APlayerCameraPawn::PawnMovement(float DeltaTime)
 	{
 		const FVector NewLocation = GetActorLocation() + (MovementDirection * DeltaTime * MovementSpeed);
 		SetActorLocation(NewLocation);
+	}
+}
+
+void APlayerCameraPawn::UpdatePlayerFactionInfo()
+{
+	// Updates set to every 5 seconds
+	if(GetWorld()->TimeSince(LastUpdateCheckTime) >= UpdateCheckFrequency)
+	{
+		UpdatePlayerIncome();
+		
+		LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
 	}
 }
 
@@ -174,7 +188,7 @@ void APlayerCameraPawn::UpdatePlayerIncome()
 	if(PlayerAssignedFaction && FactionEconomics)
 	{
 		PlayerAssignedFaction->FactionEconomics.Treasury;
-		SetTreasury();
+		SetTreasury();		
 	}
 }
 

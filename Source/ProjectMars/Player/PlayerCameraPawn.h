@@ -90,6 +90,8 @@ public:
 
 private:
 	void PawnMovement(float DeltaTime);
+
+	void UpdatePlayerFactionInfo();
 	
 	FVector MovementDirection{};
 
@@ -124,4 +126,12 @@ private:
 	void UpdatePlayerIncome();
 
 	void AddMoney();
+
+/* --- TIME --- */
+
+	// The last time an update occured in seconds
+	float LastUpdateCheckTime;
+
+	// Amount in seconds we want to update our player's faction info
+	float UpdateCheckFrequency;
 };
