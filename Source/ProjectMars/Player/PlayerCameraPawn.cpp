@@ -34,6 +34,7 @@ APlayerCameraPawn::APlayerCameraPawn()
 	MovementSpeed = 500.f;
 
 	bHasChosenFaction = false;
+	bHasSetTreasury = false;
 
 	UpdateCheckFrequency = 5.f;
 	LastUpdateCheckTime = UpdateCheckFrequency;
@@ -44,6 +45,14 @@ void APlayerCameraPawn::SetTreasury()
 	if(FactionEconomics)
 	{
 		PlayerEconomy.Treasury = FactionEconomics->Treasury;
+
+		UE_LOG(LogTemp, Warning, TEXT("SetTreasury CALLED!"))
+		
+		bHasSetTreasury = true;
+	}
+	if(!FactionEconomics)
+	{
+		UE_LOG(LogTemp, Error, TEXT("FactionEconomics is NULL!"))
 	}
 }
 
@@ -89,6 +98,9 @@ void APlayerCameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		PlayerInputComponent->BindAction("Carthage", IE_Pressed, this, &APlayerCameraPawn::ChooseCarthage);
 
 		PlayerInputComponent->BindAction("Money", IE_Pressed, this, &APlayerCameraPawn::AddMoney);
+
+		// Game Speed
+		PlayerInputComponent->BindAxis("GameSpeed", this, &APlayerCameraPawn::UpdateGameSpeed);
 	}
 }
 
@@ -106,6 +118,8 @@ void APlayerCameraPawn::UpdatePlayerFactionInfo()
 	// Updates set to every 5 seconds
 	if(GetWorld()->TimeSince(LastUpdateCheckTime) >= UpdateCheckFrequency)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("UpdatePlayerFactionInfo CALLED!"));
+		
 		UpdatePlayerIncome();
 		
 		LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
@@ -169,6 +183,10 @@ void APlayerCameraPawn::InitialisePlayerFaction(const EFaction Faction)
 
 		bHasChosenFaction = true;
 	}
+	if(!PlayerAssignedFaction)
+	{
+		UE_LOG(LogTemp, Error, TEXT("PlayerAssignedFaction is NULL!"))
+	}
 }
 
 void APlayerCameraPawn::InitialiseHUD(class UFactionBase* FactionBase)
@@ -185,10 +203,14 @@ void APlayerCameraPawn::InitialiseHUD(class UFactionBase* FactionBase)
 
 void APlayerCameraPawn::UpdatePlayerIncome()
 {
-	if(PlayerAssignedFaction && FactionEconomics)
+	if(PlayerAssignedFaction && !bHasSetTreasury)
 	{
-		PlayerAssignedFaction->FactionEconomics.Treasury;
-		SetTreasury();		
+		SetTreasury();
+	}
+	if(PlayerAssignedFaction && bHasSetTreasury)
+	{
+		AddMoney();
+		PlayerEconomy.Treasury = FactionEconomics->Treasury;
 	}
 }
 
@@ -197,5 +219,31 @@ void APlayerCameraPawn::AddMoney()
 	if(FactionEconomics)
 	{
 		FactionEconomics->Treasury += 10.f;
+		
+		UE_LOG(LogTemp, Warning, TEXT("AddMoney CALLED!"))
 	}
+}
+
+void APlayerCameraPawn::UpdateGameSpeed(float Val)
+{
+	if(Val == 0) { return; }
+	
+	if(Val == 1)
+	{
+		UpdateCheckFrequency = 5.f;
+		
+		UE_LOG(LogTemp, Warning, TEXT("GameSpeed: %f"), Val);
+	}
+	if(Val == 2)
+	{
+		UpdateCheckFrequency = 3.f;
+
+		UE_LOG(LogTemp, Warning, TEXT("GameSpeed: %f"), Val);
+	}
+	if(Val == 5)
+	{
+		UpdateCheckFrequency = 1.f;
+		
+		UE_LOG(LogTemp, Warning, TEXT("GameSpeed: %f"), Val);
+	}	
 }

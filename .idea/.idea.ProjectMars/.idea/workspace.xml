@@ -5,8 +5,9 @@
     <projectFile>Intermediate/ProjectFiles/UE4.vcxproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Implementing modular faction economies">
+    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Added a timer to updating faction info such as treasury amount so that this only updates once every 5 seconds - temporary fix to implementing a real passage of time mechanic">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultInput.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultInput.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" afterDir="false" />
     </list>
@@ -446,7 +447,8 @@
       <workItem from="1614899664916" duration="4161000" />
       <workItem from="1614903955719" duration="785000" />
       <workItem from="1614950892114" duration="14761000" />
-      <workItem from="1615046731448" duration="7362000" />
+      <workItem from="1615046731448" duration="8295000" />
+      <workItem from="1615132382546" duration="3171000" />
     </task>
     <task id="LOCAL-00005" summary="Trialing structs for data about factions">
       <created>1614902585052</created>
@@ -483,7 +485,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615053241559</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added a timer to updating faction info such as treasury amount so that this only updates once every 5 seconds - temporary fix to implementing a real passage of time mechanic">
+      <created>1615054974496</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1615054974496</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -513,6 +522,7 @@
     <MESSAGE value="Created a few faction and culture classes - implemented basic system where player can choose a faction with a keybind" />
     <MESSAGE value="Further faction implementation" />
     <MESSAGE value="Implementing modular faction economies" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementing modular faction economies" />
+    <MESSAGE value="Added a timer to updating faction info such as treasury amount so that this only updates once every 5 seconds - temporary fix to implementing a real passage of time mechanic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a timer to updating faction info such as treasury amount so that this only updates once every 5 seconds - temporary fix to implementing a real passage of time mechanic" />
   </component>
 </project>

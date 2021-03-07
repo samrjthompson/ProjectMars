@@ -134,4 +134,8 @@ private:
 
 	// Amount in seconds we want to update our player's faction info
 	float UpdateCheckFrequency;
+
+	void UpdateGameSpeed(float Val);
+
+	bool bHasSetTreasury;
 };
