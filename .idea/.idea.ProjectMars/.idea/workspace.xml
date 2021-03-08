@@ -5,7 +5,16 @@
     <projectFile>Intermediate/ProjectFiles/UE4.vcxproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Removed TODO" />
+    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Started to make it so that the month ticks up when the day of the month hits the last day - few bugs to iron out.">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultInput.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultInput.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,10 +23,18 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="dev-branch" />
+        <entry key="$PROJECT_DIR$" value="faction-setup" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h" root0="FORCE_HIGHLIGHTING" />
@@ -37,7 +54,6 @@
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameModeBase.cpp" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/ProjectMars.Build.cs" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/UI/Widgets/BaseGameplayWidget.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Faction/FactionBase.cpp" />
@@ -52,7 +68,6 @@
       <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/RomanCulture.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/EtruscanCulture.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/EtruscanCulture.cpp" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/RomanCulture.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/EtruriaFaction.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/EtruriaFaction.cpp" />
@@ -62,13 +77,15 @@
       <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/FactionBase.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/UI/Widgets/BaseGameplayWidget.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.h" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/TimeInGame.h" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/TimeInGame.cpp" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1pIql2f20KP7AmgWxuOUIYPC8O3" />
@@ -451,7 +468,8 @@
       <workItem from="1615046731448" duration="8295000" />
       <workItem from="1615132382546" duration="5966000" />
       <workItem from="1615142127455" duration="2364000" />
-      <workItem from="1615205554385" duration="4421000" />
+      <workItem from="1615205554385" duration="16859000" />
+      <workItem from="1615242938611" duration="4193000" />
     </task>
     <task id="LOCAL-00005" summary="Trialing structs for data about factions">
       <created>1614902585052</created>
@@ -516,7 +534,49 @@
       <option name="project" value="LOCAL" />
       <updated>1615162003006</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Fixed so that LastUpdateCheckTime does not start counting until Player has been assigned faction">
+      <created>1615210124545</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1615210124545</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Initialised refs in GameState">
+      <created>1615215454456</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1615215454456</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Refactored code so that time is managed by the game state rather than the player">
+      <created>1615216804170</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1615216804170</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Implementing passage of the days of the month">
+      <created>1615223125008</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1615223125008</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Clamped day of month to correct amount of days for respective month">
+      <created>1615224188286</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1615224188286</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Started to make it so that the month ticks up when the day of the month hits the last day - few bugs to iron out.">
+      <created>1615224857727</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1615224857727</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -550,6 +610,12 @@
     <MESSAGE value="Added variation in update speed between 1, 3 and 5 seconds to update player info depending on a key bind." />
     <MESSAGE value="Started implementing days months and years into the game" />
     <MESSAGE value="Removed TODO" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed TODO" />
+    <MESSAGE value="Fixed so that LastUpdateCheckTime does not start counting until Player has been assigned faction" />
+    <MESSAGE value="Initialised refs in GameState" />
+    <MESSAGE value="Refactored code so that time is managed by the game state rather than the player" />
+    <MESSAGE value="Implementing passage of the days of the month" />
+    <MESSAGE value="Clamped day of month to correct amount of days for respective month" />
+    <MESSAGE value="Started to make it so that the month ticks up when the day of the month hits the last day - few bugs to iron out." />
+    <option name="LAST_COMMIT_MESSAGE" value="Started to make it so that the month ticks up when the day of the month hits the last day - few bugs to iron out." />
   </component>
 </project>

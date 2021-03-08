@@ -78,6 +78,12 @@ protected:
 	FBaseFactionData* BaseFactionData{ nullptr };
 	FFactionEconomics* FactionEconomics{ nullptr };
 
+	UPROPERTY()
+	class AMarsGameStateBase* MarsGameStateBase{ nullptr };
+
+	// Function that calls the InitialiseReferences function in the GameState class and passes this as the arg
+	void InitialiseGameStateRefs();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -92,8 +98,6 @@ public:
 private:
 	void PawnMovement(float DeltaTime);
 
-	void UpdatePlayerFactionInfo();
-	
 	FVector MovementDirection{};
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
@@ -109,8 +113,6 @@ private:
 	// Sets the player's faction 
 	void InitialisePlayerFaction(const EFaction& Faction);
 
-	bool bHasChosenFaction;
-
 	// Initialises a pointer (stored in the ABaseHUD class) to a faction class object
 	void InitialiseHUD(class UFactionBase* FactionBase);
 
@@ -119,6 +121,11 @@ private:
 
 	UPROPERTY()
 	class ABaseHUD* BaseHUD{ nullptr };
+
+public:
+	void UpdatePlayerFactionInfo();
+
+	bool bHasChosenFaction;
 
 	
 	// ECONOMY
@@ -132,17 +139,10 @@ private:
 
 	FCampaignDateTime* CampaignDateTimePtr;
 	
-	// The last time an update occured in seconds
-	float LastUpdateCheckTime;
-
-	// Amount in seconds we want to update our player's faction info
-	float UpdateCheckFrequency;
 
 	void UpdateGameSpeed(float Val);
 
 	bool bHasSetTreasury;
-
-	void UpdateMonth();
 
 	EMonthOfYear CurrentMonth;
 
