@@ -67,8 +67,6 @@ void APlayerCameraPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	
-
-
 	InitialiseGameStateRefs();
 	
 	BasePlayerController = Cast<ABasePlayerController>(GetController());

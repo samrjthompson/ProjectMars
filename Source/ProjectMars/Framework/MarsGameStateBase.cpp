@@ -14,10 +14,18 @@ AMarsGameStateBase::AMarsGameStateBase()
 	UpdateCheckFrequency = 5.f;
 	LastUpdateCheckTime = 0.f;
 
-	MonthIndex = 1;
+	// Starts on Feb because if we start on Jan the year gets updated straight away due to the condition for updating the year being 1st of Jan
+	CurrentMonth = EMonthOfYear::February;
+	MonthIndex = 2;
+	
 	CurrentDay = 1;
+	
 	CurrentTick = 0;
 	LastTickCheck = 0;
+
+	// Arbitrary start date at the moment, should change this if suits the historical background
+	StartYear = 304;
+	CurrentYear = StartYear;
 }
 
 // BeginPlay in the game state is called before BeginPlay in the player class. References will therefore not be initialised in BeginPlay here.
@@ -25,8 +33,7 @@ void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
 	LastTickCheck = GetWorld()->GetTimeSeconds();
-	LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();
-	
+	LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();	
 }
 
 void AMarsGameStateBase::Tick(float DeltaSeconds)
@@ -85,31 +92,55 @@ void AMarsGameStateBase::UpdateMonth()
 	}
 	if(MonthIndex >= 13)
 	{
-		MonthIndex = 1;
+		MonthIndex = 1;	
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Current Month: %d"), CurrentMonth);
 }
 
 void AMarsGameStateBase::UpdateGameTime()
 {
+	if(PlayerController->bGameIsPaused == true)
+	{
+		GEngine->AddOnScreenDebugMessage(1, 2, FColor::Orange, "Game is paused");
+		return;
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(1, 2, FColor::Green, "Game is resumed");
+	}
+	
 	if(Player->bHasChosenFaction == false) { return; }
 	
 	// Updates set to every 5 seconds
-	if(CurrentDay == CalculateMaxDaysInMonthNum() && Player)
-	{	
-		// Updates the info such as treasury, manpower, political power etc. on a monthly basis
-		Player->UpdatePlayerFactionInfo();
+	if(CurrentDay == CalculateMaxDaysInMonthNum() + 1 || !bGameHasStarted)
+	{
+		/* The first month is 0 so that Player faction info isn't updated on the first day of the first month. Instead,
+		 * it will be updated for the first time on the first day of the 2nd month and every 1st of the month from then
+		 * on. */
+		if(MonthsInGame > 0)
+		{
+			// Updates the info such as treasury, manpower, political power etc. on a monthly basis
+			Player->UpdatePlayerFactionInfo();
+		}
 		
 		LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
 
-		// BUG: Game not starting on correct month.
-		UpdateMonth();		
+		UpdateMonth();
+		MonthsInGame++;
 		CurrentDay = 1;
 		CalculateMaxDaysInMonthNum();
+		if(CurrentDay == 1 && CurrentMonth == EMonthOfYear::January)
+		{
+			CurrentYear--;
+		}
+
+		// Initiate counting of days
+		if(!bGameHasStarted) { bGameHasStarted = true; }
 	}
 
-	CalculateCurrentDay();
+	if(bGameHasStarted)
+	{
+		CalculateCurrentDay();
+	}
 }
 
 int32 AMarsGameStateBase::CalculateMaxDaysInMonthNum()
@@ -122,19 +153,52 @@ int32 AMarsGameStateBase::CalculateMaxDaysInMonthNum()
 		CurrentMonth == EMonthOfYear::October ||
 		CurrentMonth == EMonthOfYear::December)
 	{
-		CurrentDay = FMath::Clamp(CurrentDay, 1, 31);
+		// CurrentDay = FMath::Clamp(CurrentDay, 1, 31);
 		return 31;
 	}
 	if(CurrentMonth == EMonthOfYear::February)
 	{
-		CurrentDay = FMath::Clamp(CurrentDay, 1, 28);
+		// CurrentDay = FMath::Clamp(CurrentDay, 1, 28);
 		return 28;
 	}
 	else
 	{
-		CurrentDay = FMath::Clamp(CurrentDay, 1, 30);
+		//CurrentDay = FMath::Clamp(CurrentDay, 1, 30);
 		return 30;
 	}
+}
+
+FString AMarsGameStateBase::GetCurrentMonthName() const
+{
+	// No need to have a break statement due to return statement
+	switch (CurrentMonth)
+	{
+		case EMonthOfYear::January : return "Jan";
+
+		case EMonthOfYear::February : return "Feb";
+
+		case EMonthOfYear::March : return "Mar";
+		
+		case EMonthOfYear::April : return "Apr";
+
+		case EMonthOfYear::May : return "May";
+
+		case EMonthOfYear::June : return "Jun";
+
+		case EMonthOfYear::July : return "Jul";
+
+		case EMonthOfYear::August : return "Aug";
+
+		case EMonthOfYear::September : return "Sep";
+
+		case EMonthOfYear::October : return "Oct";
+
+		case EMonthOfYear::November : return "Nov";
+
+		case EMonthOfYear::December : return "Dec";
+	}
+
+	return "NONE";
 }
 
 void AMarsGameStateBase::CalculateTickRate()
@@ -142,25 +206,19 @@ void AMarsGameStateBase::CalculateTickRate()
 	CurrentTick++;
 	if(GetWorld()->TimeSince(LastTickCheck) >= 1)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Tick rate: %f"), CurrentTick);
 		TickRate = CurrentTick;		
 		CurrentTick = 0.f;
 		LastTickCheck = GetWorld()->GetTimeSeconds();
 	}
 }
 
-// BUG: Partly works, issues with months always having 30 days (apart from feb).
-// BUG: When changing speed of game, days of the month don't modify their speed appropriately so we can stay on 31st for a few days before changing to next month.
 void AMarsGameStateBase::CalculateCurrentDay()
 {
 	const float DaysPerSecond = UpdateCheckFrequency / CalculateMaxDaysInMonthNum();
 
 	if(GetWorld()->TimeSince(LastDaysPerTickCheck) >= DaysPerSecond)
-	{
-		// BUG: Counter misses out 1 day of the month - the 1st or the last depending on where I put this UE_LOG
-		UE_LOG(LogTemp, Warning, TEXT("CurrentDay: %d"), CurrentDay);
-		++CurrentDay;
-		
+	{		
+		++CurrentDay;	
 		LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();	
 	}
 }

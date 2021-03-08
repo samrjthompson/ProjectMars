@@ -5,9 +5,15 @@
     <projectFile>Intermediate/ProjectFiles/UE4.vcxproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Clamped day of month to correct amount of days for respective month">
+    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Started to make it so that the month ticks up when the day of the month hits the last day - few bugs to iron out.">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultInput.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultInput.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +28,14 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/CoreUObject/Public/UObject/UObjectBase.h" root0="FORCE_HIGHLIGHTING" />
@@ -34,14 +48,12 @@
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/GameFramework/PlayerController.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/Misc/DateTime.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/Engine/EngineTypes.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Unreal/Unreal Projects/ProjectMars/Source/ProjectMars/Framework/MarsGameStateBase.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/Math/Color.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/Components/InputComponent.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameModeBase.cpp" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/ProjectMars.Build.cs" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/UI/Widgets/BaseGameplayWidget.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Faction/FactionBase.cpp" />
@@ -56,7 +68,6 @@
       <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/RomanCulture.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/EtruscanCulture.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/EtruscanCulture.cpp" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Cultures/Italic/RomanCulture.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/EtruriaFaction.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/Hellenic/EtruriaFaction.cpp" />
@@ -66,11 +77,13 @@
       <option value="$PROJECT_DIR$/Source/ProjectMars/Factions/FactionBase.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/UI/Widgets/BaseGameplayWidget.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.h" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/TimeInGame.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/TimeInGame.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" />
     </changedPaths>
@@ -455,7 +468,8 @@
       <workItem from="1615046731448" duration="8295000" />
       <workItem from="1615132382546" duration="5966000" />
       <workItem from="1615142127455" duration="2364000" />
-      <workItem from="1615205554385" duration="16530000" />
+      <workItem from="1615205554385" duration="16859000" />
+      <workItem from="1615242938611" duration="4193000" />
     </task>
     <task id="LOCAL-00005" summary="Trialing structs for data about factions">
       <created>1614902585052</created>
@@ -555,7 +569,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615224188286</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Started to make it so that the month ticks up when the day of the month hits the last day - few bugs to iron out.">
+      <created>1615224857727</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1615224857727</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -594,6 +615,7 @@
     <MESSAGE value="Refactored code so that time is managed by the game state rather than the player" />
     <MESSAGE value="Implementing passage of the days of the month" />
     <MESSAGE value="Clamped day of month to correct amount of days for respective month" />
-    <option name="LAST_COMMIT_MESSAGE" value="Clamped day of month to correct amount of days for respective month" />
+    <MESSAGE value="Started to make it so that the month ticks up when the day of the month hits the last day - few bugs to iron out." />
+    <option name="LAST_COMMIT_MESSAGE" value="Started to make it so that the month ticks up when the day of the month hits the last day - few bugs to iron out." />
   </component>
 </project>

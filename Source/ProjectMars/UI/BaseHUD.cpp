@@ -5,6 +5,7 @@
 
 #include "Engine.h"
 #include "Components/TextBlock.h"
+#include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/Player/PlayerCameraPawn.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
 
@@ -28,17 +29,6 @@ void ABaseHUD::BeginPlay()
 		BaseGameplayWidget->AddToViewport();
 		UE_LOG(LogTemp, Warning, TEXT("BaseGameplayWidget is valid"));
 	}
-
-
-	/*// TODO: This may not work correctly, currently trying to store a list of months as enums so I can refer to them
-	for(int i = EMonthOfYear::January; i <= 12; i++)
-	{		
-		EMonthOfYear Month = static_cast<EMonthOfYear>(i);
-		MonthArray->Emplace(Month);
-		UE_LOG(LogTemp, Warning, TEXT("Month: %i"), Month);
-	}
-
-	UE_LOG(LogTemp, Warning, TEXT("MonthArray Size: %i"), MonthArray->Num());*/
 }
 
 FVector2D ABaseHUD::GetMonitorResolution()
@@ -105,7 +95,9 @@ void ABaseHUD::DrawDate()
 {	
 	if(BaseGameplayWidget && Player)
 	{
-		
+		BaseGameplayWidget->DayText->SetText(FText::AsNumber(Player->MarsGameStateBase->GetCurrentDay()));
+		BaseGameplayWidget->MonthText->SetText(FText::FromString(Player->MarsGameStateBase->GetCurrentMonthName()));
+		BaseGameplayWidget->YearText->SetText(FText::AsNumber(Player->MarsGameStateBase->GetCurrentYear()));
 	}
 }
 
@@ -120,4 +112,6 @@ void ABaseHUD::DrawHUD()
 	}
 
 	DrawPlayerTreasury();
+
+	DrawDate();
 }

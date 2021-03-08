@@ -21,6 +21,10 @@ public:
 
 	virtual void SetupInputComponent() override;
 
+	bool bGameIsPaused = true;
+
+	void PauseGame();
+
 protected:
 	virtual void BeginPlay() override;
 

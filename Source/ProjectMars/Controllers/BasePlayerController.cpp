@@ -9,6 +9,7 @@ ABasePlayerController::ABasePlayerController()
 {
 	bShowMouseCursor = true;
 	bEnableMouseOverEvents = true;
+	bGameIsPaused = true;
 }
 
 void ABasePlayerController::SetupInputComponent()
@@ -17,6 +18,19 @@ void ABasePlayerController::SetupInputComponent()
 
 	InputComponent->BindAction("LeftMouseClick", IE_Pressed, this, &ABasePlayerController::SelectionPressed);
 	InputComponent->BindAction("LeftMouseClick", IE_Released, this, &ABasePlayerController::SelectionReleased);
+	InputComponent->BindAction("PauseGame", IE_Pressed, this, &ABasePlayerController::PauseGame);
+}
+
+void ABasePlayerController::PauseGame()
+{
+	switch (bGameIsPaused)
+	{
+		case true : bGameIsPaused = false;
+		break;
+
+		case false : bGameIsPaused = true;
+		break;
+	}
 }
 
 void ABasePlayerController::BeginPlay()

@@ -60,6 +60,10 @@ public:
 
 	inline float GetTickRate() const { return TickRate; }
 	inline int32 GetCurrentDay() const { return CurrentDay; }
+	FString GetCurrentMonthName() const;
+	inline int32 GetCurrentYear() const { return CurrentYear; }
+
+	bool bGameHasStarted = false;
 	
 protected:
 	
@@ -86,4 +90,9 @@ private:
 	float TickRate{};
 	float TicksPerMonth{ TickRate * UpdateCheckFrequency };
 	float LastDaysPerTickCheck{};
+
+	int32 CurrentYear;
+	int32 StartYear;
+
+	int32 MonthsInGame{ 0 };
 };
