@@ -38,9 +38,6 @@ APlayerCameraPawn::APlayerCameraPawn()
 	bHasChosenFaction = false;
 	bHasSetTreasury = false;
 
-	UpdateCheckFrequency = 5.f;
-	LastUpdateCheckTime = 0.f;
-
 	MonthIndex = 1;
 
 	// TIME
@@ -102,8 +99,6 @@ void APlayerCameraPawn::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	PawnMovement(DeltaTime);
-
-	UpdatePlayerFactionInfo();
 }
 
 // Called to bind functionality to input
@@ -137,22 +132,10 @@ void APlayerCameraPawn::PawnMovement(float DeltaTime)
 	}
 }
 
+// Is called by the GameState class
 void APlayerCameraPawn::UpdatePlayerFactionInfo()
 {
-	// Updates set to every 5 seconds
-	if(GetWorld()->TimeSince(LastUpdateCheckTime) >= UpdateCheckFrequency && bHasChosenFaction)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("UpdatePlayerFactionInfo CALLED!"));
-		
-		UpdatePlayerIncome();
-		
-		LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
-
-		UpdateMonth();
-
-		/*if(!CampaignDateTimePtr) { return; } // NULL Check
-		CampaignDateTimePtr->UpdateDayOfMonth(CurrentMonth);*/
-	}
+	UpdatePlayerIncome();	
 }
 
 void APlayerCameraPawn::MoveForward(float Val)
@@ -204,7 +187,7 @@ void APlayerCameraPawn::InitialisePlayerFaction(const EFaction& Faction)
 		break;
 	}
 
-	if(PlayerAssignedFaction)
+	if(PlayerAssignedFaction && MarsGameStateBase)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Faction Name: %s"), *PlayerAssignedFaction->GetBaseFactionName().ToString());
 		InitialiseHUD(PlayerAssignedFaction);
@@ -214,7 +197,7 @@ void APlayerCameraPawn::InitialisePlayerFaction(const EFaction& Faction)
 		FactionEconomics = &PlayerAssignedFaction->GetRefToEconomicsData();
 
 		bHasChosenFaction = true;
-		LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
+		MarsGameStateBase->LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
 	}
 	if(!PlayerAssignedFaction)
 	{
@@ -260,76 +243,24 @@ void APlayerCameraPawn::AddMoney()
 void APlayerCameraPawn::UpdateGameSpeed(float Val)
 {
 	if(Val == 0) { return; }
+	if(!MarsGameStateBase) { return; }
 	
 	if(Val == 1)
 	{
-		UpdateCheckFrequency = 5.f;
+		MarsGameStateBase->UpdateCheckFrequency = 5.f;
 		
 		UE_LOG(LogTemp, Warning, TEXT("GameSpeed: %f"), Val);
 	}
 	if(Val == 2)
 	{
-		UpdateCheckFrequency = 3.f;
+		MarsGameStateBase->UpdateCheckFrequency = 3.f;
 
 		UE_LOG(LogTemp, Warning, TEXT("GameSpeed: %f"), Val);
 	}
 	if(Val == 5)
 	{
-		UpdateCheckFrequency = 1.f;
+		MarsGameStateBase->UpdateCheckFrequency = 1.f;
 		
 		UE_LOG(LogTemp, Warning, TEXT("GameSpeed: %f"), Val);
 	}	
-}
-
-void APlayerCameraPawn::UpdateMonth()
-{
-	switch (MonthIndex)
-	{
-		case 1 : CurrentMonth = EMonthOfYear::January;
-		break;
-
-		case 2 : CurrentMonth = EMonthOfYear::February;
-		break;
-
-		case 3 : CurrentMonth = EMonthOfYear::March;
-		break;
-
-		case 4 : CurrentMonth = EMonthOfYear::April;
-		break;
-
-		case 5 : CurrentMonth = EMonthOfYear::May;
-		break;
-
-		case 6 : CurrentMonth = EMonthOfYear::June;
-		break;
-
-		case 7 : CurrentMonth = EMonthOfYear::July;
-		break;
-
-		case 8 : CurrentMonth = EMonthOfYear::August;
-		break;
-		
-		case 9 : CurrentMonth = EMonthOfYear::September;
-		break;
-
-		case 10 : CurrentMonth = EMonthOfYear::October;
-		break;
-
-		case 11 : CurrentMonth = EMonthOfYear::November;
-		break;
-
-		case 12 : CurrentMonth = EMonthOfYear::December;
-		break;		
-	}
-
-	if(MonthIndex < 13)
-	{
-		MonthIndex++;
-	}
-	if(MonthIndex >= 13)
-	{
-		MonthIndex = 1;
-	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Current Month: %d"), CurrentMonth);
 }

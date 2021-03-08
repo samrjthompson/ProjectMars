@@ -8,6 +8,10 @@
 
 class APlayerCameraPawn;
 
+enum class EMonthOfYear;
+
+struct FCampaignDateTime;
+
 UCLASS()
 class PROJECTMARS_API AMarsGameStateBase : public AGameStateBase
 {
@@ -34,5 +38,29 @@ private:
 	UPROPERTY()
 	class ABaseHUD* BaseHUD{ nullptr };
 
+	
+/* --- TIME --- */
+public:
+	// 
+	void UpdateMonth();
+
+	void UpdateGameTime();
+
+	FCampaignDateTime* CampaignDateTime;
+
+	// The last time an update occured in seconds
+	float LastUpdateCheckTime;
+
+	// Amount in seconds we want to update our player's faction info
+	float UpdateCheckFrequency;
+	
+protected:
+	
+private:
+	// Copy of EMonthOfYear obj so that can evaluate an if statement (i.e., if(CurrentMonth == EMonthOfYear::January) { // Do something }).
+	EMonthOfYear CurrentMonth;
+
+	// Storing the month number to be used in a switch statement
+	int32 MonthIndex;
 
 };
