@@ -39,13 +39,17 @@ private:
 	class ABaseHUD* BaseHUD{ nullptr };
 
 	
-/* --- TIME --- */
+/* --- TIME MANAGEMENT --- */
 public:
-	// 
+	// Initialises CurrentMonth depending on the current MonthIndex
 	void UpdateMonth();
 
+	// Tick function that manages how many seconds it takes for a month to pass - the seconds are determined by the UpdateCheckFrequency variable
 	void UpdateGameTime();
 
+	int32 GetMaxDaysInMonthNum();
+
+	// Ptr to FCampaignDateTime struct
 	FCampaignDateTime* CampaignDateTime;
 
 	// The last time an update occured in seconds
@@ -53,6 +57,9 @@ public:
 
 	// Amount in seconds we want to update our player's faction info
 	float UpdateCheckFrequency;
+
+	inline float GetTickRate() const { return TickRate; }
+	inline int32 GetCurrentDay() const { return CurrentDay; }
 	
 protected:
 	
@@ -61,6 +68,22 @@ private:
 	EMonthOfYear CurrentMonth;
 
 	// Storing the month number to be used in a switch statement
-	int32 MonthIndex;
+	int32 MonthIndex{};
 
+	// Stores the maximum number of days in a particular month
+	float MaxDaysInMonth{};
+
+	// Stores the current day of the month
+	int32 CurrentDay{};
+	int32 PreviousDay{};
+	float DaysPerTick{};
+
+	void CalculateTickRate();
+	void CalculateCurrentDay();
+
+	float LastTickCheck{};
+	float CurrentTick{};
+	float TickRate{};
+	float TicksPerMonth{ TickRate * UpdateCheckFrequency };
+	float LastDaysPerTickCheck{};
 };

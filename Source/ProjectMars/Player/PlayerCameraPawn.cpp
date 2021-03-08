@@ -2,6 +2,7 @@
 
 
 #include "ProjectMars/Player/PlayerCameraPawn.h"
+
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
@@ -65,6 +66,8 @@ void APlayerCameraPawn::SetTreasury()
 void APlayerCameraPawn::BeginPlay()
 {
 	Super::BeginPlay();
+	
+
 
 	InitialiseGameStateRefs();
 	
@@ -240,6 +243,7 @@ void APlayerCameraPawn::AddMoney()
 	}
 }
 
+// TODO: May want to refactor this so that it is implemented a little cleaner.
 void APlayerCameraPawn::UpdateGameSpeed(float Val)
 {
 	if(Val == 0) { return; }

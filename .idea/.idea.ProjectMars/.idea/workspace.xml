@@ -5,12 +5,11 @@
     <projectFile>Intermediate/ProjectFiles/UE4.vcxproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Initialised refs in GameState">
+    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Refactored code so that time is managed by the game state rather than the player">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,9 +70,9 @@
       <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/TimeInGame.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/TimeInGame.cpp" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" />
     </changedPaths>
   </component>
@@ -457,7 +456,7 @@
       <workItem from="1615046731448" duration="8295000" />
       <workItem from="1615132382546" duration="5966000" />
       <workItem from="1615142127455" duration="2364000" />
-      <workItem from="1615205554385" duration="8753000" />
+      <workItem from="1615205554385" duration="15096000" />
     </task>
     <task id="LOCAL-00005" summary="Trialing structs for data about factions">
       <created>1614902585052</created>
@@ -536,7 +535,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615215454456</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Refactored code so that time is managed by the game state rather than the player">
+      <created>1615216804170</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1615216804170</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -572,6 +578,7 @@
     <MESSAGE value="Removed TODO" />
     <MESSAGE value="Fixed so that LastUpdateCheckTime does not start counting until Player has been assigned faction" />
     <MESSAGE value="Initialised refs in GameState" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initialised refs in GameState" />
+    <MESSAGE value="Refactored code so that time is managed by the game state rather than the player" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored code so that time is managed by the game state rather than the player" />
   </component>
 </project>

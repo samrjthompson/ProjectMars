@@ -13,12 +13,18 @@ AMarsGameStateBase::AMarsGameStateBase()
 	
 	UpdateCheckFrequency = 5.f;
 	LastUpdateCheckTime = 0.f;
+
+	CurrentDay = 1;
+	CurrentTick = 0;
+	LastTickCheck = 0;
 }
 
 // BeginPlay in the game state is called before BeginPlay in the player class. References will therefore not be initialised in BeginPlay here.
 void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
+	LastTickCheck = GetWorld()->GetTimeSeconds();
+	LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();
 	
 }
 
@@ -26,6 +32,8 @@ void AMarsGameStateBase::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
+	CalculateTickRate();
+	
 	UpdateGameTime();
 }
 
@@ -84,22 +92,71 @@ void AMarsGameStateBase::UpdateMonth()
 
 void AMarsGameStateBase::UpdateGameTime()
 {
+	if(Player->bHasChosenFaction == false) { return; }
+	
 	// Updates set to every 5 seconds
 	if(GetWorld()->TimeSince(LastUpdateCheckTime) >= UpdateCheckFrequency && Player)
-	{		
-		if(Player->bHasChosenFaction == false) { return; }
-
-		UE_LOG(LogTemp, Warning, TEXT("UpdatePlayerFactionInfo CALLED!"));		
-
+	{	
 		// Updates the info such as treasury, manpower, political power etc. on a monthly basis
 		Player->UpdatePlayerFactionInfo();
 		
 		LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
 
 		UpdateMonth();
+		CurrentDay = 1;
 
-		/*if(!CampaignDateTimePtr) { return; } // NULL Check
-		CampaignDateTimePtr->UpdateDayOfMonth(CurrentMonth);*/
+		GetMaxDaysInMonthNum();
+
+	}
+	CalculateCurrentDay();
+}
+
+int32 AMarsGameStateBase::GetMaxDaysInMonthNum()
+{
+	if(	CurrentMonth == EMonthOfYear::January ||
+		CurrentMonth == EMonthOfYear::March ||
+		CurrentMonth == EMonthOfYear::May ||
+		CurrentMonth == EMonthOfYear::July ||
+		CurrentMonth == EMonthOfYear::August ||
+		CurrentMonth == EMonthOfYear::October ||
+		CurrentMonth == EMonthOfYear::December)
+	{
+		return MaxDaysInMonth = 31;
+	}
+	if(CurrentMonth == EMonthOfYear::February)
+	{
+		return MaxDaysInMonth = 28;
+	}
+	else
+	{
+		return MaxDaysInMonth = 30;
+	}
+}
+
+void AMarsGameStateBase::CalculateTickRate()
+{
+	CurrentTick++;
+	if(GetWorld()->TimeSince(LastTickCheck) >= 1)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Tick rate: %f"), CurrentTick);
+		TickRate = CurrentTick;		
+		CurrentTick = 0.f;
+		LastTickCheck = GetWorld()->GetTimeSeconds();
+	}
+}
+
+// BUG: Partly works, issues with months always having 30 days (apart from feb).
+// BUG: When changing speed of game, days of the month can go over 30/31.
+void AMarsGameStateBase::CalculateCurrentDay()
+{
+	const float DaysPerSecond = UpdateCheckFrequency / GetMaxDaysInMonthNum();
+
+	if(GetWorld()->TimeSince(LastDaysPerTickCheck) >= DaysPerSecond)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("CurrentDay: %d"), CurrentDay);
+		CurrentDay++;
+		
+		LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();	
 	}
 }
 
