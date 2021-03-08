@@ -102,16 +102,15 @@ void AMarsGameStateBase::UpdateGameTime()
 		
 		LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
 
-		UpdateMonth();
+		UpdateMonth();		
 		CurrentDay = 1;
-
-		GetMaxDaysInMonthNum();
-
+		CalculateMaxDaysInMonthNum();
 	}
+	
 	CalculateCurrentDay();
 }
 
-int32 AMarsGameStateBase::GetMaxDaysInMonthNum()
+int32 AMarsGameStateBase::CalculateMaxDaysInMonthNum()
 {
 	if(	CurrentMonth == EMonthOfYear::January ||
 		CurrentMonth == EMonthOfYear::March ||
@@ -121,15 +120,18 @@ int32 AMarsGameStateBase::GetMaxDaysInMonthNum()
 		CurrentMonth == EMonthOfYear::October ||
 		CurrentMonth == EMonthOfYear::December)
 	{
-		return MaxDaysInMonth = 31;
+		CurrentDay = FMath::Clamp(CurrentDay, 1, 31);
+		return 31;
 	}
 	if(CurrentMonth == EMonthOfYear::February)
 	{
-		return MaxDaysInMonth = 28;
+		CurrentDay = FMath::Clamp(CurrentDay, 1, 28);
+		return 28;
 	}
 	else
 	{
-		return MaxDaysInMonth = 30;
+		CurrentDay = FMath::Clamp(CurrentDay, 1, 30);
+		return 30;
 	}
 }
 
@@ -146,10 +148,10 @@ void AMarsGameStateBase::CalculateTickRate()
 }
 
 // BUG: Partly works, issues with months always having 30 days (apart from feb).
-// BUG: When changing speed of game, days of the month can go over 30/31.
+// BUG: When changing speed of game, days of the month don't modify their speed appropriately so we can stay on 31st for a few days before changing to next month.
 void AMarsGameStateBase::CalculateCurrentDay()
 {
-	const float DaysPerSecond = UpdateCheckFrequency / GetMaxDaysInMonthNum();
+	const float DaysPerSecond = UpdateCheckFrequency / CalculateMaxDaysInMonthNum();
 
 	if(GetWorld()->TimeSince(LastDaysPerTickCheck) >= DaysPerSecond)
 	{

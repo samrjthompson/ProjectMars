@@ -47,7 +47,7 @@ public:
 	// Tick function that manages how many seconds it takes for a month to pass - the seconds are determined by the UpdateCheckFrequency variable
 	void UpdateGameTime();
 
-	int32 GetMaxDaysInMonthNum();
+	int32 CalculateMaxDaysInMonthNum();
 
 	// Ptr to FCampaignDateTime struct
 	FCampaignDateTime* CampaignDateTime;
@@ -71,7 +71,7 @@ private:
 	int32 MonthIndex{};
 
 	// Stores the maximum number of days in a particular month
-	float MaxDaysInMonth{};
+	int32 MaxDaysInMonth{};
 
 	// Stores the current day of the month
 	int32 CurrentDay{};
