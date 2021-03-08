@@ -37,7 +37,9 @@ APlayerCameraPawn::APlayerCameraPawn()
 	bHasSetTreasury = false;
 
 	UpdateCheckFrequency = 5.f;
-	LastUpdateCheckTime = UpdateCheckFrequency;
+	LastUpdateCheckTime = 0.f;
+
+	UpdateNumber = 1;
 }
 
 void APlayerCameraPawn::SetTreasury()
@@ -116,13 +118,15 @@ void APlayerCameraPawn::PawnMovement(float DeltaTime)
 void APlayerCameraPawn::UpdatePlayerFactionInfo()
 {
 	// Updates set to every 5 seconds
-	if(GetWorld()->TimeSince(LastUpdateCheckTime) >= UpdateCheckFrequency)
+	if(GetWorld()->TimeSince(LastUpdateCheckTime) >= UpdateCheckFrequency && PlayerAssignedFaction)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("UpdatePlayerFactionInfo CALLED!"));
 		
 		UpdatePlayerIncome();
 		
 		LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
+
+		UpdateMonth();
 	}
 }
 
@@ -140,20 +144,23 @@ void APlayerCameraPawn::MoveRight(float Val)
 
 void APlayerCameraPawn::ChooseRome()
 {
+	if(bHasChosenFaction) { return; }
 	InitialisePlayerFaction(EFaction::Rome);
 }
 
 void APlayerCameraPawn::ChooseEtruria()
 {
+	if(bHasChosenFaction) { return; }
 	InitialisePlayerFaction(EFaction::Etruria);
 }
 
 void APlayerCameraPawn::ChooseCarthage()
 {
+	if(bHasChosenFaction) { return; }
 	InitialisePlayerFaction(EFaction::Carthage);
 }
 
-void APlayerCameraPawn::InitialisePlayerFaction(const EFaction Faction)
+void APlayerCameraPawn::InitialisePlayerFaction(const EFaction& Faction)
 {
 	if(bHasChosenFaction) { return; }
 	
@@ -246,4 +253,59 @@ void APlayerCameraPawn::UpdateGameSpeed(float Val)
 		
 		UE_LOG(LogTemp, Warning, TEXT("GameSpeed: %f"), Val);
 	}	
+}
+
+void APlayerCameraPawn::UpdateMonth()
+{
+	switch (UpdateNumber)
+	{
+		case 1 : CurrentMonth = EMonthOfYear::January;
+		break;
+
+		case 2 : CurrentMonth = EMonthOfYear::February;
+		break;
+
+		case 3 : CurrentMonth = EMonthOfYear::March;
+		break;
+
+		case 4 : CurrentMonth = EMonthOfYear::April;
+		break;
+
+		case 5 : CurrentMonth = EMonthOfYear::May;
+		break;
+
+		case 6 : CurrentMonth = EMonthOfYear::June;
+		break;
+
+		case 7 : CurrentMonth = EMonthOfYear::July;
+		break;
+
+		case 8 : CurrentMonth = EMonthOfYear::August;
+		break;
+		
+		case 9 : CurrentMonth = EMonthOfYear::September;
+		break;
+
+		case 10 : CurrentMonth = EMonthOfYear::October;
+		break;
+
+		case 11 : CurrentMonth = EMonthOfYear::November;
+		break;
+
+		case 12 : CurrentMonth = EMonthOfYear::December;
+		break;		
+	}
+
+	if(UpdateNumber < 13)
+	{
+		UpdateNumber++;
+	}
+	if(UpdateNumber >= 13)
+	{
+		UpdateNumber = 1;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Current Month: %d"), CurrentMonth);
+
+	// TODO: Make sur this function only fires when player has chosen a faction
 }

@@ -26,5 +26,14 @@ public:
 private:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* EconomyText{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* DayText{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* MonthText{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* YearText{ nullptr };
 	
 };

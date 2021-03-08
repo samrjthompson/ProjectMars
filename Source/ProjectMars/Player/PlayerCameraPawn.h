@@ -106,7 +106,7 @@ private:
 	void ChooseCarthage();
 
 	// Sets the player's faction 
-	void InitialisePlayerFaction(const EFaction Faction);
+	void InitialisePlayerFaction(const EFaction& Faction);
 
 	bool bHasChosenFaction;
 
@@ -138,4 +138,10 @@ private:
 	void UpdateGameSpeed(float Val);
 
 	bool bHasSetTreasury;
+
+	void UpdateMonth();
+
+	EMonthOfYear CurrentMonth;
+
+	int32 UpdateNumber;
 };

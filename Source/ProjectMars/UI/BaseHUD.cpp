@@ -28,6 +28,17 @@ void ABaseHUD::BeginPlay()
 		BaseGameplayWidget->AddToViewport();
 		UE_LOG(LogTemp, Warning, TEXT("BaseGameplayWidget is valid"));
 	}
+
+
+	// TODO: This may not work correctly, currently trying to store a list of months as enums so I can refer to them
+	for(int i = EMonth::Jan; i <= EMonth::Dec; i++)
+	{		
+		EMonth Month = static_cast<EMonth>(i);
+		MonthArray->Emplace(Month);
+		UE_LOG(LogTemp, Warning, TEXT("Month: %i"), Month);
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("MonthArray Size: %i"), MonthArray->Num());
 }
 
 FVector2D ABaseHUD::GetMonitorResolution()
@@ -87,6 +98,14 @@ void ABaseHUD::DrawPlayerTreasury()
 	if(BaseGameplayWidget && Player)
 	{
 		BaseGameplayWidget->EconomyText->SetText(FText::FromString(FString::SanitizeFloat(Player->PlayerEconomy.Treasury)));
+	}
+}
+
+void ABaseHUD::DrawDate()
+{	
+	if(BaseGameplayWidget && Player)
+	{
+		
 	}
 }
 
