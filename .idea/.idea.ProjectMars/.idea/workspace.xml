@@ -5,17 +5,7 @@
     <projectFile>Intermediate/ProjectFiles/UE4.vcxproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Removed TODO">
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/TimeInGame.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/TimeInGame.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.h" afterDir="false" />
-    </list>
+    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Removed TODO" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,15 +22,16 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/CoreUObject/Public/UObject/UObjectBase.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/Misc/DateTime.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/Engine/EngineTypes.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/HAL/LowLevelMemTracker.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/CoreMinimal.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/GameFramework/HUD.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/UObject/NameTypes.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/Math/Color.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/CoreUObject/Public/UObject/Object.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/CoreUObject/Public/UObject/UObjectBaseUtility.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/GameFramework/PlayerController.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/Misc/DateTime.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/Engine/EngineTypes.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/Math/Color.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/Components/InputComponent.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
