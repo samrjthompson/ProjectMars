@@ -9,6 +9,7 @@
 #include "ProjectMars/Factions/Hellenic/EtruriaFaction.h"
 #include "ProjectMars/Factions/Hellenic/RomeFaction.h"
 #include "ProjectMars/Factions/Punic/CarthageFaction.h"
+#include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/UI/BaseHUD.h"
 #include "ProjectMars/Framework/TimeInGame.h"
 
@@ -67,6 +68,8 @@ void APlayerCameraPawn::SetTreasury()
 void APlayerCameraPawn::BeginPlay()
 {
 	Super::BeginPlay();
+
+	InitialiseGameStateRefs();
 	
 	BasePlayerController = Cast<ABasePlayerController>(GetController());
 	if(BasePlayerController)
@@ -76,6 +79,20 @@ void APlayerCameraPawn::BeginPlay()
 	if(!BasePlayerController)
 	{
 		UE_LOG(LogTemp, Error, TEXT("BasePlayerController is nullptr - APlayerCameraPawn::BeginPlay"));
+	}
+}
+
+void APlayerCameraPawn::InitialiseGameStateRefs()
+{
+	MarsGameStateBase = Cast<AMarsGameStateBase>(GetWorld()->GetGameState());
+
+	if(MarsGameStateBase)
+	{
+		MarsGameStateBase->InitialiseReferences(this);
+	}
+	if(!MarsGameStateBase)
+	{
+		UE_LOG(LogTemp, Error, TEXT("MarsGameStateBase is NULL!"))
 	}
 }
 

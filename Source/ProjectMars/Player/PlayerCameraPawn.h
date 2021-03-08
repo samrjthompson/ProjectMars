@@ -78,6 +78,12 @@ protected:
 	FBaseFactionData* BaseFactionData{ nullptr };
 	FFactionEconomics* FactionEconomics{ nullptr };
 
+	UPROPERTY()
+	class AMarsGameStateBase* MarsGameStateBase{ nullptr };
+
+	// Function that calls the InitialiseReferences function in the GameState class and passes this as the arg
+	void InitialiseGameStateRefs();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
