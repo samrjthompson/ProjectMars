@@ -5,10 +5,9 @@
     <projectFile>Intermediate/ProjectFiles/UE4.vcxproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Implementing passage of the days of the month">
+    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Clamped day of month to correct amount of days for respective month">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -456,7 +455,7 @@
       <workItem from="1615046731448" duration="8295000" />
       <workItem from="1615132382546" duration="5966000" />
       <workItem from="1615142127455" duration="2364000" />
-      <workItem from="1615205554385" duration="15893000" />
+      <workItem from="1615205554385" duration="16530000" />
     </task>
     <task id="LOCAL-00005" summary="Trialing structs for data about factions">
       <created>1614902585052</created>
@@ -549,7 +548,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615223125008</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Clamped day of month to correct amount of days for respective month">
+      <created>1615224188286</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1615224188286</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -587,6 +593,7 @@
     <MESSAGE value="Initialised refs in GameState" />
     <MESSAGE value="Refactored code so that time is managed by the game state rather than the player" />
     <MESSAGE value="Implementing passage of the days of the month" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementing passage of the days of the month" />
+    <MESSAGE value="Clamped day of month to correct amount of days for respective month" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clamped day of month to correct amount of days for respective month" />
   </component>
 </project>

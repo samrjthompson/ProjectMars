@@ -14,6 +14,7 @@ AMarsGameStateBase::AMarsGameStateBase()
 	UpdateCheckFrequency = 5.f;
 	LastUpdateCheckTime = 0.f;
 
+	MonthIndex = 1;
 	CurrentDay = 1;
 	CurrentTick = 0;
 	LastTickCheck = 0;
@@ -95,18 +96,19 @@ void AMarsGameStateBase::UpdateGameTime()
 	if(Player->bHasChosenFaction == false) { return; }
 	
 	// Updates set to every 5 seconds
-	if(GetWorld()->TimeSince(LastUpdateCheckTime) >= UpdateCheckFrequency && Player)
+	if(CurrentDay == CalculateMaxDaysInMonthNum() && Player)
 	{	
 		// Updates the info such as treasury, manpower, political power etc. on a monthly basis
 		Player->UpdatePlayerFactionInfo();
 		
 		LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
 
+		// BUG: Game not starting on correct month.
 		UpdateMonth();		
 		CurrentDay = 1;
 		CalculateMaxDaysInMonthNum();
 	}
-	
+
 	CalculateCurrentDay();
 }
 
@@ -155,8 +157,9 @@ void AMarsGameStateBase::CalculateCurrentDay()
 
 	if(GetWorld()->TimeSince(LastDaysPerTickCheck) >= DaysPerSecond)
 	{
+		// BUG: Counter misses out 1 day of the month - the 1st or the last depending on where I put this UE_LOG
 		UE_LOG(LogTemp, Warning, TEXT("CurrentDay: %d"), CurrentDay);
-		CurrentDay++;
+		++CurrentDay;
 		
 		LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();	
 	}
