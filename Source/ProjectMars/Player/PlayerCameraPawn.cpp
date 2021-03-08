@@ -10,6 +10,7 @@
 #include "ProjectMars/Factions/Hellenic/RomeFaction.h"
 #include "ProjectMars/Factions/Punic/CarthageFaction.h"
 #include "ProjectMars/UI/BaseHUD.h"
+#include "ProjectMars/Framework/TimeInGame.h"
 
 
 // Sets default values
@@ -39,7 +40,11 @@ APlayerCameraPawn::APlayerCameraPawn()
 	UpdateCheckFrequency = 5.f;
 	LastUpdateCheckTime = 0.f;
 
-	UpdateNumber = 1;
+	MonthIndex = 1;
+
+	// TIME
+	FCampaignDateTime Obj;
+	CampaignDateTimePtr = &Obj;
 }
 
 void APlayerCameraPawn::SetTreasury()
@@ -118,7 +123,7 @@ void APlayerCameraPawn::PawnMovement(float DeltaTime)
 void APlayerCameraPawn::UpdatePlayerFactionInfo()
 {
 	// Updates set to every 5 seconds
-	if(GetWorld()->TimeSince(LastUpdateCheckTime) >= UpdateCheckFrequency && PlayerAssignedFaction)
+	if(GetWorld()->TimeSince(LastUpdateCheckTime) >= UpdateCheckFrequency && bHasChosenFaction)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("UpdatePlayerFactionInfo CALLED!"));
 		
@@ -127,6 +132,9 @@ void APlayerCameraPawn::UpdatePlayerFactionInfo()
 		LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
 
 		UpdateMonth();
+
+		/*if(!CampaignDateTimePtr) { return; } // NULL Check
+		CampaignDateTimePtr->UpdateDayOfMonth(CurrentMonth);*/
 	}
 }
 
@@ -189,6 +197,7 @@ void APlayerCameraPawn::InitialisePlayerFaction(const EFaction& Faction)
 		FactionEconomics = &PlayerAssignedFaction->GetRefToEconomicsData();
 
 		bHasChosenFaction = true;
+		LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
 	}
 	if(!PlayerAssignedFaction)
 	{
@@ -257,7 +266,7 @@ void APlayerCameraPawn::UpdateGameSpeed(float Val)
 
 void APlayerCameraPawn::UpdateMonth()
 {
-	switch (UpdateNumber)
+	switch (MonthIndex)
 	{
 		case 1 : CurrentMonth = EMonthOfYear::January;
 		break;
@@ -296,13 +305,13 @@ void APlayerCameraPawn::UpdateMonth()
 		break;		
 	}
 
-	if(UpdateNumber < 13)
+	if(MonthIndex < 13)
 	{
-		UpdateNumber++;
+		MonthIndex++;
 	}
-	if(UpdateNumber >= 13)
+	if(MonthIndex >= 13)
 	{
-		UpdateNumber = 1;
+		MonthIndex = 1;
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("Current Month: %d"), CurrentMonth);

@@ -9,6 +9,7 @@
 enum class EFaction : uint8;
 struct FBaseFactionData;
 struct FFactionEconomics;
+struct FCampaignDateTime;
 
 USTRUCT()
 struct FPlayerEconomy
@@ -129,6 +130,8 @@ private:
 
 /* --- TIME --- */
 
+	FCampaignDateTime* CampaignDateTimePtr;
+	
 	// The last time an update occured in seconds
 	float LastUpdateCheckTime;
 
@@ -143,5 +146,5 @@ private:
 
 	EMonthOfYear CurrentMonth;
 
-	int32 UpdateNumber;
+	int32 MonthIndex;
 };

@@ -8,24 +8,7 @@
 
 #include "BaseHUD.generated.h"
 
-UENUM()
-enum EMonth
-{
-	Jan = 1,
-	Feb = 2,
-	Mar = 3,
-	Apr = 4,
-	May = 5,
-	Jun = 6,
-	Jul = 7,
-	Aug = 8,
-	Sept = 9,
-	Oct = 10,
-	Nov = 11,
-	Dec = 12
-};
-
-enum EMonth;
+enum class EMonthOfYear;
 
 UCLASS()
 class PROJECTMARS_API ABaseHUD : public AHUD
@@ -82,6 +65,4 @@ public:
 
 	void DrawDate();
 
-	// Array to store Month enums
-	TArray<EMonth> MonthArray[12];
 };

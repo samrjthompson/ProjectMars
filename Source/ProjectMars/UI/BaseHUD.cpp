@@ -30,15 +30,15 @@ void ABaseHUD::BeginPlay()
 	}
 
 
-	// TODO: This may not work correctly, currently trying to store a list of months as enums so I can refer to them
-	for(int i = EMonth::Jan; i <= EMonth::Dec; i++)
+	/*// TODO: This may not work correctly, currently trying to store a list of months as enums so I can refer to them
+	for(int i = EMonthOfYear::January; i <= 12; i++)
 	{		
-		EMonth Month = static_cast<EMonth>(i);
+		EMonthOfYear Month = static_cast<EMonthOfYear>(i);
 		MonthArray->Emplace(Month);
 		UE_LOG(LogTemp, Warning, TEXT("Month: %i"), Month);
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("MonthArray Size: %i"), MonthArray->Num());
+	UE_LOG(LogTemp, Warning, TEXT("MonthArray Size: %i"), MonthArray->Num());*/
 }
 
 FVector2D ABaseHUD::GetMonitorResolution()
