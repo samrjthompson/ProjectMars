@@ -306,6 +306,4 @@ void APlayerCameraPawn::UpdateMonth()
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("Current Month: %d"), CurrentMonth);
-
-	// TODO: Make sur this function only fires when player has chosen a faction
 }
