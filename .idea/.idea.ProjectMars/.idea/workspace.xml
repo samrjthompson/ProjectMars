@@ -6,12 +6,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Started to make it so that the month ticks up when the day of the month hits the last day - few bugs to iron out.">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultInput.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultInput.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" afterDir="false" />
     </list>
@@ -82,10 +76,10 @@
       <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1pIql2f20KP7AmgWxuOUIYPC8O3" />

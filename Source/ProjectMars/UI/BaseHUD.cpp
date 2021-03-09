@@ -31,6 +31,21 @@ void ABaseHUD::BeginPlay()
 	}
 }
 
+void ABaseHUD::DrawHUD()
+{
+	Super::DrawHUD();
+
+	if(bHasStartedSelecting)
+	{
+		CurrentSelectionPoint = GetMousePosition2D();
+		DrawSelectionBox();
+	}
+
+	DrawPlayerTreasury();
+
+	DrawDate();
+}
+
 FVector2D ABaseHUD::GetMonitorResolution()
 {
 	FVector2D MonitorRes{};
@@ -99,19 +114,4 @@ void ABaseHUD::DrawDate()
 		BaseGameplayWidget->MonthText->SetText(FText::FromString(Player->MarsGameStateBase->GetCurrentMonthName()));
 		BaseGameplayWidget->YearText->SetText(FText::AsNumber(Player->MarsGameStateBase->GetCurrentYear()));
 	}
-}
-
-void ABaseHUD::DrawHUD()
-{
-	Super::DrawHUD();
-
-	if(bHasStartedSelecting)
-	{
-		CurrentSelectionPoint = GetMousePosition2D();
-		DrawSelectionBox();
-	}
-
-	DrawPlayerTreasury();
-
-	DrawDate();
 }

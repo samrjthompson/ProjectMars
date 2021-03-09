@@ -80,6 +80,14 @@ void APlayerCameraPawn::BeginPlay()
 	}
 }
 
+// Called every frame
+void APlayerCameraPawn::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	PawnMovement(DeltaTime);
+}
+
 void APlayerCameraPawn::InitialiseGameStateRefs()
 {
 	MarsGameStateBase = Cast<AMarsGameStateBase>(GetWorld()->GetGameState());
@@ -92,14 +100,6 @@ void APlayerCameraPawn::InitialiseGameStateRefs()
 	{
 		UE_LOG(LogTemp, Error, TEXT("MarsGameStateBase is NULL!"))
 	}
-}
-
-// Called every frame
-void APlayerCameraPawn::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	PawnMovement(DeltaTime);
 }
 
 // Called to bind functionality to input
