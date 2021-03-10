@@ -64,5 +64,18 @@ public:
 /* --- TIME ---*/
 
 	void DrawDate();
+	FString DateSuffix{};
 
+/* --- FPS --- */
+	void DrawFPS();
+	int32 FPSNum{};
+
+/* --- CHOOSE FACTION LEVEL --- */
+	void DrawChooseFaction();
+
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<class UChooseFactionWidget> ChooseFactionWidgetClass;
+
+	UPROPERTY()
+	class UChooseFactionWidget* ChooseFactionWidget{ nullptr };
 };

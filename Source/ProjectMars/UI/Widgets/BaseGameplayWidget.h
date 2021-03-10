@@ -35,5 +35,10 @@ private:
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* YearText{ nullptr };
-	
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* DateSuffixText{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* FPSText{ nullptr };	
 };

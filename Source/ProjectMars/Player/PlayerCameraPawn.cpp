@@ -5,6 +5,7 @@
 
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Factions/FactionBase.h"
 #include "ProjectMars/Factions/Hellenic/EtruriaFaction.h"
@@ -68,6 +69,9 @@ void APlayerCameraPawn::BeginPlay()
 	Super::BeginPlay();
 	
 	InitialiseGameStateRefs();
+
+	/*UGameplayStatics::OpenLevel(GetWorld(), "ChooseFaction");
+	CurrentLevel = GetWorld()->GetMapName();*/
 	
 	BasePlayerController = Cast<ABasePlayerController>(GetController());
 	if(BasePlayerController)

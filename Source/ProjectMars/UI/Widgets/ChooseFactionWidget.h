@@ -12,6 +12,24 @@
 UCLASS()
 class PROJECTMARS_API UChooseFactionWidget : public UUserWidget
 {
+	friend class ABaseHUD;
+	
 	GENERATED_BODY()
+
+public:
+	UChooseFactionWidget(const FObjectInitializer& ObjectInitializer);
+
+	virtual void NativeConstruct() override;
+
+	virtual void NativeOnInitialized() override;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UButton* EtruriaButton{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UButton* RomeButton{ nullptr };
+
+	UFUNCTION()
+	void CloseWidget();
 	
 };

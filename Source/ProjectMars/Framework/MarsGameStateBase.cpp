@@ -26,6 +26,8 @@ AMarsGameStateBase::AMarsGameStateBase()
 
 	// Arbitrary start date at the moment, should change this if suits the historical background
 	StartYear = 304;
+
+	CurrentYear = FMath::Clamp(CurrentYear, 1, StartYear);
 	CurrentYear = StartYear;
 }
 
@@ -33,6 +35,7 @@ AMarsGameStateBase::AMarsGameStateBase()
 void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
+
 	LastTickCheck = GetWorld()->GetTimeSeconds();
 	LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();	
 }
@@ -99,17 +102,13 @@ void AMarsGameStateBase::UpdateMonth()
 
 void AMarsGameStateBase::UpdateGameTime()
 {
-	if(PlayerController->bGameIsPaused == true)
+	// We don't want the GameTime to update if the player hasn't chosen a faction yet
+	if(Player->bHasChosenFaction == false) { return; }
+
+	if (PlayerController->bGameIsPaused == true)
 	{
-		GEngine->AddOnScreenDebugMessage(1, 2, FColor::Orange, "Game is paused");
 		return;
 	}
-	else
-	{
-		GEngine->AddOnScreenDebugMessage(1, 2, FColor::Green, "Game is resumed");
-	}
-	
-	if(Player->bHasChosenFaction == false) { return; }
 	
 	// Updates set to every 5 seconds
 	if(CurrentDay == CalculateMaxDaysInMonthNum() + 1 || !bGameHasStarted)
@@ -129,9 +128,16 @@ void AMarsGameStateBase::UpdateGameTime()
 		MonthsInGame++;
 		CurrentDay = 1;
 		CalculateMaxDaysInMonthNum();
-		if(CurrentDay == 1 && CurrentMonth == EMonthOfYear::January)
+
+		if(CurrentDay == 1 && CurrentMonth == EMonthOfYear::January && CurrentYear > 1)
 		{
 			CurrentYear--;
+			BaseHUD->DateSuffix = "BCE";
+		}
+		if(CurrentDay == 1 && CurrentMonth == EMonthOfYear::January && CurrentYear <= 1)
+		{
+			CurrentYear++;
+			BaseHUD->DateSuffix = "CE";
 		}
 
 		// Initiate counting of days
@@ -210,6 +216,7 @@ void AMarsGameStateBase::CalculateTickRate()
 		TickRate = CurrentTick;		
 		CurrentTick = 0.f;
 		LastTickCheck = GetWorld()->GetTimeSeconds();
+		BaseHUD->FPSNum = FMath::FloorToInt(TickRate);
 	}
 }
 

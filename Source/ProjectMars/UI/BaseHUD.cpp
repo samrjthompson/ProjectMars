@@ -4,10 +4,12 @@
 #include "ProjectMars/UI/BaseHUD.h"
 
 #include "Engine.h"
+#include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/Player/PlayerCameraPawn.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
+#include "Widgets/ChooseFactionWidget.h"
 
 #define OUT
 
@@ -15,6 +17,8 @@ ABaseHUD::ABaseHUD()
 {
 	bHasStartedSelecting = false;
 	SelectionBoxColor = FLinearColor(0.f, 1.f, 0.2f, 0.15f);
+
+	DateSuffix = "BCE";
 }
 
 void ABaseHUD::BeginPlay()
@@ -24,10 +28,15 @@ void ABaseHUD::BeginPlay()
 	Player = Cast<APlayerCameraPawn>(GetOwningPlayerController()->GetPawn());
 
 	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(GetOwningPlayerController(), BaseGameplayWidgetClass);
-	if(BaseGameplayWidget)
+	/*if(BaseGameplayWidget)
 	{
 		BaseGameplayWidget->AddToViewport();
-		UE_LOG(LogTemp, Warning, TEXT("BaseGameplayWidget is valid"));
+	}*/
+
+	ChooseFactionWidget = CreateWidget<UChooseFactionWidget>(GetOwningPlayerController(), ChooseFactionWidgetClass);
+	if (ChooseFactionWidget)
+	{
+		ChooseFactionWidget->AddToViewport();
 	}
 }
 
@@ -44,6 +53,8 @@ void ABaseHUD::DrawHUD()
 	DrawPlayerTreasury();
 
 	DrawDate();
+
+	DrawFPS();
 }
 
 FVector2D ABaseHUD::GetMonitorResolution()
@@ -113,5 +124,14 @@ void ABaseHUD::DrawDate()
 		BaseGameplayWidget->DayText->SetText(FText::AsNumber(Player->MarsGameStateBase->GetCurrentDay()));
 		BaseGameplayWidget->MonthText->SetText(FText::FromString(Player->MarsGameStateBase->GetCurrentMonthName()));
 		BaseGameplayWidget->YearText->SetText(FText::AsNumber(Player->MarsGameStateBase->GetCurrentYear()));
+		BaseGameplayWidget->DateSuffixText->SetText(FText::FromString(DateSuffix));
+	}
+}
+
+void ABaseHUD::DrawFPS()
+{
+	if(BaseGameplayWidget)
+	{
+		BaseGameplayWidget->FPSText->SetText(FText::AsNumber(FPSNum));
 	}
 }

@@ -66,7 +66,9 @@ public:
 
 	TSubclassOf<class URomeFaction> RomeClass;
 	
-	void SetTreasury();	
+	void SetTreasury();
+
+	FString CurrentLevel{};
 
 protected:
 	// Called when the game starts or when spawned

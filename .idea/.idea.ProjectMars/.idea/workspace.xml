@@ -5,10 +5,7 @@
     <projectFile>Intermediate/ProjectFiles/UE4.vcxproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Started to make it so that the month ticks up when the day of the month hits the last day - few bugs to iron out.">
-      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Refactored code to make tick come after the begin play function so it is easier to find." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,6 +34,7 @@
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/CoreMinimal.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/GameFramework/HUD.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/UObject/NameTypes.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/Unreal/Unreal Projects/ProjectMars/Source/ProjectMars/UI/BaseHUD.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/CoreUObject/Public/UObject/Object.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/CoreUObject/Public/UObject/UObjectBaseUtility.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/GameFramework/PlayerController.h" root0="FORCE_HIGHLIGHTING" />
@@ -77,9 +75,9 @@
       <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.h" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Controllers/BasePlayerController.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" />
-      <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" />
       <option value="$PROJECT_DIR$/Source/ProjectMars/Player/PlayerCameraPawn.cpp" />
+      <option value="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1pIql2f20KP7AmgWxuOUIYPC8O3" />
@@ -570,7 +568,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615224857727</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Refactored code to make tick come after the begin play function so it is easier to find.">
+      <created>1615248260641</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1615248260641</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -610,6 +615,7 @@
     <MESSAGE value="Implementing passage of the days of the month" />
     <MESSAGE value="Clamped day of month to correct amount of days for respective month" />
     <MESSAGE value="Started to make it so that the month ticks up when the day of the month hits the last day - few bugs to iron out." />
-    <option name="LAST_COMMIT_MESSAGE" value="Started to make it so that the month ticks up when the day of the month hits the last day - few bugs to iron out." />
+    <MESSAGE value="Refactored code to make tick come after the begin play function so it is easier to find." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored code to make tick come after the begin play function so it is easier to find." />
   </component>
 </project>
