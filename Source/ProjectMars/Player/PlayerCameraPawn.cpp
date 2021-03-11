@@ -200,6 +200,7 @@ void APlayerCameraPawn::InitialiseHUD(class UFactionBase* FactionBase)
 	}
 }
 
+// TODO: Implement natural system of updating various revenue streams
 void APlayerCameraPawn::UpdatePlayerIncome()
 {
 	if(PlayerAssignedFaction && !bHasSetTreasury)
