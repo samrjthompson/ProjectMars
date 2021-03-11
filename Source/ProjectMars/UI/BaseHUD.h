@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
-#include "ProjectMars/Factions/FactionBase.h"
-
 #include "BaseHUD.generated.h"
 
 enum class EMonthOfYear;
+
+class UFactionBase;
 
 UCLASS()
 class PROJECTMARS_API ABaseHUD : public AHUD
@@ -71,11 +71,14 @@ public:
 	int32 FPSNum{};
 
 /* --- CHOOSE FACTION LEVEL --- */
-	void DrawChooseFaction();
+	// void DrawChooseFaction();
 
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TSubclassOf<class UChooseFactionWidget> ChooseFactionWidgetClass;
 
 	UPROPERTY()
 	class UChooseFactionWidget* ChooseFactionWidget{ nullptr };
+
+	UFUNCTION()
+	void DrawMainGameUI();
 };

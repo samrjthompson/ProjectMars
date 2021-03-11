@@ -37,6 +37,7 @@ void ABaseHUD::BeginPlay()
 	if (ChooseFactionWidget)
 	{
 		ChooseFactionWidget->AddToViewport();
+		ChooseFactionWidget->OnChooseFaction.AddDynamic(this, &ABaseHUD::ABaseHUD::DrawMainGameUI);
 	}
 }
 
@@ -51,9 +52,7 @@ void ABaseHUD::DrawHUD()
 	}
 
 	DrawPlayerTreasury();
-
 	DrawDate();
-
 	DrawFPS();
 }
 
@@ -133,5 +132,18 @@ void ABaseHUD::DrawFPS()
 	if(BaseGameplayWidget)
 	{
 		BaseGameplayWidget->FPSText->SetText(FText::AsNumber(FPSNum));
+	}
+}
+
+// TODO: Currently set up so that any button we click will choose Rome - need to make out faction choice relate to the button we press
+void ABaseHUD::DrawMainGameUI()
+{
+	if(ChooseFactionWidget && BaseGameplayWidget && Player)
+	{		
+		Player->ChooseRome();
+		UE_LOG(LogTemp, Warning, TEXT("Choose Rome"));
+		
+		ChooseFactionWidget->RemoveFromParent();
+		BaseGameplayWidget->AddToViewport();
 	}
 }

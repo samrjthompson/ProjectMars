@@ -30,5 +30,5 @@ void UChooseFactionWidget::NativeOnInitialized()
 
 void UChooseFactionWidget::CloseWidget()
 {
-	this->RemoveFromParent();
+	OnChooseFaction.Broadcast();
 }

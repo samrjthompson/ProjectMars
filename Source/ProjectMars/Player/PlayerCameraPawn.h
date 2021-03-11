@@ -108,8 +108,13 @@ private:
 	void MoveForward(float Val);	
 	void MoveRight(float Val);
 
+	UFUNCTION()
 	void ChooseRome();
+	
+	UFUNCTION()
 	void ChooseEtruria();
+
+	UFUNCTION()
 	void ChooseCarthage();
 
 	// Sets the player's faction 

@@ -5,7 +5,6 @@
 
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Kismet/GameplayStatics.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Factions/FactionBase.h"
 #include "ProjectMars/Factions/Hellenic/EtruriaFaction.h"
@@ -103,28 +102,6 @@ void APlayerCameraPawn::InitialiseGameStateRefs()
 	if(!MarsGameStateBase)
 	{
 		UE_LOG(LogTemp, Error, TEXT("MarsGameStateBase is NULL!"))
-	}
-}
-
-// Called to bind functionality to input
-void APlayerCameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	if(PlayerInputComponent)
-	{
-		// Movement
-		PlayerInputComponent->BindAxis("MoveForward", this, &APlayerCameraPawn::MoveForward);
-		PlayerInputComponent->BindAxis("MoveRight", this, &APlayerCameraPawn::MoveRight);
-
-		PlayerInputComponent->BindAction("Rome", IE_Pressed, this, &APlayerCameraPawn::ChooseRome);
-		PlayerInputComponent->BindAction("Etruria", IE_Pressed, this, &APlayerCameraPawn::ChooseEtruria);
-		PlayerInputComponent->BindAction("Carthage", IE_Pressed, this, &APlayerCameraPawn::ChooseCarthage);
-
-		PlayerInputComponent->BindAction("Money", IE_Pressed, this, &APlayerCameraPawn::AddMoney);
-
-		// Game Speed
-		PlayerInputComponent->BindAxis("GameSpeed", this, &APlayerCameraPawn::UpdateGameSpeed);
 	}
 }
 
@@ -269,4 +246,26 @@ void APlayerCameraPawn::UpdateGameSpeed(float Val)
 		
 		UE_LOG(LogTemp, Warning, TEXT("GameSpeed: %f"), Val);
 	}	
+}
+
+// Called to bind functionality to input
+void APlayerCameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	if (PlayerInputComponent)
+	{
+		// Movement
+		PlayerInputComponent->BindAxis("MoveForward", this, &APlayerCameraPawn::MoveForward);
+		PlayerInputComponent->BindAxis("MoveRight", this, &APlayerCameraPawn::MoveRight);
+
+		PlayerInputComponent->BindAction("Rome", IE_Pressed, this, &APlayerCameraPawn::ChooseRome);
+		PlayerInputComponent->BindAction("Etruria", IE_Pressed, this, &APlayerCameraPawn::ChooseEtruria);
+		PlayerInputComponent->BindAction("Carthage", IE_Pressed, this, &APlayerCameraPawn::ChooseCarthage);
+
+		PlayerInputComponent->BindAction("Money", IE_Pressed, this, &APlayerCameraPawn::AddMoney);
+
+		// Game Speed
+		PlayerInputComponent->BindAxis("GameSpeed", this, &APlayerCameraPawn::UpdateGameSpeed);
+	}
 }

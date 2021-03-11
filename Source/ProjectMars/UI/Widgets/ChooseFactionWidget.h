@@ -6,9 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "ChooseFactionWidget.generated.h"
 
-/**
- * 
- */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnChooseFaction);
+
 UCLASS()
 class PROJECTMARS_API UChooseFactionWidget : public UUserWidget
 {
@@ -31,5 +30,8 @@ public:
 
 	UFUNCTION()
 	void CloseWidget();
+
+	UPROPERTY()
+	FOnChooseFaction OnChooseFaction;
 	
 };
