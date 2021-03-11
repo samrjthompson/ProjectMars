@@ -5,5 +5,5 @@
 
 UItalicCultureGroup::UItalicCultureGroup()
 {
-	
+	this->CultureGroup = ECultureGroup::Italic;
 }

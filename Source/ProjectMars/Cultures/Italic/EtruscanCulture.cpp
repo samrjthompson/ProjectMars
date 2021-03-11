@@ -5,5 +5,5 @@
 
 UEtruscanCulture::UEtruscanCulture()
 {
-	
+	this->Culture = ECulture::Etruscan;
 }

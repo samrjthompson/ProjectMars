@@ -6,12 +6,13 @@
 #include "UObject/NoExportTypes.h"
 #include "PopulationBase.generated.h"
 
-/**
- * 
- */
+
+
 UCLASS()
 class PROJECTMARS_API UPopulationBase : public UObject
 {
 	GENERATED_BODY()
+
+	UPopulationBase();
 	
 };

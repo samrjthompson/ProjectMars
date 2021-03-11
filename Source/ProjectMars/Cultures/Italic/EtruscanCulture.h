@@ -15,5 +15,6 @@ class PROJECTMARS_API UEtruscanCulture : public UItalicCultureGroup
 	GENERATED_BODY()
 public:
 	UEtruscanCulture();
-	
+
+	ECulture Culture;
 };

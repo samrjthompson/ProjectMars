@@ -12,7 +12,59 @@ enum class ECultureGroup : uint8;
 enum class ECulture : uint8;
 
 struct FBaseFactionData;
+struct FPopulation;
 
+
+/*** CULTURE ***/
+
+
+
+/*** POPULATION ***/
+UENUM()
+enum class EPopType
+{
+	Noble,
+	Citizen,
+	Freeman,
+	Tribesman,
+	Slave
+};
+
+USTRUCT()
+struct FPopulation
+{
+	GENERATED_BODY()
+
+	FPopulation();
+
+	// General
+	int32 TotalPopulation{};
+	int32 TotalNoblePopulation{};
+	int32 TotalCitizenPopulation{};
+	int32 TotalFreemanPopulation{};
+	int32 TotalTribesmanPopulation{};
+	int32 TotalSlavePopulation{};
+
+	// Growth
+	float TotalGrowth{};
+	float TotalShrink{};
+	float NetGrowth{};
+
+	float NobleGrowth{};
+	float CitizenGrowth{};
+	float FreemanGrowth{};
+	float TribesmanGrowth{};
+	float SlaveGrowth{};
+
+	// Updates the grow as a percentage of each pop type
+	void UpdateGrowthPerMonth();
+
+	// Updates the total population each month after factoring in the growth that month
+	void UpdateMonthlyPopulation();
+};
+
+
+/*** FACTION ***/
 UENUM()
 enum class EFaction : uint8
 {
@@ -21,6 +73,8 @@ enum class EFaction : uint8
 	Carthage	UMETA(DisplayName = "Carthage")
 };
 
+
+/*** ECONOMY ***/
 USTRUCT()
 struct FFactionEconomics
 {
@@ -28,13 +82,13 @@ struct FFactionEconomics
 
 	FFactionEconomics()
 	{
-		StartingTreasury = 5000.00f;
+		StartingTreasury = 5000;
 		Treasury = StartingTreasury;
 	}
 
 	// Economy
-	float StartingTreasury{};
-	float Treasury{};
+	int32 StartingTreasury{};
+	int32 Treasury{};
 	float GrossIncome{};
 	float NetIncome{};
 	float Expenses{};
@@ -52,10 +106,31 @@ struct FFactionEconomics
 	float FleetMaintenance{};
 	float Wages{};
 
-	// Economic Calculations
+
+	/* --- ECONOMY --- */
+
+	// Returns the net income of a player per month
 	float GetNetIncome();
+
+	// Returns the gross income of a player per month
 	float GetGrossIncome();
+
+	// Returns the total outgoings of a player per month
 	float GetTotalOutgoings();
+
+	// Adds the net income to the player's overall treasury on a monthly basis - can be negative or positive number
+	void ApplyNetIncomeToTreasury();
+
+	// If the player's treasury is less than 0, this will be true
+	bool bHasADeficit;
+
+	// If the player's income per month is less than 0, this will be true
+	bool bHasNegativeIncome;
+
+	// TAX
+
+	void SetTaxIncome();
+	
 };
 
 USTRUCT()
@@ -70,10 +145,6 @@ struct FBaseFactionData
 
 	// Name
 	FName FactionName{};
-
-	// Economy
-	float StartingTreasury{};
-	float Treasury{};
 
 	// Population
 	int32 TotalPopulation{};
@@ -93,10 +164,7 @@ struct FBaseFactionData
 	float TotalWarExhaustion{};
 	float WarExhaustionChange{};
 	float TotalMilitaryXP{};
-	float MilitaryXPChange{};
-
-
-	
+	float MilitaryXPChange{};	
 };
 
 UCLASS()
@@ -112,8 +180,14 @@ public:
 
 	inline FName GetBaseFactionName() const { return FactionName; }
 
+	// This is a virtual function that returns a reference to an FBaseFactionData object 
 	virtual FBaseFactionData& GetRefToFactionData();
+	
+	// This is a virtual function that returns a reference to an FFactionEconomics object
 	virtual FFactionEconomics& GetRefToEconomicsData();
+
+	// This is a virtual function that returns a reference to an FPopulation object
+	virtual FPopulation& GetRefToPopulationData();
 
 protected:
 	FName FactionName{};
@@ -125,4 +199,8 @@ protected:
 	// Objects by value of faction data structs
 	FBaseFactionData BaseFactionData;
 	FFactionEconomics FactionEconomics;
+	FPopulation Population;
+
+private:
+	
 };

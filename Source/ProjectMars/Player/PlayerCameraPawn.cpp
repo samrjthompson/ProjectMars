@@ -46,22 +46,6 @@ APlayerCameraPawn::APlayerCameraPawn()
 	CampaignDateTimePtr = &Obj;
 }
 
-void APlayerCameraPawn::SetTreasury()
-{
-	if(FactionEconomics)
-	{
-		PlayerEconomy.Treasury = FactionEconomics->Treasury;
-
-		UE_LOG(LogTemp, Warning, TEXT("SetTreasury CALLED!"))
-		
-		bHasSetTreasury = true;
-	}
-	if(!FactionEconomics)
-	{
-		UE_LOG(LogTemp, Error, TEXT("FactionEconomics is NULL!"))
-	}
-}
-
 // Called when the game starts or when spawned
 void APlayerCameraPawn::BeginPlay()
 {
@@ -114,10 +98,27 @@ void APlayerCameraPawn::PawnMovement(float DeltaTime)
 	}
 }
 
+void APlayerCameraPawn::SetTreasury()
+{
+	if(FactionEconomics)
+	{
+		PlayerEconomy.Treasury = FactionEconomics->Treasury;
+
+		UE_LOG(LogTemp, Warning, TEXT("SetTreasury CALLED!"))
+		
+		bHasSetTreasury = true;
+	}
+	if(!FactionEconomics)
+	{
+		UE_LOG(LogTemp, Error, TEXT("FactionEconomics is NULL!"))
+	}
+}
+
 // Is called by the GameState class
 void APlayerCameraPawn::UpdatePlayerFactionInfo()
 {
-	UpdatePlayerIncome();	
+	UpdatePlayerIncome();
+	UpdatePlayerPopulationData();
 }
 
 void APlayerCameraPawn::MoveForward(float Val)
@@ -208,6 +209,7 @@ void APlayerCameraPawn::UpdatePlayerIncome()
 	if(PlayerAssignedFaction && bHasSetTreasury)
 	{
 		AddMoney();
+		PlayerAssignedFaction->FactionEconomics.ApplyNetIncomeToTreasury();
 		PlayerEconomy.Treasury = FactionEconomics->Treasury;
 	}
 }
@@ -248,6 +250,15 @@ void APlayerCameraPawn::UpdateGameSpeed(float Val)
 	}	
 }
 
+void APlayerCameraPawn::UpdatePlayerPopulationData()
+{
+	if(PlayerAssignedFaction)
+	{
+		FPopulation& Pop = PlayerAssignedFaction->GetRefToPopulationData();
+		Pop.UpdateMonthlyPopulation();
+	}
+}
+
 // Called to bind functionality to input
 void APlayerCameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -259,10 +270,7 @@ void APlayerCameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		PlayerInputComponent->BindAxis("MoveForward", this, &APlayerCameraPawn::MoveForward);
 		PlayerInputComponent->BindAxis("MoveRight", this, &APlayerCameraPawn::MoveRight);
 
-		PlayerInputComponent->BindAction("Rome", IE_Pressed, this, &APlayerCameraPawn::ChooseRome);
-		PlayerInputComponent->BindAction("Etruria", IE_Pressed, this, &APlayerCameraPawn::ChooseEtruria);
-		PlayerInputComponent->BindAction("Carthage", IE_Pressed, this, &APlayerCameraPawn::ChooseCarthage);
-
+		// Economy
 		PlayerInputComponent->BindAction("Money", IE_Pressed, this, &APlayerCameraPawn::AddMoney);
 
 		// Game Speed

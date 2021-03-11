@@ -3,7 +3,6 @@
 
 #include "ProjectMars/Factions/Hellenic/RomeFaction.h"
 
-#include "ProjectMars/Cultures/CultureBase.h"
 #include "ProjectMars/Cultures/Italic/ItalicCultureGroup.h"
 
 URomeFaction::URomeFaction()
@@ -17,8 +16,13 @@ URomeFaction::URomeFaction()
 	this->FactionType = EFaction::Rome;
 	this->CultureGroup = ECultureGroup::Italic;
 	this->Culture = ECulture::Roman;
-
-	RomeFactionEconomy.Wages = 150.64f;
+	
+	// Population
+	this->RomePopulation.TotalNoblePopulation = 2000;
+	this->RomePopulation.TotalCitizenPopulation = 10000;
+	this->RomePopulation.TotalFreemanPopulation = 30000;
+	this->RomePopulation.TotalTribesmanPopulation = 200;
+	this->RomePopulation.TotalSlavePopulation = 8000;
 }
 
 FBaseFactionData& URomeFaction::GetRefToFactionData()
@@ -33,4 +37,11 @@ FFactionEconomics& URomeFaction::GetRefToEconomicsData()
 	Super::GetRefToEconomicsData();
 
 	return RomeFactionEconomy;
+}
+
+FPopulation& URomeFaction::GetRefToPopulationData()
+{
+	Super::GetRefToPopulationData();
+
+	return RomePopulation;
 }

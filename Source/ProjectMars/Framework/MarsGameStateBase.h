@@ -22,7 +22,8 @@ public:
 
 	virtual void BeginPlay() override;
 
-	// Function that initialises the pointers via the player class
+	/* Function that initialises pointers by being called from the player class and having the player class 'this'
+	 * pointer being passed as the argument. */
 	void InitialiseReferences(APlayerCameraPawn* InitPlayer);
 
 protected:
@@ -68,7 +69,7 @@ public:
 protected:
 	
 private:
-	// Copy of EMonthOfYear obj so that can evaluate an if statement (i.e., if(CurrentMonth == EMonthOfYear::January) { // Do something }).
+	// EMonthOfYear obj so that we can evaluate an if statement (i.e., if(CurrentMonth == EMonthOfYear::January) { // Do something }).
 	EMonthOfYear CurrentMonth;
 
 	// Storing the month number to be used in a switch statement
@@ -82,7 +83,9 @@ private:
 	int32 PreviousDay{};
 	float DaysPerTick{};
 
+	// Calculates how many ticks per second
 	void CalculateTickRate();
+	
 	void CalculateCurrentDay();
 
 	float LastTickCheck{};

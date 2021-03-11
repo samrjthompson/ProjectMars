@@ -18,13 +18,13 @@ struct FPlayerEconomy
 
 	FPlayerEconomy()
 	{
-		StartingTreasury = 5000.00f;
+		StartingTreasury = 5000;
 		Treasury = StartingTreasury;
 	}
 
 	// Economy
-	float StartingTreasury{};
-	float Treasury{};
+	int32 StartingTreasury{};
+	int32 Treasury{};
 	float GrossIncome{};
 	float NetIncome{};
 	float Expenses{};
@@ -83,7 +83,8 @@ protected:
 	UPROPERTY()
 	class AMarsGameStateBase* MarsGameStateBase{ nullptr };
 
-	// Function that calls the InitialiseReferences function in the GameState class and passes this as the arg
+	/* Function that calls the InitialiseReferences function in the GameState class and passes 'this' as the arg
+	 * so that we can initialise a pointer to the player pointer from GameState class. */
 	void InitialiseGameStateRefs();
 
 public:	
@@ -117,7 +118,7 @@ private:
 	UFUNCTION()
 	void ChooseCarthage();
 
-	// Sets the player's faction 
+	// Sets the player's faction by creating a NewObject based off the faction that was chosen by the player
 	void InitialisePlayerFaction(const EFaction& Faction);
 
 	// Initialises a pointer (stored in the ABaseHUD class) to a faction class object
@@ -154,4 +155,10 @@ public:
 	EMonthOfYear CurrentMonth;
 
 	int32 MonthIndex;
+	
+	
+	// POPULATION
+	
+	// Updates player population data every month
+	void UpdatePlayerPopulationData();	
 };

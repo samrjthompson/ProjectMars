@@ -4,7 +4,6 @@
 #include "ProjectMars/UI/BaseHUD.h"
 
 #include "Engine.h"
-#include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/Player/PlayerCameraPawn.h"
@@ -28,16 +27,12 @@ void ABaseHUD::BeginPlay()
 	Player = Cast<APlayerCameraPawn>(GetOwningPlayerController()->GetPawn());
 
 	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(GetOwningPlayerController(), BaseGameplayWidgetClass);
-	/*if(BaseGameplayWidget)
-	{
-		BaseGameplayWidget->AddToViewport();
-	}*/
 
 	ChooseFactionWidget = CreateWidget<UChooseFactionWidget>(GetOwningPlayerController(), ChooseFactionWidgetClass);
 	if (ChooseFactionWidget)
 	{
 		ChooseFactionWidget->AddToViewport();
-		ChooseFactionWidget->OnChooseFaction.AddDynamic(this, &ABaseHUD::ABaseHUD::DrawMainGameUI);
+		ChooseFactionWidget->OnChooseFaction.AddDynamic(this, &ABaseHUD::DrawMainGameUI);
 	}
 }
 
@@ -112,7 +107,8 @@ void ABaseHUD::DrawPlayerTreasury()
 {
 	if(BaseGameplayWidget && Player)
 	{
-		BaseGameplayWidget->EconomyText->SetText(FText::FromString(FString::SanitizeFloat(Player->PlayerEconomy.Treasury)));
+		//BaseGameplayWidget->EconomyText->SetText(FText::FromString(FString::SanitizeFloat(Player->PlayerEconomy.Treasury)));
+		BaseGameplayWidget->EconomyText->SetText(FText::AsNumber(Player->PlayerEconomy.Treasury));
 	}
 }
 

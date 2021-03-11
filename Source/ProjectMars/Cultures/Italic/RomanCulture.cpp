@@ -5,5 +5,5 @@
 
 URomanCulture::URomanCulture()
 {
-	
+	this->Culture = ECulture::Roman;
 }

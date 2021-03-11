@@ -6,9 +6,14 @@
 #include "UObject/NoExportTypes.h"
 #include "ReligionBase.generated.h"
 
-/**
- * 
- */
+UENUM()
+enum class EReligion
+{
+	Hellenism,
+	Druidism,
+	Zoastrianism
+};
+
 UCLASS()
 class PROJECTMARS_API UReligionBase : public UObject
 {

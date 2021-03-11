@@ -16,6 +16,7 @@ class PROJECTMARS_API URomanCulture : public UItalicCultureGroup
 
 public:
 	URomanCulture();
-	
+
+	ECulture Culture;
 	
 };

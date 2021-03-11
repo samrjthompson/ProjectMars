@@ -6,12 +6,6 @@
 #include "ProjectMars/Cultures/CultureBase.h"
 #include "ItalicCultureGroup.generated.h"
 
-UENUM()
-enum class ECulture : uint8
-{
-	Roman UMETA(DisplayName = "Roman"),
-	Etruscan UMETA(DisplayName = "Etruscan")
-};
 
 UCLASS()
 class PROJECTMARS_API UItalicCultureGroup : public UCultureBase
@@ -20,5 +14,7 @@ class PROJECTMARS_API UItalicCultureGroup : public UCultureBase
 
 public:
 	UItalicCultureGroup();
+
+	ECultureGroup CultureGroup;
 	
 };
