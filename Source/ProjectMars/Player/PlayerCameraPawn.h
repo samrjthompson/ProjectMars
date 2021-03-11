@@ -74,7 +74,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// Cache a ref to FPlayerEconomy
 	FPlayerEconomy PlayerEconomy;
 		
 	FBaseFactionData* BaseFactionData{ nullptr };
@@ -142,8 +141,9 @@ public:
 	void UpdatePlayerIncome();
 
 	void AddMoney();
+	
 
-/* --- TIME --- */
+	// TIME
 
 	FCampaignDateTime* CampaignDateTimePtr;
 	

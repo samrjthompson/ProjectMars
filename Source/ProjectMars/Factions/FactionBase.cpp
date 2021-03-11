@@ -54,7 +54,19 @@ void FPopulation::UpdateMonthlyPopulation()
 		TotalSlavePopulation;
 
 	UE_LOG(LogTemp, Warning, TEXT("Post-Population: %d"), TotalPopulation);
-	// GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Orange, TEXT("Population: %d"), TotalPopulation);
+}
+
+FFactionEconomics::FFactionEconomics()
+{
+	StartingTreasury = 5000;
+	Treasury = StartingTreasury;
+
+	bHasADeficit = false;
+	bHasNegativeIncome = false;
+
+	NetIncome = 0.f;
+	GrossIncome = 0.f;
+	Expenses = 0.f;
 }
 
 float FFactionEconomics::GetNetIncome()
@@ -77,6 +89,12 @@ float FFactionEconomics::GetNetIncome()
 
 float FFactionEconomics::GetGrossIncome()
 {
+	/* Because the gross income changes and is unique to the month in which it is affecting the treasury, we want
+	 * to reset the gross income to 0 each month and then update it again. Otherwise, GrossIncome will be added
+	 * on top of itself each month and affect net income accordingly. */
+	
+	GrossIncome = 0.f;
+	
 	GrossIncome += TaxIncome;
 	GrossIncome += TotalValueOfExports;
 	GrossIncome += TotalValueOfImports;
@@ -88,6 +106,8 @@ float FFactionEconomics::GetGrossIncome()
 
 float FFactionEconomics::GetTotalOutgoings()
 {
+	Expenses = 0.f;
+	
 	Expenses += Wages;
 	Expenses += ArmyMaintenance;
 	Expenses += FleetMaintenance;

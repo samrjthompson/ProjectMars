@@ -23,6 +23,13 @@ URomeFaction::URomeFaction()
 	this->RomePopulation.TotalFreemanPopulation = 30000;
 	this->RomePopulation.TotalTribesmanPopulation = 200;
 	this->RomePopulation.TotalSlavePopulation = 8000;
+
+	// Economy
+	this->RomeFactionEconomy.TaxIncome = 24.6f;
+	this->RomeFactionEconomy.TotalValueOfExports = 68.2f;
+	this->RomeFactionEconomy.TotalValueOfImports = 34.2f;
+	this->RomeFactionEconomy.LootingIncome = 0.f;
+	this->RomeFactionEconomy.TributeIncome = 3.4f;
 }
 
 FBaseFactionData& URomeFaction::GetRefToFactionData()

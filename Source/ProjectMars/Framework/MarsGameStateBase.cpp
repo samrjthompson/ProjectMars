@@ -105,7 +105,6 @@ void AMarsGameStateBase::UpdateGameTime()
 	// We don't want the GameTime to update if the player hasn't chosen a faction yet
 	if(Player->bHasChosenFaction == false) { return; }
 
-	// If the game is paused, we want to return out of this function here
 	if (PlayerController->bGameIsPaused == true)
 	{
 		return;
@@ -161,14 +160,17 @@ int32 AMarsGameStateBase::CalculateMaxDaysInMonthNum()
 		CurrentMonth == EMonthOfYear::October ||
 		CurrentMonth == EMonthOfYear::December)
 	{
+		// CurrentDay = FMath::Clamp(CurrentDay, 1, 31);
 		return 31;
 	}
 	if(CurrentMonth == EMonthOfYear::February)
 	{
+		// CurrentDay = FMath::Clamp(CurrentDay, 1, 28);
 		return 28;
 	}
 	else
 	{
+		//CurrentDay = FMath::Clamp(CurrentDay, 1, 30);
 		return 30;
 	}
 }

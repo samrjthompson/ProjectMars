@@ -80,31 +80,36 @@ struct FFactionEconomics
 {
 	GENERATED_BODY()
 
-	FFactionEconomics()
-	{
-		StartingTreasury = 5000;
-		Treasury = StartingTreasury;
-	}
+	FFactionEconomics();
 
-	// Economy
+	// GENERAL
 	int32 StartingTreasury{};
 	int32 Treasury{};
 	float GrossIncome{};
 	float NetIncome{};
 	float Expenses{};
+
+	// TAXES
 	float TaxIncome{};
+
+	// TRADE
 	float TotalValueOfExports{};
 	float TotalValueOfImports{};
-	float LootingIncome{};
+
+	// TRIBUTES
 	float TributeIncome{};
-	float StateMaintenance{};
-	float FortMaintenance{};
 	float OutgoingTributes{};
+
+	// OTHER
+	float LootingIncome{};
+
 	
-	// Maintenance
+	// MAINTENANCE
 	float ArmyMaintenance{};
 	float FleetMaintenance{};
 	float Wages{};
+	float StateMaintenance{};
+	float FortMaintenance{};
 
 
 	/* --- ECONOMY --- */

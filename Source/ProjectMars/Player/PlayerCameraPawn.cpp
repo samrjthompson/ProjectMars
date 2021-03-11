@@ -206,11 +206,17 @@ void APlayerCameraPawn::UpdatePlayerIncome()
 	{
 		SetTreasury();
 	}
-	if(PlayerAssignedFaction && bHasSetTreasury)
+	if (PlayerAssignedFaction && bHasSetTreasury)
 	{
-		AddMoney();
-		PlayerAssignedFaction->FactionEconomics.ApplyNetIncomeToTreasury();
-		PlayerEconomy.Treasury = FactionEconomics->Treasury;
+		// AddMoney();
+
+		FFactionEconomics& Obj = PlayerAssignedFaction->GetRefToEconomicsData();
+		Obj.ApplyNetIncomeToTreasury();
+		PlayerEconomy.Treasury = Obj.Treasury;
+
+		UE_LOG(LogTemp, Warning, TEXT("Faction Gross income: %f"), Obj.GrossIncome);
+		UE_LOG(LogTemp, Warning, TEXT("Faction Outgoings: %f"), Obj.GetTotalOutgoings());
+		UE_LOG(LogTemp, Warning, TEXT("Faction Net income: %f"), Obj.NetIncome);
 	}
 }
 
@@ -233,20 +239,14 @@ void APlayerCameraPawn::UpdateGameSpeed(float Val)
 	if(Val == 1)
 	{
 		MarsGameStateBase->UpdateCheckFrequency = 5.f;
-		
-		UE_LOG(LogTemp, Warning, TEXT("GameSpeed: %f"), Val);
 	}
 	if(Val == 2)
 	{
 		MarsGameStateBase->UpdateCheckFrequency = 3.f;
-
-		UE_LOG(LogTemp, Warning, TEXT("GameSpeed: %f"), Val);
 	}
 	if(Val == 5)
 	{
 		MarsGameStateBase->UpdateCheckFrequency = 1.f;
-		
-		UE_LOG(LogTemp, Warning, TEXT("GameSpeed: %f"), Val);
 	}	
 }
 
