@@ -91,6 +91,21 @@ struct FFactionEconomics
 
 	// TAXES
 	float TaxIncome{};
+	
+	UPROPERTY(EditAnywhere, Category = "Taxes")
+	float NobleTaxRate{ 0.02f };
+	
+	UPROPERTY(EditAnywhere, Category = "Taxes")
+	float CitizenTaxRate{ 0.01f };
+	
+	UPROPERTY(EditAnywhere, Category = "Taxes")
+	float FreemanTaxRate{ 0.005f };
+	
+	UPROPERTY(EditAnywhere, Category = "Taxes")
+	float TribesmanTaxRate{ 0.005f };
+
+	// Function to calculate tax income
+	void CollectTaxes(FPopulation& Obj);
 
 	// TRADE
 	float TotalValueOfExports{};

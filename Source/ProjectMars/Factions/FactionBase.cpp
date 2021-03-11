@@ -12,13 +12,6 @@ FPopulation::FPopulation()
 	TotalTribesmanPopulation = FMath::Clamp(TotalTribesmanPopulation, 0, 50000000);
 	TotalSlavePopulation = FMath::Clamp(TotalSlavePopulation, 0, 50000000);
 
-	/*TotalNoblePopulation = 2000
-	TotalCitizenPopulation =
-	TotalFreemanPopulation =
-	TotalTribesmanPopulation =
-	TotalSlavePopulation =*/
-
-
 	NobleGrowth = 1.005;
 	CitizenGrowth = 1.005;
 	FreemanGrowth = 1.005;
@@ -67,6 +60,21 @@ FFactionEconomics::FFactionEconomics()
 	NetIncome = 0.f;
 	GrossIncome = 0.f;
 	Expenses = 0.f;
+}
+
+// TODO: Implement tax collection system
+void FFactionEconomics::CollectTaxes(FPopulation& Obj)
+{
+	const float NobleTax = Obj.TotalNoblePopulation * NobleTaxRate;
+	const float CitizenTax = Obj.TotalCitizenPopulation * CitizenTaxRate;
+	const float FreemanTax = Obj.TotalFreemanPopulation * FreemanTaxRate;
+	const float TribesmanTax = Obj.TotalTribesmanPopulation * TribesmanTaxRate;
+
+	TaxIncome =
+		NobleTax +
+		CitizenTax +
+		FreemanTax +
+		TribesmanTax;
 }
 
 float FFactionEconomics::GetNetIncome()

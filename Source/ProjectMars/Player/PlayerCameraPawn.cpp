@@ -212,12 +212,16 @@ void APlayerCameraPawn::UpdatePlayerIncome()
 		// AddMoney();
 
 		FFactionEconomics& Obj = PlayerAssignedFaction->GetRefToEconomicsData();
+		FPopulation& PopObj = PlayerAssignedFaction->GetRefToPopulationData();
+		
+		Obj.CollectTaxes(PopObj);
 		Obj.ApplyNetIncomeToTreasury();
+		
 		PlayerEconomy.Treasury = Obj.Treasury;
 
-		UE_LOG(LogTemp, Warning, TEXT("Faction Gross income: %f"), Obj.GrossIncome);
-		UE_LOG(LogTemp, Warning, TEXT("Faction Outgoings: %f"), Obj.GetTotalOutgoings());
-		UE_LOG(LogTemp, Warning, TEXT("Faction Net income: %f"), Obj.NetIncome);
+		// UE_LOG(LogTemp, Warning, TEXT("Faction Gross income: %f"), Obj.GrossIncome);
+		// UE_LOG(LogTemp, Warning, TEXT("Faction Outgoings: %f"), Obj.GetTotalOutgoings());
+		// UE_LOG(LogTemp, Warning, TEXT("Faction Net income: %f"), Obj.NetIncome);
 	}
 }
 

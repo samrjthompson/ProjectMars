@@ -24,12 +24,23 @@ URomeFaction::URomeFaction()
 	this->RomePopulation.TotalTribesmanPopulation = 200;
 	this->RomePopulation.TotalSlavePopulation = 8000;
 
-	// Economy
-	this->RomeFactionEconomy.TaxIncome = 24.6f;
+	// TODO: ECONOMY : Implement systems so economy values are not hard-coded
+	// ECONOMY // These are placeholder values to test out the functionality of economy
+	
+	// Income
+	//this->RomeFactionEconomy.TaxIncome = 24.6f;
 	this->RomeFactionEconomy.TotalValueOfExports = 68.2f;
 	this->RomeFactionEconomy.TotalValueOfImports = 34.2f;
 	this->RomeFactionEconomy.LootingIncome = 0.f;
 	this->RomeFactionEconomy.TributeIncome = 3.4f;
+
+	// Outgoings
+	this->RomeFactionEconomy.ArmyMaintenance = 134.4f;
+	this->RomeFactionEconomy.FleetMaintenance = 78.7f;
+	this->RomeFactionEconomy.FortMaintenance = 4.7f;
+	this->RomeFactionEconomy.StateMaintenance = 25.6f;
+	this->RomeFactionEconomy.Wages = 56.f;
+	this->RomeFactionEconomy.OutgoingTributes = 0.f;	
 }
 
 FBaseFactionData& URomeFaction::GetRefToFactionData()
