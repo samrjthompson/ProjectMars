@@ -17,6 +17,6 @@ class PROJECTMARS_API ARomanCulture : public AItalicCultureGroup
 public:
 	ARomanCulture();
 
-	ECulture Culture;
+	ECultureName Culture;
 	
 };

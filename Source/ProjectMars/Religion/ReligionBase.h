@@ -18,5 +18,7 @@ UCLASS()
 class PROJECTMARS_API AReligionBase : public AActor
 {
 	GENERATED_BODY()
+
+	AReligionBase();
 	
 };

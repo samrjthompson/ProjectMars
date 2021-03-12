@@ -7,7 +7,7 @@ FCultureGroup::FCultureGroup()
 {
 }
 
-FCultureData::FCultureData()
+FCulture::FCulture()
 {
 }
 

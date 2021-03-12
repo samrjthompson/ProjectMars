@@ -7,7 +7,7 @@
 #include "CultureBase.generated.h"
 
 UENUM()
-enum class ECulture : uint8
+enum class ECultureName : uint8
 {
 	Roman UMETA(DisplayName = "Roman"),
 	Etruscan UMETA(DisplayName = "Etruscan"),
@@ -33,11 +33,11 @@ struct FCultureGroup
 };
 
 USTRUCT()
-struct FCultureData
+struct FCulture
 {
 	GENERATED_BODY()
 
-	FCultureData();
+	FCulture();
 };
 
 UCLASS()

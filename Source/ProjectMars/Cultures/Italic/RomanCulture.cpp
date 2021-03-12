@@ -5,5 +5,5 @@
 
 ARomanCulture::ARomanCulture()
 {
-	this->Culture = ECulture::Roman;
+	this->Culture = ECultureName::Roman;
 }

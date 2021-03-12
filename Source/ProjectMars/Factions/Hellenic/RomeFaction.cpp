@@ -15,7 +15,7 @@ ARomeFaction::ARomeFaction()
 
 	this->FactionType = EFaction::Rome;
 	this->CultureGroup = ECultureGroup::Italic;
-	this->Culture = ECulture::Roman;
+	this->Culture = ECultureName::Roman;
 	
 	// Population
 	this->RomePopulation.TotalNoblePopulation = 2000;
@@ -64,7 +64,7 @@ FPopulation& ARomeFaction::GetRefToPopulationData()
 	return RomePopulation;
 }
 
-FCultureData& ARomeFaction::GetRefToCultureData()
+FCulture& ARomeFaction::GetRefToCultureData()
 {
 	Super::GetRefToCultureData();
 

@@ -20,12 +20,12 @@ private:
 	FBaseFactionData RomeFactionData;
 	FFactionEconomics RomeFactionEconomy;
 	FPopulation RomePopulation;
-	FCultureData RomanCultureData;
+	FCulture RomanCultureData;
 
 protected:
 	virtual FBaseFactionData& GetRefToFactionData() override;
 	virtual FFactionEconomics& GetRefToEconomicsData() override;
 	virtual FPopulation& GetRefToPopulationData() override;
 	// virtual FCultureGroup& GetRefToCultureGroup() override;
-	virtual FCultureData& GetRefToCultureData() override;
+	virtual FCulture& GetRefToCultureData() override;
 };

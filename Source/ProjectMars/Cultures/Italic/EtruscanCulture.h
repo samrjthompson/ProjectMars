@@ -16,5 +16,5 @@ class PROJECTMARS_API AEtruscanCulture : public AItalicCultureGroup
 public:
 	AEtruscanCulture();
 
-	ECulture Culture;
+	ECultureName Culture;
 };

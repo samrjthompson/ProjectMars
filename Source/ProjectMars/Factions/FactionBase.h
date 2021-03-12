@@ -13,7 +13,7 @@
 // Seem to have to forward declare the enums
 enum class EFaction : uint8;
 enum class ECultureGroup : uint8;
-enum class ECulture : uint8;
+enum class ECultureName : uint8;
 
 struct FBaseFactionData;
 struct FPopulation;
@@ -137,13 +137,13 @@ protected:
 public:
 	// This is a virtual function that returns a reference to an FCultureGroup object
 	virtual FCultureGroup& GetRefToCultureGroup();
-	virtual FCultureData& GetRefToCultureData();
+	virtual FCulture& GetRefToCultureData();
 
 private:
 
 protected:
 	ECultureGroup CultureGroup;
-	ECulture Culture;
+	ECultureName Culture;
 	FCultureGroup CultureGroupObj;
-	FCultureData CultureDataObj;
+	FCulture CultureDataObj;
 };

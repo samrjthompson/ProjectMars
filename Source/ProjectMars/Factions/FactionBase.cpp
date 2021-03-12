@@ -168,7 +168,7 @@ FCultureGroup& AFactionBase::GetRefToCultureGroup()
 	return CultureGroupObj;
 }
 
-FCultureData& AFactionBase::GetRefToCultureData()
+FCulture& AFactionBase::GetRefToCultureData()
 {
 	return CultureDataObj;
 }

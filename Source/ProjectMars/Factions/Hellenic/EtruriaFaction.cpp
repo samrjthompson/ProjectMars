@@ -13,7 +13,7 @@ AEtruriaFaction::AEtruriaFaction()
 
 	this->FactionType = EFaction::Etruria;
 	this->CultureGroup = ECultureGroup::Italic;
-	this->Culture = ECulture::Etruscan;
+	this->Culture = ECultureName::Etruscan;
 
 	// Population
 	this->Population.TotalNoblePopulation = 1500;
