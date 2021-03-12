@@ -3,7 +3,7 @@
 
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 
-#include "ProjectMars/Player/PlayerCameraPawn.h"
+#include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/UI/BaseHUD.h"
 
@@ -231,7 +231,7 @@ void AMarsGameStateBase::CalculateCurrentDay()
 	}
 }
 
-void AMarsGameStateBase::InitialiseReferences(APlayerCameraPawn* InitPlayer)
+void AMarsGameStateBase::InitialiseReferences(AProjectMarsPlayer* InitPlayer)
 {
 	Player = InitPlayer;
 	

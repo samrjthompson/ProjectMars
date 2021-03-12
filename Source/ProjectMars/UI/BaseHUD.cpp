@@ -6,7 +6,7 @@
 #include "Engine.h"
 #include "Components/TextBlock.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"
-#include "ProjectMars/Player/PlayerCameraPawn.h"
+#include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
 #include "Widgets/ChooseFactionWidget.h"
 
@@ -24,7 +24,7 @@ void ABaseHUD::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Player = Cast<APlayerCameraPawn>(GetOwningPlayerController()->GetPawn());
+	Player = Cast<AProjectMarsPlayer>(GetOwningPlayerController()->GetPawn());
 
 	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(GetOwningPlayerController(), BaseGameplayWidgetClass);
 

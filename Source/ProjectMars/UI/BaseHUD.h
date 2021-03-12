@@ -26,7 +26,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY()
-	class APlayerCameraPawn* Player{ nullptr };
+	class AProjectMarsPlayer* Player{ nullptr };
 
 public:
 	static FVector2D GetMonitorResolution();

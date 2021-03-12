@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "PlayerCameraPawn.generated.h"
+#include "ProjectMarsPlayer.generated.h"
 
 enum class EFaction : uint8;
 struct FBaseFactionData;
@@ -45,7 +45,7 @@ struct FPlayerEconomy
 };
 
 UCLASS()
-class PROJECTMARS_API APlayerCameraPawn : public APawn
+class PROJECTMARS_API AProjectMarsPlayer : public APawn
 {
 	friend class ABaseHUD;
 	
@@ -53,7 +53,7 @@ class PROJECTMARS_API APlayerCameraPawn : public APawn
 
 public:
 	// Sets default values for this pawn's properties
-	APlayerCameraPawn();
+	AProjectMarsPlayer();
 
 	UPROPERTY(EditAnywhere)
 	class USceneComponent* RootComp{ nullptr };

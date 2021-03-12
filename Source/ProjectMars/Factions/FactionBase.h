@@ -192,7 +192,7 @@ class PROJECTMARS_API UFactionBase : public UObject
 {
 	GENERATED_BODY()
 
-	friend class APlayerCameraPawn;
+	friend class AProjectMarsPlayer;
 	friend class ABaseHUD;
 
 public:

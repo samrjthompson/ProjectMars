@@ -6,7 +6,7 @@
 #include "GameFramework/GameStateBase.h"
 #include "MarsGameStateBase.generated.h"
 
-class APlayerCameraPawn;
+class AProjectMarsPlayer;
 
 enum class EMonthOfYear;
 
@@ -24,7 +24,7 @@ public:
 
 	/* Function that initialises pointers by being called from the player class and having the player class 'this'
 	 * pointer being passed as the argument. */
-	void InitialiseReferences(APlayerCameraPawn* InitPlayer);
+	void InitialiseReferences(AProjectMarsPlayer* InitPlayer);
 
 protected:
 	virtual void Tick(float DeltaSeconds) override;
@@ -34,7 +34,7 @@ private:
 	class ABasePlayerController* PlayerController{ nullptr };
 
 	UPROPERTY()
-	APlayerCameraPawn* Player{ nullptr };
+	AProjectMarsPlayer* Player{ nullptr };
 
 	UPROPERTY()
 	class ABaseHUD* BaseHUD{ nullptr };

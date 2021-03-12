@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ProjectMars/Player/PlayerCameraPawn.h"
+#include "ProjectMars/Player/ProjectMarsPlayer.h"
 
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -16,7 +16,7 @@
 
 
 // Sets default values
-APlayerCameraPawn::APlayerCameraPawn()
+AProjectMarsPlayer::AProjectMarsPlayer()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -47,7 +47,7 @@ APlayerCameraPawn::APlayerCameraPawn()
 }
 
 // Called when the game starts or when spawned
-void APlayerCameraPawn::BeginPlay()
+void AProjectMarsPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 	
@@ -63,19 +63,19 @@ void APlayerCameraPawn::BeginPlay()
 	}
 	if(!BasePlayerController)
 	{
-		UE_LOG(LogTemp, Error, TEXT("BasePlayerController is nullptr - APlayerCameraPawn::BeginPlay"));
+		UE_LOG(LogTemp, Error, TEXT("BasePlayerController is nullptr - AProjectMarsPlayer::BeginPlay"));
 	}
 }
 
 // Called every frame
-void APlayerCameraPawn::Tick(float DeltaTime)
+void AProjectMarsPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 	PawnMovement(DeltaTime);
 }
 
-void APlayerCameraPawn::InitialiseGameStateRefs()
+void AProjectMarsPlayer::InitialiseGameStateRefs()
 {
 	MarsGameStateBase = Cast<AMarsGameStateBase>(GetWorld()->GetGameState());
 
@@ -89,7 +89,7 @@ void APlayerCameraPawn::InitialiseGameStateRefs()
 	}
 }
 
-void APlayerCameraPawn::PawnMovement(float DeltaTime)
+void AProjectMarsPlayer::PawnMovement(float DeltaTime)
 {
 	if(!MovementDirection.IsZero())
 	{
@@ -98,7 +98,7 @@ void APlayerCameraPawn::PawnMovement(float DeltaTime)
 	}
 }
 
-void APlayerCameraPawn::SetTreasury()
+void AProjectMarsPlayer::SetTreasury()
 {
 	if(FactionEconomics)
 	{
@@ -115,43 +115,43 @@ void APlayerCameraPawn::SetTreasury()
 }
 
 // Is called by the GameState class
-void APlayerCameraPawn::UpdatePlayerFactionInfo()
+void AProjectMarsPlayer::UpdatePlayerFactionInfo()
 {
 	UpdatePlayerIncome();
 	UpdatePlayerPopulationData();
 }
 
-void APlayerCameraPawn::MoveForward(float Val)
+void AProjectMarsPlayer::MoveForward(float Val)
 {
 	// The FMath::Clamp helps to prevent higher speeds when pressing two keyboard keys at once
 	MovementDirection.X = FMath::Clamp(Val, -1.f, 1.f);
 }
 
-void APlayerCameraPawn::MoveRight(float Val)
+void AProjectMarsPlayer::MoveRight(float Val)
 {
 	// The FMath::Clamp helps to prevent higher speeds when pressing two keyboard keys at once
 	MovementDirection.Y = FMath::Clamp(Val, -1.f, 1.f);
 }
 
-void APlayerCameraPawn::ChooseRome()
+void AProjectMarsPlayer::ChooseRome()
 {
 	if(bHasChosenFaction) { return; }
 	InitialisePlayerFaction(EFaction::Rome);
 }
 
-void APlayerCameraPawn::ChooseEtruria()
+void AProjectMarsPlayer::ChooseEtruria()
 {
 	if(bHasChosenFaction) { return; }
 	InitialisePlayerFaction(EFaction::Etruria);
 }
 
-void APlayerCameraPawn::ChooseCarthage()
+void AProjectMarsPlayer::ChooseCarthage()
 {
 	if(bHasChosenFaction) { return; }
 	InitialisePlayerFaction(EFaction::Carthage);
 }
 
-void APlayerCameraPawn::InitialisePlayerFaction(const EFaction& Faction)
+void AProjectMarsPlayer::InitialisePlayerFaction(const EFaction& Faction)
 {
 	if(bHasChosenFaction) { return; }
 	
@@ -188,7 +188,7 @@ void APlayerCameraPawn::InitialisePlayerFaction(const EFaction& Faction)
 	}
 }
 
-void APlayerCameraPawn::InitialiseHUD(class UFactionBase* FactionBase)
+void AProjectMarsPlayer::InitialiseHUD(class UFactionBase* FactionBase)
 {
 	if(BaseHUD)
 	{
@@ -196,12 +196,12 @@ void APlayerCameraPawn::InitialiseHUD(class UFactionBase* FactionBase)
 	}
 	if(!BaseHUD)
 	{
-		UE_LOG(LogTemp, Error, TEXT("BaseHUD is nullptr - APlayerCameraPawn::InitialiseHUD"));
+		UE_LOG(LogTemp, Error, TEXT("BaseHUD is nullptr - AProjectMarsPlayer::InitialiseHUD"));
 	}
 }
 
 // TODO: Implement natural system of updating various revenue streams
-void APlayerCameraPawn::UpdatePlayerIncome()
+void AProjectMarsPlayer::UpdatePlayerIncome()
 {
 	if(PlayerAssignedFaction && !bHasSetTreasury)
 	{
@@ -225,7 +225,7 @@ void APlayerCameraPawn::UpdatePlayerIncome()
 	}
 }
 
-void APlayerCameraPawn::AddMoney()
+void AProjectMarsPlayer::AddMoney()
 {
 	if(FactionEconomics)
 	{
@@ -236,7 +236,7 @@ void APlayerCameraPawn::AddMoney()
 }
 
 // TODO: May want to refactor this so that it is implemented a little cleaner.
-void APlayerCameraPawn::UpdateGameSpeed(float Val)
+void AProjectMarsPlayer::UpdateGameSpeed(float Val)
 {
 	if(Val == 0) { return; }
 	if(!MarsGameStateBase) { return; }
@@ -255,7 +255,7 @@ void APlayerCameraPawn::UpdateGameSpeed(float Val)
 	}	
 }
 
-void APlayerCameraPawn::UpdatePlayerPopulationData()
+void AProjectMarsPlayer::UpdatePlayerPopulationData()
 {
 	if(PlayerAssignedFaction)
 	{
@@ -265,20 +265,20 @@ void APlayerCameraPawn::UpdatePlayerPopulationData()
 }
 
 // Called to bind functionality to input
-void APlayerCameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AProjectMarsPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	if (PlayerInputComponent)
 	{
 		// Movement
-		PlayerInputComponent->BindAxis("MoveForward", this, &APlayerCameraPawn::MoveForward);
-		PlayerInputComponent->BindAxis("MoveRight", this, &APlayerCameraPawn::MoveRight);
+		PlayerInputComponent->BindAxis("MoveForward", this, &AProjectMarsPlayer::MoveForward);
+		PlayerInputComponent->BindAxis("MoveRight", this, &AProjectMarsPlayer::MoveRight);
 
 		// Economy
-		PlayerInputComponent->BindAction("Money", IE_Pressed, this, &APlayerCameraPawn::AddMoney);
+		PlayerInputComponent->BindAction("Money", IE_Pressed, this, &AProjectMarsPlayer::AddMoney);
 
 		// Game Speed
-		PlayerInputComponent->BindAxis("GameSpeed", this, &APlayerCameraPawn::UpdateGameSpeed);
+		PlayerInputComponent->BindAxis("GameSpeed", this, &AProjectMarsPlayer::UpdateGameSpeed);
 	}
 }
