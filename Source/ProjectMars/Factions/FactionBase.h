@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "ProjectMars/Cultures/CultureBase.h"
+#include "ProjectMars/Economy/Economy.h"
+#include "ProjectMars/Population/PopulationBase.h"
 
 #include "FactionBase.generated.h"
 
@@ -16,159 +18,15 @@ enum class ECulture : uint8;
 struct FBaseFactionData;
 struct FPopulation;
 struct FCultureGroup;
+struct FFactionEconomics;
 
 
-/*** CULTURE ***/
-
-
-
-/*** POPULATION ***/
-UENUM()
-enum class EPopType
-{
-	Noble,
-	Citizen,
-	Freeman,
-	Tribesman,
-	Slave
-};
-
-USTRUCT()
-struct FPopulation
-{
-	GENERATED_BODY()
-
-	FPopulation();
-
-	// General
-	int32 TotalPopulation{};
-	int32 TotalNoblePopulation{};
-	int32 TotalCitizenPopulation{};
-	int32 TotalFreemanPopulation{};
-	int32 TotalTribesmanPopulation{};
-	int32 TotalSlavePopulation{};
-
-	// Growth
-	float TotalGrowth{};
-	float TotalShrink{};
-	float NetGrowth{};
-
-	float NobleGrowth{};
-	float CitizenGrowth{};
-	float FreemanGrowth{};
-	float TribesmanGrowth{};
-	float SlaveGrowth{};
-
-	// Updates the grow as a percentage of each pop type
-	void UpdateGrowthPerMonth();
-
-	// Updates the total population each month after factoring in the growth that month
-	void UpdateMonthlyPopulation();
-};
-
-
-/*** FACTION ***/
 UENUM()
 enum class EFaction : uint8
 {
 	Rome	UMETA(DisplayName = "Rome"),
 	Etruria		UMETA(DisplayName = "Etruria"),
 	Carthage	UMETA(DisplayName = "Carthage")
-};
-
-
-/*** ECONOMY ***/
-USTRUCT()
-struct FFactionEconomics
-{
-	GENERATED_BODY()
-
-	FFactionEconomics();
-	
-
-/****************************************************************/
-	/* GENERAL */
-	
-	int32 StartingTreasury{};
-	int32 Treasury{};
-	float GrossIncome{};
-	float NetIncome{};
-	float Expenses{};
-	
-
-/****************************************************************/
-	/* TAXES */
-	
-	float TaxIncome{};
-	
-	UPROPERTY(EditAnywhere, Category = "Taxes")
-	float NobleTaxRate{ 0.02f };
-	
-	UPROPERTY(EditAnywhere, Category = "Taxes")
-	float CitizenTaxRate{ 0.01f };
-	
-	UPROPERTY(EditAnywhere, Category = "Taxes")
-	float FreemanTaxRate{ 0.005f };
-	
-	UPROPERTY(EditAnywhere, Category = "Taxes")
-	float TribesmanTaxRate{ 0.005f };
-
-	// Function to calculate tax income
-	void CollectTaxes(FPopulation& Obj);
-	
-	void SetTaxIncome();
-	
-
-/****************************************************************/
-	/* TRADE */
-	
-	float TotalValueOfExports{};
-	float TotalValueOfImports{};
-	
-
-/****************************************************************/
-	/* TRIBUTES */
-	
-	float TributeIncome{};
-	float OutgoingTributes{};
-	
-
-/****************************************************************/
-	/* OTHER */
-	
-	float LootingIncome{};
-	
-
-/****************************************************************/
-	/* MAINTENANCE */
-	
-	float ArmyMaintenance{};
-	float FleetMaintenance{};
-	float Wages{};
-	float StateMaintenance{};
-	float FortMaintenance{};
-
-
-/****************************************************************/
-	/* ECONOMY */
-
-	// Returns the net income of a player per month
-	float GetNetIncome();
-
-	// Returns the gross income of a player per month
-	float GetGrossIncome();
-
-	// Returns the total outgoings of a player per month
-	float GetTotalOutgoings();
-
-	// Adds the net income to the player's overall treasury on a monthly basis - can be negative or positive number
-	void ApplyNetIncomeToTreasury();
-
-	// If the player's treasury is less than 0, this will be true
-	bool bHasADeficit;
-
-	// If the player's income per month is less than 0, this will be true
-	bool bHasNegativeIncome;
 };
 
 USTRUCT()
