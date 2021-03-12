@@ -46,9 +46,6 @@ AProjectMarsPlayer::AProjectMarsPlayer()
 	FCampaignDateTime Obj;
 	CampaignDateTimePtr = &Obj;
 
-	// Faction
-	FactionBase = CreateDefaultSubobject<UFactionBase>(TEXT("Faction Base Component"));
-
 	// Culture
 	CultureBase = CreateDefaultSubobject<UCultureBase>(TEXT("Culture Base Component"));
 }
@@ -164,13 +161,13 @@ void AProjectMarsPlayer::InitialisePlayerFaction(const EFaction& Faction)
 	
 	switch (Faction)
 	{
-		case EFaction::Rome : PlayerAssignedFaction = NewObject<URomeFaction>();
+		case EFaction::Rome : PlayerAssignedFaction = NewObject<ARomeFaction>();
 		break;
 
-		case EFaction::Etruria : PlayerAssignedFaction = NewObject<UEtruriaFaction>();
+		case EFaction::Etruria : PlayerAssignedFaction = NewObject<AEtruriaFaction>();
 		break;
 
-		case EFaction::Carthage : PlayerAssignedFaction = NewObject<UCarthageFaction>();
+		case EFaction::Carthage : PlayerAssignedFaction = NewObject<ACarthageFaction>();
 		break;
 
 		default: PlayerAssignedFaction = nullptr;

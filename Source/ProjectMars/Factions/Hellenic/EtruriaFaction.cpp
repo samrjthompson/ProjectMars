@@ -5,7 +5,7 @@
 
 #include "ProjectMars/Cultures/Italic/ItalicCultureGroup.h"
 
-UEtruriaFaction::UEtruriaFaction()
+AEtruriaFaction::AEtruriaFaction()
 {
 	EtruriaFactionData.FactionName = "Etruria";
 
@@ -23,21 +23,21 @@ UEtruriaFaction::UEtruriaFaction()
 	this->Population.TotalSlavePopulation = 4000;
 }
 
-FBaseFactionData& UEtruriaFaction::GetRefToFactionData()
+FBaseFactionData& AEtruriaFaction::GetRefToFactionData()
 {
 	Super::GetRefToFactionData();
 
 	return EtruriaFactionData;
 }
 
-FFactionEconomics& UEtruriaFaction::GetRefToEconomicsData()
+FFactionEconomics& AEtruriaFaction::GetRefToEconomicsData()
 {
 	Super::GetRefToEconomicsData();
 
 	return EtruriaFactionEconomics;
 }
 
-FPopulation& UEtruriaFaction::GetRefToPopulationData()
+FPopulation& AEtruriaFaction::GetRefToPopulationData()
 {
 	Super::GetRefToPopulationData();
 

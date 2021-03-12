@@ -5,7 +5,7 @@
 
 #include "ProjectMars/Cultures/Italic/ItalicCultureGroup.h"
 
-URomeFaction::URomeFaction()
+ARomeFaction::ARomeFaction()
 {
 	// FBaseFactionData Setup
 	RomeFactionData.FactionName = "Roman Republic";
@@ -43,21 +43,21 @@ URomeFaction::URomeFaction()
 	this->RomeFactionEconomy.OutgoingTributes = 0.f;	
 }
 
-FBaseFactionData& URomeFaction::GetRefToFactionData()
+FBaseFactionData& ARomeFaction::GetRefToFactionData()
 {
 	Super::GetRefToFactionData();
 
 	return RomeFactionData;
 }
 
-FFactionEconomics& URomeFaction::GetRefToEconomicsData()
+FFactionEconomics& ARomeFaction::GetRefToEconomicsData()
 {
 	Super::GetRefToEconomicsData();
 
 	return RomeFactionEconomy;
 }
 
-FPopulation& URomeFaction::GetRefToPopulationData()
+FPopulation& ARomeFaction::GetRefToPopulationData()
 {
 	Super::GetRefToPopulationData();
 

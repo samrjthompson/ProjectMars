@@ -65,12 +65,12 @@ public:
 	class UCameraComponent* Camera{ nullptr };
 
 	UPROPERTY(EditAnywhere, Category = "Faction")
-	class UFactionBase* FactionBase{ nullptr };
+	class AFactionBase* FactionBase{ nullptr };
 
-	UPROPERTY(EditAnywhere, Category = "Faction")
+	UPROPERTY(EditAnywhere, Category = "Culture")
 	class UCultureBase* CultureBase{ nullptr };
 
-	TSubclassOf<class URomeFaction> RomeClass;
+	TSubclassOf<class ARomeFaction> RomeClass;
 	
 	void SetTreasury();
 
@@ -101,7 +101,7 @@ public:
 
 	// The faction the player will be playing as
 	UPROPERTY()
-	class UFactionBase* PlayerAssignedFaction{ nullptr };
+	class AFactionBase* PlayerAssignedFaction{ nullptr };
 
 private:
 	void PawnMovement(float DeltaTime);

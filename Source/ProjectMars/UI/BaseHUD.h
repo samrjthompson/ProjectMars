@@ -8,7 +8,7 @@
 
 enum class EMonthOfYear;
 
-class UFactionBase;
+class AFactionBase;
 
 UCLASS()
 class PROJECTMARS_API ABaseHUD : public AHUD
@@ -53,9 +53,9 @@ public:
 	class UBaseGameplayWidget* BaseGameplayWidget{ nullptr };
 
 	UPROPERTY()
-	UFactionBase* FactionBase{ nullptr };
+	AFactionBase* FactionBase{ nullptr };
 
-	void InitialiseFactionBase(UFactionBase* InitFactionBase);
+	void InitialiseFactionBase(AFactionBase* InitFactionBase);
 
 /* --- ECONOMY --- */
 	void DrawPlayerTreasury();

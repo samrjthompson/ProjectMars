@@ -10,11 +10,11 @@
  * 
  */
 UCLASS()
-class PROJECTMARS_API UCarthageFaction : public UFactionBase
+class PROJECTMARS_API ACarthageFaction : public AFactionBase
 {
 	GENERATED_BODY()
 
 public:
-	UCarthageFaction();	
+	ACarthageFaction();	
 	
 };

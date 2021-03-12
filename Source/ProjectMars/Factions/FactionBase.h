@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "GameFramework/Actor.h"
 #include "FactionBase.generated.h"
 
 // Seem to have to forward declare the enums
@@ -188,7 +188,7 @@ struct FBaseFactionData
 };
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class PROJECTMARS_API UFactionBase : public UActorComponent
+class PROJECTMARS_API AFactionBase : public AActor
 {
 	GENERATED_BODY()
 
@@ -196,7 +196,7 @@ class PROJECTMARS_API UFactionBase : public UActorComponent
 	friend class ABaseHUD;
 
 public:
-	UFactionBase();
+	AFactionBase();
 
 protected:
 	// Called when the game starts
@@ -204,7 +204,7 @@ protected:
 
 public:
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	inline FName GetBaseFactionName() const { return FactionName; }
 

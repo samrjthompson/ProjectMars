@@ -10,12 +10,12 @@ struct FBaseFactionData;
 struct FFactionEconomics;
 
 UCLASS()
-class PROJECTMARS_API UEtruriaFaction : public UFactionBase
+class PROJECTMARS_API AEtruriaFaction : public AFactionBase
 {
 	GENERATED_BODY()
 
 public:
-	UEtruriaFaction();
+	AEtruriaFaction();
 
 	inline FName GetFactionName() const { return FactionName; };
 	

@@ -3,7 +3,7 @@
 
 #include "ProjectMars/Factions/Punic/CarthageFaction.h"
 
-UCarthageFaction::UCarthageFaction()
+ACarthageFaction::ACarthageFaction()
 {
 	
 }

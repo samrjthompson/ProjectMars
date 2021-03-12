@@ -7,12 +7,12 @@
 #include "RomeFaction.generated.h"
 
 UCLASS()
-class PROJECTMARS_API URomeFaction : public UFactionBase
+class PROJECTMARS_API ARomeFaction : public AFactionBase
 {
 	GENERATED_BODY()
 	
 public:
-	URomeFaction();
+	ARomeFaction();
 
 	inline FName GetFactionName() const { return FactionName; };
 

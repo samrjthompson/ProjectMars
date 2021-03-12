@@ -131,34 +131,34 @@ void FFactionEconomics::SetTaxIncome()
 	
 }
 
-UFactionBase::UFactionBase()
+AFactionBase::AFactionBase()
 {
 
 }
 
-void UFactionBase::BeginPlay()
+void AFactionBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
-void UFactionBase::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void AFactionBase::Tick(float DeltaSeconds)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	Super::Tick(DeltaSeconds);
 	
 }
 
-FBaseFactionData& UFactionBase::GetRefToFactionData()
+FBaseFactionData& AFactionBase::GetRefToFactionData()
 {
 	return BaseFactionData;
 }
 
-FFactionEconomics& UFactionBase::GetRefToEconomicsData()
+FFactionEconomics& AFactionBase::GetRefToEconomicsData()
 {
 	return FactionEconomics;
 }
 
-FPopulation& UFactionBase::GetRefToPopulationData()
+FPopulation& AFactionBase::GetRefToPopulationData()
 {
 	return Population;
 }
