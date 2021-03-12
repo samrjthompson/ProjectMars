@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
+#include "GameFramework/Actor.h"
 #include "ReligionBase.generated.h"
 
 UENUM()
@@ -11,11 +11,11 @@ enum class EReligion
 {
 	Hellenism,
 	Druidism,
-	Zoastrianism
+	Zoroastrianism
 };
 
 UCLASS()
-class PROJECTMARS_API UReligionBase : public UObject
+class PROJECTMARS_API AReligionBase : public AActor
 {
 	GENERATED_BODY()
 	

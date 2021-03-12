@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ProjectMars/Factions/Hellenic/RomeFaction.h"
+#include "RomeFaction.h"
 
 #include "ProjectMars/Cultures/Italic/ItalicCultureGroup.h"
 

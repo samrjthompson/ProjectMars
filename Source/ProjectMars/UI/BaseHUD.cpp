@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ProjectMars/UI/BaseHUD.h"
+#include "BaseHUD.h"
 
 #include "Engine.h"
 #include "Components/TextBlock.h"

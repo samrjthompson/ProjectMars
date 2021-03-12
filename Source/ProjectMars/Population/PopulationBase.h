@@ -3,16 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
+#include "GameFramework/Actor.h"
 #include "PopulationBase.generated.h"
 
 
 
 UCLASS()
-class PROJECTMARS_API UPopulationBase : public UObject
+class PROJECTMARS_API APopulationBase : public AActor
 {
 	GENERATED_BODY()
 
-	UPopulationBase();
+	APopulationBase();
 	
 };

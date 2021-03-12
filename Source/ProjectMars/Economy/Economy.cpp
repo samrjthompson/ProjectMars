@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Economy/Economy.h"
+#include "Economy.h"
 
 // Sets default values
 AEconomy::AEconomy()

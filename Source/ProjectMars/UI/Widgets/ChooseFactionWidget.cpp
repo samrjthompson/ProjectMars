@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ProjectMars/UI/Widgets/ChooseFactionWidget.h"
+#include "ChooseFactionWidget.h"
 
 #include "Components/Button.h"
 

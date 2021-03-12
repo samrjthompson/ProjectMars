@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ProjectMars/Cultures/Italic/ItalicCultureGroup.h"
+#include "ItalicCultureGroup.h"
 
 FItalicCultureGroupType::FItalicCultureGroupType()
 {

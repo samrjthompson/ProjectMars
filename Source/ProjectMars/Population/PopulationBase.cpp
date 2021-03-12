@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ProjectMars/Population/PopulationBase.h"
+#include "PopulationBase.h"
 
 
 
-UPopulationBase::UPopulationBase()
+APopulationBase::APopulationBase()
 {
 	
 }
