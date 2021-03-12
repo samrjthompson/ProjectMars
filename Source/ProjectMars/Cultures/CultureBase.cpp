@@ -3,6 +3,10 @@
 
 #include "ProjectMars/Cultures/CultureBase.h"
 
+FCultureGroup::FCultureGroup()
+{
+}
+
 FCultureData::FCultureData()
 {
 }

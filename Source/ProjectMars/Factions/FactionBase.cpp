@@ -163,6 +163,16 @@ FPopulation& AFactionBase::GetRefToPopulationData()
 	return Population;
 }
 
+FCultureGroup& AFactionBase::GetRefToCultureGroup()
+{
+	return CultureGroupObj;
+}
+
+FCultureData& AFactionBase::GetRefToCultureData()
+{
+	return CultureDataObj;
+}
+
 void FFactionEconomics::ApplyNetIncomeToTreasury()
 {
 	Treasury += GetNetIncome();

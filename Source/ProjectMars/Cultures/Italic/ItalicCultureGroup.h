@@ -6,6 +6,15 @@
 #include "ProjectMars/Cultures/CultureBase.h"
 #include "ItalicCultureGroup.generated.h"
 
+USTRUCT()
+struct FItalicCultureGroupType : public FCultureGroup
+{
+	GENERATED_BODY()
+
+	FItalicCultureGroupType();
+
+		
+};
 
 UCLASS()
 class PROJECTMARS_API AItalicCultureGroup : public ACultureBase

@@ -3,6 +3,10 @@
 
 #include "ProjectMars/Cultures/Italic/ItalicCultureGroup.h"
 
+FItalicCultureGroupType::FItalicCultureGroupType()
+{
+}
+
 AItalicCultureGroup::AItalicCultureGroup()
 {
 	this->CultureGroup = ECultureGroup::Italic;

@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "ProjectMars/Cultures/CultureBase.h"
+
 #include "FactionBase.generated.h"
 
 // Seem to have to forward declare the enums
@@ -13,6 +15,7 @@ enum class ECulture : uint8;
 
 struct FBaseFactionData;
 struct FPopulation;
+struct FCultureGroup;
 
 
 /*** CULTURE ***/
@@ -81,15 +84,21 @@ struct FFactionEconomics
 	GENERATED_BODY()
 
 	FFactionEconomics();
+	
 
-	// GENERAL
+/****************************************************************/
+	/* GENERAL */
+	
 	int32 StartingTreasury{};
 	int32 Treasury{};
 	float GrossIncome{};
 	float NetIncome{};
 	float Expenses{};
+	
 
-	// TAXES
+/****************************************************************/
+	/* TAXES */
+	
 	float TaxIncome{};
 	
 	UPROPERTY(EditAnywhere, Category = "Taxes")
@@ -106,20 +115,33 @@ struct FFactionEconomics
 
 	// Function to calculate tax income
 	void CollectTaxes(FPopulation& Obj);
+	
+	void SetTaxIncome();
+	
 
-	// TRADE
+/****************************************************************/
+	/* TRADE */
+	
 	float TotalValueOfExports{};
 	float TotalValueOfImports{};
+	
 
-	// TRIBUTES
+/****************************************************************/
+	/* TRIBUTES */
+	
 	float TributeIncome{};
 	float OutgoingTributes{};
-
-	// OTHER
-	float LootingIncome{};
-
 	
-	// MAINTENANCE
+
+/****************************************************************/
+	/* OTHER */
+	
+	float LootingIncome{};
+	
+
+/****************************************************************/
+	/* MAINTENANCE */
+	
 	float ArmyMaintenance{};
 	float FleetMaintenance{};
 	float Wages{};
@@ -127,7 +149,8 @@ struct FFactionEconomics
 	float FortMaintenance{};
 
 
-	/* --- ECONOMY --- */
+/****************************************************************/
+	/* ECONOMY */
 
 	// Returns the net income of a player per month
 	float GetNetIncome();
@@ -146,11 +169,6 @@ struct FFactionEconomics
 
 	// If the player's income per month is less than 0, this will be true
 	bool bHasNegativeIncome;
-
-	// TAX
-
-	void SetTaxIncome();
-	
 };
 
 USTRUCT()
@@ -206,29 +224,68 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaSeconds) override;
 
-	inline FName GetBaseFactionName() const { return FactionName; }
 
+/****************************************************************/
+	/* FACTION DATA */
+
+public:
+	inline FName GetBaseFactionName() const { return FactionName; }
+	
 	// This is a virtual function that returns a reference to an FBaseFactionData object 
 	virtual FBaseFactionData& GetRefToFactionData();
 	
-	// This is a virtual function that returns a reference to an FFactionEconomics object
-	virtual FFactionEconomics& GetRefToEconomicsData();
-
-	// This is a virtual function that returns a reference to an FPopulation object
-	virtual FPopulation& GetRefToPopulationData();
-
+	
+private:
+	
+	
 protected:
 	FName FactionName{};
-
+	
 	EFaction FactionType;
-	ECultureGroup CultureGroup;
-	ECulture Culture;
 
 	// Objects by value of faction data structs
 	FBaseFactionData BaseFactionData;
-	FFactionEconomics FactionEconomics;
-	FPopulation Population;
-
+	
+	
+/****************************************************************/
+	/* POPULATION */
+	
+public:
+	// This is a virtual function that returns a reference to an FPopulation object
+	virtual FPopulation& GetRefToPopulationData();
+	
 private:
 	
+protected:
+	FPopulation Population;
+	
+
+/****************************************************************/
+	/* ECONOMY */
+
+public:
+	// This is a virtual function that returns a reference to an FFactionEconomics object
+	virtual FFactionEconomics& GetRefToEconomicsData();
+	
+private:
+	
+protected:
+	FFactionEconomics FactionEconomics;
+	
+	
+/****************************************************************/
+	/* CULTURE */
+
+public:
+	// This is a virtual function that returns a reference to an FCultureGroup object
+	virtual FCultureGroup& GetRefToCultureGroup();
+	virtual FCultureData& GetRefToCultureData();
+
+private:
+
+protected:
+	ECultureGroup CultureGroup;
+	ECulture Culture;
+	FCultureGroup CultureGroupObj;
+	FCultureData CultureDataObj;
 };

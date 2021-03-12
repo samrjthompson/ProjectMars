@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+
 #include "ProjectMarsPlayer.generated.h"
 
 enum class EFaction : uint8;
@@ -166,5 +167,6 @@ public:
 	// POPULATION
 	
 	// Updates player population data every month
-	void UpdatePlayerPopulationData();	
+	void UpdatePlayerPopulationData();
+
 };

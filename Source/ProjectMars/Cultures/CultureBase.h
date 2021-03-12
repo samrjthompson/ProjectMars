@@ -24,6 +24,15 @@ enum class ECultureGroup : uint8
 };
 
 USTRUCT()
+struct FCultureGroup
+{
+	GENERATED_BODY()
+
+	FCultureGroup();
+	
+};
+
+USTRUCT()
 struct FCultureData
 {
 	GENERATED_BODY()
