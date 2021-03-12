@@ -136,6 +136,18 @@ UFactionBase::UFactionBase()
 
 }
 
+void UFactionBase::BeginPlay()
+{
+	Super::BeginPlay();
+	
+}
+
+void UFactionBase::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	
+}
+
 FBaseFactionData& UFactionBase::GetRefToFactionData()
 {
 	return BaseFactionData;

@@ -64,6 +64,12 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UCameraComponent* Camera{ nullptr };
 
+	UPROPERTY(EditAnywhere, Category = "Faction")
+	class UFactionBase* FactionBase{ nullptr };
+
+	UPROPERTY(EditAnywhere, Category = "Faction")
+	class UCultureBase* CultureBase{ nullptr };
+
 	TSubclassOf<class URomeFaction> RomeClass;
 	
 	void SetTreasury();
@@ -121,7 +127,7 @@ private:
 	void InitialisePlayerFaction(const EFaction& Faction);
 
 	// Initialises a pointer (stored in the ABaseHUD class) to a faction class object
-	void InitialiseHUD(class UFactionBase* FactionBase);
+	void InitialiseHUD();
 
 	UPROPERTY()
 	class ABasePlayerController* BasePlayerController{ nullptr };

@@ -7,6 +7,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Factions/FactionBase.h"
+#include "ProjectMars/Cultures/CultureBase.h"
 #include "ProjectMars/Factions/Hellenic/EtruriaFaction.h"
 #include "ProjectMars/Factions/Hellenic/RomeFaction.h"
 #include "ProjectMars/Factions/Punic/CarthageFaction.h"
@@ -44,6 +45,12 @@ AProjectMarsPlayer::AProjectMarsPlayer()
 	// TIME
 	FCampaignDateTime Obj;
 	CampaignDateTimePtr = &Obj;
+
+	// Faction
+	FactionBase = CreateDefaultSubobject<UFactionBase>(TEXT("Faction Base Component"));
+
+	// Culture
+	CultureBase = CreateDefaultSubobject<UCultureBase>(TEXT("Culture Base Component"));
 }
 
 // Called when the game starts or when spawned
@@ -173,7 +180,7 @@ void AProjectMarsPlayer::InitialisePlayerFaction(const EFaction& Faction)
 	if(PlayerAssignedFaction && MarsGameStateBase)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Faction Name: %s"), *PlayerAssignedFaction->GetBaseFactionName().ToString());
-		InitialiseHUD(PlayerAssignedFaction);
+		InitialiseHUD();
 
 		// This is a pointer to the address of the faction data object 
 		BaseFactionData = &PlayerAssignedFaction->GetRefToFactionData();
@@ -188,11 +195,11 @@ void AProjectMarsPlayer::InitialisePlayerFaction(const EFaction& Faction)
 	}
 }
 
-void AProjectMarsPlayer::InitialiseHUD(class UFactionBase* FactionBase)
+void AProjectMarsPlayer::InitialiseHUD()
 {
 	if(BaseHUD)
 	{
-		BaseHUD->InitialiseFactionBase(FactionBase);
+		BaseHUD->InitialiseFactionBase(PlayerAssignedFaction);
 	}
 	if(!BaseHUD)
 	{
