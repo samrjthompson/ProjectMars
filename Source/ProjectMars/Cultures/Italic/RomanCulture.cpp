@@ -3,7 +3,7 @@
 
 #include "ProjectMars/Cultures/Italic/RomanCulture.h"
 
-URomanCulture::URomanCulture()
+ARomanCulture::ARomanCulture()
 {
 	this->Culture = ECulture::Roman;
 }

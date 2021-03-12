@@ -7,19 +7,19 @@ FCultureData::FCultureData()
 {
 }
 
-UCultureBase::UCultureBase()
+ACultureBase::ACultureBase()
 {
 	
 }
 
-void UCultureBase::BeginPlay()
+void ACultureBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
-void UCultureBase::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void ACultureBase::Tick(float DeltaSeconds)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	
+	Super::Tick(DeltaSeconds);
 }
+

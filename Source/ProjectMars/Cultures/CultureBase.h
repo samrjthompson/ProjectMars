@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "GameFramework/Actor.h"
 #include "CultureBase.generated.h"
 
 UENUM()
@@ -31,13 +31,13 @@ struct FCultureData
 	FCultureData();
 };
 
-UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class PROJECTMARS_API UCultureBase : public UActorComponent
+UCLASS()
+class PROJECTMARS_API ACultureBase : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	UCultureBase();
+	ACultureBase();
 
 protected:
 	// Called when the game starts
@@ -45,5 +45,5 @@ protected:
 
 public:
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void Tick(float DeltaSeconds) override;
 };

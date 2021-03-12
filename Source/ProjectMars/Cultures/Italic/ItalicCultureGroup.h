@@ -8,12 +8,12 @@
 
 
 UCLASS()
-class PROJECTMARS_API UItalicCultureGroup : public UCultureBase
+class PROJECTMARS_API AItalicCultureGroup : public ACultureBase
 {
 	GENERATED_BODY()
 
 public:
-	UItalicCultureGroup();
+	AItalicCultureGroup();
 
 	ECultureGroup CultureGroup;
 	

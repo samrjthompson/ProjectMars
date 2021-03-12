@@ -3,7 +3,7 @@
 
 #include "ProjectMars/Cultures/Italic/EtruscanCulture.h"
 
-UEtruscanCulture::UEtruscanCulture()
+AEtruscanCulture::AEtruscanCulture()
 {
 	this->Culture = ECulture::Etruscan;
 }

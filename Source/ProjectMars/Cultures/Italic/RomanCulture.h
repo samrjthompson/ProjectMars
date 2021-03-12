@@ -10,12 +10,12 @@
  * 
  */
 UCLASS()
-class PROJECTMARS_API URomanCulture : public UItalicCultureGroup
+class PROJECTMARS_API ARomanCulture : public AItalicCultureGroup
 {
 	GENERATED_BODY()
 
 public:
-	URomanCulture();
+	ARomanCulture();
 
 	ECulture Culture;
 	

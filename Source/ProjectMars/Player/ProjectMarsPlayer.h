@@ -68,7 +68,7 @@ public:
 	class AFactionBase* FactionBase{ nullptr };
 
 	UPROPERTY(EditAnywhere, Category = "Culture")
-	class UCultureBase* CultureBase{ nullptr };
+	class ACultureBase* CultureBase{ nullptr };
 
 	TSubclassOf<class ARomeFaction> RomeClass;
 	

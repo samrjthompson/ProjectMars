@@ -7,7 +7,6 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Factions/FactionBase.h"
-#include "ProjectMars/Cultures/CultureBase.h"
 #include "ProjectMars/Factions/Hellenic/EtruriaFaction.h"
 #include "ProjectMars/Factions/Hellenic/RomeFaction.h"
 #include "ProjectMars/Factions/Punic/CarthageFaction.h"
@@ -45,9 +44,6 @@ AProjectMarsPlayer::AProjectMarsPlayer()
 	// TIME
 	FCampaignDateTime Obj;
 	CampaignDateTimePtr = &Obj;
-
-	// Culture
-	CultureBase = CreateDefaultSubobject<UCultureBase>(TEXT("Culture Base Component"));
 }
 
 // Called when the game starts or when spawned
