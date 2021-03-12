@@ -137,7 +137,7 @@ protected:
 public:
 	// This is a virtual function that returns a reference to an FCultureGroup object
 	virtual FCultureGroup& GetRefToCultureGroup();
-	virtual FCulture& GetRefToCultureData();
+	virtual FCultureData& GetRefToCultureData();
 
 private:
 
@@ -145,5 +145,5 @@ protected:
 	ECultureGroup CultureGroup;
 	ECultureName Culture;
 	FCultureGroup CultureGroupObj;
-	FCulture CultureDataObj;
+	FCultureData CultureDataObj;
 };

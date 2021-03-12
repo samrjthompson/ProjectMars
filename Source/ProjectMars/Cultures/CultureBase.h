@@ -33,11 +33,11 @@ struct FCultureGroup
 };
 
 USTRUCT()
-struct FCulture
+struct FCultureData
 {
 	GENERATED_BODY()
 
-	FCulture();
+	FCultureData();
 };
 
 UCLASS()

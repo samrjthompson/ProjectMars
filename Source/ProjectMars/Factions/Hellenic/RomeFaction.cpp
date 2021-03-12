@@ -64,7 +64,7 @@ FPopulation& ARomeFaction::GetRefToPopulationData()
 	return RomePopulation;
 }
 
-FCulture& ARomeFaction::GetRefToCultureData()
+FCultureData& ARomeFaction::GetRefToCultureData()
 {
 	Super::GetRefToCultureData();
 
