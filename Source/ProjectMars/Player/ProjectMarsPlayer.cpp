@@ -157,7 +157,7 @@ void AProjectMarsPlayer::InitialisePlayerFaction(const EFaction& Faction)
 	
 	switch (Faction)
 	{
-		case EFaction::Rome : PlayerAssignedFaction = NewObject<ARomeFaction>();
+		case EFaction::Rome : PlayerAssignedFaction = NewObject<AFactionBase>();
 		break;
 
 		case EFaction::Etruria : PlayerAssignedFaction = NewObject<AEtruriaFaction>();

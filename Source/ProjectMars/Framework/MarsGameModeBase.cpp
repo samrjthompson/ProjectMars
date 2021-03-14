@@ -3,9 +3,9 @@
 
 #include "ProjectMars/Framework/MarsGameModeBase.h"
 
-void AMarsGameModeBase::BeginPlay()
-{
-	Super::BeginPlay();
 
+void AMarsGameModeBase::StartPlay()
+{
+	Super::StartPlay();
 	
 }

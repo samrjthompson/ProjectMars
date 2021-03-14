@@ -6,7 +6,13 @@
 
 APopulationBase::APopulationBase()
 {
-	
+	PrimaryActorTick.bCanEverTick = true;
+}
+
+void APopulationBase::BeginPlay()
+{
+	Super::BeginPlay();
+	UE_LOG(LogTemp, Warning, TEXT("begin play"));
 }
 
 FPopulation::FPopulation()

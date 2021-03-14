@@ -14,8 +14,8 @@ class PROJECTMARS_API AMarsGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 
-public:
-	
-	virtual void BeginPlay() override;
+protected:
+
+	virtual void StartPlay() override;
 
 };

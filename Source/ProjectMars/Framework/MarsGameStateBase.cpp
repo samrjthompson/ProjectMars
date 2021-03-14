@@ -6,6 +6,7 @@
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/UI/BaseHUD.h"
+#include "ProjectMars/Factions/FactionBase.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
 {
@@ -35,9 +36,11 @@ AMarsGameStateBase::AMarsGameStateBase()
 void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
+	InstantiateAllFactions();
+	
 	LastTickCheck = GetWorld()->GetTimeSeconds();
-	LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();	
+	LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();
 }
 
 void AMarsGameStateBase::Tick(float DeltaSeconds)
@@ -47,6 +50,82 @@ void AMarsGameStateBase::Tick(float DeltaSeconds)
 	CalculateTickRate();
 	
 	UpdateGameTime();
+}
+
+void AMarsGameStateBase::InstantiateAllFactions()
+{
+	/* ITALIAN */
+	// Rome
+	RomeFaction = NewObject<AFactionBase>();
+
+	// Etruria
+	EtruriaFaction = NewObject<AFactionBase>();
+
+	// Samnium
+	SamniumFaction = NewObject<AFactionBase>();
+
+	// Lucania
+	LucaniaFaction = NewObject<AFactionBase>();
+
+	/**********************************************************/
+	/* NORTHER ITALY */
+
+	// Liguaria
+	LiguariaFaction = NewObject<AFactionBase>();
+
+	// Insubres
+	InsubresFaction = NewObject<AFactionBase>();
+
+	/**********************************************************/
+	/* GAUL */
+
+	// Arverni
+	ArverniFaction = NewObject<AFactionBase>();
+
+	/**********************************************************/
+	/* GERMANIC */
+
+	// Suebi
+	SuebiFaction = NewObject<AFactionBase>();
+
+	/**********************************************************/
+	/* NORTH AFRICAN */
+
+	// Carthage
+	CarthageFaction = NewObject<AFactionBase>();
+
+	/**********************************************************/
+	/* SICILIAN */
+
+	// Syracuse
+	SyracuseFaction = NewObject<AFactionBase>();
+
+	/**********************************************************/
+	/* GREEK */
+
+	// Macedonian
+	MacedonianFaction = NewObject<AFactionBase>();
+
+	// Epirus
+	EpirusFaction = NewObject<AFactionBase>();
+
+	// Sparta
+	SpartaFaction = NewObject<AFactionBase>();
+
+	PopulateFactionInformation();
+}
+
+void AMarsGameStateBase::PopulateFactionInformation()
+{
+	/* ITALIAN */
+	// Rome
+	RomeFaction->Population.TotalPatricianPop = 578;
+	RomeFaction->Population.TotalPlebesPop = 3478;
+	RomeFaction->Population.TotalProletariatPop = 30678;
+	RomeFaction->Population.TotalForeignerPop = 1789;
+	RomeFaction->Population.TotalSlavePopulation = 3421;
+
+	UE_LOG(LogTemp, Warning, TEXT("Roman patrician pop: %d"), RomeFaction->Population.TotalPatricianPop);
 }
 
 void AMarsGameStateBase::UpdateMonth()

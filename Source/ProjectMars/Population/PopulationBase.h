@@ -55,6 +55,8 @@ class PROJECTMARS_API APopulationBase : public AActor
 {
 	GENERATED_BODY()
 
+public:
 	APopulationBase();
-	
+
+	virtual void BeginPlay() override;
 };

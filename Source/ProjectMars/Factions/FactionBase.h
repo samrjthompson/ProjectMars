@@ -63,7 +63,7 @@ struct FBaseFactionData
 	float MilitaryXPChange{};	
 };
 
-UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+UCLASS()
 class PROJECTMARS_API AFactionBase : public AActor
 {
 	GENERATED_BODY()
@@ -83,15 +83,18 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 
 
-/****************************************************************/
+	/****************************************************************/
 	/* FACTION DATA */
+
+	FPopulation Population;
 
 public:
 	inline FName GetBaseFactionName() const { return FactionName; }
 	
 	// This is a virtual function that returns a reference to an FBaseFactionData object 
 	virtual FBaseFactionData& GetRefToFactionData();
-	
+
+
 	
 private:
 	
@@ -105,7 +108,7 @@ protected:
 	FBaseFactionData BaseFactionData;
 	
 	
-/****************************************************************/
+	/****************************************************************/
 	/* POPULATION */
 	
 public:
@@ -115,10 +118,10 @@ public:
 private:
 	
 protected:
-	FPopulation Population;
+
 	
 
-/****************************************************************/
+	/****************************************************************/
 	/* ECONOMY */
 
 public:
@@ -131,7 +134,7 @@ protected:
 	FFactionEconomics FactionEconomics;
 	
 	
-/****************************************************************/
+	/****************************************************************/
 	/* CULTURE */
 
 public:

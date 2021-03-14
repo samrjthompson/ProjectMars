@@ -6,13 +6,13 @@
 
 AFactionBase::AFactionBase()
 {
-
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 void AFactionBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 void AFactionBase::Tick(float DeltaSeconds)
@@ -25,6 +25,7 @@ FBaseFactionData& AFactionBase::GetRefToFactionData()
 {
 	return BaseFactionData;
 }
+
 
 FFactionEconomics& AFactionBase::GetRefToEconomicsData()
 {
