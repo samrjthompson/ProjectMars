@@ -57,6 +57,10 @@ public:
 
 	void InitialiseFactionBase(AFactionBase* InitFactionBase);
 
+	virtual void InitialisePointers();
+
+	virtual ABaseHUD* GetRefToBaseHUD();
+
 /* --- ECONOMY --- */
 	void DrawPlayerTreasury();
 	
@@ -81,4 +85,16 @@ public:
 
 	UFUNCTION()
 	void DrawMainGameUI();
+
+	
+	/***********************************************************************/
+
+	/* DRAW TOOLTIP */
+
+	UPROPERTY(EditAnywhere)
+	class UEconomyWidget* EconomyWidget{ nullptr };
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UEconomyWidget> EconomyWidgetClass;
+
+	void DrawTooltip();
 };

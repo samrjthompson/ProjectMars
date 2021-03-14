@@ -43,10 +43,10 @@ FFactionEconomics::FFactionEconomics()
 // TODO: Implement tax collection system
 void FFactionEconomics::CollectTaxes(struct FPopulation& Obj)
 {
-	const float NobleTax = Obj.TotalNoblePopulation * NobleTaxRate;
-	const float CitizenTax = Obj.TotalCitizenPopulation * CitizenTaxRate;
-	const float FreemanTax = Obj.TotalFreemanPopulation * FreemanTaxRate;
-	const float TribesmanTax = Obj.TotalTribesmanPopulation * TribesmanTaxRate;
+	const float NobleTax = Obj.TotalPatricianPop * NobleTaxRate;
+	const float CitizenTax = Obj.TotalPlebesPop * CitizenTaxRate;
+	const float FreemanTax = Obj.TotalProletariatPop * FreemanTaxRate;
+	const float TribesmanTax = Obj.TotalForeignerPop * TribesmanTaxRate;
 
 	TaxIncome =
 		NobleTax +

@@ -26,10 +26,10 @@ struct FPopulation
 
 	// General
 	int32 TotalPopulation{};
-	int32 TotalNoblePopulation{};
-	int32 TotalCitizenPopulation{};
-	int32 TotalFreemanPopulation{};
-	int32 TotalTribesmanPopulation{};
+	int32 TotalPatricianPop{};
+	int32 TotalPlebesPop{};
+	int32 TotalProletariatPop{};
+	int32 TotalForeignerPop{};
 	int32 TotalSlavePopulation{};
 
 	// Growth

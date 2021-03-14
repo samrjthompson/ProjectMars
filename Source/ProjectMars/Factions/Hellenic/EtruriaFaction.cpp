@@ -16,10 +16,10 @@ AEtruriaFaction::AEtruriaFaction()
 	this->Culture = ECultureName::Etruscan;
 
 	// Population
-	this->Population.TotalNoblePopulation = 1500;
-	this->Population.TotalCitizenPopulation = 8000;
-	this->Population.TotalFreemanPopulation = 35000;
-	this->Population.TotalTribesmanPopulation = 400;
+	this->Population.TotalPatricianPop = 1500;
+	this->Population.TotalPlebesPop = 8000;
+	this->Population.TotalProletariatPop = 35000;
+	this->Population.TotalForeignerPop = 400;
 	this->Population.TotalSlavePopulation = 4000;
 }
 

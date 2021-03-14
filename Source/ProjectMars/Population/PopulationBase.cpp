@@ -12,10 +12,10 @@ APopulationBase::APopulationBase()
 FPopulation::FPopulation()
 {
 	TotalPopulation = FMath::Clamp(TotalPopulation, 0, 50000000);
-	TotalNoblePopulation = FMath::Clamp(TotalNoblePopulation, 0, 50000000);
-	TotalCitizenPopulation = FMath::Clamp(TotalCitizenPopulation, 0, 50000000);
-	TotalFreemanPopulation = FMath::Clamp(TotalFreemanPopulation, 0, 50000000);
-	TotalTribesmanPopulation = FMath::Clamp(TotalTribesmanPopulation, 0, 50000000);
+	TotalPatricianPop = FMath::Clamp(TotalPatricianPop, 0, 50000000);
+	TotalPlebesPop = FMath::Clamp(TotalPlebesPop, 0, 50000000);
+	TotalProletariatPop = FMath::Clamp(TotalProletariatPop, 0, 50000000);
+	TotalForeignerPop = FMath::Clamp(TotalForeignerPop, 0, 50000000);
 	TotalSlavePopulation = FMath::Clamp(TotalSlavePopulation, 0, 50000000);
 
 	NobleGrowth = 1.005;
@@ -38,18 +38,18 @@ void FPopulation::UpdateMonthlyPopulation()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Pre-Population: %d"), TotalPopulation);
 
-	TotalCitizenPopulation *= NobleGrowth;
-	TotalCitizenPopulation *= CitizenGrowth;
-	TotalFreemanPopulation *= FreemanGrowth;
-	TotalTribesmanPopulation *= TribesmanGrowth;
+	TotalPlebesPop *= NobleGrowth;
+	TotalPlebesPop *= CitizenGrowth;
+	TotalProletariatPop *= FreemanGrowth;
+	TotalForeignerPop *= TribesmanGrowth;
 	TotalSlavePopulation *= SlaveGrowth;
 
 	TotalPopulation =
 
-		TotalNoblePopulation +
-		TotalCitizenPopulation +
-		TotalFreemanPopulation +
-		TotalTribesmanPopulation +
+		TotalPatricianPop +
+		TotalPlebesPop +
+		TotalProletariatPop +
+		TotalForeignerPop +
 		TotalSlavePopulation;
 
 	UE_LOG(LogTemp, Warning, TEXT("Post-Population: %d"), TotalPopulation);

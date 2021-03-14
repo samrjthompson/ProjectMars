@@ -40,5 +40,8 @@ private:
 	class UTextBlock* DateSuffixText{ nullptr };
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	class UTextBlock* FPSText{ nullptr };	
+	class UTextBlock* FPSText{ nullptr };
+
+public:
+	void ShowTooltip(UUserWidget* Widget);
 };

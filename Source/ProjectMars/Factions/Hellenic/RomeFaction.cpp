@@ -18,10 +18,10 @@ ARomeFaction::ARomeFaction()
 	this->Culture = ECultureName::Roman;
 	
 	// Population
-	this->RomePopulation.TotalNoblePopulation = 2000;
-	this->RomePopulation.TotalCitizenPopulation = 10000;
-	this->RomePopulation.TotalFreemanPopulation = 30000;
-	this->RomePopulation.TotalTribesmanPopulation = 200;
+	this->RomePopulation.TotalPatricianPop = 2000;
+	this->RomePopulation.TotalPlebesPop = 10000;
+	this->RomePopulation.TotalProletariatPop = 30000;
+	this->RomePopulation.TotalForeignerPop = 200;
 	this->RomePopulation.TotalSlavePopulation = 8000;
 
 	// TODO: ECONOMY : Implement systems so economy values are not hard-coded

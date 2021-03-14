@@ -13,5 +13,12 @@ UCLASS()
 class PROJECTMARS_API UEconomyWidget : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
+public:
+	UEconomyWidget(const FObjectInitializer& ObjectInitializer);
+
+	virtual void NativeConstruct() override;
+
+	virtual void NativeOnInitialized() override;
+
 };

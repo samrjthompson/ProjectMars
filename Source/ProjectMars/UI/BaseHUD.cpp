@@ -9,6 +9,8 @@
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
 #include "Widgets/ChooseFactionWidget.h"
+#include "Widgets/EconomyWidget.h"
+#include "ProjectMars/Factions/Hellenic/RomeFaction.h"
 
 #define OUT
 
@@ -23,17 +25,8 @@ ABaseHUD::ABaseHUD()
 void ABaseHUD::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Player = Cast<AProjectMarsPlayer>(GetOwningPlayerController()->GetPawn());
-
-	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(GetOwningPlayerController(), BaseGameplayWidgetClass);
-
-	ChooseFactionWidget = CreateWidget<UChooseFactionWidget>(GetOwningPlayerController(), ChooseFactionWidgetClass);
-	if (ChooseFactionWidget)
-	{
-		ChooseFactionWidget->AddToViewport();
-		ChooseFactionWidget->OnChooseFaction.AddDynamic(this, &ABaseHUD::DrawMainGameUI);
-	}
+	
+	InitialisePointers();
 }
 
 void ABaseHUD::DrawHUD()
@@ -49,6 +42,7 @@ void ABaseHUD::DrawHUD()
 	DrawPlayerTreasury();
 	DrawDate();
 	DrawFPS();
+	DrawTooltip();
 }
 
 FVector2D ABaseHUD::GetMonitorResolution()
@@ -103,6 +97,27 @@ void ABaseHUD::InitialiseFactionBase(AFactionBase* InitFactionBase)
 	FactionBase = InitFactionBase;
 }
 
+void ABaseHUD::InitialisePointers()
+{
+	Player = Cast<AProjectMarsPlayer>(GetOwningPlayerController()->GetPawn());
+
+	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(GetOwningPlayerController(), BaseGameplayWidgetClass);
+
+	ChooseFactionWidget = CreateWidget<UChooseFactionWidget>(GetOwningPlayerController(), ChooseFactionWidgetClass);
+	if (ChooseFactionWidget)
+	{
+		ChooseFactionWidget->AddToViewport();
+		ChooseFactionWidget->OnChooseFaction.AddDynamic(this, &ABaseHUD::DrawMainGameUI);
+	}
+
+	EconomyWidget = CreateWidget<UEconomyWidget>(GetOwningPlayerController(), EconomyWidgetClass);
+}
+
+ABaseHUD* ABaseHUD::GetRefToBaseHUD()
+{
+	return this;
+}
+
 void ABaseHUD::DrawPlayerTreasury()
 {
 	if(BaseGameplayWidget && Player)
@@ -142,4 +157,21 @@ void ABaseHUD::DrawMainGameUI()
 		ChooseFactionWidget->RemoveFromParent();
 		BaseGameplayWidget->AddToViewport();
 	}
+}
+
+void ABaseHUD::DrawTooltip()
+{
+	if (!BaseGameplayWidget) { return; } // NULL check
+
+	int32 CurrentCount = 0;
+
+	// EconomyWidget->RemoveFromParent();
+
+	if (!BaseGameplayWidget->EconomyText->IsHovered()) { return; }
+
+
+	/*DrawRect(FLinearColor(0, 0, 0, 0.75), GetMousePosition2D().X + 20, GetMousePosition2D().Y + 20,
+		GetMousePosition2D().X + 100, GetMousePosition2D().Y + 50);	*/
+
+	BaseGameplayWidget->SetToolTip(EconomyWidget);
 }
