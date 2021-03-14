@@ -10,10 +10,10 @@
 UENUM()
 enum class EPopType
 {
-	Noble,
-	Citizen,
-	Freeman,
-	Tribesman,
+	Patrician,
+	Plebes,
+	Proletariat,
+	Foreigner,
 	Slave
 };
 
@@ -37,10 +37,10 @@ struct FPopulation
 	float TotalShrink{};
 	float NetGrowth{};
 
-	float NobleGrowth{};
-	float CitizenGrowth{};
-	float FreemanGrowth{};
-	float TribesmanGrowth{};
+	float PatricianGrowth{};
+	float PlebesGrowth{};
+	float ProletariatGrowth{};
+	float ForeignerGrowth{};
 	float SlaveGrowth{};
 
 	// Updates the grow as a percentage of each pop type

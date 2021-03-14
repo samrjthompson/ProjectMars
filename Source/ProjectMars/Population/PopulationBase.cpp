@@ -18,19 +18,19 @@ FPopulation::FPopulation()
 	TotalForeignerPop = FMath::Clamp(TotalForeignerPop, 0, 50000000);
 	TotalSlavePopulation = FMath::Clamp(TotalSlavePopulation, 0, 50000000);
 
-	NobleGrowth = 1.005;
-	CitizenGrowth = 1.005;
-	FreemanGrowth = 1.005;
-	TribesmanGrowth = 1.005;
+	PatricianGrowth = 1.005;
+	PlebesGrowth = 1.005;
+	ProletariatGrowth = 1.005;
+	ForeignerGrowth = 1.005;
 	SlaveGrowth = 1.005;
 }
 
 void FPopulation::UpdateGrowthPerMonth()
 {
-	NobleGrowth;
-	CitizenGrowth;
-	FreemanGrowth;
-	TribesmanGrowth;
+	PatricianGrowth;
+	PlebesGrowth;
+	ProletariatGrowth;
+	ForeignerGrowth;
 	SlaveGrowth;
 }
 
@@ -38,10 +38,10 @@ void FPopulation::UpdateMonthlyPopulation()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Pre-Population: %d"), TotalPopulation);
 
-	TotalPlebesPop *= NobleGrowth;
-	TotalPlebesPop *= CitizenGrowth;
-	TotalProletariatPop *= FreemanGrowth;
-	TotalForeignerPop *= TribesmanGrowth;
+	TotalPatricianPop *= PatricianGrowth;
+	TotalPlebesPop *= PlebesGrowth;
+	TotalProletariatPop *= ProletariatGrowth;
+	TotalForeignerPop *= ForeignerGrowth;
 	TotalSlavePopulation *= SlaveGrowth;
 
 	TotalPopulation =
