@@ -6,7 +6,6 @@
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/UI/BaseHUD.h"
-#include "ProjectMars/Factions/FactionBase.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
 {
@@ -36,8 +35,8 @@ AMarsGameStateBase::AMarsGameStateBase()
 void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	InstantiateAllFactions();
+
+	PopulateFactionInformation();
 	
 	LastTickCheck = GetWorld()->GetTimeSeconds();
 	LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();
@@ -52,80 +51,24 @@ void AMarsGameStateBase::Tick(float DeltaSeconds)
 	UpdateGameTime();
 }
 
-void AMarsGameStateBase::InstantiateAllFactions()
-{
-	/* ITALIAN */
-	// Rome
-	RomeFaction = NewObject<AFactionBase>();
-
-	// Etruria
-	EtruriaFaction = NewObject<AFactionBase>();
-
-	// Samnium
-	SamniumFaction = NewObject<AFactionBase>();
-
-	// Lucania
-	LucaniaFaction = NewObject<AFactionBase>();
-
-	/**********************************************************/
-	/* NORTHER ITALY */
-
-	// Liguaria
-	LiguariaFaction = NewObject<AFactionBase>();
-
-	// Insubres
-	InsubresFaction = NewObject<AFactionBase>();
-
-	/**********************************************************/
-	/* GAUL */
-
-	// Arverni
-	ArverniFaction = NewObject<AFactionBase>();
-
-	/**********************************************************/
-	/* GERMANIC */
-
-	// Suebi
-	SuebiFaction = NewObject<AFactionBase>();
-
-	/**********************************************************/
-	/* NORTH AFRICAN */
-
-	// Carthage
-	CarthageFaction = NewObject<AFactionBase>();
-
-	/**********************************************************/
-	/* SICILIAN */
-
-	// Syracuse
-	SyracuseFaction = NewObject<AFactionBase>();
-
-	/**********************************************************/
-	/* GREEK */
-
-	// Macedonian
-	MacedonianFaction = NewObject<AFactionBase>();
-
-	// Epirus
-	EpirusFaction = NewObject<AFactionBase>();
-
-	// Sparta
-	SpartaFaction = NewObject<AFactionBase>();
-
-	PopulateFactionInformation();
-}
-
 void AMarsGameStateBase::PopulateFactionInformation()
 {
 	/* ITALIAN */
 	// Rome
-	RomeFaction->Population.TotalPatricianPop = 578;
-	RomeFaction->Population.TotalPlebesPop = 3478;
-	RomeFaction->Population.TotalProletariatPop = 30678;
-	RomeFaction->Population.TotalForeignerPop = 1789;
-	RomeFaction->Population.TotalSlavePopulation = 3421;
+	RomeFaction.Faction = EFactionName::Rome;
+	RomeFaction.FactionName = "Roman Republic";
 
-	UE_LOG(LogTemp, Warning, TEXT("Roman patrician pop: %d"), RomeFaction->Population.TotalPatricianPop);
+	// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
+	const int32 StartingDevelopmentLevel = 5;
+	const int32 StartingTotalPop = FMath::RandRange(StartingDevelopmentLevel * 10000, (StartingDevelopmentLevel * 10000) + 5000);
+	
+	RomeFaction.FactionPop.TotalPatricianPop = StartingTotalPop * 0.095;
+	RomeFaction.FactionPop.TotalPlebesPop = StartingTotalPop * 0.2;
+	RomeFaction.FactionPop.TotalProletariatPop = StartingTotalPop * 0.6;
+	RomeFaction.FactionPop.TotalForeignerPop = StartingTotalPop * 0.035;
+	RomeFaction.FactionPop.TotalSlavePopulation = StartingTotalPop * 0.07;
+
+	UE_LOG(LogTemp, Warning, TEXT("Rome name: %s"), *RomeFaction.FactionName.ToString());
 }
 
 void AMarsGameStateBase::UpdateMonth()

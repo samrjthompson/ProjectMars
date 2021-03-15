@@ -7,9 +7,6 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Factions/FactionBase.h"
-#include "ProjectMars/Factions/Hellenic/EtruriaFaction.h"
-#include "ProjectMars/Factions/Hellenic/RomeFaction.h"
-#include "ProjectMars/Factions/Punic/CarthageFaction.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/UI/BaseHUD.h"
 #include "ProjectMars/Framework/TimeInGame.h"
@@ -51,6 +48,7 @@ void AProjectMarsPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	CreateArrayOfAvailableFactions();
 	InitialiseGameStateRefs();
 
 	/*UGameplayStatics::OpenLevel(GetWorld(), "ChooseFaction");
@@ -87,6 +85,38 @@ void AProjectMarsPlayer::InitialiseGameStateRefs()
 	{
 		UE_LOG(LogTemp, Error, TEXT("MarsGameStateBase is NULL!"))
 	}
+}
+
+/* Creates a TMap of all factions with a key EFaction enums and creates another TMap of Available factions (which, before anyone has
+ * chosen a faction is an exact copy of the TMap of all factions). With this I intend to find some way of creating all faction objects
+ * with a key of an enum - then using the enum key to find the object and assign values from there. Hoping to also use this for assigning
+ * a player a faction. */
+void AProjectMarsPlayer::CreateArrayOfAvailableFactions()
+{
+	TArray<EFactionName> FactionEnums;
+	// TArray<ETestType> EnumTestArray;
+
+	/*for(int32 i = 0; i < ETestType::MAX; i++)
+	{
+		EnumTestArray.AddUnique(ETestType(i));
+	}*/
+	
+	for(int32 i = 0; i < (uint8)EFactionName::MAX; i++)
+	{
+		FactionEnums.Add(EFactionName(i));
+	}
+	for(int32 i = 0; i < (uint8)EFactionName::MAX; i++)
+	{
+		FFaction FactionObj;
+		//FactionPtr = NewObject<FFaction>();
+		EFactionName FactionKey = EFactionName(i);
+
+		AllFactionsMap.Add(FactionKey, FactionObj);
+	}
+
+	// Will use the AvailableFactionsMap to find the remaining available factions and assign them to the AI after the player/s have chosen their factions
+	AvailableFactionsMap = AllFactionsMap;
+	// PlayerFaction = AvailableFactionsMap.Find(EFactionName::Rome);
 }
 
 void AProjectMarsPlayer::PawnMovement(float DeltaTime)
@@ -133,58 +163,79 @@ void AProjectMarsPlayer::MoveRight(float Val)
 	MovementDirection.Y = FMath::Clamp(Val, -1.f, 1.f);
 }
 
+// Testing the functionality of choosing the faction from a TMap of faction objects - see AProjectMarsPlayer::CreateArrayOfAvailableFactions()
 void AProjectMarsPlayer::ChooseRome()
 {
 	if(bHasChosenFaction) { return; }
-	InitialisePlayerFaction(EFaction::Rome);
+	// InitialisePlayerFaction(EFactionName::Rome);
+
+	PlayerFaction = AvailableFactionsMap.Find(EFactionName::Rome);
+	AvailableFactionsMap.Remove(EFactionName::Rome);
+
+	PlayerFaction->Faction = EFactionName::Rome;
+	PlayerFaction->FactionName = "Roman Republic";
+
+	// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
+	const int32 StartingDevelopmentLevel = 5;
+	const int32 StartingTotalPop = FMath::RandRange(StartingDevelopmentLevel * 10000, (StartingDevelopmentLevel * 10000) + 5000);
+
+	PlayerFaction->FactionPop.TotalPatricianPop = StartingTotalPop * 0.095;
+	PlayerFaction->FactionPop.TotalPlebesPop = StartingTotalPop * 0.2;
+	PlayerFaction->FactionPop.TotalProletariatPop = StartingTotalPop * 0.6;
+	PlayerFaction->FactionPop.TotalForeignerPop = StartingTotalPop * 0.035;
+	PlayerFaction->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.07;
+
+	UE_LOG(LogTemp, Warning, TEXT("Rome name: %s"), *PlayerFaction->FactionName.ToString());
+
+	InitialisePlayerFaction(EFactionName::Rome);
 }
 
 void AProjectMarsPlayer::ChooseEtruria()
 {
 	if(bHasChosenFaction) { return; }
-	InitialisePlayerFaction(EFaction::Etruria);
+	InitialisePlayerFaction(EFactionName::Etruria);
 }
 
 void AProjectMarsPlayer::ChooseCarthage()
 {
 	if(bHasChosenFaction) { return; }
-	InitialisePlayerFaction(EFaction::Carthage);
+	InitialisePlayerFaction(EFactionName::Carthage);
 }
 
-void AProjectMarsPlayer::InitialisePlayerFaction(const EFaction& Faction)
+void AProjectMarsPlayer::InitialisePlayerFaction(const EFactionName& Faction)
 {
 	if(bHasChosenFaction) { return; }
 	
-	switch (Faction)
+	/*switch (Faction)
 	{
-		case EFaction::Rome : PlayerAssignedFaction = NewObject<AFactionBase>();
+	case EFactionName::Rome: PlayerFaction = &MarsGameStateBase->RomeFaction;
 		break;
 
-		case EFaction::Etruria : PlayerAssignedFaction = NewObject<AEtruriaFaction>();
+	case EFactionName::Etruria : PlayerFaction = &MarsGameStateBase->EtruriaFaction;
 		break;
 
-		case EFaction::Carthage : PlayerAssignedFaction = NewObject<ACarthageFaction>();
+	case EFactionName::Carthage : PlayerFaction = &MarsGameStateBase->CarthageFaction;
 		break;
 
-		default: PlayerAssignedFaction = nullptr;
+	default: PlayerFaction = nullptr;
 		break;
-	}
+	}*/
 
-	if(PlayerAssignedFaction && MarsGameStateBase)
+	if(PlayerFaction && MarsGameStateBase)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Faction Name: %s"), *PlayerAssignedFaction->GetBaseFactionName().ToString());
+		UE_LOG(LogTemp, Warning, TEXT("Faction Name: %s"), *PlayerFaction->FactionName.ToString());
 		InitialiseHUD();
 
 		// This is a pointer to the address of the faction data object 
-		BaseFactionData = &PlayerAssignedFaction->GetRefToFactionData();
-		FactionEconomics = &PlayerAssignedFaction->GetRefToEconomicsData();
+		// BaseFactionData = &PlayerFaction->GetRefToFactionData();
+		FactionEconomics = &PlayerFaction->Economics;
 
 		bHasChosenFaction = true;
 		MarsGameStateBase->LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
 	}
-	if(!PlayerAssignedFaction)
+	if(!PlayerFaction)
 	{
-		UE_LOG(LogTemp, Error, TEXT("PlayerAssignedFaction is NULL!"))
+		UE_LOG(LogTemp, Error, TEXT("PlayerFaction is NULL!"))
 	}
 }
 
@@ -192,7 +243,7 @@ void AProjectMarsPlayer::InitialiseHUD()
 {
 	if(BaseHUD)
 	{
-		BaseHUD->InitialiseFactionBase(PlayerAssignedFaction);
+		BaseHUD->InitialiseFactionBase(PlayerFaction);
 	}
 	if(!BaseHUD)
 	{
@@ -203,16 +254,16 @@ void AProjectMarsPlayer::InitialiseHUD()
 // TODO: Implement natural system of updating various revenue streams
 void AProjectMarsPlayer::UpdatePlayerIncome()
 {
-	if(PlayerAssignedFaction && !bHasSetTreasury)
+	if(PlayerFaction && !bHasSetTreasury)
 	{
 		SetTreasury();
 	}
-	if (PlayerAssignedFaction && bHasSetTreasury)
+	if (PlayerFaction && bHasSetTreasury)
 	{
 		// AddMoney();
 
-		FFactionEconomics& Obj = PlayerAssignedFaction->GetRefToEconomicsData();
-		FPopulation& PopObj = PlayerAssignedFaction->GetRefToPopulationData();
+		FFactionEconomics& Obj = PlayerFaction->Economics;
+		FPopulation& PopObj = PlayerFaction->FactionPop;
 		
 		Obj.CollectTaxes(PopObj);
 		Obj.ApplyNetIncomeToTreasury();
@@ -257,9 +308,9 @@ void AProjectMarsPlayer::UpdateGameSpeed(float Val)
 
 void AProjectMarsPlayer::UpdatePlayerPopulationData()
 {
-	if(PlayerAssignedFaction)
+	if(PlayerFaction)
 	{
-		FPopulation& Pop = PlayerAssignedFaction->GetRefToPopulationData();
+		FPopulation& Pop = PlayerFaction->FactionPop;
 		Pop.UpdateMonthlyPopulation();
 	}
 }

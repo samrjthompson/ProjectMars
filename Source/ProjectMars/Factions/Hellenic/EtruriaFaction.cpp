@@ -7,11 +7,11 @@
 
 AEtruriaFaction::AEtruriaFaction()
 {
-	EtruriaFactionData.FactionName = "Etruria";
+	/*EtruriaFactionData.FactionName = "Etruria";
 
 	FactionName = EtruriaFactionData.FactionName;
 
-	this->FactionType = EFaction::Etruria;
+	this->FactionType = EFactionName::Etruria;
 	this->CultureGroup = ECultureGroup::Italic;
 	this->Culture = ECultureName::Etruscan;
 
@@ -20,15 +20,15 @@ AEtruriaFaction::AEtruriaFaction()
 	this->Population.TotalPlebesPop = 8000;
 	this->Population.TotalProletariatPop = 35000;
 	this->Population.TotalForeignerPop = 400;
-	this->Population.TotalSlavePopulation = 4000;
+	this->Population.TotalSlavePopulation = 4000;*/
 }
 
-FBaseFactionData& AEtruriaFaction::GetRefToFactionData()
+/*FFaction& AEtruriaFaction::GetRefToFactionData()
 {
 	Super::GetRefToFactionData();
 
-	return EtruriaFactionData;
-}
+	return 0;
+}*/
 
 FFactionEconomics& AEtruriaFaction::GetRefToEconomicsData()
 {

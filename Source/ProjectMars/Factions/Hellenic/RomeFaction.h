@@ -14,16 +14,16 @@ class PROJECTMARS_API ARomeFaction : public AFactionBase
 public:
 	ARomeFaction();
 
-	inline FName GetFactionName() const { return FactionName; };
+	virtual FName GetFactionName() const override { return FactionName; }
 
 private:	
-	FBaseFactionData RomeFactionData;
+	FFaction RomeFactionData;
 	FFactionEconomics RomeFactionEconomy;
 	FPopulation RomePopulation;
 	FCultureData RomanCultureData;
 
 protected:
-	virtual FBaseFactionData& GetRefToFactionData() override;
+	virtual FFaction& GetRefToFactionData() override;
 	virtual FFactionEconomics& GetRefToEconomicsData() override;
 	virtual FPopulation& GetRefToPopulationData() override;
 	// virtual FCultureGroup& GetRefToCultureGroup() override;

@@ -6,7 +6,7 @@
 #include "ProjectMars/Factions/FactionBase.h"
 #include "EtruriaFaction.generated.h"
 
-struct FBaseFactionData;
+// struct FFaction;
 struct FFactionEconomics;
 
 UCLASS()
@@ -17,14 +17,14 @@ class PROJECTMARS_API AEtruriaFaction : public AFactionBase
 public:
 	AEtruriaFaction();
 
-	inline FName GetFactionName() const { return FactionName; };
+	virtual FName GetFactionName() const override { return FactionName; }
 	
-	FBaseFactionData EtruriaFactionData;	
+	// FFaction EtruriaFactionData;	
 	FFactionEconomics EtruriaFactionEconomics;
 	FPopulation EtruriaPopulation;
 
 protected:
-	virtual FBaseFactionData& GetRefToFactionData() override;
+	//virtual FFaction& GetRefToFactionData() override;
 	virtual FFactionEconomics& GetRefToEconomicsData() override;
 	virtual FPopulation& GetRefToPopulationData() override;
 };

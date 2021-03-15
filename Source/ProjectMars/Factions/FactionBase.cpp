@@ -6,13 +6,13 @@
 
 AFactionBase::AFactionBase()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	FactionName = "NONE";
 }
 
 void AFactionBase::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 }
 
 void AFactionBase::Tick(float DeltaSeconds)
@@ -21,7 +21,7 @@ void AFactionBase::Tick(float DeltaSeconds)
 	
 }
 
-FBaseFactionData& AFactionBase::GetRefToFactionData()
+FFaction& AFactionBase::GetRefToFactionData()
 {
 	return BaseFactionData;
 }

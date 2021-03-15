@@ -51,11 +51,10 @@ public:
 	
 	UPROPERTY()
 	class UBaseGameplayWidget* BaseGameplayWidget{ nullptr };
+	
+	struct FFaction* FactionBase{ nullptr };
 
-	UPROPERTY()
-	AFactionBase* FactionBase{ nullptr };
-
-	void InitialiseFactionBase(AFactionBase* InitFactionBase);
+	void InitialiseFactionBase(struct FFaction* InitFaction);
 
 	virtual void InitialisePointers();
 

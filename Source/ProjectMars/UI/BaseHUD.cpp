@@ -92,9 +92,9 @@ void ABaseHUD::DrawSelectionBox()
 		CurrentSelectionPoint.X - InitialSelectionPoint.X, CurrentSelectionPoint.Y - InitialSelectionPoint.Y);
 }
 
-void ABaseHUD::InitialiseFactionBase(AFactionBase* InitFactionBase)
+void ABaseHUD::InitialiseFactionBase(FFaction* InitFaction)
 {
-	FactionBase = InitFactionBase;
+	FactionBase = InitFaction;
 }
 
 void ABaseHUD::InitialisePointers()

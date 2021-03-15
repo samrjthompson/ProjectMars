@@ -7,13 +7,13 @@
 
 ARomeFaction::ARomeFaction()
 {
-	// FBaseFactionData Setup
+	// FFaction Setup
 	RomeFactionData.FactionName = "Roman Republic";
 
 	// Initialise Variables
 	FactionName = RomeFactionData.FactionName;
 
-	this->FactionType = EFaction::Rome;
+	this->FactionType = EFactionName::Rome;
 	this->CultureGroup = ECultureGroup::Italic;
 	this->Culture = ECultureName::Roman;
 	
@@ -43,7 +43,7 @@ ARomeFaction::ARomeFaction()
 	this->RomeFactionEconomy.OutgoingTributes = 0.f;	
 }
 
-FBaseFactionData& ARomeFaction::GetRefToFactionData()
+FFaction& ARomeFaction::GetRefToFactionData()
 {
 	Super::GetRefToFactionData();
 

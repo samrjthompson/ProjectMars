@@ -4,13 +4,25 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "ProjectMars/Factions/FactionBase.h"
 
 #include "ProjectMarsPlayer.generated.h"
 
-enum class EFaction : uint8;
-struct FBaseFactionData;
+enum class EFactionName : uint8;
+struct FFaction;
 struct FFactionEconomics;
 struct FCampaignDateTime;
+
+UENUM()
+enum ETestType
+{
+	Test1,
+	Test2,
+	Test3,
+
+	MAX
+};
+
 
 USTRUCT()
 struct FPlayerEconomy
@@ -83,8 +95,10 @@ protected:
 
 	FPlayerEconomy PlayerEconomy;
 		
-	FBaseFactionData* BaseFactionData{ nullptr };
+	FFaction* BaseFactionData{ nullptr };
 	FFactionEconomics* FactionEconomics{ nullptr };
+
+	FFaction* FactionPtr{ nullptr };
 
 	UPROPERTY()
 	class AMarsGameStateBase* MarsGameStateBase{ nullptr };
@@ -101,8 +115,18 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	// The faction the player will be playing as
-	UPROPERTY()
-	class AFactionBase* PlayerAssignedFaction{ nullptr };
+	struct FFaction* PlayerFaction{ nullptr };
+
+	TArray<AProjectMarsPlayer*> AllPlayers[3];
+
+	TMap<EFactionName, struct FFaction> AllFactionsMap;
+	TMap<EFactionName, struct FFaction> AvailableFactionsMap;
+
+	//FString FactionKey;
+
+	void CreateArrayOfAvailableFactions();
+
+	// TUniquePtr<FFaction> PlayerFaction;
 
 private:
 	void PawnMovement(float DeltaTime);
@@ -125,7 +149,7 @@ private:
 	void ChooseCarthage();
 
 	// Sets the player's faction by creating a NewObject based off the faction that was chosen by the player
-	void InitialisePlayerFaction(const EFaction& Faction);
+	void InitialisePlayerFaction(const EFactionName& Faction);
 
 	// Initialises a pointer (stored in the ABaseHUD class) to a faction class object
 	void InitialiseHUD();

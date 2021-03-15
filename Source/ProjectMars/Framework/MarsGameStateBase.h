@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameStateBase.h"
+#include "ProjectMars/Factions/FactionBase.h"
+
 #include "MarsGameStateBase.generated.h"
 
 class AProjectMarsPlayer;
@@ -27,38 +29,11 @@ public:
 	 * pointer being passed as the argument. */
 	void InitialiseReferences(AProjectMarsPlayer* InitPlayer);
 
-	// Creates objects of all factions in game
-	void InstantiateAllFactions();
-
 	void PopulateFactionInformation();
 
-	// FACTIONS
-	UPROPERTY()
-	AFactionBase* RomeFaction {	nullptr };
-	UPROPERTY()
-	AFactionBase* EtruriaFaction { nullptr };
-	UPROPERTY()
-	AFactionBase* SamniumFaction { nullptr };
-	UPROPERTY()
-	AFactionBase* LucaniaFaction { nullptr };
-	UPROPERTY()
-	AFactionBase* LiguariaFaction {	nullptr	};
-	UPROPERTY()
-	AFactionBase* InsubresFaction {	nullptr	};
-	UPROPERTY()
-	AFactionBase* ArverniFaction { nullptr };
-	UPROPERTY()
-	AFactionBase* SuebiFaction { nullptr };
-	UPROPERTY()
-	AFactionBase* CarthageFaction { nullptr };
-	UPROPERTY()
-	AFactionBase* SyracuseFaction { nullptr };
-	UPROPERTY()
-	AFactionBase* MacedonianFaction { nullptr };
-	UPROPERTY()
-	AFactionBase* EpirusFaction { nullptr };
-	UPROPERTY()
-	AFactionBase* SpartaFaction { nullptr };
+	FFaction RomeFaction;
+	FFaction EtruriaFaction;
+	FFaction CarthageFaction;
 
 protected:
 	virtual void Tick(float DeltaSeconds) override;

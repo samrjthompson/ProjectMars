@@ -11,36 +11,41 @@
 #include "FactionBase.generated.h"
 
 // Seem to have to forward declare the enums
-enum class EFaction : uint8;
 enum class ECultureGroup : uint8;
 enum class ECultureName : uint8;
 
-struct FBaseFactionData;
+struct FFaction;
 struct FPopulation;
 struct FCultureGroup;
 struct FFactionEconomics;
 
 
 UENUM()
-enum class EFaction : uint8
+enum class EFactionName : uint8
 {
-	Rome	UMETA(DisplayName = "Rome"),
-	Etruria		UMETA(DisplayName = "Etruria"),
-	Carthage	UMETA(DisplayName = "Carthage")
+	Rome = 0,
+	Etruria,
+	Carthage,
+	MAX
 };
 
 USTRUCT()
-struct FBaseFactionData
+struct FFaction
 {
 	GENERATED_BODY()
-	
-	FBaseFactionData()
+
+	FFaction()
 	{
-		FactionName = "NONE";
+		
+	}
+	FFaction(EFactionName InitFaction)
+	{
+		Faction = InitFaction;
 	}
 
 	// Name
 	FName FactionName{};
+	EFactionName Faction;
 
 	// Population
 	int32 TotalPopulation{};
@@ -60,7 +65,10 @@ struct FBaseFactionData
 	float TotalWarExhaustion{};
 	float WarExhaustionChange{};
 	float TotalMilitaryXP{};
-	float MilitaryXPChange{};	
+	float MilitaryXPChange{};
+
+	FPopulation FactionPop;
+	FFactionEconomics Economics;
 };
 
 UCLASS()
@@ -73,6 +81,7 @@ class PROJECTMARS_API AFactionBase : public AActor
 
 public:
 	AFactionBase();
+
 
 protected:
 	// Called when the game starts
@@ -89,10 +98,11 @@ public:
 	FPopulation Population;
 
 public:
-	inline FName GetBaseFactionName() const { return FactionName; }
+	inline virtual FName GetFactionName() const { return FactionName; }
+	inline void SetFactionName(FString Name) { FactionName = FName(Name); }
 	
-	// This is a virtual function that returns a reference to an FBaseFactionData object 
-	virtual FBaseFactionData& GetRefToFactionData();
+	// This is a virtual function that returns a reference to an FFaction object 
+	virtual FFaction& GetRefToFactionData();
 
 
 	
@@ -102,10 +112,10 @@ private:
 protected:
 	FName FactionName{};
 	
-	EFaction FactionType;
+	EFactionName FactionType;
 
 	// Objects by value of faction data structs
-	FBaseFactionData BaseFactionData;
+	FFaction BaseFactionData;
 	
 	
 	/****************************************************************/
