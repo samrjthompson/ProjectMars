@@ -3,14 +3,14 @@
 Developed with Unreal Engine 4
 
 
-# Factions
+## Factions
 
 Factions are objects of the FFaction struct. Seeing as a faction object has no physical presence in the world, it doesn't really make
 sense to have the faction as an AActor. In addition, it is just a container of data that the player interacts with. Therefore, it seems
 to make sense to have factions as USTRUCTS rather than UCLASS.
 
 
-# Province System
+## Province System
 
 The original plan was to go with the Paradox style provincial/regional system where each region has its own RGB value and this
 RGB value is the key for the region. However, I think I prefer the total war style where the player cannot easily see provincial 
@@ -20,7 +20,7 @@ I think the best way to implement this would be to break the map up and have eac
 Therefore, when we click on a province, we return the actor in order to identify it. Will see how this goes.
 
 
-# Money
+## Money
 
 Money is earned through tax, trade, tribute, and/or looting.
 
@@ -34,7 +34,7 @@ Tribute is earned through clients/satrapies/war reparations.
 Looting is earned through piracy/sacking and looting settlements.
 
 
-# Population
+## Population
 
 Population is the literal number of people in your city (i.e., the number of pops his not hidden in some way. If there are 50,000 people
 in a city, then the game will tell you that). 
