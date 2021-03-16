@@ -25,7 +25,7 @@ Therefore, when we click on a province, we return the actor in order to identify
 Money is earned through tax, trade, tribute, and/or looting.
 
 Tax is earned from your population. Each pop type will give a different level of tax (except slaves who will give no tax).
-Tax will also be modified based off event modifiers (e.g., a sacrifice to the Gods will boost productivity), and pop happiness.
+Tax will also be modified based on event modifiers (e.g., a sacrifice to the Gods will boost productivity), and pop happiness.
 
 Trade/Commerce is earned through imports and exports. Slaves also increase your import and export value.
 
@@ -36,7 +36,7 @@ Looting is earned through piracy/sacking and looting settlements.
 
 # Population
 
-Population is the literal number of people in your city (i.e., the number of pops his not hidden in someway. If there are 50,000 people
+Population is the literal number of people in your city (i.e., the number of pops his not hidden in some way. If there are 50,000 people
 in a city, then the game will tell you that). 
 
 This total population will be split up into different classes. These are the Patricians (Upper/Aristocratic class), the Plebes 
@@ -48,6 +48,6 @@ In the case of war, obviously slaves are the main pop type you will gain.
 
 Migration is affected through region attraction which, in turn, is affected by fertility, economic opportunities, and border security.
 
-Reproduction rates, and pop growth from this, is affected by health of the population and the food abundance of the region. Food abudance
+Reproduction rates, and pop growth from this, is affected by health of the population and the food abundance of the region. Food abundance
 will directly affect pop capacity. If food abundance drops below pop capacity, then people will start to starve and overall productivity
 and economic output of the region will go down.
