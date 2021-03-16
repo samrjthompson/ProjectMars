@@ -68,6 +68,8 @@ public:
 	// Sets default values for this pawn's properties
 	AProjectMarsPlayer();
 
+	//FOnFactionChosenByPlayer OnFactionChosenByPlayer;
+
 	UPROPERTY(EditAnywhere)
 	class USceneComponent* RootComp{ nullptr };
 
@@ -116,17 +118,6 @@ public:
 
 	// The faction the player will be playing as
 	struct FFaction* PlayerFaction{ nullptr };
-
-	TArray<AProjectMarsPlayer*> AllPlayers[3];
-
-	TMap<EFactionName, struct FFaction> AllFactionsMap;
-	TMap<EFactionName, struct FFaction> AvailableFactionsMap;
-
-	//FString FactionKey;
-
-	void CreateArrayOfAvailableFactions();
-
-	// TUniquePtr<FFaction> PlayerFaction;
 
 private:
 	void PawnMovement(float DeltaTime);

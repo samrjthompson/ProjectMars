@@ -29,12 +29,27 @@ public:
 	 * pointer being passed as the argument. */
 	void InitialiseReferences(AProjectMarsPlayer* InitPlayer);
 
-	void PopulateFactionInformation();
+	// This function populates all factions with their unique info (e.g., pops, govt types etc.)
+	void PopulateFactionInformation(TMap<EFactionName, struct FFaction>& InitAllFactionsMap);
 
 	FFaction RomeFaction;
 	FFaction EtruriaFaction;
 	FFaction CarthageFaction;
 
+	void CreateArrayOfAvailableFactions();
+
+	TArray<AProjectMarsPlayer*> AllPlayers[3];
+
+	TMap<EFactionName, struct FFaction> AllFactionsMap;
+	TMap<EFactionName, struct FFaction>* AvailableFactionsMap;
+
+	// FACTION POINTERS
+	struct FFaction* Rome{ nullptr };
+	struct FFaction* Etruria{ nullptr };
+	struct FFaction* Carthage{ nullptr };
+
+	void AssignAIFactions();
+	
 protected:
 	virtual void Tick(float DeltaSeconds) override;
 

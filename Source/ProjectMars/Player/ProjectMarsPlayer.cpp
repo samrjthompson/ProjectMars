@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
+#include "ProjectMars/Controllers/AIControllerBase.h"
 #include "ProjectMars/Factions/FactionBase.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/UI/BaseHUD.h"
@@ -48,20 +49,22 @@ void AProjectMarsPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	CreateArrayOfAvailableFactions();
 	InitialiseGameStateRefs();
 
 	/*UGameplayStatics::OpenLevel(GetWorld(), "ChooseFaction");
 	CurrentLevel = GetWorld()->GetMapName();*/
-	
+
+	// BUG: Currently not initialising the BasePlayerController ptr when spawning an AProjectMarsPlayer object in the AMarsGameStateBase::AssignAIFactions - I think it is because AI needs to get the AIController rather than playercontroller
 	BasePlayerController = Cast<ABasePlayerController>(GetController());
 	if(BasePlayerController)
 	{
 		BaseHUD = Cast<ABaseHUD>(BasePlayerController->GetHUD());
 	}
-	if(!BasePlayerController)
+	if (!BasePlayerController)
 	{
-		UE_LOG(LogTemp, Error, TEXT("BasePlayerController is nullptr - AProjectMarsPlayer::BeginPlay"));
+		// TODO: Add a pointer to AIControllerBase so that AI can use this rather than the player
+		// BasePlayerController = Cast<AAIControllerBase>(AIControllerClass);
+		// UE_LOG(LogTemp, Error, TEXT("BasePlayerController is nullptr - AProjectMarsPlayer::BeginPlay"));
 	}
 }
 
@@ -85,38 +88,6 @@ void AProjectMarsPlayer::InitialiseGameStateRefs()
 	{
 		UE_LOG(LogTemp, Error, TEXT("MarsGameStateBase is NULL!"))
 	}
-}
-
-/* Creates a TMap of all factions with a key EFaction enums and creates another TMap of Available factions (which, before anyone has
- * chosen a faction is an exact copy of the TMap of all factions). With this I intend to find some way of creating all faction objects
- * with a key of an enum - then using the enum key to find the object and assign values from there. Hoping to also use this for assigning
- * a player a faction. */
-void AProjectMarsPlayer::CreateArrayOfAvailableFactions()
-{
-	TArray<EFactionName> FactionEnums;
-	// TArray<ETestType> EnumTestArray;
-
-	/*for(int32 i = 0; i < ETestType::MAX; i++)
-	{
-		EnumTestArray.AddUnique(ETestType(i));
-	}*/
-	
-	for(int32 i = 0; i < (uint8)EFactionName::MAX; i++)
-	{
-		FactionEnums.Add(EFactionName(i));
-	}
-	for(int32 i = 0; i < (uint8)EFactionName::MAX; i++)
-	{
-		FFaction FactionObj;
-		//FactionPtr = NewObject<FFaction>();
-		EFactionName FactionKey = EFactionName(i);
-
-		AllFactionsMap.Add(FactionKey, FactionObj);
-	}
-
-	// Will use the AvailableFactionsMap to find the remaining available factions and assign them to the AI after the player/s have chosen their factions
-	AvailableFactionsMap = AllFactionsMap;
-	// PlayerFaction = AvailableFactionsMap.Find(EFactionName::Rome);
 }
 
 void AProjectMarsPlayer::PawnMovement(float DeltaTime)
@@ -167,39 +138,35 @@ void AProjectMarsPlayer::MoveRight(float Val)
 void AProjectMarsPlayer::ChooseRome()
 {
 	if(bHasChosenFaction) { return; }
-	// InitialisePlayerFaction(EFactionName::Rome);
 
-	PlayerFaction = AvailableFactionsMap.Find(EFactionName::Rome);
-	AvailableFactionsMap.Remove(EFactionName::Rome);
-
-	PlayerFaction->Faction = EFactionName::Rome;
-	PlayerFaction->FactionName = "Roman Republic";
-
-	// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
-	const int32 StartingDevelopmentLevel = 5;
-	const int32 StartingTotalPop = FMath::RandRange(StartingDevelopmentLevel * 10000, (StartingDevelopmentLevel * 10000) + 5000);
-
-	PlayerFaction->FactionPop.TotalPatricianPop = StartingTotalPop * 0.095;
-	PlayerFaction->FactionPop.TotalPlebesPop = StartingTotalPop * 0.2;
-	PlayerFaction->FactionPop.TotalProletariatPop = StartingTotalPop * 0.6;
-	PlayerFaction->FactionPop.TotalForeignerPop = StartingTotalPop * 0.035;
-	PlayerFaction->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.07;
-
-	UE_LOG(LogTemp, Warning, TEXT("Rome name: %s"), *PlayerFaction->FactionName.ToString());
+	PlayerFaction = MarsGameStateBase->AvailableFactionsMap->Find(EFactionName::Rome);
+	MarsGameStateBase->AvailableFactionsMap->Remove(EFactionName::Rome);
 
 	InitialisePlayerFaction(EFactionName::Rome);
+
+	MarsGameStateBase->AssignAIFactions();
+
+	// OnFactionChosenByPlayer.Broadcast();
 }
 
 void AProjectMarsPlayer::ChooseEtruria()
 {
 	if(bHasChosenFaction) { return; }
 	InitialisePlayerFaction(EFactionName::Etruria);
+
+	// OnFactionChosenByPlayer.Broadcast();
+
+	MarsGameStateBase->AssignAIFactions();
 }
 
 void AProjectMarsPlayer::ChooseCarthage()
 {
 	if(bHasChosenFaction) { return; }
 	InitialisePlayerFaction(EFactionName::Carthage);
+
+	// OnFactionChosenByPlayer.Broadcast();
+
+	MarsGameStateBase->AssignAIFactions();
 }
 
 void AProjectMarsPlayer::InitialisePlayerFaction(const EFactionName& Faction)

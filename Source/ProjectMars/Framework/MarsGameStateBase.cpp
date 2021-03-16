@@ -1,11 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ProjectMars/Framework/MarsGameStateBase.h"
+#include "MarsGameStateBase.h"
 
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/UI/BaseHUD.h"
+#include "ProjectMars/Factions/FactionBase.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
 {
@@ -36,7 +37,8 @@ void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PopulateFactionInformation();
+	//PopulateFactionInformation();
+	CreateArrayOfAvailableFactions();
 	
 	LastTickCheck = GetWorld()->GetTimeSeconds();
 	LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();
@@ -49,26 +51,6 @@ void AMarsGameStateBase::Tick(float DeltaSeconds)
 	CalculateTickRate();
 	
 	UpdateGameTime();
-}
-
-void AMarsGameStateBase::PopulateFactionInformation()
-{
-	/* ITALIAN */
-	// Rome
-	RomeFaction.Faction = EFactionName::Rome;
-	RomeFaction.FactionName = "Roman Republic";
-
-	// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
-	const int32 StartingDevelopmentLevel = 5;
-	const int32 StartingTotalPop = FMath::RandRange(StartingDevelopmentLevel * 10000, (StartingDevelopmentLevel * 10000) + 5000);
-	
-	RomeFaction.FactionPop.TotalPatricianPop = StartingTotalPop * 0.095;
-	RomeFaction.FactionPop.TotalPlebesPop = StartingTotalPop * 0.2;
-	RomeFaction.FactionPop.TotalProletariatPop = StartingTotalPop * 0.6;
-	RomeFaction.FactionPop.TotalForeignerPop = StartingTotalPop * 0.035;
-	RomeFaction.FactionPop.TotalSlavePopulation = StartingTotalPop * 0.07;
-
-	UE_LOG(LogTemp, Warning, TEXT("Rome name: %s"), *RomeFaction.FactionName.ToString());
 }
 
 void AMarsGameStateBase::UpdateMonth()
@@ -276,4 +258,108 @@ void AMarsGameStateBase::InitialiseReferences(AProjectMarsPlayer* InitPlayer)
 		UE_LOG(LogTemp, Error, TEXT("BaseHUD is NULL"));
 		return;
 	}
+}
+
+/* Creates a TMap of all factions with a key EFaction enums and creates another TMap of Available factions (which, before anyone has
+ * chosen a faction is an exact copy of the TMap of all factions). With this I intend to find some way of creating all faction objects
+ * with a key of an enum - then using the enum key to find the object and assign values from there. Hoping to also use this for assigning
+ * a player a faction. */
+void AMarsGameStateBase::CreateArrayOfAvailableFactions()
+{
+	for (int32 i = 0; i < (uint8)EFactionName::MAX; i++)
+	{
+		FFaction FactionObj;
+		//FactionPtr = NewObject<FFaction>();
+		EFactionName FactionKey = EFactionName(i);
+
+		AllFactionsMap.Add(FactionKey, FactionObj);
+	}
+	
+	PopulateFactionInformation(AllFactionsMap);
+	
+	/* Will use the AvailableFactionsMap array (which is a pointer) to find the remaining available factions and assign them to the
+	 * AI after the player/s have chosen their factions. */
+	AvailableFactionsMap = &AllFactionsMap;
+}
+
+void AMarsGameStateBase::PopulateFactionInformation(TMap<EFactionName, struct FFaction>& InitAllFactionsMap)
+{
+	/* ITALIAN */
+	// Rome
+	Rome = InitAllFactionsMap.Find(EFactionName::Rome);
+	if (!Rome) { UE_LOG(LogTemp, Error, TEXT("Rome is nullptr in AMarsGameStateBase::PopulateFactionInformation")); return; } // Null check
+	
+	Rome->Faction = EFactionName::Rome;
+	Rome->FactionName = "Roman Republic";
+
+	// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
+	{
+		const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
+
+		Rome->FactionPop.TotalPatricianPop = StartingTotalPop;
+		Rome->FactionPop.TotalPlebesPop = StartingTotalPop;
+		Rome->FactionPop.TotalProletariatPop = StartingTotalPop;
+		Rome->FactionPop.TotalForeignerPop = StartingTotalPop;
+		Rome->FactionPop.TotalSlavePopulation = StartingTotalPop;
+
+		UE_LOG(LogTemp, Warning, TEXT("Rome name: %s"), *RomeFaction.FactionName.ToString());
+	}
+
+	// Etruria
+	Etruria = InitAllFactionsMap.Find(EFactionName::Etruria);
+	if (!Etruria) { UE_LOG(LogTemp, Error, TEXT("Etruria is nullptr in AMarsGameStateBase::PopulateFactionInformation")); return; } // Null check
+
+	Etruria->Faction = EFactionName::Etruria;
+	Etruria->FactionName = "Etruria";
+
+	// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
+	{
+		const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
+
+		Etruria->FactionPop.TotalPatricianPop = StartingTotalPop;
+		Etruria->FactionPop.TotalPlebesPop = StartingTotalPop;
+		Etruria->FactionPop.TotalProletariatPop = StartingTotalPop;
+		Etruria->FactionPop.TotalForeignerPop = StartingTotalPop;
+		Etruria->FactionPop.TotalSlavePopulation = StartingTotalPop;
+	}
+
+
+	/* NORTH AFRICAN */
+	// Carthage
+
+	Carthage = InitAllFactionsMap.Find(EFactionName::Carthage);
+	if (!Carthage) { UE_LOG(LogTemp, Error, TEXT("Carthage is nullptr in AMarsGameStateBase::PopulateFactionInformation")); return; } // Null check
+
+	Carthage->Faction = EFactionName::Carthage;
+	Carthage->FactionName = "Carthage";
+
+	// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
+	{
+		const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
+
+		Carthage->FactionPop.TotalPatricianPop = StartingTotalPop;
+		Carthage->FactionPop.TotalPlebesPop = StartingTotalPop;
+		Carthage->FactionPop.TotalProletariatPop = StartingTotalPop;
+		Carthage->FactionPop.TotalForeignerPop = StartingTotalPop;
+		Carthage->FactionPop.TotalSlavePopulation = StartingTotalPop;
+	}
+}
+
+void AMarsGameStateBase::AssignAIFactions()
+{
+	if (!AvailableFactionsMap) { return; }
+
+	TArray<FFaction> FactionArray;
+	AvailableFactionsMap->GenerateValueArray(FactionArray);
+
+	TArray<AProjectMarsPlayer*> AIPlayersArray;
+	
+	for (int32 i = 0; i < AvailableFactionsMap->Num(); i++)
+	{
+		AProjectMarsPlayer* AIPlayer = GetWorld()->SpawnActor<AProjectMarsPlayer>(AProjectMarsPlayer::StaticClass());
+		AIPlayer->PlayerFaction = &FactionArray[i];
+		AIPlayersArray.Emplace(AIPlayer);
+	}
+
+	FactionArray.Empty();
 }
