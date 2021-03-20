@@ -238,8 +238,6 @@ void AMarsGameStateBase::CalculateCurrentDay()
 
 void AMarsGameStateBase::InitialiseReferences(AProjectMarsPlayer* InitPlayer)
 {
-	// BUG: Player is still initialised to the player controlled player rather than AI when AI is spawned
-	// Player = nullptr;
 	Player = InitPlayer;
 	
 	if(!Player)
@@ -248,6 +246,8 @@ void AMarsGameStateBase::InitialiseReferences(AProjectMarsPlayer* InitPlayer)
 		return;
 	}
 
+	if (!Player->IsPlayerControlled()) { return; }
+	
 	// If player is controlled by player
 	if(Player->IsPlayerControlled())
 	{
@@ -365,7 +365,6 @@ void AMarsGameStateBase::AssignAIFactions()
 	{
 		AProjectMarsPlayer* AIPlayer = nullptr;
 		AIPlayer = GetWorld()->SpawnActor<AProjectMarsPlayer>(AProjectMarsPlayer::StaticClass());
-		// AIPlayer->BasePlayerController = Player->BasePlayerController;
 		AIPlayer->PlayerFaction = &FactionArray[i];
 		AIPlayer->SpawnDefaultController();
 		AIPlayersArray.Emplace(AIPlayer);

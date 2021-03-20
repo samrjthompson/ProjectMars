@@ -67,7 +67,9 @@ void AProjectMarsPlayer::Tick(float DeltaTime)
 
 void AProjectMarsPlayer::InitialiseGameStateRefs()
 {
-	if (!IsPlayerControlled()) { return; }
+	// if (!IsPlayerControlled()) { return; }
+
+	// TODO: BUG: If I uncomment this out, I can control the game time. However, if we run this code when not controlled by player I cannot.
 	
 	MarsGameStateBase = Cast<AMarsGameStateBase>(GetWorld()->GetGameState());
 
