@@ -38,7 +38,7 @@ void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//PopulateFactionInformation();
+	//PopulateFactionStartingInformation();
 	CreateArrayOfAvailableFactions();
 	
 	LastTickCheck = GetWorld()->GetTimeSeconds();
@@ -289,19 +289,19 @@ void AMarsGameStateBase::CreateArrayOfAvailableFactions()
 		AllFactionsMap.Add(FactionKey, FactionObj);
 	}
 	
-	PopulateFactionInformation(AllFactionsMap);
+	PopulateFactionStartingInformation(AllFactionsMap);
 	
 	/* Will use the AvailableFactionsMap array (which is a pointer) to find the remaining available factions and assign them to the
 	 * AI after the player/s have chosen their factions. */
 	AvailableFactionsMap = &AllFactionsMap;
 }
 
-void AMarsGameStateBase::PopulateFactionInformation(TMap<EFactionName, struct FFaction>& InitAllFactionsMap)
+void AMarsGameStateBase::PopulateFactionStartingInformation(TMap<EFactionName, struct FFaction>& InitAllFactionsMap)
 {
 	/* ITALIAN */
 	// Rome
 	Rome = InitAllFactionsMap.Find(EFactionName::Rome);
-	if (!Rome) { UE_LOG(LogTemp, Error, TEXT("Rome is nullptr in AMarsGameStateBase::PopulateFactionInformation")); return; } // Null check
+	if (!Rome) { UE_LOG(LogTemp, Error, TEXT("Rome is nullptr in AMarsGameStateBase::PopulateFactionStartingInformation")); return; } // Null check
 	
 	Rome->Faction = EFactionName::Rome;
 	Rome->FactionName = "Roman Republic";
@@ -321,7 +321,7 @@ void AMarsGameStateBase::PopulateFactionInformation(TMap<EFactionName, struct FF
 
 	// Etruria
 	Etruria = InitAllFactionsMap.Find(EFactionName::Etruria);
-	if (!Etruria) { UE_LOG(LogTemp, Error, TEXT("Etruria is nullptr in AMarsGameStateBase::PopulateFactionInformation")); return; } // Null check
+	if (!Etruria) { UE_LOG(LogTemp, Error, TEXT("Etruria is nullptr in AMarsGameStateBase::PopulateFactionStartingInformation")); return; } // Null check
 
 	Etruria->Faction = EFactionName::Etruria;
 	Etruria->FactionName = "Etruria";
@@ -342,7 +342,7 @@ void AMarsGameStateBase::PopulateFactionInformation(TMap<EFactionName, struct FF
 	// Carthage
 
 	Carthage = InitAllFactionsMap.Find(EFactionName::Carthage);
-	if (!Carthage) { UE_LOG(LogTemp, Error, TEXT("Carthage is nullptr in AMarsGameStateBase::PopulateFactionInformation")); return; } // Null check
+	if (!Carthage) { UE_LOG(LogTemp, Error, TEXT("Carthage is nullptr in AMarsGameStateBase::PopulateFactionStartingInformation")); return; } // Null check
 
 	Carthage->Faction = EFactionName::Carthage;
 	Carthage->FactionName = "Carthage";

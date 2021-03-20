@@ -30,7 +30,7 @@ public:
 	void InitialiseReferences(AProjectMarsPlayer* InitPlayer);
 
 	// This function populates all factions with their unique info (e.g., pops, govt types etc.)
-	void PopulateFactionInformation(TMap<EFactionName, struct FFaction>& InitAllFactionsMap);
+	void PopulateFactionStartingInformation(TMap<EFactionName, struct FFaction>& InitAllFactionsMap);
 
 	FFaction RomeFaction;
 	FFaction EtruriaFaction;
