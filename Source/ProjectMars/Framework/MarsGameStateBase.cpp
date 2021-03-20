@@ -7,6 +7,7 @@
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/UI/BaseHUD.h"
 #include "ProjectMars/Factions/FactionBase.h"
+#include "ProjectMars/Controllers/AIControllerBase.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
 {
@@ -237,6 +238,8 @@ void AMarsGameStateBase::CalculateCurrentDay()
 
 void AMarsGameStateBase::InitialiseReferences(AProjectMarsPlayer* InitPlayer)
 {
+	// BUG: Player is still initialised to the player controlled player rather than AI when AI is spawned
+	// Player = nullptr;
 	Player = InitPlayer;
 	
 	if(!Player)
@@ -245,11 +248,15 @@ void AMarsGameStateBase::InitialiseReferences(AProjectMarsPlayer* InitPlayer)
 		return;
 	}
 
-	PlayerController = Cast<ABasePlayerController>(Player->GetController());
-	if(!PlayerController)
+	// If player is controlled by player
+	if(Player->IsPlayerControlled())
 	{
-		UE_LOG(LogTemp, Error, TEXT("PlayerController is NULL"));
-		return;
+		PlayerController = Cast<ABasePlayerController>(Player->GetController());
+		if (!PlayerController)
+		{
+			UE_LOG(LogTemp, Error, TEXT("PlayerController is NULL"));
+			return;
+		}
 	}
 
 	BaseHUD = Cast<ABaseHUD>(PlayerController->GetHUD());
@@ -356,10 +363,22 @@ void AMarsGameStateBase::AssignAIFactions()
 	
 	for (int32 i = 0; i < AvailableFactionsMap->Num(); i++)
 	{
-		AProjectMarsPlayer* AIPlayer = GetWorld()->SpawnActor<AProjectMarsPlayer>(AProjectMarsPlayer::StaticClass());
+		AProjectMarsPlayer* AIPlayer = nullptr;
+		AIPlayer = GetWorld()->SpawnActor<AProjectMarsPlayer>(AProjectMarsPlayer::StaticClass());
+		// AIPlayer->BasePlayerController = Player->BasePlayerController;
 		AIPlayer->PlayerFaction = &FactionArray[i];
+		AIPlayer->SpawnDefaultController();
 		AIPlayersArray.Emplace(AIPlayer);
-	}
 
+		if(AIPlayer->GetController())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("AI Controller: %s"), *AIPlayer->GetController()->GetName());
+		}
+		if(!AIPlayer->GetController())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("AI has no controller!"));
+		}
+	}
+	
 	FactionArray.Empty();
 }

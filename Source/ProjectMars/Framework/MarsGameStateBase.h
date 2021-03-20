@@ -58,6 +58,9 @@ private:
 	class ABasePlayerController* PlayerController{ nullptr };
 
 	UPROPERTY()
+	class AAIControllerBase* AIController{ nullptr };
+
+	UPROPERTY()
 	AProjectMarsPlayer* Player{ nullptr };
 
 	UPROPERTY()

@@ -59,4 +59,7 @@ public:
 	APopulationBase();
 
 	virtual void BeginPlay() override;
+
+	
+
 };

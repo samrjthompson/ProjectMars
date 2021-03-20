@@ -61,6 +61,7 @@ UCLASS()
 class PROJECTMARS_API AProjectMarsPlayer : public APawn
 {
 	friend class ABaseHUD;
+	friend class AMarsGameStateBase;
 	
 	GENERATED_BODY()
 
@@ -109,6 +110,8 @@ protected:
 	 * so that we can initialise a pointer to the player pointer from GameState class. */
 	void InitialiseGameStateRefs();
 
+	void InitialisePlayerController();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -144,6 +147,8 @@ private:
 
 	// Initialises a pointer (stored in the ABaseHUD class) to a faction class object
 	void InitialiseHUD();
+
+	//TSharedPtr<class ABasePlayerController> BasePlayerController;
 
 	UPROPERTY()
 	class ABasePlayerController* BasePlayerController{ nullptr };

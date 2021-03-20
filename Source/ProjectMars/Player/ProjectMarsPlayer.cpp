@@ -48,24 +48,13 @@ AProjectMarsPlayer::AProjectMarsPlayer()
 void AProjectMarsPlayer::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	InitialiseGameStateRefs();
+
+	InitialisePlayerController();
 
 	/*UGameplayStatics::OpenLevel(GetWorld(), "ChooseFaction");
 	CurrentLevel = GetWorld()->GetMapName();*/
-
-	// BUG: Currently not initialising the BasePlayerController ptr when spawning an AProjectMarsPlayer object in the AMarsGameStateBase::AssignAIFactions - I think it is because AI needs to get the AIController rather than playercontroller
-	BasePlayerController = Cast<ABasePlayerController>(GetController());
-	if(BasePlayerController)
-	{
-		BaseHUD = Cast<ABaseHUD>(BasePlayerController->GetHUD());
-	}
-	if (!BasePlayerController)
-	{
-		// TODO: Add a pointer to AIControllerBase so that AI can use this rather than the player
-		// BasePlayerController = Cast<AAIControllerBase>(AIControllerClass);
-		// UE_LOG(LogTemp, Error, TEXT("BasePlayerController is nullptr - AProjectMarsPlayer::BeginPlay"));
-	}
 }
 
 // Called every frame
@@ -78,6 +67,8 @@ void AProjectMarsPlayer::Tick(float DeltaTime)
 
 void AProjectMarsPlayer::InitialiseGameStateRefs()
 {
+	if (!IsPlayerControlled()) { return; }
+	
 	MarsGameStateBase = Cast<AMarsGameStateBase>(GetWorld()->GetGameState());
 
 	if(MarsGameStateBase)
@@ -87,6 +78,23 @@ void AProjectMarsPlayer::InitialiseGameStateRefs()
 	if(!MarsGameStateBase)
 	{
 		UE_LOG(LogTemp, Error, TEXT("MarsGameStateBase is NULL!"))
+	}
+}
+
+void AProjectMarsPlayer::InitialisePlayerController()
+{
+	if (IsPlayerControlled())
+	{
+		BasePlayerController = Cast<ABasePlayerController>(GetController());;
+
+		if (BasePlayerController)
+		{
+			BaseHUD = Cast<ABaseHUD>(BasePlayerController->GetHUD());
+		}
+		if (!BasePlayerController)
+		{
+			UE_LOG(LogTemp, Error, TEXT("BasePlayerController is nullptr - AProjectMarsPlayer::BeginPlay"));
+		}
 	}
 }
 
