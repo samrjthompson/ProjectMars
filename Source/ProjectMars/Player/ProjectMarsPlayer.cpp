@@ -38,10 +38,6 @@ AProjectMarsPlayer::AProjectMarsPlayer()
 	bHasSetTreasury = false;
 
 	MonthIndex = 1;
-
-	// TIME
-	FCampaignDateTime Obj;
-	CampaignDateTimePtr = &Obj;
 }
 
 void AProjectMarsPlayer::InitialiseAIComponents(AProjectMarsPlayer* AIPlayer)
@@ -121,7 +117,7 @@ void AProjectMarsPlayer::SetTreasury()
 {
 	if(FactionEconomics)
 	{
-		PlayerEconomy.Treasury = FactionEconomics->Treasury;
+		//PlayerEconomy.Treasury = FactionEconomics->Treasury;
 
 		UE_LOG(LogTemp, Warning, TEXT("SetTreasury CALLED!"))
 		
@@ -255,7 +251,7 @@ void AProjectMarsPlayer::UpdatePlayerIncome()
 		Obj.CollectTaxes(PopObj);
 		Obj.ApplyNetIncomeToTreasury();
 		
-		PlayerEconomy.Treasury = Obj.Treasury;
+		// PlayerEconomy.Treasury = Obj.Treasury;
 
 		// UE_LOG(LogTemp, Warning, TEXT("Faction Gross income: %f"), Obj.GrossIncome);
 		// UE_LOG(LogTemp, Warning, TEXT("Faction Outgoings: %f"), Obj.GetTotalOutgoings());

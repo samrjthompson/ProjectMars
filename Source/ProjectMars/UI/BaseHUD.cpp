@@ -10,7 +10,6 @@
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
 #include "Widgets/ChooseFactionWidget.h"
 #include "Widgets/EconomyWidget.h"
-#include "ProjectMars/Factions/Hellenic/RomeFaction.h"
 
 #define OUT
 
@@ -120,16 +119,16 @@ ABaseHUD* ABaseHUD::GetRefToBaseHUD()
 
 void ABaseHUD::DrawPlayerTreasury()
 {
-	if(BaseGameplayWidget && Player)
+	if(BaseGameplayWidget && Player && Player->FactionEconomics)
 	{
 		//BaseGameplayWidget->EconomyText->SetText(FText::FromString(FString::SanitizeFloat(Player->PlayerEconomy.Treasury)));
-		BaseGameplayWidget->EconomyText->SetText(FText::AsNumber(Player->PlayerEconomy.Treasury));
+		BaseGameplayWidget->EconomyText->SetText(FText::AsNumber(Player->FactionEconomics->Treasury));
 	}
 }
 
 void ABaseHUD::DrawDate()
 {	
-	if(BaseGameplayWidget && Player)
+	if(BaseGameplayWidget && Player && Player->MarsGameStateBase)
 	{
 		BaseGameplayWidget->DayText->SetText(FText::AsNumber(Player->MarsGameStateBase->GetCurrentDay()));
 		BaseGameplayWidget->MonthText->SetText(FText::FromString(Player->MarsGameStateBase->GetCurrentMonthName()));

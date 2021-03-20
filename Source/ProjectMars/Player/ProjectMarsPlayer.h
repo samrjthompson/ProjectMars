@@ -23,40 +23,6 @@ enum ETestType
 	MAX
 };
 
-
-USTRUCT()
-struct FPlayerEconomy
-{
-	GENERATED_BODY()
-
-	FPlayerEconomy()
-	{
-		StartingTreasury = 5000;
-		Treasury = StartingTreasury;
-	}
-
-	// Economy
-	int32 StartingTreasury{};
-	int32 Treasury{};
-	float GrossIncome{};
-	float NetIncome{};
-	float Expenses{};
-	float TaxIncome{};
-	float TotalValueOfExports{};
-	float TotalValueOfImports{};
-	float LootingIncome{};
-	float TributeIncome{};
-	float StateMaintenance{};
-	float FortMaintenance{};
-	float OutgoingTributes{};
-
-	// Maintenance
-	float ArmyMaintenance{};
-	float FleetMaintenance{};
-	float Wages{};
-
-};
-
 UCLASS()
 class PROJECTMARS_API AProjectMarsPlayer : public APawn
 {
@@ -85,25 +51,17 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Culture")
 	class ACultureBase* CultureBase{ nullptr };
-
-	TSubclassOf<class ARomeFaction> RomeClass;
 	
 	void SetTreasury();
 
 	FString CurrentLevel{};
 
+	// Function that initialises components, such as FactionEconomics, for the AI
 	void InitialiseAIComponents(AProjectMarsPlayer* AIPlayer);
 	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	FPlayerEconomy PlayerEconomy;
-		
-	FFaction* BaseFactionData{ nullptr };
-	FFactionEconomics* FactionEconomics{ nullptr };
-
-	FFaction* FactionPtr{ nullptr };
 
 	UPROPERTY()
 	class AMarsGameStateBase* MarsGameStateBase{ nullptr };
@@ -113,6 +71,19 @@ protected:
 	void InitialiseGameStateRefs();
 
 	void InitialisePlayerController();
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// PLAYER COMPONENTS
+private:
+	FFactionEconomics* FactionEconomics{ nullptr };
+	FFaction* BaseFactionData{ nullptr };
+	FFaction* FactionPtr{ nullptr };
+
+	UPROPERTY()
+	class ABasePlayerController* BasePlayerController{ nullptr };
+
+	UPROPERTY()
+	class ABaseHUD* BaseHUD{ nullptr };
 
 public:	
 	// Called every frame
@@ -150,32 +121,23 @@ private:
 	// Initialises a pointer (stored in the ABaseHUD class) to a faction class object
 	void InitialiseHUD();
 
-	//TSharedPtr<class ABasePlayerController> BasePlayerController;
-
-	UPROPERTY()
-	class ABasePlayerController* BasePlayerController{ nullptr };
-
-	UPROPERTY()
-	class ABaseHUD* BaseHUD{ nullptr };
-
 public:
 	void UpdatePlayerFactionInfo();
 
 	bool bHasChosenFaction;
 
-	
-	// ECONOMY
+//////////////////////////////////////////////////////////////////////////////////////////////////////////	
+// ECONOMY
+public:
 
 	// Updates the player income each month
 	void UpdatePlayerIncome();
 
 	void AddMoney();
 	
-
-	// TIME
-
-	FCampaignDateTime* CampaignDateTimePtr;
-	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// TIME
+public:
 
 	void UpdateGameSpeed(float Val);
 
@@ -184,9 +146,10 @@ public:
 	EMonthOfYear CurrentMonth;
 
 	int32 MonthIndex;
-	
-	
-	// POPULATION
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// POPULATION
+public:
 	
 	// Updates player population data every month
 	void UpdatePlayerPopulationData();
