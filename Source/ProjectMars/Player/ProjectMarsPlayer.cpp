@@ -44,6 +44,13 @@ AProjectMarsPlayer::AProjectMarsPlayer()
 	CampaignDateTimePtr = &Obj;
 }
 
+void AProjectMarsPlayer::InitialiseAIComponents(AProjectMarsPlayer* AIPlayer)
+{
+	if (!AIPlayer) { return; }
+	
+	AIPlayer->FactionEconomics = &AIPlayer->PlayerFaction->Economics;
+}
+
 // Called when the game starts or when spawned
 void AProjectMarsPlayer::BeginPlay()
 {
@@ -67,14 +74,15 @@ void AProjectMarsPlayer::Tick(float DeltaTime)
 
 void AProjectMarsPlayer::InitialiseGameStateRefs()
 {
-	// if (!IsPlayerControlled()) { return; }
-
-	// TODO: BUG: If I uncomment this out, I can control the game time. However, if we run this code when not controlled by player I cannot.
-	
 	MarsGameStateBase = Cast<AMarsGameStateBase>(GetWorld()->GetGameState());
 
 	if(MarsGameStateBase)
 	{
+		MarsGameStateBase->PlayerArray.Emplace(this);
+		
+		// TODO: BUG: If I uncomment this out, I can control the game time. However, if we run this code when not controlled by player I cannot.
+		if (!IsPlayerControlled()) { return; }
+		
 		MarsGameStateBase->InitialiseReferences(this);
 	}
 	if(!MarsGameStateBase)
@@ -205,6 +213,8 @@ void AProjectMarsPlayer::InitialisePlayerFaction(const EFactionName& Faction)
 
 		// This is a pointer to the address of the faction data object 
 		// BaseFactionData = &PlayerFaction->GetRefToFactionData();
+
+		// TODO: Move this to somewhere the AI can also be initialised
 		FactionEconomics = &PlayerFaction->Economics;
 
 		bHasChosenFaction = true;

@@ -123,8 +123,15 @@ void AMarsGameStateBase::UpdateGameTime()
 		 * on. */
 		if(MonthsInGame > 0)
 		{
+			// TODO: Update array of players incl AI
 			// Updates the info such as treasury, manpower, political power etc. on a monthly basis
-			Player->UpdatePlayerFactionInfo();
+			if(PlayerArray.IsValidIndex(0))
+			{
+				for (int32 i = 0; i < PlayerArray.Num(); i++)
+				{
+					PlayerArray[i]->UpdatePlayerFactionInfo();
+				}
+			}
 		}
 		
 		LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
@@ -366,6 +373,7 @@ void AMarsGameStateBase::AssignAIFactions()
 		AProjectMarsPlayer* AIPlayer = nullptr;
 		AIPlayer = GetWorld()->SpawnActor<AProjectMarsPlayer>(AProjectMarsPlayer::StaticClass());
 		AIPlayer->PlayerFaction = &FactionArray[i];
+		AIPlayer->InitialiseAIComponents(AIPlayer);
 		AIPlayer->SpawnDefaultController();
 		AIPlayersArray.Emplace(AIPlayer);
 

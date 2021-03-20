@@ -49,6 +49,8 @@ public:
 	struct FFaction* Carthage{ nullptr };
 
 	void AssignAIFactions();
+
+	TArray<AProjectMarsPlayer*> PlayerArray;
 	
 protected:
 	virtual void Tick(float DeltaSeconds) override;
