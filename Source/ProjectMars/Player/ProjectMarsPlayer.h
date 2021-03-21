@@ -78,6 +78,7 @@ private:
 	FFactionEconomics* FactionEconomics{ nullptr };
 	FFaction* BaseFactionData{ nullptr };
 	FFaction* FactionPtr{ nullptr };
+	FPopulation* FactionPopulation{ nullptr };
 
 	UPROPERTY()
 	class ABasePlayerController* BasePlayerController{ nullptr };

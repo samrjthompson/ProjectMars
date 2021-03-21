@@ -5,11 +5,18 @@
 
 #include "ProjectMars/Population/PopulationBase.h"
 
+void FFactionEconomics::CalculateClassIncome()
+{
+	if (!Population) { return; }
+
+	PatricianIncome = ((Population->TotalPatricianPop * 0.8) * 0.75);
+}
+
 // Sets default values
 AEconomy::AEconomy()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 }
 
@@ -18,13 +25,6 @@ void AEconomy::BeginPlay()
 {
 	Super::BeginPlay();
 	
-}
-
-// Called every frame
-void AEconomy::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 FFactionEconomics::FFactionEconomics()
@@ -43,10 +43,10 @@ FFactionEconomics::FFactionEconomics()
 // TODO: Implement tax collection system
 void FFactionEconomics::CollectTaxes(struct FPopulation& Obj)
 {
-	const float NobleTax = Obj.TotalPatricianPop * NobleTaxRate;
-	const float CitizenTax = Obj.TotalPlebesPop * CitizenTaxRate;
-	const float FreemanTax = Obj.TotalProletariatPop * FreemanTaxRate;
-	const float TribesmanTax = Obj.TotalForeignerPop * TribesmanTaxRate;
+	const float NobleTax = Obj.TotalPatricianPop * PatricianTaxRate;
+	const float CitizenTax = Obj.TotalPlebesPop * PlebesTaxRate;
+	const float FreemanTax = Obj.TotalProletariatPop * ProletariatTaxRate;
+	const float TribesmanTax = Obj.TotalForeignerPop * ForeignerTaxRate;
 
 	TaxIncome =
 		NobleTax +

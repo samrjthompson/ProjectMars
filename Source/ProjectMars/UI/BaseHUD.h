@@ -96,4 +96,9 @@ public:
 	TSubclassOf<class UEconomyWidget> EconomyWidgetClass;
 
 	void DrawTooltip();
+
+/////////////////////////////////////////////////////////////////////
+// POPULATION
+
+	void DrawPopulationNum();
 };

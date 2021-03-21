@@ -28,6 +28,9 @@ private:
 	class UTextBlock* EconomyText{ nullptr };
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* PopText{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* DayText{ nullptr };
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))

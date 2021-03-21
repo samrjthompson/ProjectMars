@@ -24,6 +24,10 @@ struct FPopulation
 
 	FPopulation();
 
+	// Total patrician population should start at around 10% of the total population of a country/city state
+	// Slaves: start low - but, for example, average level of slaves in rome during the empire would be about 30% of total pop
+	// https://en.wikipedia.org/wiki/Demography_of_the_Roman_Empire#Population
+
 	// General
 	int32 TotalPopulation{};
 	int32 TotalPatricianPop{};

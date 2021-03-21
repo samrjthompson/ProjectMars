@@ -14,9 +14,10 @@ struct FFactionEconomics
 
 	FFactionEconomics();
 
+	struct FPopulation* Population{ nullptr };
 
-/****************************************************************/
-	/* GENERAL */
+/////////////////////////////////////////////////////////////////
+	// GENERAL
 
 	int32 StartingTreasury{};
 	int32 Treasury{};
@@ -25,22 +26,22 @@ struct FFactionEconomics
 	float Expenses{};
 
 
-/****************************************************************/
-	/* TAXES */
+/////////////////////////////////////////////////////////////////
+	// TAXES
 
 	float TaxIncome{};
 
 	UPROPERTY(EditAnywhere, Category = "Taxes")
-		float NobleTaxRate{ 0.02f };
+		float PatricianTaxRate{ 0.02f };
 
 	UPROPERTY(EditAnywhere, Category = "Taxes")
-		float CitizenTaxRate{ 0.01f };
+		float PlebesTaxRate{ 0.01f };
 
 	UPROPERTY(EditAnywhere, Category = "Taxes")
-		float FreemanTaxRate{ 0.005f };
+		float ProletariatTaxRate{ 0.005f };
 
 	UPROPERTY(EditAnywhere, Category = "Taxes")
-		float TribesmanTaxRate{ 0.005f };
+		float ForeignerTaxRate{ 0.005f };
 
 	// Function to calculate tax income
 	void CollectTaxes(struct FPopulation& Obj);
@@ -48,27 +49,27 @@ struct FFactionEconomics
 	void SetTaxIncome();
 
 
-/****************************************************************/
-	/* TRADE */
+/////////////////////////////////////////////////////////////////
+	// TRADE
 
 	float TotalValueOfExports{};
 	float TotalValueOfImports{};
 
 
-/****************************************************************/
+/////////////////////////////////////////////////////////////////
 	/* TRIBUTES */
 
 	float TributeIncome{};
 	float OutgoingTributes{};
 
 
-/****************************************************************/
+/////////////////////////////////////////////////////////////////
 	/* OTHER */
 
 	float LootingIncome{};
 
 
-/****************************************************************/
+/////////////////////////////////////////////////////////////////
 	/* MAINTENANCE */
 
 	float ArmyMaintenance{};
@@ -78,7 +79,7 @@ struct FFactionEconomics
 	float FortMaintenance{};
 
 
-/****************************************************************/
+/////////////////////////////////////////////////////////////////
 	/* ECONOMY */
 
 		// Returns the net income of a player per month
@@ -98,6 +99,14 @@ struct FFactionEconomics
 
 	// If the player's income per month is less than 0, this will be true
 	bool bHasNegativeIncome;
+
+	float PatricianIncome{};
+	float PlebesIncome{};
+	float ProletariatIncome{};
+	float ForeignerIncome{};
+
+	// Calculates the gross income of each class type
+	void CalculateClassIncome();
 };
 
 UCLASS()
@@ -112,9 +121,4 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 };

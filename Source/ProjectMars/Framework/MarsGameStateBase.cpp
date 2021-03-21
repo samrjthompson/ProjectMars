@@ -310,11 +310,11 @@ void AMarsGameStateBase::PopulateFactionStartingInformation(TMap<EFactionName, s
 	{
 		const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
 
-		Rome->FactionPop.TotalPatricianPop = StartingTotalPop;
-		Rome->FactionPop.TotalPlebesPop = StartingTotalPop;
-		Rome->FactionPop.TotalProletariatPop = StartingTotalPop;
-		Rome->FactionPop.TotalForeignerPop = StartingTotalPop;
-		Rome->FactionPop.TotalSlavePopulation = StartingTotalPop;
+		Rome->FactionPop.TotalPatricianPop = StartingTotalPop * 0.10;
+		Rome->FactionPop.TotalPlebesPop = StartingTotalPop * 0.30;
+		Rome->FactionPop.TotalProletariatPop = StartingTotalPop * 0.30;
+		Rome->FactionPop.TotalForeignerPop = StartingTotalPop * 0.05;
+		Rome->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.25;
 
 		UE_LOG(LogTemp, Warning, TEXT("Rome name: %s"), *RomeFaction.FactionName.ToString());
 	}
@@ -330,11 +330,11 @@ void AMarsGameStateBase::PopulateFactionStartingInformation(TMap<EFactionName, s
 	{
 		const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
 
-		Etruria->FactionPop.TotalPatricianPop = StartingTotalPop;
-		Etruria->FactionPop.TotalPlebesPop = StartingTotalPop;
-		Etruria->FactionPop.TotalProletariatPop = StartingTotalPop;
-		Etruria->FactionPop.TotalForeignerPop = StartingTotalPop;
-		Etruria->FactionPop.TotalSlavePopulation = StartingTotalPop;
+		Etruria->FactionPop.TotalPatricianPop = StartingTotalPop * 0.10;
+		Etruria->FactionPop.TotalPlebesPop = StartingTotalPop * 0.30;
+		Etruria->FactionPop.TotalProletariatPop = StartingTotalPop * 0.30;
+		Etruria->FactionPop.TotalForeignerPop = StartingTotalPop * 0.05;
+		Etruria->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.25;
 	}
 
 
@@ -351,11 +351,11 @@ void AMarsGameStateBase::PopulateFactionStartingInformation(TMap<EFactionName, s
 	{
 		const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
 
-		Carthage->FactionPop.TotalPatricianPop = StartingTotalPop;
-		Carthage->FactionPop.TotalPlebesPop = StartingTotalPop;
-		Carthage->FactionPop.TotalProletariatPop = StartingTotalPop;
-		Carthage->FactionPop.TotalForeignerPop = StartingTotalPop;
-		Carthage->FactionPop.TotalSlavePopulation = StartingTotalPop;
+		Carthage->FactionPop.TotalPatricianPop = StartingTotalPop * 0.10;
+		Carthage->FactionPop.TotalPlebesPop = StartingTotalPop * 0.30;
+		Carthage->FactionPop.TotalProletariatPop = StartingTotalPop * 0.30;
+		Carthage->FactionPop.TotalForeignerPop = StartingTotalPop * 0.05;
+		Carthage->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.25;
 	}
 }
 

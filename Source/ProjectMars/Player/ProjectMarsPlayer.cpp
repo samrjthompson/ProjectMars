@@ -45,6 +45,7 @@ void AProjectMarsPlayer::InitialiseAIComponents(AProjectMarsPlayer* AIPlayer)
 	if (!AIPlayer) { return; }
 	
 	AIPlayer->FactionEconomics = &AIPlayer->PlayerFaction->Economics;
+	AIPlayer->FactionPopulation = &AIPlayer->PlayerFaction->FactionPop;
 }
 
 // Called when the game starts or when spawned
@@ -153,6 +154,7 @@ void AProjectMarsPlayer::ChooseRome()
 {
 	if(bHasChosenFaction) { return; }
 
+	// Initialises PlayerFaction with the address of an object of FFaction - this is done for the AI in MarsGameStateBase
 	PlayerFaction = MarsGameStateBase->AvailableFactionsMap->Find(EFactionName::Rome);
 	MarsGameStateBase->AvailableFactionsMap->Remove(EFactionName::Rome);
 
@@ -212,6 +214,7 @@ void AProjectMarsPlayer::InitialisePlayerFaction(const EFactionName& Faction)
 
 		// TODO: Move this to somewhere the AI can also be initialised
 		FactionEconomics = &PlayerFaction->Economics;
+		FactionPopulation = &PlayerFaction->FactionPop;
 
 		bHasChosenFaction = true;
 		MarsGameStateBase->LastUpdateCheckTime = GetWorld()->GetTimeSeconds();

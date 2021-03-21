@@ -39,6 +39,7 @@ void ABaseHUD::DrawHUD()
 	}
 
 	DrawPlayerTreasury();
+	DrawPopulationNum();
 	DrawDate();
 	DrawFPS();
 	DrawTooltip();
@@ -173,4 +174,13 @@ void ABaseHUD::DrawTooltip()
 		GetMousePosition2D().X + 100, GetMousePosition2D().Y + 50);	*/
 
 	BaseGameplayWidget->SetToolTip(EconomyWidget);
+}
+
+void ABaseHUD::DrawPopulationNum()
+{
+	if (BaseGameplayWidget && Player && Player->FactionPopulation)
+	{
+		//BaseGameplayWidget->EconomyText->SetText(FText::FromString(FString::SanitizeFloat(Player->PlayerEconomy.Treasury)));
+		BaseGameplayWidget->PopText->SetText(FText::AsNumber(Player->FactionPopulation->TotalPopulation));
+	}
 }
