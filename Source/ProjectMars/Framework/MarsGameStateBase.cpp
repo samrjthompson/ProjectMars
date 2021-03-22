@@ -38,7 +38,6 @@ void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//PopulateFactionStartingInformation();
 	CreateArrayOfAvailableFactions();
 	
 	LastTickCheck = GetWorld()->GetTimeSeconds();
@@ -308,21 +307,21 @@ void AMarsGameStateBase::PopulateFactionStartingInformation(TMap<EFactionName, s
 			Rome->Faction = EFactionName::Rome;
 			Rome->FactionName = "Roman Republic";
 
-			// POPULATION
+			// Population
 			{
 				const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
 
-				Rome->FactionPop.TotalUpperClassPop = StartingTotalPop * 0.10;
-				Rome->FactionPop.TotalMiddleClassPop = StartingTotalPop * 0.30;
-				Rome->FactionPop.TotalLowerClassPop = StartingTotalPop * 0.30;
-				Rome->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.30;
+				Rome->Population.TotalUpperClassPop = StartingTotalPop * 0.10;
+				Rome->Population.TotalMiddleClassPop = StartingTotalPop * 0.30;
+				Rome->Population.TotalLowerClassPop = StartingTotalPop * 0.30;
+				Rome->Population.TotalSlavePopulation = StartingTotalPop * 0.30;
 
 				UE_LOG(LogTemp, Warning, TEXT("Rome name: %s"), *RomeFaction.FactionName.ToString());
 			}
 
 			// Political System
 			{
-				Rome->PoliticalSystem.FactionPoliticalSystem = EFactionPoliticalSystem::Republic;
+				Rome->Politics.PoliticalSystem = EPoliticalSystem::Republic;
 			}
 		}
 
@@ -334,19 +333,19 @@ void AMarsGameStateBase::PopulateFactionStartingInformation(TMap<EFactionName, s
 			Etruria->Faction = EFactionName::Etruria;
 			Etruria->FactionName = "Etruria";
 
-			// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
+			// Population
 			{
 				const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
 
-				Etruria->FactionPop.TotalUpperClassPop = StartingTotalPop * 0.10;
-				Etruria->FactionPop.TotalMiddleClassPop = StartingTotalPop * 0.30;
-				Etruria->FactionPop.TotalLowerClassPop = StartingTotalPop * 0.30;
-				Etruria->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.30;
+				Etruria->Population.TotalUpperClassPop = StartingTotalPop * 0.10;
+				Etruria->Population.TotalMiddleClassPop = StartingTotalPop * 0.30;
+				Etruria->Population.TotalLowerClassPop = StartingTotalPop * 0.30;
+				Etruria->Population.TotalSlavePopulation = StartingTotalPop * 0.30;
 			}
 
 			// Political System
 			{
-				Etruria->PoliticalSystem.FactionPoliticalSystem = EFactionPoliticalSystem::Republic;
+				Etruria->Politics.PoliticalSystem = EPoliticalSystem::Republic;
 			}
 		}
 	}
@@ -361,19 +360,19 @@ void AMarsGameStateBase::PopulateFactionStartingInformation(TMap<EFactionName, s
 			Carthage->Faction = EFactionName::Carthage;
 			Carthage->FactionName = "Carthage";
 
-			// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
+			// Population
 			{
 				const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
 
-				Carthage->FactionPop.TotalUpperClassPop = StartingTotalPop * 0.10;
-				Carthage->FactionPop.TotalMiddleClassPop = StartingTotalPop * 0.30;
-				Carthage->FactionPop.TotalLowerClassPop = StartingTotalPop * 0.30;
-				Carthage->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.30;
+				Carthage->Population.TotalUpperClassPop = StartingTotalPop * 0.10;
+				Carthage->Population.TotalMiddleClassPop = StartingTotalPop * 0.30;
+				Carthage->Population.TotalLowerClassPop = StartingTotalPop * 0.30;
+				Carthage->Population.TotalSlavePopulation = StartingTotalPop * 0.30;
 			}
 
 			// Political System
 			{
-				Carthage->PoliticalSystem.FactionPoliticalSystem = EFactionPoliticalSystem::Republic;
+				Carthage->Politics.PoliticalSystem = EPoliticalSystem::Republic;
 			}
 		}
 	}
@@ -383,29 +382,14 @@ void AMarsGameStateBase::AssignAIFactions()
 {
 	if (!AvailableFactionsMap) { return; }
 
-	TArray<FFaction> FactionArray;
-	AvailableFactionsMap->GenerateValueArray(FactionArray);
-
 	TArray<AProjectMarsPlayer*> AIPlayersArray;
-	
-	for (int32 i = 0; i < AvailableFactionsMap->Num(); i++)
+
+	for(auto& Elem : *AvailableFactionsMap)
 	{
-		AProjectMarsPlayer* AIPlayer = nullptr;
+		AProjectMarsPlayer* AIPlayer{ nullptr };
 		AIPlayer = GetWorld()->SpawnActor<AProjectMarsPlayer>(AProjectMarsPlayer::StaticClass());
-		AIPlayer->PlayerFaction = &FactionArray[i];
-		AIPlayer->InitialiseAIComponents(AIPlayer);
+		AIPlayer->PlayerFaction = &Elem.Value;
 		AIPlayer->SpawnDefaultController();
 		AIPlayersArray.Emplace(AIPlayer);
-
-		if(AIPlayer->GetController())
-		{
-			UE_LOG(LogTemp, Warning, TEXT("AI Controller: %s"), *AIPlayer->GetController()->GetName());
-		}
-		if(!AIPlayer->GetController())
-		{
-			UE_LOG(LogTemp, Warning, TEXT("AI has no controller!"));
-		}
 	}
-	
-	FactionArray.Empty();
 }

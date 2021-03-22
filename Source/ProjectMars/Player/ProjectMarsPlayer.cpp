@@ -40,14 +40,6 @@ AProjectMarsPlayer::AProjectMarsPlayer()
 	MonthIndex = 1;
 }
 
-void AProjectMarsPlayer::InitialiseAIComponents(AProjectMarsPlayer* AIPlayer)
-{
-	if (!AIPlayer) { return; }
-	
-	AIPlayer->FactionEconomics = &AIPlayer->PlayerFaction->Economics;
-	AIPlayer->FactionPopulation = &AIPlayer->PlayerFaction->FactionPop;
-}
-
 // Called when the game starts or when spawned
 void AProjectMarsPlayer::BeginPlay()
 {
@@ -114,22 +106,6 @@ void AProjectMarsPlayer::PawnMovement(float DeltaTime)
 	}
 }
 
-void AProjectMarsPlayer::SetTreasury()
-{
-	if(FactionEconomics)
-	{
-		//PlayerEconomy.Treasury = FactionEconomics->Treasury;
-
-		UE_LOG(LogTemp, Warning, TEXT("SetTreasury CALLED!"))
-		
-		bHasSetTreasury = true;
-	}
-	if(!FactionEconomics)
-	{
-		UE_LOG(LogTemp, Error, TEXT("FactionEconomics is NULL!"))
-	}
-}
-
 // Is called by the GameState class
 void AProjectMarsPlayer::UpdatePlayerFactionInfo()
 {
@@ -161,16 +137,12 @@ void AProjectMarsPlayer::ChooseRome()
 	InitialisePlayerFaction(EFactionName::Rome);
 
 	MarsGameStateBase->AssignAIFactions();
-
-	// OnFactionChosenByPlayer.Broadcast();
 }
 
 void AProjectMarsPlayer::ChooseEtruria()
 {
 	if(bHasChosenFaction) { return; }
 	InitialisePlayerFaction(EFactionName::Etruria);
-
-	// OnFactionChosenByPlayer.Broadcast();
 
 	MarsGameStateBase->AssignAIFactions();
 }
@@ -180,41 +152,17 @@ void AProjectMarsPlayer::ChooseCarthage()
 	if(bHasChosenFaction) { return; }
 	InitialisePlayerFaction(EFactionName::Carthage);
 
-	// OnFactionChosenByPlayer.Broadcast();
-
 	MarsGameStateBase->AssignAIFactions();
 }
 
 void AProjectMarsPlayer::InitialisePlayerFaction(const EFactionName& Faction)
 {
 	if(bHasChosenFaction) { return; }
-	
-	/*switch (Faction)
-	{
-	case EFactionName::Rome: PlayerFaction = &MarsGameStateBase->RomeFaction;
-		break;
-
-	case EFactionName::Etruria : PlayerFaction = &MarsGameStateBase->EtruriaFaction;
-		break;
-
-	case EFactionName::Carthage : PlayerFaction = &MarsGameStateBase->CarthageFaction;
-		break;
-
-	default: PlayerFaction = nullptr;
-		break;
-	}*/
 
 	if(PlayerFaction && MarsGameStateBase)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Faction Name: %s"), *PlayerFaction->FactionName.ToString());
 		InitialiseHUD();
-
-		// This is a pointer to the address of the faction data object 
-		// BaseFactionData = &PlayerFaction->GetRefToFactionData();
-
-		// TODO: Move this to somewhere the AI can also be initialised
-		FactionEconomics = &PlayerFaction->Economics;
-		FactionPopulation = &PlayerFaction->FactionPop;
 
 		bHasChosenFaction = true;
 		MarsGameStateBase->LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
@@ -240,35 +188,15 @@ void AProjectMarsPlayer::InitialiseHUD()
 // TODO: Implement natural system of updating various revenue streams
 void AProjectMarsPlayer::UpdatePlayerIncome()
 {
-	if(PlayerFaction && !bHasSetTreasury)
-	{
-		SetTreasury();
-	}
-	if (PlayerFaction && bHasSetTreasury)
+	if (PlayerFaction)
 	{
 		// AddMoney();
 
 		FFactionEconomics& Obj = PlayerFaction->Economics;
-		FPopulation& PopObj = PlayerFaction->FactionPop;
+		FPopulation& PopObj = PlayerFaction->Population;
 		
 		Obj.CollectTaxes(PopObj);
 		Obj.ApplyNetIncomeToTreasury();
-		
-		// PlayerEconomy.Treasury = Obj.Treasury;
-
-		// UE_LOG(LogTemp, Warning, TEXT("Faction Gross income: %f"), Obj.GrossIncome);
-		// UE_LOG(LogTemp, Warning, TEXT("Faction Outgoings: %f"), Obj.GetTotalOutgoings());
-		// UE_LOG(LogTemp, Warning, TEXT("Faction Net income: %f"), Obj.NetIncome);
-	}
-}
-
-void AProjectMarsPlayer::AddMoney()
-{
-	if(FactionEconomics)
-	{
-		FactionEconomics->Treasury += 10.f;
-		
-		UE_LOG(LogTemp, Warning, TEXT("AddMoney CALLED!"))
 	}
 }
 
@@ -296,7 +224,7 @@ void AProjectMarsPlayer::UpdatePlayerPopulationData()
 {
 	if(PlayerFaction)
 	{
-		FPopulation& Pop = PlayerFaction->FactionPop;
+		FPopulation& Pop = PlayerFaction->Population;
 		Pop.UpdateMonthlyPopulation();
 	}
 }
@@ -311,9 +239,6 @@ void AProjectMarsPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 		// Movement
 		PlayerInputComponent->BindAxis("MoveForward", this, &AProjectMarsPlayer::MoveForward);
 		PlayerInputComponent->BindAxis("MoveRight", this, &AProjectMarsPlayer::MoveRight);
-
-		// Economy
-		PlayerInputComponent->BindAction("Money", IE_Pressed, this, &AProjectMarsPlayer::AddMoney);
 
 		// Game Speed
 		PlayerInputComponent->BindAxis("GameSpeed", this, &AProjectMarsPlayer::UpdateGameSpeed);

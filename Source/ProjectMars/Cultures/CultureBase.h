@@ -29,7 +29,8 @@ struct FCultureGroup
 	GENERATED_BODY()
 
 	FCultureGroup();
-	
+
+	ECultureGroup CultureGroup;	
 };
 
 USTRUCT()
@@ -38,6 +39,8 @@ struct FCultureData
 	GENERATED_BODY()
 
 	FCultureData();
+	
+	ECultureName Culture;
 };
 
 UCLASS()

@@ -120,10 +120,10 @@ ABaseHUD* ABaseHUD::GetRefToBaseHUD()
 
 void ABaseHUD::DrawPlayerTreasury()
 {
-	if(BaseGameplayWidget && Player && Player->FactionEconomics)
+	if(BaseGameplayWidget && Player && Player->PlayerFaction)
 	{
 		//BaseGameplayWidget->EconomyText->SetText(FText::FromString(FString::SanitizeFloat(Player->PlayerEconomy.Treasury)));
-		BaseGameplayWidget->EconomyText->SetText(FText::AsNumber(Player->FactionEconomics->Treasury));
+		BaseGameplayWidget->EconomyText->SetText(FText::AsNumber(Player->PlayerFaction->Economics.Treasury));
 	}
 }
 
@@ -178,9 +178,8 @@ void ABaseHUD::DrawTooltip()
 
 void ABaseHUD::DrawPopulationNum()
 {
-	if (BaseGameplayWidget && Player && Player->FactionPopulation)
+	if (BaseGameplayWidget && Player && Player->PlayerFaction)
 	{
-		//BaseGameplayWidget->EconomyText->SetText(FText::FromString(FString::SanitizeFloat(Player->PlayerEconomy.Treasury)));
-		BaseGameplayWidget->PopText->SetText(FText::AsNumber(Player->FactionPopulation->TotalPopulation));
+		BaseGameplayWidget->PopText->SetText(FText::AsNumber(Player->PlayerFaction->Population.TotalPopulation));
 	}
 }

@@ -4,7 +4,7 @@
 #include "FactionBase.h"
 
 
-FPoliticalSystem::FPoliticalSystem()
+FPolitics::FPolitics()
 {
 	
 }
@@ -28,22 +28,22 @@ void AFactionBase::Tick(float DeltaSeconds)
 
 FFactionEconomics& AFactionBase::GetRefToEconomicsData()
 {
-	return FactionEconomics;
+	return Faction.Economics;
 }
 
 FPopulation& AFactionBase::GetRefToPopulationData()
 {
-	return Population;
+	return Faction.Population;
 }
 
 FCultureGroup& AFactionBase::GetRefToCultureGroup()
 {
-	return CultureGroupObj;
+	return Faction.CultureGroup;
 }
 
 FCultureData& AFactionBase::GetRefToCultureData()
 {
-	return CultureDataObj;
+	return Faction.CultureData;
 }
 
 void FFactionEconomics::ApplyNetIncomeToTreasury()

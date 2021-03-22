@@ -13,7 +13,7 @@
 // Seem to have to forward declare the enums
 enum class ECultureGroup : uint8;
 enum class ECultureName : uint8;
-enum class EFactionPoliticalSystem : uint8;
+enum class EPoliticalSystem : uint8;
 
 struct FFaction;
 struct FPopulation;
@@ -22,7 +22,7 @@ struct FFactionEconomics;
 
 // Enum to define the type of political system a faction has
 UENUM()
-enum class EFactionPoliticalSystem : uint8
+enum class EPoliticalSystem : uint8
 {
 	Republic = 0,
 	TribalRepublic,
@@ -33,14 +33,14 @@ enum class EFactionPoliticalSystem : uint8
 };
 
 USTRUCT()
-struct FPoliticalSystem
+struct FPolitics
 {
 	GENERATED_BODY()
 
-	FPoliticalSystem();
+	FPolitics();
 
 	// Enum to define the type of political system a faction has
-	EFactionPoliticalSystem FactionPoliticalSystem;
+	EPoliticalSystem PoliticalSystem;
 };
 
 UENUM()
@@ -94,14 +94,12 @@ struct FFaction
 ////////////////////////////////////////////////////////////////////////////////
 // FACTION DATA
 	
-	// Each faction will have a copy of an FPopulation object
-	FPopulation FactionPop;
-
-	// Each faction will have a copy of an FFactionEconomics object
+	FPopulation Population;
 	FFactionEconomics Economics;
-
-	// Each faction has a political system
-	FPoliticalSystem PoliticalSystem;
+	EFactionName FactionType;
+	FCultureGroup CultureGroup;
+	FCultureData CultureData;
+	FPolitics Politics;
 };
 
 UCLASS()
@@ -133,18 +131,9 @@ public:
 	 * (for example), or an economy. This belongs to the faction - each faction has a population/economy etc. */
 	
 public:
+
+	FFaction Faction;
 	
-	FPopulation Population;
-
-	FFactionEconomics FactionEconomics;
-
-	EFactionName FactionType;
-	
-	ECultureGroup CultureGroup;
-	ECultureName Culture;
-	FCultureGroup CultureGroupObj;
-	FCultureData CultureDataObj;
-
 	
 ////////////////////////////////////////////////////////////////////////////////
 // POPULATION

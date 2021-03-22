@@ -49,13 +49,8 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Culture")
 	class ACultureBase* CultureBase{ nullptr };
-	
-	void SetTreasury();
 
 	FString CurrentLevel{};
-
-	// Function that initialises components, such as FactionEconomics, for the AI
-	void InitialiseAIComponents(AProjectMarsPlayer* AIPlayer);
 	
 protected:
 	// Called when the game starts or when spawned
@@ -74,15 +69,10 @@ protected:
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PLAYER COMPONENTS
 private:
-	FFactionEconomics* FactionEconomics{ nullptr };
-	FFaction* BaseFactionData{ nullptr };
-	FFaction* FactionPtr{ nullptr };
-	FPopulation* FactionPopulation{ nullptr };
 
-	// Copy of the population object per character
-	FPopulation Population;
-
-	
+	/* The faction the player will be playing as - this pointer is initialised from a TMap of available factions when the player
+	 * chooses their faction and when the AI is spawned. */
+	struct FFaction* PlayerFaction{ nullptr };
 
 	UPROPERTY()
 	class ABasePlayerController* BasePlayerController{ nullptr };
@@ -96,9 +86,6 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	// The faction the player will be playing as
-	struct FFaction* PlayerFaction{ nullptr };
 
 private:
 	void PawnMovement(float DeltaTime);
@@ -138,8 +125,6 @@ public:
 
 	// Updates the player income each month
 	void UpdatePlayerIncome();
-
-	void AddMoney();
 	
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
