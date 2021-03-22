@@ -18,7 +18,7 @@ enum class EPoliticalSystem : uint8;
 struct FFaction;
 struct FPopulation;
 struct FCultureGroup;
-struct FFactionEconomics;
+struct FEconomics;
 
 // Enum to define the type of political system a faction has
 UENUM()
@@ -93,10 +93,18 @@ struct FFaction
 	
 ////////////////////////////////////////////////////////////////////////////////
 // FACTION DATA
-	
-	FPopulation Population;
-	FFactionEconomics Economics;
+
+	/* The faction data is where we store objects that all factions will have. Each player (incl. AI)
+	 * will have their own FFaction object and each FFaction object will contain objects that relate
+	 * to components of a faction. I.e. Each player has a faction, but a player does not have a population
+	 * (for example), or an economy. This belongs to the faction - each faction has a population/economy etc. */
+
+	// Enums
 	EFactionName FactionType;
+	
+	// Structs
+	FPopulation Population;
+	FEconomics Economics;
 	FCultureGroup CultureGroup;
 	FCultureData CultureData;
 	FPolitics Politics;
@@ -124,11 +132,6 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////
 // FACTION DATA
-
-	/* The faction data is where we store objects that all factions will have. Each player (incl. AI)
-	 * will have their own FFaction object and each FFaction object will contain objects that relate
-	 * to components of a faction. I.e. Each player has a faction, but a player does not have a population
-	 * (for example), or an economy. This belongs to the faction - each faction has a population/economy etc. */
 	
 public:
 
@@ -149,8 +152,8 @@ public:
 
 public:
 	
-	// This is a virtual function that returns a reference to an FFactionEconomics object
-	virtual FFactionEconomics& GetRefToEconomicsData();
+	// This is a virtual function that returns a reference to an FEconomics object
+	virtual FEconomics& GetRefToEconomicsData();
 	
 	
 ////////////////////////////////////////////////////////////////////////////////

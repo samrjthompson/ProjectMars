@@ -6,13 +6,12 @@
 
 APopulationBase::APopulationBase()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 }
 
 void APopulationBase::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("begin play"));
 }
 
 FPopulation::FPopulation()
@@ -23,11 +22,10 @@ FPopulation::FPopulation()
 	TotalLowerClassPop = FMath::Clamp(TotalLowerClassPop, 0, 50000000);
 	TotalSlavePopulation = FMath::Clamp(TotalSlavePopulation, 0, 50000000);
 
-	UpperClassGrowth = 1.005;
-	MiddleClassGrowth = 1.005;
-	LowerClassGrowth = 1.005;
-	ForeignerGrowth = 1.005;
-	SlaveGrowth = 1.005;
+	UpperClassGrowth = 5;
+	MiddleClassGrowth = 23;
+	LowerClassGrowth = 26;
+	SlaveGrowth = 21;
 
 	TotalPopulation =
 
@@ -48,12 +46,10 @@ void FPopulation::UpdateGrowthPerMonth()
 
 void FPopulation::UpdateMonthlyPopulation()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Pre-Population: %d"), TotalPopulation);
-
-	TotalUpperClassPop *= UpperClassGrowth;
-	TotalMiddleClassPop *= MiddleClassGrowth;
-	TotalLowerClassPop *= LowerClassGrowth;
-	TotalSlavePopulation *= SlaveGrowth;
+	TotalUpperClassPop += UpperClassGrowth;
+	TotalMiddleClassPop += MiddleClassGrowth;
+	TotalLowerClassPop += LowerClassGrowth;
+	TotalSlavePopulation += SlaveGrowth;
 
 	TotalPopulation =
 
@@ -61,6 +57,4 @@ void FPopulation::UpdateMonthlyPopulation()
 		TotalMiddleClassPop +
 		TotalLowerClassPop +
 		TotalSlavePopulation;
-
-	UE_LOG(LogTemp, Warning, TEXT("Post-Population: %d"), TotalPopulation);
 }

@@ -9,6 +9,12 @@ Factions are objects of the FFaction struct. Seeing as a faction object has no p
 sense to have the faction as an AActor. In addition, it is just a container of data that the player interacts with. Therefore, it seems
 to make sense to have factions as USTRUCTS rather than UCLASS.
 
+An FFaction struct is composed of all the components that make up a faction. E.g., A faction has a population, has an economy etc. Because
+of this, an FFaction struct will contain objects to the structs such as FPopulation and FEconomy etc.
+
+Each player (including AI) will have their own FFaction object. Through this we can access the unqiue components of each faction (i.e., each
+faction's unique FPopulation object).
+
 
 ## Province System
 

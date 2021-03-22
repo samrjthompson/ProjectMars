@@ -10,18 +10,9 @@
 
 enum class EFactionName : uint8;
 struct FFaction;
-struct FFactionEconomics;
+struct FEconomics;
 struct FCampaignDateTime;
 
-UENUM()
-enum ETestType
-{
-	Test1,
-	Test2,
-	Test3,
-
-	MAX
-};
 
 UCLASS()
 class PROJECTMARS_API AProjectMarsPlayer : public APawn
@@ -32,6 +23,7 @@ class PROJECTMARS_API AProjectMarsPlayer : public APawn
 	GENERATED_BODY()
 
 public:
+	
 	// Sets default values for this pawn's properties
 	AProjectMarsPlayer();
 
@@ -53,6 +45,7 @@ public:
 	FString CurrentLevel{};
 	
 protected:
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -80,7 +73,8 @@ private:
 	UPROPERTY()
 	class ABaseHUD* BaseHUD{ nullptr };
 
-public:	
+public:
+	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -88,6 +82,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
+	
 	void PawnMovement(float DeltaTime);
 
 	FVector MovementDirection{};
@@ -114,6 +109,7 @@ private:
 	void InitialiseHUD();
 
 public:
+	
 	void UpdatePlayerFactionInfo();
 
 	bool bHasChosenFaction;

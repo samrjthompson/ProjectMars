@@ -5,29 +5,7 @@
 
 #include "ProjectMars/Population/PopulationBase.h"
 
-void FFactionEconomics::CalculateClassIncome()
-{
-	if (!Population) { return; }
-
-	UpperClassIncome = ((Population->TotalUpperClassPop * 0.8) * 0.75);
-}
-
-// Sets default values
-AEconomy::AEconomy()
-{
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
-
-}
-
-// Called when the game starts or when spawned
-void AEconomy::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-FFactionEconomics::FFactionEconomics()
+FEconomics::FEconomics()
 {
 	StartingTreasury = 5000;
 	Treasury = StartingTreasury;
@@ -40,8 +18,15 @@ FFactionEconomics::FFactionEconomics()
 	Expenses = 0.f;
 }
 
+void FEconomics::CalculateClassIncome()
+{
+	if (!Population) { return; }
+
+	UpperClassIncome = ((Population->TotalUpperClassPop * 0.8) * 0.75);
+}
+
 // TODO: Implement tax collection system
-void FFactionEconomics::CollectTaxes(struct FPopulation& Obj)
+void FEconomics::CollectTaxes(struct FPopulation& Obj)
 {
 	const float UpperClassTax = Obj.TotalUpperClassPop * UpperClassTaxRate;
 	const float MiddleClassTax = Obj.TotalMiddleClassPop * MiddleClassTaxRate;
@@ -53,7 +38,7 @@ void FFactionEconomics::CollectTaxes(struct FPopulation& Obj)
 		LowerClassTax;
 }
 
-float FFactionEconomics::GetNetIncome()
+float FEconomics::GetNetIncome()
 {
 	NetIncome = GetGrossIncome() - GetTotalOutgoings();
 
@@ -71,7 +56,7 @@ float FFactionEconomics::GetNetIncome()
 	return FMath::RoundHalfToZero(100 * NetIncome) / 100;
 }
 
-float FFactionEconomics::GetGrossIncome()
+float FEconomics::GetGrossIncome()
 {
 	/* Because the gross income changes and is unique to the month in which it is affecting the treasury, we want
 	 * to reset the gross income to 0 each month and then update it again. Otherwise, GrossIncome will be added
@@ -88,7 +73,7 @@ float FFactionEconomics::GetGrossIncome()
 	return FMath::RoundHalfToZero(100 * GrossIncome) / 100;
 }
 
-float FFactionEconomics::GetTotalOutgoings()
+float FEconomics::GetTotalOutgoings()
 {
 	Expenses = 0.f;
 
@@ -102,7 +87,7 @@ float FFactionEconomics::GetTotalOutgoings()
 	return FMath::RoundHalfToZero(100 * Expenses) / 100;
 }
 
-void FFactionEconomics::SetTaxIncome()
+void FEconomics::SetTaxIncome()
 {
 
 }

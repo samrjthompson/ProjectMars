@@ -8,11 +8,11 @@
 
 
 USTRUCT()
-struct FFactionEconomics
+struct FEconomics
 {
 	GENERATED_BODY()
 
-	FFactionEconomics();
+	FEconomics();
 
 	struct FPopulation* Population{ nullptr };
 	
@@ -108,18 +108,4 @@ struct FFactionEconomics
 
 	// Calculates the gross income of each class type
 	void CalculateClassIncome();
-};
-
-UCLASS()
-class PROJECTMARS_API AEconomy : public AActor
-{
-	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	AEconomy();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 };

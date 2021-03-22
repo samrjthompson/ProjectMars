@@ -192,7 +192,7 @@ void AProjectMarsPlayer::UpdatePlayerIncome()
 	{
 		// AddMoney();
 
-		FFactionEconomics& Obj = PlayerFaction->Economics;
+		FEconomics& Obj = PlayerFaction->Economics;
 		FPopulation& PopObj = PlayerFaction->Population;
 		
 		Obj.CollectTaxes(PopObj);

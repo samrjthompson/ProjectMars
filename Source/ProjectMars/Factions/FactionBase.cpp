@@ -26,7 +26,7 @@ void AFactionBase::Tick(float DeltaSeconds)
 	
 }
 
-FFactionEconomics& AFactionBase::GetRefToEconomicsData()
+FEconomics& AFactionBase::GetRefToEconomicsData()
 {
 	return Faction.Economics;
 }
@@ -46,7 +46,7 @@ FCultureData& AFactionBase::GetRefToCultureData()
 	return Faction.CultureData;
 }
 
-void FFactionEconomics::ApplyNetIncomeToTreasury()
+void FEconomics::ApplyNetIncomeToTreasury()
 {
 	Treasury += GetNetIncome();
 	if(Treasury < 0)
