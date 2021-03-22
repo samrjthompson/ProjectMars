@@ -15,6 +15,7 @@ struct FFactionEconomics
 	FFactionEconomics();
 
 	struct FPopulation* Population{ nullptr };
+	
 
 /////////////////////////////////////////////////////////////////
 	// GENERAL
@@ -32,13 +33,13 @@ struct FFactionEconomics
 	float TaxIncome{};
 
 	UPROPERTY(EditAnywhere, Category = "Taxes")
-		float PatricianTaxRate{ 0.02f };
+		float UpperClassTaxRate{ 0.02f };
 
 	UPROPERTY(EditAnywhere, Category = "Taxes")
-		float PlebesTaxRate{ 0.01f };
+		float MiddleClassTaxRate{ 0.01f };
 
 	UPROPERTY(EditAnywhere, Category = "Taxes")
-		float ProletariatTaxRate{ 0.005f };
+		float LowerClassTaxRate{ 0.005f };
 
 	UPROPERTY(EditAnywhere, Category = "Taxes")
 		float ForeignerTaxRate{ 0.005f };
@@ -100,9 +101,9 @@ struct FFactionEconomics
 	// If the player's income per month is less than 0, this will be true
 	bool bHasNegativeIncome;
 
-	float PatricianIncome{};
-	float PlebesIncome{};
-	float ProletariatIncome{};
+	float UpperClassIncome{};
+	float MiddleClassIncome{};
+	float LowerClassIncome{};
 	float ForeignerIncome{};
 
 	// Calculates the gross income of each class type

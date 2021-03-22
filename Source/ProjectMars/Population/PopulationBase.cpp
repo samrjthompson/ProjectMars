@@ -18,24 +18,30 @@ void APopulationBase::BeginPlay()
 FPopulation::FPopulation()
 {
 	TotalPopulation = FMath::Clamp(TotalPopulation, 0, 50000000);
-	TotalPatricianPop = FMath::Clamp(TotalPatricianPop, 0, 50000000);
-	TotalPlebesPop = FMath::Clamp(TotalPlebesPop, 0, 50000000);
-	TotalProletariatPop = FMath::Clamp(TotalProletariatPop, 0, 50000000);
-	TotalForeignerPop = FMath::Clamp(TotalForeignerPop, 0, 50000000);
+	TotalUpperClassPop = FMath::Clamp(TotalUpperClassPop, 0, 50000000);
+	TotalMiddleClassPop = FMath::Clamp(TotalMiddleClassPop, 0, 50000000);
+	TotalLowerClassPop = FMath::Clamp(TotalLowerClassPop, 0, 50000000);
 	TotalSlavePopulation = FMath::Clamp(TotalSlavePopulation, 0, 50000000);
 
-	PatricianGrowth = 1.005;
-	PlebesGrowth = 1.005;
-	ProletariatGrowth = 1.005;
+	UpperClassGrowth = 1.005;
+	MiddleClassGrowth = 1.005;
+	LowerClassGrowth = 1.005;
 	ForeignerGrowth = 1.005;
 	SlaveGrowth = 1.005;
+
+	TotalPopulation =
+
+		TotalUpperClassPop +
+		TotalMiddleClassPop +
+		TotalLowerClassPop +
+		TotalSlavePopulation;
 }
 
 void FPopulation::UpdateGrowthPerMonth()
 {
-	PatricianGrowth;
-	PlebesGrowth;
-	ProletariatGrowth;
+	UpperClassGrowth;
+	MiddleClassGrowth;
+	LowerClassGrowth;
 	ForeignerGrowth;
 	SlaveGrowth;
 }
@@ -44,18 +50,16 @@ void FPopulation::UpdateMonthlyPopulation()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Pre-Population: %d"), TotalPopulation);
 
-	TotalPatricianPop *= PatricianGrowth;
-	TotalPlebesPop *= PlebesGrowth;
-	TotalProletariatPop *= ProletariatGrowth;
-	TotalForeignerPop *= ForeignerGrowth;
+	TotalUpperClassPop *= UpperClassGrowth;
+	TotalMiddleClassPop *= MiddleClassGrowth;
+	TotalLowerClassPop *= LowerClassGrowth;
 	TotalSlavePopulation *= SlaveGrowth;
 
 	TotalPopulation =
 
-		TotalPatricianPop +
-		TotalPlebesPop +
-		TotalProletariatPop +
-		TotalForeignerPop +
+		TotalUpperClassPop +
+		TotalMiddleClassPop +
+		TotalLowerClassPop +
 		TotalSlavePopulation;
 
 	UE_LOG(LogTemp, Warning, TEXT("Post-Population: %d"), TotalPopulation);

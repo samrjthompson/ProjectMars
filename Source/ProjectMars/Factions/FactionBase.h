@@ -13,12 +13,35 @@
 // Seem to have to forward declare the enums
 enum class ECultureGroup : uint8;
 enum class ECultureName : uint8;
+enum class EFactionPoliticalSystem : uint8;
 
 struct FFaction;
 struct FPopulation;
 struct FCultureGroup;
 struct FFactionEconomics;
 
+// Enum to define the type of political system a faction has
+UENUM()
+enum class EFactionPoliticalSystem : uint8
+{
+	Republic = 0,
+	TribalRepublic,
+	Monarchy,
+	Tribe,
+	Empire,
+	Max
+};
+
+USTRUCT()
+struct FPoliticalSystem
+{
+	GENERATED_BODY()
+
+	FPoliticalSystem();
+
+	// Enum to define the type of political system a faction has
+	EFactionPoliticalSystem FactionPoliticalSystem;
+};
 
 UENUM()
 enum class EFactionName : uint8
@@ -26,7 +49,7 @@ enum class EFactionName : uint8
 	Rome = 0,
 	Etruria,
 	Carthage,
-	MAX
+	Max
 };
 
 USTRUCT()
@@ -67,8 +90,18 @@ struct FFaction
 	float TotalMilitaryXP{};
 	float MilitaryXPChange{};
 
+	
+////////////////////////////////////////////////////////////////////////////////
+// FACTION DATA
+	
+	// Each faction will have a copy of an FPopulation object
 	FPopulation FactionPop;
+
+	// Each faction will have a copy of an FFactionEconomics object
 	FFactionEconomics Economics;
+
+	// Each faction has a political system
+	FPoliticalSystem PoliticalSystem;
 };
 
 UCLASS()
@@ -82,7 +115,6 @@ class PROJECTMARS_API AFactionBase : public AActor
 public:
 	AFactionBase();
 
-
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -92,71 +124,52 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 
 
-	/****************************************************************/
-	/* FACTION DATA */
+////////////////////////////////////////////////////////////////////////////////
+// FACTION DATA
 
+	/* The faction data is where we store objects that all factions will have. Each player (incl. AI)
+	 * will have their own FFaction object and each FFaction object will contain objects that relate
+	 * to components of a faction. I.e. Each player has a faction, but a player does not have a population
+	 * (for example), or an economy. This belongs to the faction - each faction has a population/economy etc. */
+	
+public:
+	
 	FPopulation Population;
 
-public:
-	inline virtual FName GetFactionName() const { return FactionName; }
-	inline void SetFactionName(FString Name) { FactionName = FName(Name); }
-	
-	// This is a virtual function that returns a reference to an FFaction object 
-	virtual FFaction& GetRefToFactionData();
-
-
-	
-private:
-	
-	
-protected:
-	FName FactionName{};
-	
-	EFactionName FactionType;
-
-	// Objects by value of faction data structs
-	FFaction BaseFactionData;
-	
-	
-	/****************************************************************/
-	/* POPULATION */
-	
-public:
-	// This is a virtual function that returns a reference to an FPopulation object
-	virtual FPopulation& GetRefToPopulationData();
-	
-private:
-	
-protected:
-
-	
-
-	/****************************************************************/
-	/* ECONOMY */
-
-public:
-	// This is a virtual function that returns a reference to an FFactionEconomics object
-	virtual FFactionEconomics& GetRefToEconomicsData();
-	
-private:
-	
-protected:
 	FFactionEconomics FactionEconomics;
+
+	EFactionName FactionType;
 	
-	
-	/****************************************************************/
-	/* CULTURE */
-
-public:
-	// This is a virtual function that returns a reference to an FCultureGroup object
-	virtual FCultureGroup& GetRefToCultureGroup();
-	virtual FCultureData& GetRefToCultureData();
-
-private:
-
-protected:
 	ECultureGroup CultureGroup;
 	ECultureName Culture;
 	FCultureGroup CultureGroupObj;
 	FCultureData CultureDataObj;
+
+	
+////////////////////////////////////////////////////////////////////////////////
+// POPULATION
+	
+public:
+	
+	// This is a virtual function that returns a reference to an FPopulation object
+	virtual FPopulation& GetRefToPopulationData();
+	
+
+////////////////////////////////////////////////////////////////////////////////
+// ECONOMY
+
+public:
+	
+	// This is a virtual function that returns a reference to an FFactionEconomics object
+	virtual FFactionEconomics& GetRefToEconomicsData();
+	
+	
+////////////////////////////////////////////////////////////////////////////////
+// CULTURE
+
+public:
+	
+	// This is a virtual function that returns a reference to an FCultureGroup object
+	virtual FCultureGroup& GetRefToCultureGroup();
+	virtual FCultureData& GetRefToCultureData();
 };

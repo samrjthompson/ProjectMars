@@ -4,9 +4,14 @@
 #include "FactionBase.h"
 
 
+FPoliticalSystem::FPoliticalSystem()
+{
+	
+}
+
 AFactionBase::AFactionBase()
 {
-	FactionName = "NONE";
+
 }
 
 void AFactionBase::BeginPlay()
@@ -20,12 +25,6 @@ void AFactionBase::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	
 }
-
-FFaction& AFactionBase::GetRefToFactionData()
-{
-	return BaseFactionData;
-}
-
 
 FFactionEconomics& AFactionBase::GetRefToEconomicsData()
 {

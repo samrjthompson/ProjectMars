@@ -280,7 +280,7 @@ void AMarsGameStateBase::InitialiseReferences(AProjectMarsPlayer* InitPlayer)
  * a player a faction. */
 void AMarsGameStateBase::CreateArrayOfAvailableFactions()
 {
-	for (int32 i = 0; i < (uint8)EFactionName::MAX; i++)
+	for (int32 i = 0; i < (uint8)EFactionName::Max; i++)
 	{
 		FFaction FactionObj;
 		//FactionPtr = NewObject<FFaction>();
@@ -298,64 +298,84 @@ void AMarsGameStateBase::CreateArrayOfAvailableFactions()
 
 void AMarsGameStateBase::PopulateFactionStartingInformation(TMap<EFactionName, struct FFaction>& InitAllFactionsMap)
 {
-	/* ITALIAN */
-	// Rome
-	Rome = InitAllFactionsMap.Find(EFactionName::Rome);
-	if (!Rome) { UE_LOG(LogTemp, Error, TEXT("Rome is nullptr in AMarsGameStateBase::PopulateFactionStartingInformation")); return; } // Null check
-	
-	Rome->Faction = EFactionName::Rome;
-	Rome->FactionName = "Roman Republic";
-
-	// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
+	// ITALIAN
 	{
-		const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
+		// Rome
+		{
+			Rome = InitAllFactionsMap.Find(EFactionName::Rome);
+			if (!Rome) { UE_LOG(LogTemp, Error, TEXT("Rome is nullptr in AMarsGameStateBase::PopulateFactionStartingInformation")); return; } // Null check
 
-		Rome->FactionPop.TotalPatricianPop = StartingTotalPop * 0.10;
-		Rome->FactionPop.TotalPlebesPop = StartingTotalPop * 0.30;
-		Rome->FactionPop.TotalProletariatPop = StartingTotalPop * 0.30;
-		Rome->FactionPop.TotalForeignerPop = StartingTotalPop * 0.05;
-		Rome->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.25;
+			Rome->Faction = EFactionName::Rome;
+			Rome->FactionName = "Roman Republic";
 
-		UE_LOG(LogTemp, Warning, TEXT("Rome name: %s"), *RomeFaction.FactionName.ToString());
+			// POPULATION
+			{
+				const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
+
+				Rome->FactionPop.TotalUpperClassPop = StartingTotalPop * 0.10;
+				Rome->FactionPop.TotalMiddleClassPop = StartingTotalPop * 0.30;
+				Rome->FactionPop.TotalLowerClassPop = StartingTotalPop * 0.30;
+				Rome->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.30;
+
+				UE_LOG(LogTemp, Warning, TEXT("Rome name: %s"), *RomeFaction.FactionName.ToString());
+			}
+
+			// Political System
+			{
+				Rome->PoliticalSystem.FactionPoliticalSystem = EFactionPoliticalSystem::Republic;
+			}
+		}
+
+		// Etruria
+		{
+			Etruria = InitAllFactionsMap.Find(EFactionName::Etruria);
+			if (!Etruria) { UE_LOG(LogTemp, Error, TEXT("Etruria is nullptr in AMarsGameStateBase::PopulateFactionStartingInformation")); return; } // Null check
+
+			Etruria->Faction = EFactionName::Etruria;
+			Etruria->FactionName = "Etruria";
+
+			// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
+			{
+				const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
+
+				Etruria->FactionPop.TotalUpperClassPop = StartingTotalPop * 0.10;
+				Etruria->FactionPop.TotalMiddleClassPop = StartingTotalPop * 0.30;
+				Etruria->FactionPop.TotalLowerClassPop = StartingTotalPop * 0.30;
+				Etruria->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.30;
+			}
+
+			// Political System
+			{
+				Etruria->PoliticalSystem.FactionPoliticalSystem = EFactionPoliticalSystem::Republic;
+			}
+		}
 	}
 
-	// Etruria
-	Etruria = InitAllFactionsMap.Find(EFactionName::Etruria);
-	if (!Etruria) { UE_LOG(LogTemp, Error, TEXT("Etruria is nullptr in AMarsGameStateBase::PopulateFactionStartingInformation")); return; } // Null check
-
-	Etruria->Faction = EFactionName::Etruria;
-	Etruria->FactionName = "Etruria";
-
-	// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
+	// NORTH AFRICAN
 	{
-		const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
+		// Carthage
+		{
+			Carthage = InitAllFactionsMap.Find(EFactionName::Carthage);
+			if (!Carthage) { UE_LOG(LogTemp, Error, TEXT("Carthage is nullptr in AMarsGameStateBase::PopulateFactionStartingInformation")); return; } // Null check
 
-		Etruria->FactionPop.TotalPatricianPop = StartingTotalPop * 0.10;
-		Etruria->FactionPop.TotalPlebesPop = StartingTotalPop * 0.30;
-		Etruria->FactionPop.TotalProletariatPop = StartingTotalPop * 0.30;
-		Etruria->FactionPop.TotalForeignerPop = StartingTotalPop * 0.05;
-		Etruria->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.25;
-	}
+			Carthage->Faction = EFactionName::Carthage;
+			Carthage->FactionName = "Carthage";
 
+			// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
+			{
+				const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
 
-	/* NORTH AFRICAN */
-	// Carthage
+				Carthage->FactionPop.TotalUpperClassPop = StartingTotalPop * 0.10;
+				Carthage->FactionPop.TotalMiddleClassPop = StartingTotalPop * 0.30;
+				Carthage->FactionPop.TotalLowerClassPop = StartingTotalPop * 0.30;
+				Carthage->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.30;
+			}
 
-	Carthage = InitAllFactionsMap.Find(EFactionName::Carthage);
-	if (!Carthage) { UE_LOG(LogTemp, Error, TEXT("Carthage is nullptr in AMarsGameStateBase::PopulateFactionStartingInformation")); return; } // Null check
-
-	Carthage->Faction = EFactionName::Carthage;
-	Carthage->FactionName = "Carthage";
-
-	// Certain criteria allow for an increase in dev level - one being every 10,000 population (up to level 50)
-	{
-		const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
-
-		Carthage->FactionPop.TotalPatricianPop = StartingTotalPop * 0.10;
-		Carthage->FactionPop.TotalPlebesPop = StartingTotalPop * 0.30;
-		Carthage->FactionPop.TotalProletariatPop = StartingTotalPop * 0.30;
-		Carthage->FactionPop.TotalForeignerPop = StartingTotalPop * 0.05;
-		Carthage->FactionPop.TotalSlavePopulation = StartingTotalPop * 0.25;
+			// Political System
+			{
+				Carthage->PoliticalSystem.FactionPoliticalSystem = EFactionPoliticalSystem::Republic;
+			}
+		}
 	}
 }
 

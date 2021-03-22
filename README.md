@@ -39,8 +39,8 @@ Looting is earned through piracy/sacking and looting settlements.
 Population is the literal number of people in your city (i.e., the number of pops his not hidden in some way. If there are 50,000 people
 in a city, then the game will tell you that). 
 
-This total population will be split up into different classes. These are the Patricians (Upper/Aristocratic class), the Plebes 
-(Middle class), Proletariat (Lower class), Foreigners, and Slaves.
+This total population will be split up into different classes. These are the UpperClasss (Upper/Aristocratic class), the MiddleClass 
+(Middle class), LowerClass (Lower class), Foreigners, and Slaves.
 
 Pops are gained through war, migration, and reproduction rates of your pops. 
 

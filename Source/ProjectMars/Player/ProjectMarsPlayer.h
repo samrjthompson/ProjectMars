@@ -35,8 +35,6 @@ public:
 	// Sets default values for this pawn's properties
 	AProjectMarsPlayer();
 
-	//FOnFactionChosenByPlayer OnFactionChosenByPlayer;
-
 	UPROPERTY(EditAnywhere)
 	class USceneComponent* RootComp{ nullptr };
 
@@ -71,6 +69,7 @@ protected:
 	void InitialiseGameStateRefs();
 
 	void InitialisePlayerController();
+	
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PLAYER COMPONENTS
@@ -79,6 +78,11 @@ private:
 	FFaction* BaseFactionData{ nullptr };
 	FFaction* FactionPtr{ nullptr };
 	FPopulation* FactionPopulation{ nullptr };
+
+	// Copy of the population object per character
+	FPopulation Population;
+
+	
 
 	UPROPERTY()
 	class ABasePlayerController* BasePlayerController{ nullptr };
@@ -126,6 +130,7 @@ public:
 	void UpdatePlayerFactionInfo();
 
 	bool bHasChosenFaction;
+	
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////	
 // ECONOMY
@@ -135,6 +140,7 @@ public:
 	void UpdatePlayerIncome();
 
 	void AddMoney();
+	
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TIME
@@ -147,6 +153,7 @@ public:
 	EMonthOfYear CurrentMonth;
 
 	int32 MonthIndex;
+	
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // POPULATION

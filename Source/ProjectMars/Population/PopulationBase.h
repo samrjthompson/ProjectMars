@@ -10,9 +10,9 @@
 UENUM()
 enum class EPopType
 {
-	Patrician,
-	Plebes,
-	Proletariat,
+	UpperClass,
+	MiddleClass,
+	LowerClass,
 	Foreigner,
 	Slave
 };
@@ -30,10 +30,9 @@ struct FPopulation
 
 	// General
 	int32 TotalPopulation{};
-	int32 TotalPatricianPop{};
-	int32 TotalPlebesPop{};
-	int32 TotalProletariatPop{};
-	int32 TotalForeignerPop{};
+	int32 TotalUpperClassPop{};
+	int32 TotalMiddleClassPop{};
+	int32 TotalLowerClassPop{};
 	int32 TotalSlavePopulation{};
 
 	// Growth
@@ -41,9 +40,9 @@ struct FPopulation
 	float TotalShrink{};
 	float NetGrowth{};
 
-	float PatricianGrowth{};
-	float PlebesGrowth{};
-	float ProletariatGrowth{};
+	float UpperClassGrowth{};
+	float MiddleClassGrowth{};
+	float LowerClassGrowth{};
 	float ForeignerGrowth{};
 	float SlaveGrowth{};
 
@@ -62,8 +61,6 @@ class PROJECTMARS_API APopulationBase : public AActor
 public:
 	APopulationBase();
 
-	virtual void BeginPlay() override;
-
-	
+	virtual void BeginPlay() override;	
 
 };

@@ -9,7 +9,7 @@ void FFactionEconomics::CalculateClassIncome()
 {
 	if (!Population) { return; }
 
-	PatricianIncome = ((Population->TotalPatricianPop * 0.8) * 0.75);
+	UpperClassIncome = ((Population->TotalUpperClassPop * 0.8) * 0.75);
 }
 
 // Sets default values
@@ -43,16 +43,14 @@ FFactionEconomics::FFactionEconomics()
 // TODO: Implement tax collection system
 void FFactionEconomics::CollectTaxes(struct FPopulation& Obj)
 {
-	const float NobleTax = Obj.TotalPatricianPop * PatricianTaxRate;
-	const float CitizenTax = Obj.TotalPlebesPop * PlebesTaxRate;
-	const float FreemanTax = Obj.TotalProletariatPop * ProletariatTaxRate;
-	const float TribesmanTax = Obj.TotalForeignerPop * ForeignerTaxRate;
+	const float UpperClassTax = Obj.TotalUpperClassPop * UpperClassTaxRate;
+	const float MiddleClassTax = Obj.TotalMiddleClassPop * MiddleClassTaxRate;
+	const float LowerClassTax = Obj.TotalLowerClassPop * LowerClassTaxRate;
 
 	TaxIncome =
-		NobleTax +
-		CitizenTax +
-		FreemanTax +
-		TribesmanTax;
+		UpperClassTax +
+		MiddleClassTax +
+		LowerClassTax;
 }
 
 float FFactionEconomics::GetNetIncome()
