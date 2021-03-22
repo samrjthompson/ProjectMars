@@ -10,20 +10,3 @@ FCultureGroup::FCultureGroup()
 FCultureData::FCultureData()
 {
 }
-
-ACultureBase::ACultureBase()
-{
-	
-}
-
-void ACultureBase::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-void ACultureBase::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
-}
-

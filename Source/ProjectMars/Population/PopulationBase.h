@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
 #include "PopulationBase.generated.h"
 
 
@@ -51,16 +50,4 @@ struct FPopulation
 
 	// Updates the total population each month after factoring in the growth that month
 	void UpdateMonthlyPopulation();
-};
-
-UCLASS()
-class PROJECTMARS_API APopulationBase : public AActor
-{
-	GENERATED_BODY()
-
-public:
-	APopulationBase();
-
-	virtual void BeginPlay() override;	
-
 };

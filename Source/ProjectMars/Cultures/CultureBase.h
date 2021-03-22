@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
 #include "CultureBase.generated.h"
 
 UENUM()
@@ -41,21 +40,4 @@ struct FCultureData
 	FCultureData();
 	
 	ECultureName Culture;
-};
-
-UCLASS()
-class PROJECTMARS_API ACultureBase : public AActor
-{
-	GENERATED_BODY()
-
-public:
-	ACultureBase();
-
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
-public:
-	// Called every frame
-	virtual void Tick(float DeltaSeconds) override;
 };

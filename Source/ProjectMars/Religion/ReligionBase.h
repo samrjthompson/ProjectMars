@@ -3,22 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
 #include "ReligionBase.generated.h"
 
 UENUM()
-enum class EReligion
+enum class EReligionName
 {
 	Hellenism,
 	Druidism,
 	Zoroastrianism
 };
 
-UCLASS()
-class PROJECTMARS_API AReligionBase : public AActor
+USTRUCT()
+struct FReligion
 {
 	GENERATED_BODY()
-
-	AReligionBase();
 	
 };

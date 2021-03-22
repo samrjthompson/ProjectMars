@@ -39,9 +39,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Faction")
 	class AFactionBase* FactionBase{ nullptr };
 
-	UPROPERTY(EditAnywhere, Category = "Culture")
-	class ACultureBase* CultureBase{ nullptr };
-
 	FString CurrentLevel{};
 	
 protected:

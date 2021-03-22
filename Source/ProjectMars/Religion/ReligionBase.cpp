@@ -3,7 +3,3 @@
 
 #include "ReligionBase.h"
 
-AReligionBase::AReligionBase()
-{
-	
-}

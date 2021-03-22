@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
 #include "Resources.generated.h"
 
 UENUM()
@@ -28,21 +27,9 @@ enum class EResourceType
 	None
 };
 
-
-UCLASS()
-class PROJECTMARS_API AResources : public AActor
+USTRUCT()
+struct FResource
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
-	AResources();
-
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 };

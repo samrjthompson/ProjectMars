@@ -4,16 +4,6 @@
 #include "PopulationBase.h"
 
 
-APopulationBase::APopulationBase()
-{
-	PrimaryActorTick.bCanEverTick = false;
-}
-
-void APopulationBase::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
 FPopulation::FPopulation()
 {
 	TotalPopulation = FMath::Clamp(TotalPopulation, 0, 50000000);
