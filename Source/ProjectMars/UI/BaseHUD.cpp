@@ -4,12 +4,14 @@
 #include "BaseHUD.h"
 
 #include "Engine.h"
+#include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
 #include "Widgets/ChooseFactionWidget.h"
 #include "Widgets/EconomyWidget.h"
+#include "Widgets/Events/EventPopupWidget.h"
 
 #define OUT
 
@@ -43,6 +45,14 @@ void ABaseHUD::DrawHUD()
 	DrawDate();
 	DrawFPS();
 	DrawTooltip();
+
+	if(EventPopupWidget && EventPopupWidget->DecisionButton)
+	{
+		if(EventPopupWidget->DecisionButton->IsPressed())
+		{
+			EventPopupWidget->CloseEventPopup();
+		}
+	}
 }
 
 FVector2D ABaseHUD::GetMonitorResolution()
@@ -111,6 +121,8 @@ void ABaseHUD::InitialisePointers()
 	}
 
 	EconomyWidget = CreateWidget<UEconomyWidget>(GetOwningPlayerController(), EconomyWidgetClass);
+
+	EventPopupWidget = CreateWidget<UEventPopupWidget>(GetOwningPlayerController(), EventPopupWidgetClass);
 }
 
 ABaseHUD* ABaseHUD::GetRefToBaseHUD()
@@ -156,6 +168,7 @@ void ABaseHUD::DrawMainGameUI()
 		
 		ChooseFactionWidget->RemoveFromParent();
 		BaseGameplayWidget->AddToViewport();
+		DrawEventPopup();
 	}
 }
 
@@ -182,4 +195,11 @@ void ABaseHUD::DrawPopulationNum()
 	{
 		BaseGameplayWidget->PopText->SetText(FText::AsNumber(Player->PlayerFaction->Population.TotalPopulation));
 	}
+}
+
+void ABaseHUD::DrawEventPopup()
+{
+	if (!EventPopupWidget) { return; }
+
+	EventPopupWidget->AddToViewport();
 }

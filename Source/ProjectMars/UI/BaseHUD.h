@@ -101,4 +101,16 @@ public:
 // POPULATION
 
 	void DrawPopulationNum();
+	
+
+/////////////////////////////////////////////////////////////////////
+// EVENTS
+
+	UPROPERTY()
+	class UEventPopupWidget* EventPopupWidget{ nullptr };
+	
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<class UEventPopupWidget> EventPopupWidgetClass;
+
+	void DrawEventPopup();
 };
