@@ -28,6 +28,8 @@ void ABaseHUD::BeginPlay()
 	Super::BeginPlay();
 	
 	InitialisePointers();
+
+	CurrentEventPopupPos = StartingEventPopupPosition;
 }
 
 void ABaseHUD::DrawHUD()
@@ -53,6 +55,8 @@ void ABaseHUD::DrawHUD()
 			EventPopupWidget->CloseEventPopup();
 		}
 	}
+
+	MoveWidgetInViewportWithMouse(EventPopupWidget);
 }
 
 FVector2D ABaseHUD::GetMonitorResolution()
@@ -201,5 +205,27 @@ void ABaseHUD::DrawEventPopup()
 {
 	if (!EventPopupWidget) { return; }
 
+	EventPopupWidget->SetPositionInViewport(StartingEventPopupPosition);
 	EventPopupWidget->AddToViewport();
+}
+
+void ABaseHUD::MoveWidgetInViewportWithMouse(UUserWidget* EventPopupWidgetToMove)
+{
+	// TODO: Currently requires a double click if we use the left mouse button rather than single click.
+	// TODO: Also clicks on whatever is behind the widget as well as the widget.
+	
+	if (!EventPopupWidgetToMove) { return; }
+
+	// EventPopupWidgetToMove->bIsFocusable = true;
+
+	if(EventPopupWidgetToMove->IsHovered() && !GetOwningPlayerController()->IsInputKeyDown(EKeys::LeftAlt))
+	{
+		DistanceBetweenMouseAndLeftSideOfWidget = GetMousePosition2D() - CurrentEventPopupPos;
+	}
+
+	if(EventPopupWidgetToMove->IsHovered() && GetOwningPlayerController()->IsInputKeyDown(EKeys::LeftAlt))
+	{
+		CurrentEventPopupPos = GetMousePosition2D() - DistanceBetweenMouseAndLeftSideOfWidget;
+		EventPopupWidgetToMove->SetPositionInViewport(CurrentEventPopupPos);
+	}
 }

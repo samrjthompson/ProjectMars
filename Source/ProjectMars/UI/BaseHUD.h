@@ -112,5 +112,13 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TSubclassOf<class UEventPopupWidget> EventPopupWidgetClass;
 
+	FVector2D StartingEventPopupPosition = FVector2D(660, 115);
+
+	FVector2D CurrentEventPopupPos;
+
+	FVector2D DistanceBetweenMouseAndLeftSideOfWidget;
+
 	void DrawEventPopup();
+
+	void MoveWidgetInViewportWithMouse(class UUserWidget* EventPopupWidgetToMove);
 };
