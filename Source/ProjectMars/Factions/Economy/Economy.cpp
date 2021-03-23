@@ -3,7 +3,7 @@
 
 #include "Economy.h"
 
-#include "ProjectMars/Population/PopulationBase.h"
+#include "ProjectMars/Factions/Population/PopulationBase.h"
 
 FEconomics::FEconomics()
 {

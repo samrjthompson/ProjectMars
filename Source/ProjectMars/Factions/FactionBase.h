@@ -4,9 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "ProjectMars/Cultures/CultureBase.h"
-#include "ProjectMars/Economy/Economy.h"
-#include "ProjectMars/Population/PopulationBase.h"
+#include "ProjectMars/Factions/Cultures/CultureBase.h"
+#include "ProjectMars/Factions/Economy/Economy.h"
+#include "ProjectMars/Factions/Population/PopulationBase.h"
 
 #include "FactionBase.generated.h"
 
@@ -97,7 +97,8 @@ struct FFaction
 	/* The faction data is where we store objects that all factions will have. Each player (incl. AI)
 	 * will have their own FFaction object and each FFaction object will contain objects that relate
 	 * to components of a faction. I.e. Each player has a faction, but a player does not have a population
-	 * (for example), or an economy. This belongs to the faction - each faction has a population/economy etc. */
+	 * (for example), or an economy. This belongs to the faction. Each player has a faction, and each
+	 * faction has a population/economy etc. */
 
 	// Enums
 	EFactionName FactionType;
