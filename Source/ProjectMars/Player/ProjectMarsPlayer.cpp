@@ -167,8 +167,6 @@ void AProjectMarsPlayer::ChooseCarthage()
 
 void AProjectMarsPlayer::InitialisePlayerFaction(const EFactionName& Faction)
 {
-	if(bHasChosenFaction) { return; }
-
 	if(PlayerFaction && MarsGameStateBase)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Faction Name: %s"), *PlayerFaction->FactionName.ToString());
@@ -200,8 +198,6 @@ void AProjectMarsPlayer::UpdatePlayerIncome()
 {
 	if (PlayerFaction)
 	{
-		// AddMoney();
-
 		FEconomics& Obj = PlayerFaction->Economics;
 		FPopulation& PopObj = PlayerFaction->Population;
 		

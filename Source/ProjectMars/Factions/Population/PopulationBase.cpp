@@ -47,4 +47,6 @@ void FPopulation::UpdateMonthlyPopulation()
 		TotalMiddleClassPop +
 		TotalLowerClassPop +
 		TotalSlavePopulation;
+
+	Manpower = (TotalMiddleClassPop + TotalLowerClassPop) * 0.25;
 }

@@ -205,7 +205,7 @@ void ABaseHUD::DrawPopulationNum()
 {
 	if (BaseGameplayWidget && Player && Player->PlayerFaction)
 	{
-		BaseGameplayWidget->PopText->SetText(FText::AsNumber(Player->PlayerFaction->Population.TotalPopulation));
+		BaseGameplayWidget->PopText->SetText(FText::AsNumber(Player->PlayerFaction->Population.Manpower));
 	}
 }
 

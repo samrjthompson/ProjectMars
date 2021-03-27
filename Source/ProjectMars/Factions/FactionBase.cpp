@@ -9,6 +9,16 @@ FPolitics::FPolitics()
 	
 }
 
+FFaction::FFaction()
+{
+
+}
+
+FFaction::FFaction(EFactionName InitFaction)
+{
+	Faction = InitFaction;
+}
+
 AFactionBase::AFactionBase()
 {
 

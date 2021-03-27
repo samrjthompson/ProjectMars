@@ -45,6 +45,8 @@ struct FPopulation
 	float ForeignerGrowth{};
 	float SlaveGrowth{};
 
+	int32 Manpower{};
+
 	// Updates the grow as a percentage of each pop type
 	void UpdateGrowthPerMonth();
 

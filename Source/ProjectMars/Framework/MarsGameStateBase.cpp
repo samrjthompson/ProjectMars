@@ -282,7 +282,6 @@ void AMarsGameStateBase::CreateArrayOfAvailableFactions()
 	for (int32 i = 0; i < (uint8)EFactionName::Max; i++)
 	{
 		FFaction FactionObj;
-		//FactionPtr = NewObject<FFaction>();
 		EFactionName FactionKey = EFactionName(i);
 
 		AllFactionsMap.Add(FactionKey, FactionObj);
@@ -315,8 +314,6 @@ void AMarsGameStateBase::PopulateFactionStartingInformation(TMap<EFactionName, s
 				Rome->Population.TotalMiddleClassPop = StartingTotalPop * 0.30;
 				Rome->Population.TotalLowerClassPop = StartingTotalPop * 0.30;
 				Rome->Population.TotalSlavePopulation = StartingTotalPop * 0.30;
-
-				UE_LOG(LogTemp, Warning, TEXT("Rome name: %s"), *RomeFaction.FactionName.ToString());
 			}
 
 			// Political System
@@ -335,7 +332,7 @@ void AMarsGameStateBase::PopulateFactionStartingInformation(TMap<EFactionName, s
 
 			// Population
 			{
-				const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
+				const int32 StartingTotalPop = FMath::RandRange(30000, 35000);
 
 				Etruria->Population.TotalUpperClassPop = StartingTotalPop * 0.10;
 				Etruria->Population.TotalMiddleClassPop = StartingTotalPop * 0.30;
@@ -362,7 +359,7 @@ void AMarsGameStateBase::PopulateFactionStartingInformation(TMap<EFactionName, s
 
 			// Population
 			{
-				const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
+				const int32 StartingTotalPop = FMath::RandRange(40000, 45000);
 
 				Carthage->Population.TotalUpperClassPop = StartingTotalPop * 0.10;
 				Carthage->Population.TotalMiddleClassPop = StartingTotalPop * 0.30;

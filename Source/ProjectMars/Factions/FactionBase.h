@@ -57,14 +57,8 @@ struct FFaction
 {
 	GENERATED_BODY()
 
-	FFaction()
-	{
-		
-	}
-	FFaction(EFactionName InitFaction)
-	{
-		Faction = InitFaction;
-	}
+	FFaction();
+	FFaction(EFactionName InitFaction);
 
 	// Name
 	FName FactionName{};
@@ -72,22 +66,21 @@ struct FFaction
 
 	// Population
 	int32 TotalPopulation{};
-	int32 Manpower{};
 
 	// Politics
 	float PoliticalPowerIncome{};
 	float TotalPoliticalPower{};
 	float TotalStability{};
 	float StabilityChange{};
-	float TotalTyranny{};
+	float TotalTyranny{ 0 };
 	float TyrannyChange{};
 
 	// Military
-	float TotalAggressiveExpansion{};
+	float TotalAggressiveExpansion{ 0 };
 	float AggressiveExpansionChange{};
-	float TotalWarExhaustion{};
+	float TotalWarExhaustion{ 0 };
 	float WarExhaustionChange{};
-	float TotalMilitaryXP{};
+	float TotalMilitaryXP{ 0 };
 	float MilitaryXPChange{};
 
 	
