@@ -82,7 +82,7 @@ public:
 	// Ptr to FCampaignDateTime struct
 	FCampaignDateTime* CampaignDateTime;
 
-	// The last time an update occured in seconds
+	// The last time an update occurred in seconds
 	float LastUpdateCheckTime;
 
 	// Amount in seconds we want to update our player's faction info

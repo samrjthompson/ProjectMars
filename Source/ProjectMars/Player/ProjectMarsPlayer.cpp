@@ -142,6 +142,11 @@ void AProjectMarsPlayer::ChooseRome()
 void AProjectMarsPlayer::ChooseEtruria()
 {
 	if(bHasChosenFaction) { return; }
+	// InitialisePlayerFaction(EFactionName::Etruria);
+
+	PlayerFaction = MarsGameStateBase->AvailableFactionsMap->Find(EFactionName::Etruria);
+	MarsGameStateBase->AvailableFactionsMap->Remove(EFactionName::Etruria);
+
 	InitialisePlayerFaction(EFactionName::Etruria);
 
 	MarsGameStateBase->AssignAIFactions();
@@ -150,6 +155,11 @@ void AProjectMarsPlayer::ChooseEtruria()
 void AProjectMarsPlayer::ChooseCarthage()
 {
 	if(bHasChosenFaction) { return; }
+	// InitialisePlayerFaction(EFactionName::Carthage);
+
+	PlayerFaction = MarsGameStateBase->AvailableFactionsMap->Find(EFactionName::Carthage);
+	MarsGameStateBase->AvailableFactionsMap->Remove(EFactionName::Carthage);
+
 	InitialisePlayerFaction(EFactionName::Carthage);
 
 	MarsGameStateBase->AssignAIFactions();

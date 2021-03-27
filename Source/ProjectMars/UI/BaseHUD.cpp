@@ -166,12 +166,20 @@ void ABaseHUD::DrawFPS()
 void ABaseHUD::DrawMainGameUI()
 {
 	if(ChooseFactionWidget && BaseGameplayWidget && Player)
-	{		
-		Player->ChooseRome();
-		UE_LOG(LogTemp, Warning, TEXT("Choose Rome"));
+	{
+		if(ChooseFactionWidget->RomeButton->IsHovered())
+		{
+			Player->ChooseRome();
+			ChooseFactionWidget->RemoveFromParent();
+			BaseGameplayWidget->AddToViewport();
+		}
+		if(ChooseFactionWidget->EtruriaButton->IsHovered())
+		{
+			Player->ChooseEtruria();
+			ChooseFactionWidget->RemoveFromParent();
+			BaseGameplayWidget->AddToViewport();
+		}
 		
-		ChooseFactionWidget->RemoveFromParent();
-		BaseGameplayWidget->AddToViewport();
 		DrawEventPopup();
 	}
 }
