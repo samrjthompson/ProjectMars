@@ -39,6 +39,7 @@ void AMarsGameStateBase::BeginPlay()
 	Super::BeginPlay();
 
 	CreateArrayOfAvailableFactions();
+	CreateAllUnits();
 	
 	LastTickCheck = GetWorld()->GetTimeSeconds();
 	LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();
@@ -240,6 +241,100 @@ void AMarsGameStateBase::CalculateCurrentDay()
 		++CurrentDay;	
 		LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();	
 	}
+}
+
+void AMarsGameStateBase::CreateAllUnits()
+{
+	for (int32 i = 0; i < (uint8)EUnitName::Max; i++)
+	{
+		FUnitData UnitObject;
+		EUnitName UnitNameKey = EUnitName(i);
+
+		UnitMap.Emplace(UnitNameKey, UnitObject);
+	}
+
+	InitialiseUnits();
+}
+
+void AMarsGameStateBase::InitialiseUnits()
+{
+	FUnitData* Unit{ nullptr };
+
+	// ROME
+	{
+		// Hastati
+		{
+			Unit = UnitMap.Find(EUnitName::Hastati);
+			Unit->Armour = 40;
+			Unit->ClimateProficiency = EClimateProficiency::Temperate;
+			Unit->Discipline = 40;
+			Unit->Experience = 0;
+			Unit->Speed = 25;
+			Unit->Morale = 40;
+			Unit->TerrainProficiency = ETerrainProficiency::None;
+			Unit->UnitClass = EUnitClass::Heavy;
+			Unit->UnitName = "Hastati";
+			Unit->UnitType = EUnitCategory::Swordsmen;
+			Unit->WeaponDamage = 40;
+		}
+		// Principes
+		{
+			Unit = UnitMap.Find(EUnitName::Principes);
+			Unit->Armour = 60;
+			Unit->ClimateProficiency = EClimateProficiency::Temperate;
+			Unit->Discipline = 60;
+			Unit->Experience = 0;
+			Unit->Speed = 20;
+			Unit->Morale = 60;
+			Unit->TerrainProficiency = ETerrainProficiency::None;
+			Unit->UnitClass = EUnitClass::Heavy;
+			Unit->UnitName = "Principes";
+			Unit->UnitType = EUnitCategory::Swordsmen;
+			Unit->WeaponDamage = 50;
+		}
+		// Triarii
+		{
+			Unit = UnitMap.Find(EUnitName::Triarii);
+			Unit->Armour = 65;
+			Unit->ClimateProficiency = EClimateProficiency::Temperate;
+			Unit->Discipline = 65;
+			Unit->Experience = 0;
+			Unit->Speed = 18;
+			Unit->Morale = 65;
+			Unit->TerrainProficiency = ETerrainProficiency::None;
+			Unit->UnitClass = EUnitClass::Heavy;
+			Unit->UnitName = "Triarii";
+			Unit->UnitType = EUnitCategory::Spearmen;
+			Unit->WeaponDamage = 60;
+		}
+		// Equites
+		{
+			Unit = UnitMap.Find(EUnitName::Equites);
+			Unit->Armour = 25;
+			Unit->ClimateProficiency = EClimateProficiency::Temperate;
+			Unit->Discipline = 50;
+			Unit->Experience = 0;
+			Unit->Speed = 75;
+			Unit->Morale = 50;
+			Unit->TerrainProficiency = ETerrainProficiency::Grassland;
+			Unit->UnitClass = EUnitClass::Light;
+			Unit->UnitName = "Equites";
+			Unit->UnitType = EUnitCategory::Cavalry;
+			Unit->WeaponDamage = 35;
+		}
+
+		Unit = nullptr;
+	}
+
+	// ETRURIA
+	{
+		Unit = nullptr;
+	}
+
+	// CARTHAGE
+	{
+		Unit = nullptr;
+	}	
 }
 
 void AMarsGameStateBase::InitialiseReferences(AProjectMarsPlayer* InitPlayer)

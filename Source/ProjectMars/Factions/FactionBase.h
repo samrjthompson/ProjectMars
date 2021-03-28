@@ -123,6 +123,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaSeconds) override;
 
+	FVector CapitalLocation{};
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // FACTION DATA

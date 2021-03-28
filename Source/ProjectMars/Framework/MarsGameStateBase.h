@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameStateBase.h"
 #include "ProjectMars/Factions/FactionBase.h"
+#include "ProjectMars/Military/UnitBase.h"
 
 #include "MarsGameStateBase.generated.h"
 
@@ -127,4 +128,11 @@ private:
 	int32 StartYear;
 
 	int32 MonthsInGame{ 0 };
+
+	//////////////////////////////////////////////////////////////////
+	// UNITS
+
+	TMap<EUnitName, FUnitData> UnitMap;
+	void CreateAllUnits();
+	void InitialiseUnits();
 };
