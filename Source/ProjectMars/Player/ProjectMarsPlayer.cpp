@@ -10,7 +10,6 @@
 #include "ProjectMars/Factions/FactionBase.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/UI/BaseHUD.h"
-#include "ProjectMars/Framework/TimeInGame.h"
 
 
 // Sets default values
@@ -59,6 +58,8 @@ void AProjectMarsPlayer::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	PawnMovement(DeltaTime);
+	GetArmyClickedOn();
+	// MoveArmy();
 }
 
 void AProjectMarsPlayer::InitialiseGameStateRefs()
@@ -89,6 +90,7 @@ void AProjectMarsPlayer::InitialisePlayerController()
 		if (BasePlayerController)
 		{
 			BaseHUD = Cast<ABaseHUD>(BasePlayerController->GetHUD());
+			BasePlayerController->OnRMBPressed.AddDynamic(this, &AProjectMarsPlayer::MoveArmy);
 		}
 		if (!BasePlayerController)
 		{
@@ -232,6 +234,51 @@ void AProjectMarsPlayer::UpdatePlayerPopulationData()
 	{
 		FPopulation& Pop = PlayerFaction->Population;
 		Pop.UpdateMonthlyPopulation();
+	}
+}
+
+void AProjectMarsPlayer::GetArmyClickedOn()
+{
+	if (!BasePlayerController) { return; } // NULL Check
+	if (!BasePlayerController->IsInputKeyDown(EKeys::LeftMouseButton)) { return; }
+	
+	FHitResult LeftClick;
+
+	if(BasePlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, LeftClick))
+	{
+		if(LeftClick.GetActor())
+		{
+			FactionArmy = Cast<AArmy>(LeftClick.GetActor());
+			if(FactionArmy)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("FactionArmy selected"));
+			}
+			else
+			{
+				UE_LOG(LogTemp, Error, TEXT("No army selected"));
+				FactionArmy = nullptr;;
+			}
+		}
+	}
+}
+
+void AProjectMarsPlayer::MoveArmy()
+{
+	if (!BasePlayerController) { return; } // NULL Check
+	if (!FactionArmy) { return; } // NULL CHECK
+	//if (!BasePlayerController->IsInputKeyDown(EKeys::RightMouseButton)) { return; }
+
+	
+	FHitResult RightClickLoc;
+	if(BasePlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, RightClickLoc))
+	{
+		// TODO: Need to change this so that we can only right click on appropriate actors such as terrain, or cities, or other armies etc.
+		if(RightClickLoc.GetActor())
+		{
+			FactionArmy->SetActorLocation(FVector(RightClickLoc.ImpactPoint.X, RightClickLoc.ImpactPoint.Y, RightClickLoc.GetActor()->GetActorLocation().Z));
+			
+			UE_LOG(LogTemp, Warning, TEXT("FactionArmy moved"));
+		}
 	}
 }
 

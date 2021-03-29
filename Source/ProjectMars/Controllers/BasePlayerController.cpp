@@ -3,6 +3,8 @@
 
 #include "ProjectMars/Controllers/BasePlayerController.h"
 
+
+#include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/BaseHUD.h"
 
 ABasePlayerController::ABasePlayerController()
@@ -18,6 +20,7 @@ void ABasePlayerController::SetupInputComponent()
 
 	InputComponent->BindAction("LeftMouseClick", IE_Pressed, this, &ABasePlayerController::SelectionPressed);
 	InputComponent->BindAction("LeftMouseClick", IE_Released, this, &ABasePlayerController::SelectionReleased);
+	InputComponent->BindAction("RightMouseClick", IE_Pressed, this, &ABasePlayerController::RMBPressed);
 	InputComponent->BindAction("PauseGame", IE_Pressed, this, &ABasePlayerController::PauseGame);
 }
 
@@ -62,4 +65,9 @@ void ABasePlayerController::SelectionReleased()
 	{
 		HUD->bHasStartedSelecting = false;
 	}
+}
+
+void ABasePlayerController::RMBPressed()
+{
+	OnRMBPressed.Broadcast();
 }

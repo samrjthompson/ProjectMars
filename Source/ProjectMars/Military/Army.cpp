@@ -4,7 +4,18 @@
 #include "Army.h"
 
 #include "Components/BoxComponent.h"
-#include "ProjectMars/Military/UnitBase.h"
+
+FLegion::FLegion()
+{
+}
+
+FCohort::FCohort()
+{
+}
+
+FInfantry::FInfantry()
+{
+}
 
 // Sets default values
 AArmy::AArmy()
@@ -17,6 +28,7 @@ AArmy::AArmy()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Army Mesh"));
 	Mesh->SetupAttachment(Root);
+	//Mesh->OnClicked.AddDynamic(this, &AArmy::ArmyHasBeenClickedOn);
 
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger Box"));
 	TriggerBox->SetupAttachment(Mesh);
@@ -29,10 +41,14 @@ void AArmy::BeginPlay()
 	
 }
 
+AArmy* AArmy::ArmyHasBeenClickedOn()
+{
+	return this;
+}
+
 // Called every frame
 void AArmy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
-

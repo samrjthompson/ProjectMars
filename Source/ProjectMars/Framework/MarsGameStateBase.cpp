@@ -8,6 +8,7 @@
 #include "ProjectMars/UI/BaseHUD.h"
 #include "ProjectMars/Factions/FactionBase.h"
 #include "ProjectMars/Controllers/AIControllerBase.h"
+#include "ProjectMars/Military/Army.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
 {
@@ -247,7 +248,7 @@ void AMarsGameStateBase::CreateAllUnits()
 {
 	for (int32 i = 0; i < (uint8)EUnitName::Max; i++)
 	{
-		FUnitData UnitObject;
+		FCohort UnitObject;
 		EUnitName UnitNameKey = EUnitName(i);
 
 		UnitMap.Emplace(UnitNameKey, UnitObject);
@@ -258,13 +259,15 @@ void AMarsGameStateBase::CreateAllUnits()
 
 void AMarsGameStateBase::InitialiseUnits()
 {
-	FUnitData* Unit{ nullptr };
+	FCohort* Unit{ nullptr };
 
 	// ROME
 	{
 		// Hastati
 		{
 			Unit = UnitMap.Find(EUnitName::Hastati);
+			if (!Unit) { return; }
+			
 			Unit->Armour = 40;
 			Unit->ClimateProficiency = EClimateProficiency::Temperate;
 			Unit->Discipline = 40;
@@ -276,10 +279,14 @@ void AMarsGameStateBase::InitialiseUnits()
 			Unit->UnitName = "Hastati";
 			Unit->UnitType = EUnitCategory::Swordsmen;
 			Unit->WeaponDamage = 40;
+
+			Unit = nullptr;
 		}
 		// Principes
 		{
 			Unit = UnitMap.Find(EUnitName::Principes);
+			if (!Unit) { return; }
+			
 			Unit->Armour = 60;
 			Unit->ClimateProficiency = EClimateProficiency::Temperate;
 			Unit->Discipline = 60;
@@ -291,10 +298,14 @@ void AMarsGameStateBase::InitialiseUnits()
 			Unit->UnitName = "Principes";
 			Unit->UnitType = EUnitCategory::Swordsmen;
 			Unit->WeaponDamage = 50;
+
+			Unit = nullptr;
 		}
 		// Triarii
 		{
 			Unit = UnitMap.Find(EUnitName::Triarii);
+			if (!Unit) { return; }
+			
 			Unit->Armour = 65;
 			Unit->ClimateProficiency = EClimateProficiency::Temperate;
 			Unit->Discipline = 65;
@@ -306,10 +317,14 @@ void AMarsGameStateBase::InitialiseUnits()
 			Unit->UnitName = "Triarii";
 			Unit->UnitType = EUnitCategory::Spearmen;
 			Unit->WeaponDamage = 60;
+
+			Unit = nullptr;
 		}
 		// Equites
 		{
 			Unit = UnitMap.Find(EUnitName::Equites);
+			if (!Unit) { return; }
+			
 			Unit->Armour = 25;
 			Unit->ClimateProficiency = EClimateProficiency::Temperate;
 			Unit->Discipline = 50;
@@ -321,6 +336,8 @@ void AMarsGameStateBase::InitialiseUnits()
 			Unit->UnitName = "Equites";
 			Unit->UnitType = EUnitCategory::Cavalry;
 			Unit->WeaponDamage = 35;
+
+			Unit = nullptr;
 		}
 
 		Unit = nullptr;

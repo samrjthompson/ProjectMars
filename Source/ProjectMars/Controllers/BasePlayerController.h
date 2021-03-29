@@ -6,9 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "BasePlayerController.generated.h"
 
-/**
- * 
- */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnRMBPressed);
+
 UCLASS()
 class PROJECTMARS_API ABasePlayerController : public APlayerController
 {
@@ -31,6 +30,12 @@ protected:
 private:
 	void SelectionPressed();
 	void SelectionReleased();
+
+public:
+	FOnRMBPressed OnRMBPressed;
+
+	UFUNCTION()
+	void RMBPressed();
 
 	UPROPERTY()
 	class ABaseHUD* HUD{ nullptr };

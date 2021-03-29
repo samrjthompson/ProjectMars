@@ -20,6 +20,8 @@ struct FPopulation;
 struct FCultureGroup;
 struct FEconomics;
 
+class AArmy;
+
 // Enum to define the type of political system a faction has
 UENUM()
 enum class EPoliticalSystem : uint8
@@ -126,16 +128,16 @@ public:
 	FVector CapitalLocation{};
 
 
-////////////////////////////////////////////////////////////////////////////////
-// FACTION DATA
+	//////////////////////////////////////////////////////
+	// FACTION DATA
 	
 public:
 
 	FFaction Faction;
 	
 	
-////////////////////////////////////////////////////////////////////////////////
-// POPULATION
+	//////////////////////////////////////////////////////
+	// POPULATION
 	
 public:
 	
@@ -143,8 +145,8 @@ public:
 	virtual FPopulation& GetRefToPopulationData();
 	
 
-////////////////////////////////////////////////////////////////////////////////
-// ECONOMY
+	//////////////////////////////////////////////////////
+	// ECONOMY
 
 public:
 	
@@ -152,12 +154,21 @@ public:
 	virtual FEconomics& GetRefToEconomicsData();
 	
 	
-////////////////////////////////////////////////////////////////////////////////
-// CULTURE
+	//////////////////////////////////////////////////////
+	// CULTURE
 
 public:
 	
 	// This is a virtual function that returns a reference to an FCultureGroup object
 	virtual FCultureGroup& GetRefToCultureGroup();
 	virtual FCultureData& GetRefToCultureData();
+
+	
+	//////////////////////////////////////////////////////
+	// ARMY
+
+public:
+	// Pointer to an army a faction has
+	UPROPERTY()
+	AArmy* FactionArmy{ nullptr };
 };
