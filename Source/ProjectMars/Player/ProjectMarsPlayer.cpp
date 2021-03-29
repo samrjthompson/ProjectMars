@@ -216,15 +216,18 @@ void AProjectMarsPlayer::UpdateGameSpeed(float Val)
 	if(Val == 1)
 	{
 		MarsGameStateBase->UpdateCheckFrequency = 5.f;
+		GameSpeed = 1;
 	}
 	if(Val == 2)
 	{
 		MarsGameStateBase->UpdateCheckFrequency = 3.f;
+		GameSpeed = 2;
 	}
 	if(Val == 5)
 	{
 		MarsGameStateBase->UpdateCheckFrequency = 1.f;
-	}	
+		GameSpeed = 5;
+	}
 }
 
 void AProjectMarsPlayer::UpdatePlayerPopulationData()

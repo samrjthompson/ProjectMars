@@ -79,6 +79,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	int32 GameSpeed{ 1 };
+
 private:
 	
 	void PawnMovement(float DeltaTime);

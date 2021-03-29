@@ -210,7 +210,9 @@ public:
 public:
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
-	float MeshMovementSpeed = 20.f;
+	float DefaultMovementSpeed{ 20.f };
+	
+	float CurrentMovementSpeed{ DefaultMovementSpeed };
 
 	FVector StartLocation{};
 
