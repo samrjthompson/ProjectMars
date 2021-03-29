@@ -82,7 +82,7 @@ void AArmy::MoveArmy()
 
 	FVector Location = GetActorLocation();
 
-	float JourneyLength = (TargetLocation - GetActorLocation()).Size();
+	const float JourneyLength = (TargetLocation - GetActorLocation()).Size();
 
 	// Setting this to 1.f seems to fix the glitching issue
 	if(JourneyLength > 1.f)
