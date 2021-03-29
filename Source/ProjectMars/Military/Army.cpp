@@ -4,6 +4,8 @@
 #include "Army.h"
 
 #include "Components/BoxComponent.h"
+#include "ProjectMars/Controllers/BasePlayerController.h"
+#include "ProjectMars/Player/ProjectMarsPlayer.h"
 
 FLegion::FLegion()
 {
@@ -32,18 +34,17 @@ AArmy::AArmy()
 
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger Box"));
 	TriggerBox->SetupAttachment(Mesh);
+
+	// SetTickableWhenPaused(false);
 }
 
 // Called when the game starts or when spawned
 void AArmy::BeginPlay()
 {
 	Super::BeginPlay();
-	
-}
 
-AArmy* AArmy::ArmyHasBeenClickedOn()
-{
-	return this;
+	GlobalStartLocation = GetActorLocation();
+	GlobalTargetLocation = GetTransform().TransformPosition(TargetLocation);
 }
 
 // Called every frame
@@ -51,4 +52,46 @@ void AArmy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	MoveArmy();
+}
+
+AArmy* AArmy::ArmyHasBeenClickedOn()
+{
+	return this;
+}
+
+void AArmy::MoveArmy()
+{
+	if (!OwnerOfArmy) { return; }
+
+	// This prevents the army from moving when the game is paused but retains the TargetLocation ready for when we unpause
+	if(OwnerOfArmy->BasePlayerController && OwnerOfArmy->BasePlayerController->bGameIsPaused == true)
+	{
+		bCanMoveArmy = false;
+	}
+	else
+	{
+		bCanMoveArmy = true;
+	}
+	
+	if (!bCanMoveArmy) { return; }
+
+	FVector Location = GetActorLocation();
+
+	float JourneyLength = (TargetLocation - GetActorLocation()).Size();
+
+	// Setting this to 1.f seems to fix the glitching issue
+	if(JourneyLength > 1.f)
+	{		
+		Direction = (TargetLocation - Location).GetSafeNormal();
+		
+		Location += MeshMovementSpeed * GetWorld()->DeltaTimeSeconds * Direction;
+
+		SetActorLocation(Location);
+	}
+}
+
+void AArmy::GetPlayerOwnerOfArmy(AProjectMarsPlayer* PlayerOwner)
+{
+	OwnerOfArmy = PlayerOwner;
 }

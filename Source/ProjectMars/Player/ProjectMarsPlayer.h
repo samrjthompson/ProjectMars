@@ -64,6 +64,7 @@ private:
 	 * chooses their faction and when the AI is spawned. */
 	struct FFaction* PlayerFaction{ nullptr };
 
+public:
 	UPROPERTY()
 	class ABasePlayerController* BasePlayerController{ nullptr };
 

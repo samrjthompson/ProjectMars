@@ -59,7 +59,6 @@ void AProjectMarsPlayer::Tick(float DeltaTime)
 
 	PawnMovement(DeltaTime);
 	GetArmyClickedOn();
-	// MoveArmy();
 }
 
 void AProjectMarsPlayer::InitialiseGameStateRefs()
@@ -279,18 +278,15 @@ void AProjectMarsPlayer::MoveArmy()
 {
 	if (!BasePlayerController) { return; } // NULL Check
 	if (!FactionArmy) { return; } // NULL CHECK
-	//if (!BasePlayerController->IsInputKeyDown(EKeys::RightMouseButton)) { return; }
-
-	
+		
 	FHitResult RightClickLoc;
 	if(BasePlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, RightClickLoc))
 	{
 		// TODO: Need to change this so that we can only right click on appropriate actors such as terrain, or cities, or other armies etc.
 		if(RightClickLoc.GetActor())
 		{
-			FactionArmy->SetActorLocation(FVector(RightClickLoc.ImpactPoint.X, RightClickLoc.ImpactPoint.Y, RightClickLoc.GetActor()->GetActorLocation().Z));
-			
-			UE_LOG(LogTemp, Warning, TEXT("FactionArmy moved"));
+			FactionArmy->TargetLocation = FVector(RightClickLoc.ImpactPoint.X, RightClickLoc.ImpactPoint.Y, RightClickLoc.GetActor()->GetActorLocation().Z);
+			FactionArmy->GetPlayerOwnerOfArmy(this);
 		}
 	}
 }

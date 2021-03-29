@@ -8,6 +8,8 @@
 
 struct FCohort;
 
+class AProjectMarsPlayer;
+
 UENUM()
 enum class EArmyMovementStance : uint8
 {
@@ -201,4 +203,35 @@ public:
 	TArray<TArray<FLegion>*> Army;
 
 	AArmy* ArmyHasBeenClickedOn();
+
+
+	//////////////////////////////////////////////////////
+	// ARMY MOVEMENT
+public:
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float MeshMovementSpeed = 20.f;
+
+	FVector StartLocation{};
+
+	UPROPERTY(EditAnywhere, Category = "Movement", Meta = (MakeEditWidget = true))
+	FVector TargetLocation{};
+
+	FVector GlobalTargetLocation{};
+	FVector GlobalStartLocation{};
+
+	void MoveArmy();
+
+	bool bArmyIsMoving = false;
+	bool bGameIsPaused = true;
+	bool bCanMoveArmy = false;
+
+	FVector Direction{};
+	FVector ActorLocAtPause{};
+
+	void GetPlayerOwnerOfArmy(AProjectMarsPlayer* PlayerOwner);
+
+	UPROPERTY()
+	AProjectMarsPlayer* OwnerOfArmy{ nullptr };
+
 };
