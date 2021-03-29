@@ -121,4 +121,10 @@ public:
 	void DrawEventPopup();
 
 	void MoveWidgetInViewportWithMouse(class UUserWidget* EventPopupWidgetToMove);
+
+	void GetActorsUnderSelectionBox();
+	TArray<class AArmy*> ArmiesUnderSelectionBox;
+
+	UPROPERTY()
+	class AArmy* ArmySelected{ nullptr };
 };

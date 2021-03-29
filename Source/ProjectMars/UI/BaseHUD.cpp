@@ -12,6 +12,7 @@
 #include "Widgets/ChooseFactionWidget.h"
 #include "Widgets/EconomyWidget.h"
 #include "Widgets/Events/EventPopupWidget.h"
+#include "ProjectMars/Military/Army.h"
 
 #define OUT
 
@@ -104,6 +105,17 @@ void ABaseHUD::DrawSelectionBox()
 {
 	DrawRect(SelectionBoxColor, InitialSelectionPoint.X, InitialSelectionPoint.Y,
 		CurrentSelectionPoint.X - InitialSelectionPoint.X, CurrentSelectionPoint.Y - InitialSelectionPoint.Y);
+
+	GetActorsInSelectionRectangle<AArmy>(InitialSelectionPoint, CurrentSelectionPoint, ArmiesUnderSelectionBox, false);
+
+	if (ArmiesUnderSelectionBox.IsValidIndex(0))
+	{
+		ArmySelected = ArmiesUnderSelectionBox[0];
+		if (ArmySelected)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Army selected under selection box"));
+		}
+	}
 }
 
 void ABaseHUD::InitialiseFactionBase(FFaction* InitFaction)
@@ -236,4 +248,9 @@ void ABaseHUD::MoveWidgetInViewportWithMouse(UUserWidget* EventPopupWidgetToMove
 		CurrentEventPopupPos = GetMousePosition2D() - DistanceBetweenMouseAndLeftSideOfWidget;
 		EventPopupWidgetToMove->SetPositionInViewport(CurrentEventPopupPos);
 	}
+}
+
+void ABaseHUD::GetActorsUnderSelectionBox()
+{
+	
 }

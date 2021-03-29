@@ -260,6 +260,19 @@ void AProjectMarsPlayer::GetArmyClickedOn()
 			}
 		}
 	}
+	if(BaseHUD && BaseHUD->ArmySelected)
+	{
+		FactionArmy = BaseHUD->ArmySelected;
+		if(FactionArmy)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("FactionArmy selected"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("No army selected"));
+			FactionArmy = nullptr;;
+		}
+	}
 }
 
 void AProjectMarsPlayer::MoveArmy()

@@ -53,6 +53,8 @@ void ABasePlayerController::SelectionPressed()
 {
 	if(HUD)
 	{
+		HUD->ArmiesUnderSelectionBox.Empty();
+		HUD->ArmySelected = nullptr;
 		HUD->bHasStartedSelecting = true;
 		
 		HUD->InitialSelectionPoint = HUD->GetMousePosition2D();
