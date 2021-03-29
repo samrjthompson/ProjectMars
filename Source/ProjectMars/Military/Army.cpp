@@ -68,8 +68,6 @@ void AArmy::MoveArmy()
 	CurrentMovementSpeed = DefaultMovementSpeed; // Resets movement speed to the default - if we don't do this, CurrentMovementSpeed will infinitely increase
 	CurrentMovementSpeed *= OwnerOfArmy->GameSpeed;	
 	
-	UE_LOG(LogTemp, Warning, TEXT("CurrentMovementSpeed: %f"), CurrentMovementSpeed);
-	
 	// This prevents the army from moving when the game is paused but retains the TargetLocation ready for when we un-pause
 	if(OwnerOfArmy->BasePlayerController && OwnerOfArmy->BasePlayerController->bGameIsPaused == true)
 	{
