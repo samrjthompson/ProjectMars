@@ -6,9 +6,11 @@
 
 #include "Blueprint/UserWidget.h"
 #include "Components/BoxComponent.h"
+#include "Components/TextBlock.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/Widgets/Military/ArmyRoster.h"
+#include "ProjectMars/UI/Widgets/WidgetComponents/ArmyWidgetComponent.h"
 
 FLegion::FLegion()
 {
@@ -36,6 +38,11 @@ AArmy::AArmy()
 
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger Box"));
 	TriggerBox->SetupAttachment(Mesh);
+
+	ArmyWidgetComponent = CreateDefaultSubobject<UArmyWidgetComponent>(TEXT("Army Details Component"));
+	ArmyWidgetComponent->SetupAttachment(Root);
+
+	NumOfLegions = Army.Num();
 }
 
 // Called when the game starts or when spawned
@@ -109,10 +116,6 @@ void AArmy::ShowArmyWidget()
 	if(OwnerOfArmy)
 	{
 		ArmyRosterWidget = CreateWidget<UArmyRoster>(OwnerOfArmy->BasePlayerController, ArmyRosterClass);
-		if (ArmyRosterWidget)
-		{
-			ArmyRosterWidget->AddToViewport();
-		}
 	}
 }
 

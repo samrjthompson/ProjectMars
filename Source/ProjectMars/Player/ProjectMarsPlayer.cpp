@@ -11,6 +11,7 @@
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/UI/BaseHUD.h"
 #include "DrawDebugHelpers.h"
+#include "ProjectMars/UI/Widgets/WidgetComponents/ArmyWidgetComponent.h"
 
 
 // Sets default values
@@ -269,7 +270,8 @@ void AProjectMarsPlayer::GetArmyClickedOn()
 				UE_LOG(LogTemp, Warning, TEXT("FactionArmy selected"));
 				FactionArmy->OwnerOfArmy = this;
 				TempArmyPtr = FactionArmy;
-				FactionArmy->ShowArmyWidget();
+				// FactionArmy->ShowArmyWidget();
+				FactionArmy->ArmyWidgetComponent->ArmyClicked(this);
 				
 				ClickCounter = 1;
 			}
@@ -280,7 +282,8 @@ void AProjectMarsPlayer::GetArmyClickedOn()
 
 				if(TempArmyPtr)
 				{
-					TempArmyPtr->HideArmyWidget();
+					TempArmyPtr->ArmyWidgetComponent->ArmyUnClicked(this);
+					// TempArmyPtr->HideArmyWidget();
 				}
 				
 				ClickCounter = 0;

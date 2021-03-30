@@ -20,3 +20,16 @@ void UArmyRoster::NativeOnInitialized()
 	Super::NativeOnInitialized();
 	
 }
+
+void UArmyRoster::UpdateArmyRosterWidget(UArmyWidgetComponent* Comp)
+{
+	if(Comp)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UpdateArmyRosterWidget CALLED"));
+	}
+}
+
+void UArmyRoster::DrawToScreen()
+{
+	this->AddToViewport();
+}

@@ -245,6 +245,12 @@ public:
 public:
 	FOnArmyClicked OnArmyClicked;
 	FOnArmyUnClicked OnArmyUnClicked;
+
+	UPROPERTY(EditAnywhere, Category = "Widget Component")
+	class UArmyWidgetComponent* ArmyWidgetComponent{ nullptr };
+
+	UPROPERTY(EditAnywhere, Category = "Widget Component")
+	TSubclassOf<class UUserWidget> ArmyWidgetComponentClass;
 	
 	UFUNCTION()
 	void ShowArmyWidget();
@@ -262,4 +268,14 @@ public:
 	
 	UPROPERTY()
 	class UArmyRoster* ArmyRosterWidget{ nullptr };
+
+
+	//////////////////////////////////////////////////////
+	// ARMY DETAILS
+
+	UPROPERTY(EditAnywhere, Category = "Army Details")
+	FName ArmyName = "Gaius Julius Caesar";
+
+	UPROPERTY(EditAnywhere, Category = "Army Details")
+	int32 NumOfLegions{};
 };

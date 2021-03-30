@@ -20,4 +20,14 @@ public:
 	virtual void NativeConstruct() override;
 
 	virtual void NativeOnInitialized() override;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* ArmyNameText{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* LegionNum{ nullptr };
+
+	void UpdateArmyRosterWidget(class UArmyWidgetComponent* Comp);
+
+	void DrawToScreen();
 };
