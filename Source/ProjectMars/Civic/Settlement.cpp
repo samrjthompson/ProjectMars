@@ -4,6 +4,7 @@
 #include "Settlement.h"
 
 #include "Components/BoxComponent.h"
+#include "ProjectMars/UI/Widgets/WidgetComponents/SettlementWidgetComponent.h"
 
 // Sets default values
 ASettlement::ASettlement()
@@ -19,6 +20,9 @@ ASettlement::ASettlement()
 
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>("Trigger Box");
 	TriggerBox->SetupAttachment(Mesh);
+
+	SettlementWidgetComponent = CreateDefaultSubobject<USettlementWidgetComponent>("Settlement Widget Component");
+	SettlementWidgetComponent->SetupAttachment(Mesh);
 }
 
 // Called when the game starts or when spawned

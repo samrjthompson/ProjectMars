@@ -39,4 +39,11 @@ private:
 	UFUNCTION()
 	void SettlementClicked(UPrimitiveComponent* ClickedComponent, FKey ButtonPressed);
 
+public:
+	UPROPERTY(EditAnywhere, Category = "Widget Component")
+	class USettlementWidgetComponent* SettlementWidgetComponent{ nullptr };
+
+	UPROPERTY(EditAnywhere, Category = "Widget Component")
+	TSubclassOf<class UUserWidget> SettlementWidgetComponentClass;
+	
 };
