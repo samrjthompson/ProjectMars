@@ -304,6 +304,8 @@ void AProjectMarsPlayer::MoveArmy()
 		{
 			FactionArmy->TargetLocation = FVector(RightClickLoc.ImpactPoint.X, RightClickLoc.ImpactPoint.Y, RightClickLoc.GetActor()->GetActorLocation().Z);
 			FactionArmy->GetPlayerOwnerOfArmy(this);
+			
+			DrawDebugBox(GetWorld(), RightClickLoc.ImpactPoint, FVector(25.f, 25.f, 25.f), FColor::Yellow, false, 4.f, 0, 2.f);
 		}
 	}
 }
