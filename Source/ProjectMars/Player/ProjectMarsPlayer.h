@@ -157,4 +157,9 @@ public:
 
 	UFUNCTION()
 	void MoveArmy();
+
+	int32 ClickCounter = 0;
+
+	UPROPERTY()
+	class AArmy* TempArmyPtr{ nullptr };
 };

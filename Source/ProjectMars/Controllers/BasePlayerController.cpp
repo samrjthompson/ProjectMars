@@ -12,6 +12,7 @@ ABasePlayerController::ABasePlayerController()
 	bShowMouseCursor = true;
 	bEnableMouseOverEvents = true;
 	bGameIsPaused = true;
+	bEnableClickEvents = true;
 }
 
 void ABasePlayerController::SetupInputComponent()

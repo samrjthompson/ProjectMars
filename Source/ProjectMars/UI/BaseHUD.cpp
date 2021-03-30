@@ -113,7 +113,7 @@ void ABaseHUD::DrawSelectionBox()
 		ArmySelected = ArmiesUnderSelectionBox[0];
 		if (ArmySelected)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Army selected under selection box"));
+			// UE_LOG(LogTemp, Warning, TEXT("Army selected under selection box"));
 		}
 	}
 }

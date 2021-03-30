@@ -259,20 +259,31 @@ void AProjectMarsPlayer::GetArmyClickedOn()
 	if (!BasePlayerController->IsInputKeyDown(EKeys::LeftMouseButton)) { return; }
 	
 	FHitResult LeftClick;
-
-	if(BasePlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, LeftClick))
+	if(BasePlayerController->GetHitResultUnderCursor(ECC_Visibility, false, LeftClick))
 	{
 		if(LeftClick.GetActor())
 		{
 			FactionArmy = Cast<AArmy>(LeftClick.GetActor());
-			if(FactionArmy)
+			if(FactionArmy && ClickCounter == 0)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("FactionArmy selected"));
+				FactionArmy->OwnerOfArmy = this;
+				TempArmyPtr = FactionArmy;
+				FactionArmy->ShowArmyWidget();
+				
+				ClickCounter = 1;
 			}
-			else
+			else if (!FactionArmy && ClickCounter == 1)
 			{
 				UE_LOG(LogTemp, Error, TEXT("No army selected"));
 				FactionArmy = nullptr;;
+
+				if(TempArmyPtr)
+				{
+					TempArmyPtr->HideArmyWidget();
+				}
+				
+				ClickCounter = 0;
 			}
 		}
 	}
@@ -281,11 +292,10 @@ void AProjectMarsPlayer::GetArmyClickedOn()
 		FactionArmy = BaseHUD->ArmySelected;
 		if(FactionArmy)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("FactionArmy selected"));
+
 		}
 		else
 		{
-			UE_LOG(LogTemp, Error, TEXT("No army selected"));
 			FactionArmy = nullptr;;
 		}
 	}

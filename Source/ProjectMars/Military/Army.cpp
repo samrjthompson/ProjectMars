@@ -3,9 +3,12 @@
 
 #include "Army.h"
 
+
+#include "Blueprint/UserWidget.h"
 #include "Components/BoxComponent.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
+#include "ProjectMars/UI/Widgets/Military/ArmyRoster.h"
 
 FLegion::FLegion()
 {
@@ -30,19 +33,18 @@ AArmy::AArmy()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Army Mesh"));
 	Mesh->SetupAttachment(Root);
-	//Mesh->OnClicked.AddDynamic(this, &AArmy::ArmyHasBeenClickedOn);
 
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger Box"));
 	TriggerBox->SetupAttachment(Mesh);
-
-	// SetTickableWhenPaused(false);
 }
 
 // Called when the game starts or when spawned
 void AArmy::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
+	SetupDelegates();
+	
 	GlobalStartLocation = GetActorLocation();
 	GlobalTargetLocation = GetTransform().TransformPosition(TargetLocation);
 }
@@ -98,4 +100,37 @@ void AArmy::MoveArmy()
 void AArmy::GetPlayerOwnerOfArmy(AProjectMarsPlayer* PlayerOwner)
 {
 	OwnerOfArmy = PlayerOwner;
+}
+
+void AArmy::ShowArmyWidget()
+{
+	OnArmyClicked.Broadcast();
+
+	if(OwnerOfArmy)
+	{
+		ArmyRosterWidget = CreateWidget<UArmyRoster>(OwnerOfArmy->BasePlayerController, ArmyRosterClass);
+		if (ArmyRosterWidget)
+		{
+			ArmyRosterWidget->AddToViewport();
+		}
+	}
+}
+
+void AArmy::HideArmyWidget()
+{
+	OnArmyUnClicked.Broadcast();
+	if (ArmyRosterWidget)
+	{
+		ArmyRosterWidget->RemoveFromViewport();
+	}
+}
+
+void AArmy::TestDelegate(UPrimitiveComponent* ClickedComponent, FKey ButtonPressed)
+{
+	UE_LOG(LogTemp, Error, TEXT("Army click DELEGATE"));
+}
+
+void AArmy::SetupDelegates()
+{
+	TriggerBox->OnClicked.AddUniqueDynamic(this, &AArmy::TestDelegate);
 }

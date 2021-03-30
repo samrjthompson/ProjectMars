@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "Army.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnArmyClicked);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnArmyUnClicked);
+
 struct FCohort;
 
 class AProjectMarsPlayer;
@@ -236,4 +239,27 @@ public:
 	UPROPERTY()
 	AProjectMarsPlayer* OwnerOfArmy{ nullptr };
 
+
+	//////////////////////////////////////////////////////
+	// ARMY WIDGET
+public:
+	FOnArmyClicked OnArmyClicked;
+	FOnArmyUnClicked OnArmyUnClicked;
+	
+	UFUNCTION()
+	void ShowArmyWidget();
+	
+	UFUNCTION()
+	void HideArmyWidget();
+
+	UFUNCTION()
+	void TestDelegate(UPrimitiveComponent* ClickedComponent, FKey ButtonPressed);
+
+	void SetupDelegates();
+
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<class UArmyRoster> ArmyRosterClass;
+	
+	UPROPERTY()
+	class UArmyRoster* ArmyRosterWidget{ nullptr };
 };
