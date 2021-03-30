@@ -10,6 +10,7 @@
 #include "ProjectMars/Factions/FactionBase.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/UI/BaseHUD.h"
+#include "DrawDebugHelpers.h"
 
 
 // Sets default values
@@ -58,7 +59,20 @@ void AProjectMarsPlayer::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	PawnMovement(DeltaTime);
+
+	// TODO: Might be better to find some way of this not being in tick
 	GetArmyClickedOn();
+	if(FactionArmy)
+	{
+		FVector MeshLoc = FactionArmy->GetActorLocation();
+		MeshLoc.Z += (FactionArmy->Mesh->Bounds.BoxExtent.Z / 2);
+		
+		FVector MeshExtent = FVector(FactionArmy->Mesh->Bounds.BoxExtent);
+		MeshExtent.X += 2.f;
+		MeshExtent.Y += 2.f;
+		
+		DrawDebugBox(GetWorld(), MeshLoc, MeshExtent, FColor::Green, false, -1.f, 0, 2.f);
+	}
 }
 
 void AProjectMarsPlayer::InitialiseGameStateRefs()
