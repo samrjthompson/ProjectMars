@@ -2,7 +2,7 @@
 
 
 ## MONEY
-### SPENDING MONEY
+### Spending Money
 
 Use a bool function to return whether or not a player can purchase something. 
 
@@ -26,7 +26,7 @@ If CanPlayerPurchase returns true, then we can buy an item, else whe cannot.
 
 ## CHARACTERS 
 
-### TRAITS
+### Traits
 
 Character traits should be acquired in 3 different ways: 1) Genetic inheritance; 
 2) Environmental factors/decisions; 3) Random events.
