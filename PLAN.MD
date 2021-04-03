@@ -111,7 +111,7 @@ TArray<ETraits*> TraitsArrayPtr;
 
 TraitsArrayPtr = &CharacterObject.TraitsArray;
 
- for (auto& CharacterElem : Characters)
+ for (auto& CharacterElem : LivingCharacterArray)
  {
      for(auto& TraitElem : TraitsArrayPtr)
      {
