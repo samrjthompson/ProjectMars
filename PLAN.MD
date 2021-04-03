@@ -95,11 +95,13 @@ month. Traits like this are additive and stack.
 
 To do this, we would probably want an array of all living characters:
 ```C++
-TArray<CharacterClass> LivingCharacterArray;
+TArray<CharacterClass*> LivingCharacterArray;
 ```
 
 We then might want an array of their traits:
 ```C++
+// Character class
+
 TArray<ETraits> TraitsArray;
 ```
 
