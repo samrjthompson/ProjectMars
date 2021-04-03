@@ -109,10 +109,10 @@ TArray<ETraits> TraitsArray;
  ```C++
 TArray<ETraits*> TraitsArrayPtr;
 
-TraitsArrayPtr = &CharacterObject.TraitsArray;
-
  for (auto& CharacterElem : LivingCharacterArray)
  {
+     TraitsArrayPtr = &CharacterElem.TraitsArray;
+     
      for(auto& TraitElem : TraitsArrayPtr)
      {
          CharacterElem.ApplyTraitModifier(TraitElem);
