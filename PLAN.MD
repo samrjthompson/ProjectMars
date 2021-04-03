@@ -107,9 +107,13 @@ TArray<ETraits> TraitsArray;
 
  We could then iterate through each character and all their traits and apply the modifiers:
  ```C++
+TArray<ETraits*> TraitsArrayPtr;
+
+TraitsArrayPtr = &CharacterObject.TraitsArray;
+
  for (auto& CharacterElem : Characters)
  {
-     for(auto& TraitElem : TraitsArray)
+     for(auto& TraitElem : TraitsArrayPtr)
      {
          CharacterElem.ApplyTraitModifier(TraitElem);
      }
