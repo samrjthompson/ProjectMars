@@ -2,7 +2,7 @@
 
 
 ## MONEY
-### Spending Money
+### SPENDING MONEY
 
 Use a bool function to return whether or not a player can purchase something. 
 
@@ -21,12 +21,12 @@ bool CanPlayerPurchase(float PlayerTreasury, float ItemCost)
 }
 ```
 
-If CanPlayerPurchase returns true, then we can buy an item, else whe cannot.
+If CanPlayerPurchase returns true, then we can buy an item, else we cannot.
 
 
 ## CHARACTERS 
 
-### Traits
+### TRAITS
 
 Character traits should be acquired in 3 different ways: 1) Genetic inheritance; 
 2) Environmental factors/decisions; 3) Random events.
@@ -85,3 +85,56 @@ enum class EMilitaryTraits
 
 }
 ```
+
+These traits must then relate to something changing about the character. E.g., if 
+a character has Inspiring Commander, it adds +4 to their martial capability.
+
+Alternatively, there are some traits which add a % chance of something happening each
+month. E.g., if a character has the trait Infection, there is a x% chance of dying each
+month. Traits like this are additive and stack. 
+
+To do this, we would probably want an array of all living characters:
+```C++
+TArray<CharacterClass> LivingCharacterArray;
+```
+
+We then might want an array of their traits:
+```C++
+TArray<ETraits> TraitsArray;
+```
+
+ We could then iterate through each character and all their traits and apply the modifiers:
+ ```C++
+ for (auto& CharacterElem : Characters)
+ {
+     for(auto& TraitElem : TraitsArray)
+     {
+         CharacterElem.ApplyTraitModifier(TraitElem);
+     }
+ }
+ ```
+
+ This would also entail a function in the Character class that applied the trait modifier:
+ ```C++
+ // Character class
+
+int32 CharacterMartialSkill;
+int32 CharacterFightingAbility;
+
+ETraits CharacterTraits;
+
+void ApplyTraitModifier(const ETrait& Trait)
+{
+    switch (Trait)
+    {
+        case ETraits::InspiringCommander : CharacterMartialSkill += 4;
+        break;
+
+        case ETraits::Craven : CharacterMartialSkill += -4;
+        break;
+
+        case ETraits::Brave : CharacterFightingAbility += 6;
+        break;
+    }   
+}
+ ```
