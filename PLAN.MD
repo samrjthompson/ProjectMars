@@ -40,6 +40,14 @@ struct FCharacter
 
     FCharacter();
 
+    // APPEARANCE
+    class UTexture2D* Portrait;
+    FName Name;
+    int32 Age;
+
+    // LEVEL
+    enum class ERank CharacterRank;
+
     // SKILLS
     int32 MartialSkill;
     int32 IntrigueSkill;
