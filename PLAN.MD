@@ -26,6 +26,28 @@ If CanPlayerPurchase returns true, then we can buy an item, else we cannot.
 
 ## CHARACTERS 
 
+### CHARACTER OBJECT
+
+The character doesn't need any complex interactions with the world, rather it is
+just a repository of data about a character which will have a name and thumbnail 
+to give the character a human appearance. As such, I think it's best to have a
+character struct that can be easily accessed elsewhere.
+```C++
+USTRUCT()
+struct FCharacter
+{
+    GENERATED_BODY()
+
+    FCharacter();
+
+    // SKILLS
+    int32 MartialSkill;
+    int32 IntrigueSkill;
+    int32 DiplomacySkill;
+    int32 FightingSkill;
+};
+```
+
 ### TRAITS
 
 Character traits should be acquired in 3 different ways: 1) Genetic inheritance; 
@@ -58,6 +80,7 @@ this character acquiring the Ill trait.
 
 Traits can be stored as enums to begin with:
 ```C++
+UENUM()
 enum class ECharacterTraits
 {
     Genius = 0,
@@ -67,23 +90,28 @@ enum class ECharacterTraits
     Slow,
     Rude,
     Max
-}
+};
 ```
 
 We could organise these enums so that they house trait types for organisiation purposes:
 ```C++
+UENUM()
 enum class EIntelligenceTraits
 {
 
-}
+};
+
+UENUM()
 enum class EHealthTraits
 {
 
-}
+};
+
+UENUM()
 enum class EMilitaryTraits
 {
 
-}
+};
 ```
 
 These traits must then relate to something changing about the character. E.g., if 
@@ -112,7 +140,7 @@ TArray<ETraits*> TraitsArrayPtr;
  for (auto& CharacterElem : LivingCharacterArray)
  {
      TraitsArrayPtr = &CharacterElem.TraitsArray;
-     
+
      for(auto& TraitElem : TraitsArrayPtr)
      {
          CharacterElem.ApplyTraitModifier(TraitElem);
