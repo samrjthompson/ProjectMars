@@ -3,6 +3,8 @@
 
 #include "FactionBase.h"
 
+#include "ProjectMars/Characters/GameCharacter.h"
+
 
 FPolitics::FPolitics()
 {
@@ -17,6 +19,37 @@ FFaction::FFaction()
 FFaction::FFaction(EFactionName InitFaction)
 {
 	Faction = InitFaction;
+}
+
+void FFaction::AddCharacterToAliveOrDeadArray(FInGameCharacter* Character)
+{
+	if (!Character) { return; } // Null check
+
+	if(Character->CharacterState == ECharacterState::Alive)
+	{
+		LivingCharacters.Emplace(Character);
+	}
+	else if(Character->CharacterState == ECharacterState::Dead)
+	{
+		DeadCharacters.Emplace(Character);
+	}
+}
+
+void FFaction::ApplyModifiersToLivingCharacters()
+{
+	if (!LivingCharacters.IsValidIndex(0)) { return; } // Null check
+	
+	TArray<ECharacterTraits> TraitsArrayPtr;
+
+	for(auto& CharacterElem : LivingCharacters)
+	{
+		TraitsArrayPtr = CharacterElem->CharacterTraitsArray;
+
+		for(auto& TraitElem : TraitsArrayPtr)
+		{
+			CharacterElem->ApplyTraitModifier(TraitElem);
+		}
+	}
 }
 
 AFactionBase::AFactionBase()

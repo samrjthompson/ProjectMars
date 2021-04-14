@@ -7,6 +7,7 @@
 #include "ProjectMars/Factions/Cultures/CultureBase.h"
 #include "ProjectMars/Factions/Economy/Economy.h"
 #include "ProjectMars/Factions/Population/PopulationBase.h"
+#include "ProjectMars/Characters/GameCharacter.h"
 
 #include "FactionBase.generated.h"
 
@@ -104,6 +105,18 @@ struct FFaction
 	FCultureGroup CultureGroup;
 	FCultureData CultureData;
 	FPolitics Politics;
+
+
+	/////////////////////////////////////////////////////////////////
+	// FACTION CHARACTERS
+
+	TArray<struct FInGameCharacter*> LivingCharacters;
+	TArray<struct FInGameCharacter*> DeadCharacters;
+
+	// Adds a character to the 'dead' array or the 'alive' array
+	void AddCharacterToAliveOrDeadArray(struct FInGameCharacter* Character);
+
+	void ApplyModifiersToLivingCharacters();
 };
 
 UCLASS()
