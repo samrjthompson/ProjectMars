@@ -55,6 +55,7 @@ struct FCharacter
     int32 FightingSkill;
 };
 ```
+The faction class of a player should have an array of all living and dead characters from that faction.
 
 ### TRAITS
 
