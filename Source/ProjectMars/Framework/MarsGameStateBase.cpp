@@ -221,6 +221,7 @@ FString AMarsGameStateBase::GetCurrentMonthName() const
 	return "NONE";
 }
 
+// calculates the frame rate
 void AMarsGameStateBase::CalculateTickRate()
 {
 	CurrentTick++;
