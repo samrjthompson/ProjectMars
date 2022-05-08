@@ -119,7 +119,7 @@ struct FCohort
 
 	// TEXTURE
 	UPROPERTY()
-	class UTexture2D* UnitIcon{ nullptr };
+	class UTexture2D* UnitIcon { nullptr };
 
 	FName UnitName = "NONE";
 };
@@ -234,7 +234,7 @@ public:
 	FVector Direction{};
 	FVector ActorLocAtPause{};
 
-	void GetPlayerOwnerOfArmy(AProjectMarsPlayer* PlayerOwner);
+	void SetPlayerOwnerOfArmy(AProjectMarsPlayer* PlayerOwner);
 
 	UPROPERTY()
 	AProjectMarsPlayer* OwnerOfArmy{ nullptr };

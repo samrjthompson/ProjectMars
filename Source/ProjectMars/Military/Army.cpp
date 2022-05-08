@@ -3,7 +3,6 @@
 
 #include "Army.h"
 
-
 #include "Blueprint/UserWidget.h"
 #include "Components/BoxComponent.h"
 #include "Components/TextBlock.h"
@@ -71,7 +70,7 @@ AArmy* AArmy::ArmyHasBeenClickedOn()
 
 void AArmy::MoveArmy()
 {
-	if (!OwnerOfArmy) { return; }
+	if (!OwnerOfArmy) return;
 
 	// Makes movement speed relative to game speed
 	CurrentMovementSpeed = DefaultMovementSpeed; // Resets movement speed to the default - if we don't do this, CurrentMovementSpeed will infinitely increase
@@ -87,7 +86,7 @@ void AArmy::MoveArmy()
 		bCanMoveArmy = true;
 	}
 	
-	if (!bCanMoveArmy) { return; }
+	if (!bCanMoveArmy) return;
 
 	FVector Location = GetActorLocation();
 
@@ -104,7 +103,7 @@ void AArmy::MoveArmy()
 	}
 }
 
-void AArmy::GetPlayerOwnerOfArmy(AProjectMarsPlayer* PlayerOwner)
+void AArmy::SetPlayerOwnerOfArmy(AProjectMarsPlayer* PlayerOwner)
 {
 	OwnerOfArmy = PlayerOwner;
 }

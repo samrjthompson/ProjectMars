@@ -23,7 +23,7 @@ FFaction::FFaction(EFactionName InitFaction)
 
 void FFaction::AddCharacterToAliveOrDeadArray(FInGameCharacter* Character)
 {
-	if (!Character) { return; } // Null check
+	if (!Character) return; // Null check
 
 	if(Character->CharacterState == ECharacterState::Alive)
 	{

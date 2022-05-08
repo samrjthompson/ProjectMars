@@ -146,14 +146,17 @@ public:
 
 	//////////////////////////////////////////////////////
 	// ARMY
-public:
+private:
 	// Pointer to an army
 	UPROPERTY()
 	class AArmy* FactionArmy{ nullptr };
-
+public:
 	// Returns the AArmy object that player has clicked on
 	UFUNCTION()
-	void GetArmyClickedOn();
+	void SetArmyClickedOn();
+
+	UFUNCTION()
+	const AArmy* GetArmyClickedOn();
 
 	UFUNCTION()
 	void MoveArmy();

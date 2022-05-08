@@ -62,7 +62,7 @@ void AProjectMarsPlayer::Tick(float DeltaTime)
 	PawnMovement(DeltaTime);
 
 	// TODO: Might be better to find some way of this not being in tick
-	GetArmyClickedOn();
+	SetArmyClickedOn();
 	if(FactionArmy)
 	{
 		FVector MeshLoc = FactionArmy->GetActorLocation();
@@ -225,8 +225,8 @@ void AProjectMarsPlayer::UpdatePlayerIncome()
 // TODO: May want to refactor this so that it is implemented a little cleaner.
 void AProjectMarsPlayer::UpdateGameSpeed(float Val)
 {
-	if(Val == 0) { return; }
-	if(!MarsGameStateBase) { return; }
+	if(Val == 0) return;
+	if(!MarsGameStateBase) return;
 	
 	if(Val == 1)
 	{
@@ -254,10 +254,10 @@ void AProjectMarsPlayer::UpdatePlayerPopulationData()
 	}
 }
 
-void AProjectMarsPlayer::GetArmyClickedOn()
+void AProjectMarsPlayer::SetArmyClickedOn()
 {
-	if (!BasePlayerController) { return; } // NULL Check
-	if (!BasePlayerController->IsInputKeyDown(EKeys::LeftMouseButton)) { return; }
+	if (!BasePlayerController) return;
+	if (!BasePlayerController->IsInputKeyDown(EKeys::LeftMouseButton)) return;
 	
 	FHitResult LeftClick;
 	if(BasePlayerController->GetHitResultUnderCursor(ECC_Visibility, false, LeftClick))
@@ -304,10 +304,15 @@ void AProjectMarsPlayer::GetArmyClickedOn()
 	}
 }
 
+const AArmy* AProjectMarsPlayer::GetArmyClickedOn()
+{
+	return FactionArmy;
+}
+
 void AProjectMarsPlayer::MoveArmy()
 {
-	if (!BasePlayerController) { return; } // NULL Check
-	if (!FactionArmy) { return; } // NULL CHECK
+	if (!BasePlayerController) return;
+	if (!FactionArmy) return;
 		
 	FHitResult RightClickLoc;
 	if(BasePlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, RightClickLoc))
@@ -316,7 +321,7 @@ void AProjectMarsPlayer::MoveArmy()
 		if(RightClickLoc.GetActor())
 		{
 			FactionArmy->TargetLocation = FVector(RightClickLoc.ImpactPoint.X, RightClickLoc.ImpactPoint.Y, RightClickLoc.GetActor()->GetActorLocation().Z);
-			FactionArmy->GetPlayerOwnerOfArmy(this);
+			FactionArmy->SetPlayerOwnerOfArmy(this);
 			
 			DrawDebugBox(GetWorld(), RightClickLoc.ImpactPoint, FVector(25.f, 25.f, 25.f), FColor::Yellow, false, 4.f, 0, 2.f);
 		}
