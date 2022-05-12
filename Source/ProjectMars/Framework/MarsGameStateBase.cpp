@@ -9,6 +9,7 @@
 #include "ProjectMars/Factions/FactionBase.h"
 #include "ProjectMars/Controllers/AIControllerBase.h"
 #include "ProjectMars/Military/Army.h"
+#include "../Framework/DelegateManager.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
 {
@@ -502,4 +503,9 @@ void AMarsGameStateBase::AssignAIFactions()
 		AIPlayer->SpawnDefaultController();
 		AIPlayersArray.Emplace(AIPlayer);
 	}
+}
+
+ADelegateManager* AMarsGameStateBase::GetDelegateManager()
+{
+	return DelegateManager;
 }

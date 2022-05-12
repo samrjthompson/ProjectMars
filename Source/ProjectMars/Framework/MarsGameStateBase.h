@@ -11,6 +11,7 @@
 
 class AProjectMarsPlayer;
 class AFactionBase;
+class ADelegateManager;
 
 enum class EMonthOfYear;
 
@@ -23,6 +24,9 @@ class PROJECTMARS_API AMarsGameStateBase : public AGameStateBase
 
 public:
 	AMarsGameStateBase();
+
+	UFUNCTION()
+	ADelegateManager* GetDelegateManager();
 
 	virtual void BeginPlay() override;
 
@@ -137,4 +141,8 @@ public:
 	TMap<EUnitName, FCohort> UnitMap;
 	void CreateAllUnits();
 	void InitialiseUnits();
+
+	// DelegateManager is initialsied by ADelegateManager - see ADelegateManager::PassSelfToGameState()
+	UPROPERTY()
+	ADelegateManager* DelegateManager{ nullptr };
 };

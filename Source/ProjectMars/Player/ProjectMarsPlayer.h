@@ -8,6 +8,8 @@
 
 #include "ProjectMarsPlayer.generated.h"
 
+class ADelegateManager;
+
 enum class EFactionName : uint8;
 struct FFaction;
 struct FEconomics;
@@ -32,6 +34,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	class USpringArmComponent* SpringArmComp{ nullptr };
+
+	UPROPERTY(EditAnywhere)
+	class UEconomyManagerComponent* EconomyManagerComponent{ nullptr };
 
 	UPROPERTY(EditAnywhere)
 	class UCameraComponent* Camera{ nullptr };
@@ -120,8 +125,7 @@ public:
 public:
 
 	// Updates the player income each month
-	void UpdatePlayerIncome();
-	
+	void UpdatePlayerIncome();	
 	
 	//////////////////////////////////////////////////////
 	// TIME
@@ -159,10 +163,19 @@ public:
 	const AArmy* GetArmyClickedOn();
 
 	UFUNCTION()
-	void MoveArmy();
+	void IssueMoveArmyOrder();
 
 	int32 ClickCounter = 0;
 
 	UPROPERTY()
 	class AArmy* TempArmyPtr{ nullptr };
+
+	UPROPERTY()
+	ADelegateManager* DelegateManager{ nullptr };
+
+	UFUNCTION()
+	void TestDelegate();
+
+	UFUNCTION()
+	void BroadcastTestDelegate();
 };

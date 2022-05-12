@@ -12,6 +12,9 @@
 #include "ProjectMars/UI/BaseHUD.h"
 #include "DrawDebugHelpers.h"
 #include "ProjectMars/UI/Widgets/WidgetComponents/ArmyWidgetComponent.h"
+#include "../Framework/DelegateManager.h"
+#include "ProjectMars/Components/Economy/EconomyManagerComponent.h"
+#include "ProjectMars/Controllers/AIControllerBase.h"
 
 
 // Sets default values
@@ -33,6 +36,10 @@ AProjectMarsPlayer::AProjectMarsPlayer()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArmComp);
 
+	// Economy Manager
+	EconomyManagerComponent = CreateDefaultSubobject<UEconomyManagerComponent>(TEXT("Economy Component"));
+	ensure(EconomyManagerComponent);
+
 	MovementSpeed = 500.f;
 
 	bHasChosenFaction = false;
@@ -49,6 +56,13 @@ void AProjectMarsPlayer::BeginPlay()
 	InitialiseGameStateRefs();
 
 	InitialisePlayerController();
+
+	if(DelegateManager)
+	{
+		DelegateManager->OnTestDelegate.AddDynamic(this, &AProjectMarsPlayer::TestDelegate);		
+	}
+
+	BroadcastTestDelegate();
 
 	/*UGameplayStatics::OpenLevel(GetWorld(), "ChooseFaction");
 	CurrentLevel = GetWorld()->GetMapName();*/
@@ -79,20 +93,19 @@ void AProjectMarsPlayer::Tick(float DeltaTime)
 void AProjectMarsPlayer::InitialiseGameStateRefs()
 {
 	MarsGameStateBase = Cast<AMarsGameStateBase>(GetWorld()->GetGameState());
+	ensure(MarsGameStateBase);
 
-	if(MarsGameStateBase)
-	{
-		MarsGameStateBase->PlayerArray.Emplace(this);
+	if (!MarsGameStateBase) return;
+
+	MarsGameStateBase->PlayerArray.Emplace(this);
+
+	DelegateManager = MarsGameStateBase->DelegateManager;
+	ensure(DelegateManager);
 		
-		// TODO: BUG: If I uncomment this out, I can control the game time. However, if we run this code when not controlled by player I cannot.
-		if (!IsPlayerControlled()) { return; }
+	// TODO: BUG: If I uncomment this out, I can control the game time. However, if we run this code when not controlled by player I cannot.
+	if (!IsPlayerControlled()) return;
 		
-		MarsGameStateBase->InitialiseReferences(this);
-	}
-	if(!MarsGameStateBase)
-	{
-		UE_LOG(LogTemp, Error, TEXT("MarsGameStateBase is NULL!"))
-	}
+	MarsGameStateBase->InitialiseReferences(this);	
 }
 
 void AProjectMarsPlayer::InitialisePlayerController()
@@ -104,7 +117,7 @@ void AProjectMarsPlayer::InitialisePlayerController()
 		if (BasePlayerController)
 		{
 			BaseHUD = Cast<ABaseHUD>(BasePlayerController->GetHUD());
-			BasePlayerController->OnRMBPressed.AddDynamic(this, &AProjectMarsPlayer::MoveArmy);
+			BasePlayerController->OnRMBPressed.AddDynamic(this, &AProjectMarsPlayer::IssueMoveArmyOrder);
 		}
 		if (!BasePlayerController)
 		{
@@ -124,9 +137,8 @@ void AProjectMarsPlayer::PawnMovement(float DeltaTime)
 
 // Is called by the GameState class
 void AProjectMarsPlayer::UpdatePlayerFactionInfo()
-{
-	UpdatePlayerIncome();
-	UpdatePlayerPopulationData();
+{	
+	DelegateManager->OnMonthlyUpdate.Broadcast();
 }
 
 void AProjectMarsPlayer::MoveForward(float Val)
@@ -144,7 +156,7 @@ void AProjectMarsPlayer::MoveRight(float Val)
 // Testing the functionality of choosing the faction from a TMap of faction objects - see AProjectMarsPlayer::CreateArrayOfAvailableFactions()
 void AProjectMarsPlayer::ChooseRome()
 {
-	if(bHasChosenFaction) { return; }
+	if(bHasChosenFaction) return;
 
 	// Initialises PlayerFaction with the address of an object of FFaction - this is done for the AI in MarsGameStateBase
 	PlayerFaction = MarsGameStateBase->AvailableFactionsMap->Find(EFactionName::Rome);
@@ -157,7 +169,7 @@ void AProjectMarsPlayer::ChooseRome()
 
 void AProjectMarsPlayer::ChooseEtruria()
 {
-	if(bHasChosenFaction) { return; }
+	if(bHasChosenFaction) return;
 	// InitialisePlayerFaction(EFactionName::Etruria);
 
 	PlayerFaction = MarsGameStateBase->AvailableFactionsMap->Find(EFactionName::Etruria);
@@ -170,7 +182,7 @@ void AProjectMarsPlayer::ChooseEtruria()
 
 void AProjectMarsPlayer::ChooseCarthage()
 {
-	if(bHasChosenFaction) { return; }
+	if(bHasChosenFaction) return;
 	// InitialisePlayerFaction(EFactionName::Carthage);
 
 	PlayerFaction = MarsGameStateBase->AvailableFactionsMap->Find(EFactionName::Carthage);
@@ -309,7 +321,7 @@ const AArmy* AProjectMarsPlayer::GetArmyClickedOn()
 	return FactionArmy;
 }
 
-void AProjectMarsPlayer::MoveArmy()
+void AProjectMarsPlayer::IssueMoveArmyOrder()
 {
 	if (!BasePlayerController) return;
 	if (!FactionArmy) return;
@@ -326,6 +338,16 @@ void AProjectMarsPlayer::MoveArmy()
 			DrawDebugBox(GetWorld(), RightClickLoc.ImpactPoint, FVector(25.f, 25.f, 25.f), FColor::Yellow, false, 4.f, 0, 2.f);
 		}
 	}
+}
+
+void AProjectMarsPlayer::TestDelegate()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Test DELEGATE FIRED"));
+}
+
+void AProjectMarsPlayer::BroadcastTestDelegate()
+{
+	DelegateManager->OnTestDelegate.Broadcast();
 }
 
 // Called to bind functionality to input
