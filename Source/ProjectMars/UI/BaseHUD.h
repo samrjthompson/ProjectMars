@@ -22,6 +22,12 @@ public:
 
 	FString HUDName = "Bob";
 
+	UFUNCTION()
+	void SetDateSuffix(const FString& SuffixVal);
+
+private:
+	FString DateSuffix{};
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -67,7 +73,7 @@ public:
 /* --- TIME ---*/
 
 	void DrawDate();
-	FString DateSuffix{};
+	
 
 /* --- FPS --- */
 	void DrawFPS();

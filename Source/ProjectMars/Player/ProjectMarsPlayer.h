@@ -14,6 +14,7 @@ enum class EFactionName : uint8;
 struct FFaction;
 struct FEconomics;
 struct FCampaignDateTime;
+class AArmy;
 
 
 UCLASS()
@@ -45,6 +46,13 @@ public:
 	class AFactionBase* FactionBase{ nullptr };
 
 	FString CurrentLevel{};
+
+	UFUNCTION()
+	AMarsGameStateBase* GetMarsGameStateBase() const { return MarsGameStateBase; }
+	
+	enum class EFactionName GetFactionName() const;
+
+	void SetFactionName(const EFactionName& FacName);
 	
 protected:
 	
@@ -68,6 +76,8 @@ private:
 	/* The faction the player will be playing as - this pointer is initialised from a TMap of available factions when the player
 	 * chooses their faction and when the AI is spawned. */
 	struct FFaction* PlayerFaction{ nullptr };
+
+	enum class EFactionName FactionName;
 
 public:
 	UPROPERTY()
@@ -115,7 +125,8 @@ private:
 
 public:
 	
-	void UpdatePlayerFactionInfo();
+	UFUNCTION()
+	void UpdatePlayerFactionInfo() const;
 
 	bool bHasChosenFaction;
 	
@@ -174,8 +185,5 @@ public:
 	ADelegateManager* DelegateManager{ nullptr };
 
 	UFUNCTION()
-	void TestDelegate();
-
-	UFUNCTION()
-	void BroadcastTestDelegate();
+	void SetTimeManagementPointers(AProjectMarsPlayer* Player);
 };

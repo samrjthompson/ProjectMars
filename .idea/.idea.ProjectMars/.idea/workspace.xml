@@ -10,24 +10,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb9cdb8f-7cdd-47b9-bc04-895974c0d02f" name="Default Changelist" comment="Refactored code to make tick come after the begin play function so it is easier to find.">
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Components/Economy/EconomyManagerComponent.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Components/Economy/EconomyManagerComponent.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Components/Economy/TradeManagerComponent.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Components/Economy/TradeManagerComponent.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Data/Economy/EconomyData.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Data/Economy/EconomyData.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/DelegateManager.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/DelegateManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Build/WindowsNoEditor/FileOpenOrder/CookerOpenOrder.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Build/WindowsNoEditor/FileOpenOrder/EditorOpenOrder.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Components/Economy/EconomyComponent.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Components/Economy/EconomyComponent.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Components/Faction/FactionManagerComponent.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Components/Faction/FactionManagerComponent.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Components/PlayerManagement/PlayerManagerComponent.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Components/Time/TimeManagementComponent.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Components/Time/TimeManagementComponent.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/FactionManager.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/FactionManager.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Helpers/Logger.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectMars/Helpers/Logger.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectMars/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Build/WindowsNoEditor/FileOpenOrder/CookerOpenOrder.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Build/WindowsNoEditor/FileOpenOrder/EditorOpenOrder.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectMars.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectMars.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Components/Economy/EconomyManagerComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Components/Economy/EconomyManagerComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Factions/FactionBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Factions/FactionBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/DelegateManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/DelegateManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/DelegateManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/DelegateManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Framework/MarsGameStateBase.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/ProjectMarsPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/ProjectMarsPlayer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectMars/Player/ProjectMarsPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/Player/ProjectMarsPlayer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectMars/UI/BaseHUD.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +57,7 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://C:/Program Files (x86)/Windows Kits/10/Include/10.0.22000.0/um/winioctl.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/CoreMinimal.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/HAL/LowLevelMemTracker.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Core/Public/Math/Color.h" root0="FORCE_HIGHLIGHTING" />
@@ -64,6 +71,8 @@
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/GameFramework/HUD.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Engine/UE_4.26/Engine/Source/Runtime/Engine/Classes/GameFramework/PlayerController.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ProjectMars/Components/PlayerManagement/PlayerManagerComponent.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -106,24 +115,28 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="1pIql2f20KP7AmgWxuOUIYPC8O3" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "preferences.editor",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;TODO_SCOPE&quot;: &quot;Project Files&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="C++ Project.ProjectMars">
     <configuration name="ProjectMars" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -594,7 +607,16 @@
       <workItem from="1652258461044" duration="356000" />
       <workItem from="1652259141719" duration="1000" />
       <workItem from="1652394103525" duration="18000" />
-      <workItem from="1652394139984" duration="144000" />
+      <workItem from="1652394139984" duration="322000" />
+      <workItem from="1652457299227" duration="8992000" />
+      <workItem from="1652526452415" duration="2539000" />
+      <workItem from="1652730338024" duration="1196000" />
+      <workItem from="1652732106801" duration="6026000" />
+      <workItem from="1652774819480" duration="6699000" />
+      <workItem from="1652784958896" duration="4492000" />
+      <workItem from="1652793757253" duration="14268000" />
+      <workItem from="1652866689656" duration="3737000" />
+      <workItem from="1652882477574" duration="3106000" />
     </task>
     <task id="LOCAL-00005" summary="Trialing structs for data about factions">
       <created>1614902585052</created>
@@ -729,6 +751,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Setup movement of camera" />
     <MESSAGE value="Implemented HUD selection box" />
     <MESSAGE value="Added UMG module to build.cs file" />
@@ -750,5 +773,21 @@
     <MESSAGE value="Started to make it so that the month ticks up when the day of the month hits the last day - few bugs to iron out." />
     <MESSAGE value="Refactored code to make tick come after the begin play function so it is easier to find." />
     <option name="LAST_COMMIT_MESSAGE" value="Refactored code to make tick come after the begin play function so it is easier to find." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/ProjectMars/Components/Economy/EconomyManagerComponent.cpp</url>
+          <line>34</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="CppProject">
+        <watch expression="@ ALREADY PREPROCESSED @CurrentDay" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

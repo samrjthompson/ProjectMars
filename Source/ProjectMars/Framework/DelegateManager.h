@@ -7,8 +7,9 @@
 #include "GameFramework/Actor.h"
 #include "DelegateManager.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTestDelegate);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMonthlyUpdate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerInitialisation);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAIFactionInitialisation);
 
 UCLASS()
 class PROJECTMARS_API ADelegateManager : public AActor
@@ -19,17 +20,18 @@ public:
 	// Sets default values for this actor's properties
 	ADelegateManager();
 
+	UPROPERTY()
+	AMarsGameStateBase* MarsGameStateBase{ nullptr };
+
+	void PassSelfToGameState();
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;	
 
-private:
-	AMarsGameStateBase* MarsGameStateBase{ nullptr };
-
-	void PassSelfToGameState();
-
-	// Delegates
+// Delegates
 public:
-	FOnTestDelegate OnTestDelegate;
 	FOnMonthlyUpdate OnMonthlyUpdate;
+	FOnPlayerInitialisation OnPlayerInitialisation;
+	FOnAIFactionInitialisation OnAIFactionInitialisation;
 };

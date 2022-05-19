@@ -14,7 +14,9 @@
 #include "ProjectMars/UI/Widgets/WidgetComponents/ArmyWidgetComponent.h"
 #include "../Framework/DelegateManager.h"
 #include "ProjectMars/Components/Economy/EconomyManagerComponent.h"
-#include "ProjectMars/Controllers/AIControllerBase.h"
+#include "ProjectMars/Components/Time/TimeManagementComponent.h"
+#include "ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h"
+#include "ProjectMars/Military/Army.h"
 
 
 // Sets default values
@@ -48,24 +50,28 @@ AProjectMarsPlayer::AProjectMarsPlayer()
 	MonthIndex = 1;
 }
 
+EFactionName AProjectMarsPlayer::GetFactionName() const
+{
+	return FactionName;
+}
+
+void AProjectMarsPlayer::SetFactionName(const EFactionName& FacName)
+{
+	FactionName = FacName;
+}
+
 // Called when the game starts or when spawned
 void AProjectMarsPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
 	InitialiseGameStateRefs();
-
 	InitialisePlayerController();
-
-	if(DelegateManager)
-	{
-		DelegateManager->OnTestDelegate.AddDynamic(this, &AProjectMarsPlayer::TestDelegate);		
-	}
-
-	BroadcastTestDelegate();
 
 	/*UGameplayStatics::OpenLevel(GetWorld(), "ChooseFaction");
 	CurrentLevel = GetWorld()->GetMapName();*/
+
+	MarsGameStateBase->AddPlayerToPlayerArray(this);
 }
 
 // Called every frame
@@ -96,16 +102,19 @@ void AProjectMarsPlayer::InitialiseGameStateRefs()
 	ensure(MarsGameStateBase);
 
 	if (!MarsGameStateBase) return;
+	MarsGameStateBase->AddPlayerToPlayerArray(this);
 
-	MarsGameStateBase->PlayerArray.Emplace(this);
-
-	DelegateManager = MarsGameStateBase->DelegateManager;
+	DelegateManager = MarsGameStateBase->GetDelegateManager();
 	ensure(DelegateManager);
 		
 	// TODO: BUG: If I uncomment this out, I can control the game time. However, if we run this code when not controlled by player I cannot.
 	if (!IsPlayerControlled()) return;
+	UE_LOG(LogTemp, Warning, TEXT("Player is controlled!"));
 		
-	MarsGameStateBase->InitialiseReferences(this);	
+	MarsGameStateBase->InitialiseReferences(this);
+
+	// Tells all listeners that it is safe to initialise Player ptrs from AMarsGameStateBase class
+	DelegateManager->OnPlayerInitialisation.Broadcast();
 }
 
 void AProjectMarsPlayer::InitialisePlayerController()
@@ -119,7 +128,7 @@ void AProjectMarsPlayer::InitialisePlayerController()
 			BaseHUD = Cast<ABaseHUD>(BasePlayerController->GetHUD());
 			BasePlayerController->OnRMBPressed.AddDynamic(this, &AProjectMarsPlayer::IssueMoveArmyOrder);
 		}
-		if (!BasePlayerController)
+		else if (!BasePlayerController)
 		{
 			UE_LOG(LogTemp, Error, TEXT("BasePlayerController is nullptr - AProjectMarsPlayer::BeginPlay"));
 		}
@@ -136,9 +145,9 @@ void AProjectMarsPlayer::PawnMovement(float DeltaTime)
 }
 
 // Is called by the GameState class
-void AProjectMarsPlayer::UpdatePlayerFactionInfo()
+void AProjectMarsPlayer::UpdatePlayerFactionInfo() const
 {	
-	DelegateManager->OnMonthlyUpdate.Broadcast();
+	
 }
 
 void AProjectMarsPlayer::MoveForward(float Val)
@@ -157,40 +166,25 @@ void AProjectMarsPlayer::MoveRight(float Val)
 void AProjectMarsPlayer::ChooseRome()
 {
 	if(bHasChosenFaction) return;
+	UPlayerManagerComponent* const PlayerManagerComponent = MarsGameStateBase->GetPlayerManagerComponent();
 
-	// Initialises PlayerFaction with the address of an object of FFaction - this is done for the AI in MarsGameStateBase
-	PlayerFaction = MarsGameStateBase->AvailableFactionsMap->Find(EFactionName::Rome);
-	MarsGameStateBase->AvailableFactionsMap->Remove(EFactionName::Rome);
+	int32 Index = PlayerManagerComponent->GetAllFactionsArray().Find(EFactionName::Rome);
+	FactionName = PlayerManagerComponent->GetAllFactionsArray()[Index];
+	PlayerManagerComponent->GetAvailableFactionsArray().Remove(EFactionName::Rome);
+	UE_LOG(LogTemp, Warning, TEXT("Player Faction: ROME"));
 
-	InitialisePlayerFaction(EFactionName::Rome);
-
-	MarsGameStateBase->AssignAIFactions();
+	PlayerManagerComponent->AssignAIFactions();
+	bHasChosenFaction = true;
 }
 
 void AProjectMarsPlayer::ChooseEtruria()
 {
-	if(bHasChosenFaction) return;
-	// InitialisePlayerFaction(EFactionName::Etruria);
-
-	PlayerFaction = MarsGameStateBase->AvailableFactionsMap->Find(EFactionName::Etruria);
-	MarsGameStateBase->AvailableFactionsMap->Remove(EFactionName::Etruria);
-
-	InitialisePlayerFaction(EFactionName::Etruria);
-
-	MarsGameStateBase->AssignAIFactions();
+	return; 
 }
 
 void AProjectMarsPlayer::ChooseCarthage()
 {
-	if(bHasChosenFaction) return;
-	// InitialisePlayerFaction(EFactionName::Carthage);
-
-	PlayerFaction = MarsGameStateBase->AvailableFactionsMap->Find(EFactionName::Carthage);
-	MarsGameStateBase->AvailableFactionsMap->Remove(EFactionName::Carthage);
-
-	InitialisePlayerFaction(EFactionName::Carthage);
-
-	MarsGameStateBase->AssignAIFactions();
+	return;
 }
 
 void AProjectMarsPlayer::InitialisePlayerFaction(const EFactionName& Faction)
@@ -201,11 +195,11 @@ void AProjectMarsPlayer::InitialisePlayerFaction(const EFactionName& Faction)
 		InitialiseHUD();
 
 		bHasChosenFaction = true;
-		MarsGameStateBase->LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
+		MarsGameStateBase->GetTimeManagementComponent()->SetLastUpdateCheckTime(FPlatformTime::Seconds());
 	}
 	if(!PlayerFaction)
 	{
-		UE_LOG(LogTemp, Error, TEXT("PlayerFaction is NULL!"))
+		//UE_LOG(LogTemp, Error, TEXT("PlayerFaction is NULL!"))
 	}
 }
 
@@ -242,17 +236,17 @@ void AProjectMarsPlayer::UpdateGameSpeed(float Val)
 	
 	if(Val == 1)
 	{
-		MarsGameStateBase->UpdateCheckFrequency = 5.f;
+		MarsGameStateBase->GetTimeManagementComponent()->SetUpdateCheckFrequency(5.0f);
 		GameSpeed = 1;
 	}
 	if(Val == 2)
 	{
-		MarsGameStateBase->UpdateCheckFrequency = 3.f;
+		MarsGameStateBase->GetTimeManagementComponent()->SetUpdateCheckFrequency(3.0f);
 		GameSpeed = 2;
 	}
 	if(Val == 5)
 	{
-		MarsGameStateBase->UpdateCheckFrequency = 1.f;
+		MarsGameStateBase->GetTimeManagementComponent()->SetUpdateCheckFrequency(1.0f);
 		GameSpeed = 5;
 	}
 }
@@ -340,14 +334,9 @@ void AProjectMarsPlayer::IssueMoveArmyOrder()
 	}
 }
 
-void AProjectMarsPlayer::TestDelegate()
+void AProjectMarsPlayer::SetTimeManagementPointers(AProjectMarsPlayer* Player)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Test DELEGATE FIRED"));
-}
-
-void AProjectMarsPlayer::BroadcastTestDelegate()
-{
-	DelegateManager->OnTestDelegate.Broadcast();
+	if(!MarsGameStateBase) return;
 }
 
 // Called to bind functionality to input

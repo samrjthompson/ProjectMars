@@ -28,8 +28,7 @@ void ADelegateManager::PassSelfToGameState()
 		return;
 	}
 
-	MarsGameStateBase->DelegateManager = this;
-
-	ensure(MarsGameStateBase->DelegateManager);
+	MarsGameStateBase->SetDelegateManager(this);
+	ensure(MarsGameStateBase->GetDelegateManager());
 }
 

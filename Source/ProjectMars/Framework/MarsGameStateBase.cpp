@@ -6,354 +6,77 @@
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/UI/BaseHUD.h"
-#include "ProjectMars/Factions/FactionBase.h"
 #include "ProjectMars/Controllers/AIControllerBase.h"
 #include "ProjectMars/Military/Army.h"
 #include "../Framework/DelegateManager.h"
+#include "../Components/Time/TimeManagementComponent.h"
+#include "ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
 {
 	PrimaryActorTick.bStartWithTickEnabled = true;
 	PrimaryActorTick.bCanEverTick = true;
 	
-	UpdateCheckFrequency = 5.f;
-	LastUpdateCheckTime = 0.f;
+	TimeManagementComponent = CreateDefaultSubobject<UTimeManagementComponent>(TEXT("Time Management Component"));
+	PlayerManagerComponent = CreateDefaultSubobject<UPlayerManagerComponent>(TEXT("Player Manager Component"));
+}
 
-	// Starts on Feb because if we start on Jan the year gets updated straight away due to the condition for updating the year being 1st of Jan
-	CurrentMonth = EMonthOfYear::February;
-	MonthIndex = 2;
-	
-	CurrentDay = 1;
-	
-	CurrentTick = 0;
-	LastTickCheck = 0;
+AProjectMarsPlayer* AMarsGameStateBase::GetPlayer()
+{
+	return Player;
+}
 
-	// Arbitrary start date at the moment, should change this if suits the historical background
-	StartYear = 304;
+UTimeManagementComponent* AMarsGameStateBase::GetTimeManagementComponent() const
+{
+	return TimeManagementComponent;
+}
 
-	CurrentYear = FMath::Clamp(CurrentYear, 1, StartYear);
-	CurrentYear = StartYear;
+ABasePlayerController* AMarsGameStateBase::GetPlayerController() const
+{
+	return PlayerController;
+}
+
+void AMarsGameStateBase::AddPlayerToPlayerArray(AProjectMarsPlayer* ProjectMarsPlayer)
+{
+	AllPlayers.Add(ProjectMarsPlayer);
+}
+
+AActor* AMarsGameStateBase::PassActorToSelf(AActor* ActorToPass)
+{
+	return ActorToPass;
 }
 
 // BeginPlay in the game state is called before BeginPlay in the player class. References will therefore not be initialised in BeginPlay here.
 void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
-
-	CreateArrayOfAvailableFactions();
-	CreateAllUnits();
 	
-	LastTickCheck = GetWorld()->GetTimeSeconds();
-	LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();
 }
 
 void AMarsGameStateBase::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-
-	CalculateTickRate();
 	
-	UpdateGameTime();
+	//LogEveryFiveSeconds();
 }
 
-void AMarsGameStateBase::UpdateMonth()
+void AMarsGameStateBase::LogEveryFiveSeconds()
 {
-	switch (MonthIndex)
+	if(GetTimeSince(LogTickCheck) >= 5.0)
 	{
-	case 1 : CurrentMonth = EMonthOfYear::January;
-		break;
-
-	case 2 : CurrentMonth = EMonthOfYear::February;
-		break;
-
-	case 3 : CurrentMonth = EMonthOfYear::March;
-		break;
-
-	case 4 : CurrentMonth = EMonthOfYear::April;
-		break;
-
-	case 5 : CurrentMonth = EMonthOfYear::May;
-		break;
-
-	case 6 : CurrentMonth = EMonthOfYear::June;
-		break;
-
-	case 7 : CurrentMonth = EMonthOfYear::July;
-		break;
-
-	case 8 : CurrentMonth = EMonthOfYear::August;
-		break;
-		
-	case 9 : CurrentMonth = EMonthOfYear::September;
-		break;
-
-	case 10 : CurrentMonth = EMonthOfYear::October;
-		break;
-
-	case 11 : CurrentMonth = EMonthOfYear::November;
-		break;
-
-	case 12 : CurrentMonth = EMonthOfYear::December;
-		break;		
-	}
-
-	if(MonthIndex < 13)
-	{
-		MonthIndex++;
-	}
-	if(MonthIndex >= 13)
-	{
-		MonthIndex = 1;	
+		UE_LOG(LogTemp, Error, TEXT("LOG"));
+		LogTickCheck = FPlatformTime::Seconds();		
 	}
 }
 
-void AMarsGameStateBase::UpdateGameTime()
+void AMarsGameStateBase::SetStartTime(double& StartTime)
 {
-	// We don't want the GameTime to update if the player hasn't chosen a faction yet
-	if(Player->bHasChosenFaction == false) { return; }
-
-	if (PlayerController->bGameIsPaused == true)
-	{
-		return;
-	}
-	
-	// Updates set to every 5 seconds
-	if(CurrentDay == CalculateMaxDaysInMonthNum() + 1 || !bGameHasStarted)
-	{
-		/* The first month is 0 so that Player faction info isn't updated on the first day of the first month. Instead,
-		 * it will be updated for the first time on the first day of the 2nd month and every 1st of the month from then
-		 * on. */
-		if(MonthsInGame > 0)
-		{
-			// TODO: Update array of players incl AI
-			// Updates the info such as treasury, manpower, political power etc. on a monthly basis
-			if(PlayerArray.IsValidIndex(0))
-			{
-				for (int32 i = 0; i < PlayerArray.Num(); i++)
-				{
-					PlayerArray[i]->UpdatePlayerFactionInfo();
-				}
-			}
-		}
-		
-		LastUpdateCheckTime = GetWorld()->GetTimeSeconds();
-
-		UpdateMonth();
-		MonthsInGame++;
-		CurrentDay = 1;
-		CalculateMaxDaysInMonthNum();
-
-		if(CurrentDay == 1 && CurrentMonth == EMonthOfYear::January && CurrentYear > 1)
-		{
-			CurrentYear--;
-			BaseHUD->DateSuffix = "BCE";
-		}
-		if(CurrentDay == 1 && CurrentMonth == EMonthOfYear::January && CurrentYear <= 1)
-		{
-			CurrentYear++;
-			BaseHUD->DateSuffix = "CE";
-		}
-
-		// Initiate counting of days
-		if(!bGameHasStarted) { bGameHasStarted = true; }
-	}
-
-	if(bGameHasStarted)
-	{
-		CalculateCurrentDay();
-	}
+	StartTime = FPlatformTime::Seconds();
 }
 
-int32 AMarsGameStateBase::CalculateMaxDaysInMonthNum()
+double AMarsGameStateBase::GetTimeSince(double StartTime)
 {
-	if(	CurrentMonth == EMonthOfYear::January ||
-		CurrentMonth == EMonthOfYear::March ||
-		CurrentMonth == EMonthOfYear::May ||
-		CurrentMonth == EMonthOfYear::July ||
-		CurrentMonth == EMonthOfYear::August ||
-		CurrentMonth == EMonthOfYear::October ||
-		CurrentMonth == EMonthOfYear::December)
-	{
-		// CurrentDay = FMath::Clamp(CurrentDay, 1, 31);
-		return 31;
-	}
-	if(CurrentMonth == EMonthOfYear::February)
-	{
-		// CurrentDay = FMath::Clamp(CurrentDay, 1, 28);
-		return 28;
-	}
-	else
-	{
-		//CurrentDay = FMath::Clamp(CurrentDay, 1, 30);
-		return 30;
-	}
-}
-
-FString AMarsGameStateBase::GetCurrentMonthName() const
-{
-	// No need to have a break statement due to return statement
-	switch (CurrentMonth)
-	{
-		case EMonthOfYear::January : return "Jan";
-
-		case EMonthOfYear::February : return "Feb";
-
-		case EMonthOfYear::March : return "Mar";
-		
-		case EMonthOfYear::April : return "Apr";
-
-		case EMonthOfYear::May : return "May";
-
-		case EMonthOfYear::June : return "Jun";
-
-		case EMonthOfYear::July : return "Jul";
-
-		case EMonthOfYear::August : return "Aug";
-
-		case EMonthOfYear::September : return "Sep";
-
-		case EMonthOfYear::October : return "Oct";
-
-		case EMonthOfYear::November : return "Nov";
-
-		case EMonthOfYear::December : return "Dec";
-	}
-
-	return "NONE";
-}
-
-// calculates the frame rate
-void AMarsGameStateBase::CalculateTickRate()
-{
-	CurrentTick++;
-	if(GetWorld()->TimeSince(LastTickCheck) >= 1)
-	{
-		TickRate = CurrentTick;		
-		CurrentTick = 0.f;
-		LastTickCheck = GetWorld()->GetTimeSeconds();
-		BaseHUD->FPSNum = FMath::FloorToInt(TickRate);
-	}
-}
-
-void AMarsGameStateBase::CalculateCurrentDay()
-{
-	const float DaysPerSecond = UpdateCheckFrequency / CalculateMaxDaysInMonthNum();
-
-	if(GetWorld()->TimeSince(LastDaysPerTickCheck) >= DaysPerSecond)
-	{		
-		++CurrentDay;	
-		LastDaysPerTickCheck = GetWorld()->GetTimeSeconds();	
-	}
-}
-
-void AMarsGameStateBase::CreateAllUnits()
-{
-	for (int32 i = 0; i < (uint8)EUnitName::Max; i++)
-	{
-		FCohort UnitObject;
-		EUnitName UnitNameKey = EUnitName(i);
-
-		UnitMap.Emplace(UnitNameKey, UnitObject);
-	}
-
-	InitialiseUnits();
-}
-
-void AMarsGameStateBase::InitialiseUnits()
-{
-	FCohort* Unit{ nullptr };
-
-	// ROME
-	{
-		// Hastati
-		{
-			Unit = UnitMap.Find(EUnitName::Hastati);
-			if (!Unit) { return; }
-			
-			Unit->Armour = 40;
-			Unit->ClimateProficiency = EClimateProficiency::Temperate;
-			Unit->Discipline = 40;
-			Unit->Experience = 0;
-			Unit->Speed = 25;
-			Unit->Morale = 40;
-			Unit->TerrainProficiency = ETerrainProficiency::None;
-			Unit->UnitClass = EUnitClass::Heavy;
-			Unit->UnitName = "Hastati";
-			Unit->UnitType = EUnitCategory::Swordsmen;
-			Unit->WeaponDamage = 40;
-
-			Unit = nullptr;
-		}
-		// Principes
-		{
-			Unit = UnitMap.Find(EUnitName::Principes);
-			if (!Unit) { return; }
-			
-			Unit->Armour = 60;
-			Unit->ClimateProficiency = EClimateProficiency::Temperate;
-			Unit->Discipline = 60;
-			Unit->Experience = 0;
-			Unit->Speed = 20;
-			Unit->Morale = 60;
-			Unit->TerrainProficiency = ETerrainProficiency::None;
-			Unit->UnitClass = EUnitClass::Heavy;
-			Unit->UnitName = "Principes";
-			Unit->UnitType = EUnitCategory::Swordsmen;
-			Unit->WeaponDamage = 50;
-
-			Unit = nullptr;
-		}
-		// Triarii
-		{
-			Unit = UnitMap.Find(EUnitName::Triarii);
-			if (!Unit) { return; }
-			
-			Unit->Armour = 65;
-			Unit->ClimateProficiency = EClimateProficiency::Temperate;
-			Unit->Discipline = 65;
-			Unit->Experience = 0;
-			Unit->Speed = 18;
-			Unit->Morale = 65;
-			Unit->TerrainProficiency = ETerrainProficiency::None;
-			Unit->UnitClass = EUnitClass::Heavy;
-			Unit->UnitName = "Triarii";
-			Unit->UnitType = EUnitCategory::Spearmen;
-			Unit->WeaponDamage = 60;
-
-			Unit = nullptr;
-		}
-		// Equites
-		{
-			Unit = UnitMap.Find(EUnitName::Equites);
-			if (!Unit) { return; }
-			
-			Unit->Armour = 25;
-			Unit->ClimateProficiency = EClimateProficiency::Temperate;
-			Unit->Discipline = 50;
-			Unit->Experience = 0;
-			Unit->Speed = 75;
-			Unit->Morale = 50;
-			Unit->TerrainProficiency = ETerrainProficiency::Grassland;
-			Unit->UnitClass = EUnitClass::Light;
-			Unit->UnitName = "Equites";
-			Unit->UnitType = EUnitCategory::Cavalry;
-			Unit->WeaponDamage = 35;
-
-			Unit = nullptr;
-		}
-
-		Unit = nullptr;
-	}
-
-	// ETRURIA
-	{
-		Unit = nullptr;
-	}
-
-	// CARTHAGE
-	{
-		Unit = nullptr;
-	}	
+	return FPlatformTime::Seconds() - StartTime;
 }
 
 void AMarsGameStateBase::InitialiseReferences(AProjectMarsPlayer* InitPlayer)
@@ -387,125 +110,32 @@ void AMarsGameStateBase::InitialiseReferences(AProjectMarsPlayer* InitPlayer)
 	}
 }
 
-/* Creates a TMap of all factions with a key EFaction enums and creates another TMap of Available factions (which, before anyone has
- * chosen a faction is an exact copy of the TMap of all factions). With this I intend to find some way of creating all faction objects
- * with a key of an enum - then using the enum key to find the object and assign values from there. Hoping to also use this for assigning
- * a player a faction. */
-void AMarsGameStateBase::CreateArrayOfAvailableFactions()
-{
-	for (int32 i = 0; i < (uint8)EFactionName::Max; i++)
-	{
-		FFaction FactionObj;
-		EFactionName FactionKey = EFactionName(i);
-
-		AllFactionsMap.Add(FactionKey, FactionObj);
-	}
-	
-	PopulateFactionStartingInformation(AllFactionsMap);
-	
-	/* Will use the AvailableFactionsMap array (which is a pointer) to find the remaining available factions and assign them to the
-	 * AI after the player/s have chosen their factions. */
-	AvailableFactionsMap = &AllFactionsMap;
-}
-
-void AMarsGameStateBase::PopulateFactionStartingInformation(TMap<EFactionName, struct FFaction>& InitAllFactionsMap)
-{
-	// ITALIAN
-	{
-		// Rome
-		{
-			Rome = InitAllFactionsMap.Find(EFactionName::Rome);
-			if (!Rome) { UE_LOG(LogTemp, Error, TEXT("Rome is nullptr in AMarsGameStateBase::PopulateFactionStartingInformation")); return; } // Null check
-
-			Rome->Faction = EFactionName::Rome;
-			Rome->FactionName = "Roman Republic";
-
-			// Population
-			{
-				const int32 StartingTotalPop = FMath::RandRange(50000, 55000);
-
-				Rome->Population.TotalUpperClassPop = StartingTotalPop * 0.10;
-				Rome->Population.TotalMiddleClassPop = StartingTotalPop * 0.30;
-				Rome->Population.TotalLowerClassPop = StartingTotalPop * 0.30;
-				Rome->Population.TotalSlavePopulation = StartingTotalPop * 0.30;
-			}
-
-			// Political System
-			{
-				Rome->Politics.PoliticalSystem = EPoliticalSystem::Republic;
-			}
-		}
-
-		// Etruria
-		{
-			Etruria = InitAllFactionsMap.Find(EFactionName::Etruria);
-			if (!Etruria) { UE_LOG(LogTemp, Error, TEXT("Etruria is nullptr in AMarsGameStateBase::PopulateFactionStartingInformation")); return; } // Null check
-
-			Etruria->Faction = EFactionName::Etruria;
-			Etruria->FactionName = "Etruria";
-
-			// Population
-			{
-				const int32 StartingTotalPop = FMath::RandRange(30000, 35000);
-
-				Etruria->Population.TotalUpperClassPop = StartingTotalPop * 0.10;
-				Etruria->Population.TotalMiddleClassPop = StartingTotalPop * 0.30;
-				Etruria->Population.TotalLowerClassPop = StartingTotalPop * 0.30;
-				Etruria->Population.TotalSlavePopulation = StartingTotalPop * 0.30;
-			}
-
-			// Political System
-			{
-				Etruria->Politics.PoliticalSystem = EPoliticalSystem::Republic;
-			}
-		}
-	}
-
-	// NORTH AFRICAN
-	{
-		// Carthage
-		{
-			Carthage = InitAllFactionsMap.Find(EFactionName::Carthage);
-			if (!Carthage) { UE_LOG(LogTemp, Error, TEXT("Carthage is nullptr in AMarsGameStateBase::PopulateFactionStartingInformation")); return; } // Null check
-
-			Carthage->Faction = EFactionName::Carthage;
-			Carthage->FactionName = "Carthage";
-
-			// Population
-			{
-				const int32 StartingTotalPop = FMath::RandRange(40000, 45000);
-
-				Carthage->Population.TotalUpperClassPop = StartingTotalPop * 0.10;
-				Carthage->Population.TotalMiddleClassPop = StartingTotalPop * 0.30;
-				Carthage->Population.TotalLowerClassPop = StartingTotalPop * 0.30;
-				Carthage->Population.TotalSlavePopulation = StartingTotalPop * 0.30;
-			}
-
-			// Political System
-			{
-				Carthage->Politics.PoliticalSystem = EPoliticalSystem::Republic;
-			}
-		}
-	}
-}
-
-void AMarsGameStateBase::AssignAIFactions()
-{
-	if (!AvailableFactionsMap) { return; }
-
-	TArray<AProjectMarsPlayer*> AIPlayersArray;
-
-	for(auto& Elem : *AvailableFactionsMap)
-	{
-		AProjectMarsPlayer* AIPlayer{ nullptr };
-		AIPlayer = GetWorld()->SpawnActor<AProjectMarsPlayer>(AProjectMarsPlayer::StaticClass());
-		AIPlayer->PlayerFaction = &Elem.Value;
-		AIPlayer->SpawnDefaultController();
-		AIPlayersArray.Emplace(AIPlayer);
-	}
-}
-
-ADelegateManager* AMarsGameStateBase::GetDelegateManager()
+ADelegateManager* AMarsGameStateBase::GetDelegateManager() const
 {
 	return DelegateManager;
+}
+
+AFactionManager* AMarsGameStateBase::GetFactionManager() const
+{
+    return FactionManager;
+}
+
+ABaseHUD* AMarsGameStateBase::GetBaseHUD() const
+{
+	return BaseHUD;
+}
+
+void AMarsGameStateBase::SetFactionManager(AFactionManager* FactionMan)
+{
+    FactionManager = FactionMan;
+}
+
+void AMarsGameStateBase::SetDelegateManager(ADelegateManager* ptr)
+{
+	DelegateManager = ptr;
+}
+
+UPlayerManagerComponent* AMarsGameStateBase::GetPlayerManagerComponent() const
+{
+	return PlayerManagerComponent;
 }

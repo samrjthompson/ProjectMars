@@ -26,11 +26,13 @@ void UEconomyManagerComponent::BeginPlay()
 	Super::BeginPlay();
 
 	GameState = Cast<AMarsGameStateBase>(GetWorld()->GetGameState());
+	ensure(GameState);
 	
 	ensure(InitialisePointers());
 	ensure(InitialiseDelegateManager());
 
-	// AddDelegates();
+	//AddDelegates();
+	DelegateManager->OnMonthlyUpdate.AddDynamic(this, &UEconomyManagerComponent::UpdatePlayerTreasury);
 }
 
 bool UEconomyManagerComponent::InitialisePointers()
@@ -61,8 +63,8 @@ void UEconomyManagerComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 
 void UEconomyManagerComponent::UpdatePlayerTreasury()
 {
-	EconomyData->SetMoney(20);
 	UE_LOG(LogTemp, Warning, TEXT("Month UPDATED!"));
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, "Month UPDATED!", true);
 }
 
 int32 UEconomyManagerComponent::GetPlayerTreasury() const
@@ -72,10 +74,12 @@ int32 UEconomyManagerComponent::GetPlayerTreasury() const
 
 bool UEconomyManagerComponent::InitialiseDelegateManager()
 {
+	if(!GameState) return false;
+	
 	DelegateManager = GameState->GetDelegateManager();
 	if(DelegateManager)
 	{
-		AddDelegates();
+		//AddDelegates();
 		return true;
 	}
 

@@ -23,7 +23,7 @@ FFaction::FFaction(EFactionName InitFaction)
 
 void FFaction::AddCharacterToAliveOrDeadArray(FInGameCharacter* Character)
 {
-	if (!Character) return; // Null check
+	if (!Character) return;
 
 	if(Character->CharacterState == ECharacterState::Alive)
 	{
@@ -37,7 +37,7 @@ void FFaction::AddCharacterToAliveOrDeadArray(FInGameCharacter* Character)
 
 void FFaction::ApplyModifiersToLivingCharacters()
 {
-	if (!LivingCharacters.IsValidIndex(0)) { return; } // Null check
+	if (!LivingCharacters.IsValidIndex(0)) return;
 	
 	TArray<ECharacterTraits> TraitsArrayPtr;
 

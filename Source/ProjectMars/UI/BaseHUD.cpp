@@ -6,6 +6,7 @@
 #include "Engine.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
+#include "ProjectMars/Components/Time/TimeManagementComponent.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
@@ -58,6 +59,11 @@ void ABaseHUD::DrawHUD()
 	}
 
 	MoveWidgetInViewportWithMouse(EventPopupWidget);
+}
+
+void ABaseHUD::SetDateSuffix(const FString& SuffixVal)
+{
+	DateSuffix = SuffixVal;
 }
 
 FVector2D ABaseHUD::GetMonitorResolution()
@@ -113,7 +119,7 @@ void ABaseHUD::DrawSelectionBox()
 		ArmySelected = ArmiesUnderSelectionBox[0];
 		if (ArmySelected)
 		{
-			// UE_LOG(LogTemp, Warning, TEXT("Army selected under selection box"));
+			
 		}
 	}
 }
@@ -151,7 +157,7 @@ void ABaseHUD::DrawPlayerTreasury()
 	if(BaseGameplayWidget && Player && Player->PlayerFaction)
 	{
 		//BaseGameplayWidget->EconomyText->SetText(FText::FromString(FString::SanitizeFloat(Player->PlayerEconomy.Treasury)));
-		BaseGameplayWidget->EconomyText->SetText(FText::AsNumber(Player->PlayerFaction->Economics.Treasury));
+		//BaseGameplayWidget->EconomyText->SetText(FText::AsNumber(Player->PlayerFaction->Economics.Treasury));
 	}
 }
 
@@ -159,9 +165,13 @@ void ABaseHUD::DrawDate()
 {	
 	if(BaseGameplayWidget && Player && Player->MarsGameStateBase)
 	{
-		BaseGameplayWidget->DayText->SetText(FText::AsNumber(Player->MarsGameStateBase->GetCurrentDay()));
-		BaseGameplayWidget->MonthText->SetText(FText::FromString(Player->MarsGameStateBase->GetCurrentMonthName()));
-		BaseGameplayWidget->YearText->SetText(FText::AsNumber(Player->MarsGameStateBase->GetCurrentYear()));
+		const UTimeManagementComponent* TimeManagementComponent = Player->GetMarsGameStateBase()->GetTimeManagementComponent();
+		if(!TimeManagementComponent) return;
+		
+		BaseGameplayWidget->DayText->SetText(FText::AsNumber(TimeManagementComponent->GetCurrentDisplayDay()));
+		BaseGameplayWidget->MonthText->SetText(FText::FromString(TimeManagementComponent->ConvertCurrentMonthToString()));
+		BaseGameplayWidget->YearText->SetText(FText::AsNumber(TimeManagementComponent->GetCurrentDisplayYear()));
+		
 		BaseGameplayWidget->DateSuffixText->SetText(FText::FromString(DateSuffix));
 	}
 }
@@ -178,10 +188,11 @@ void ABaseHUD::DrawFPS()
 void ABaseHUD::DrawMainGameUI()
 {
 	if(ChooseFactionWidget && BaseGameplayWidget && Player)
-	{
+	{		
 		if(ChooseFactionWidget->RomeButton->IsHovered())
 		{
 			Player->ChooseRome();
+
 			ChooseFactionWidget->RemoveFromParent();
 			BaseGameplayWidget->AddToViewport();
 		}
@@ -198,7 +209,7 @@ void ABaseHUD::DrawMainGameUI()
 
 void ABaseHUD::DrawTooltip()
 {
-	if (!BaseGameplayWidget) { return; } // NULL check
+	if (!BaseGameplayWidget) return;
 
 	int32 CurrentCount = 0;
 
@@ -223,7 +234,7 @@ void ABaseHUD::DrawPopulationNum()
 
 void ABaseHUD::DrawEventPopup()
 {
-	if (!EventPopupWidget) { return; }
+	if (!EventPopupWidget) return;
 
 	EventPopupWidget->SetPositionInViewport(StartingEventPopupPosition);
 	EventPopupWidget->AddToViewport();
