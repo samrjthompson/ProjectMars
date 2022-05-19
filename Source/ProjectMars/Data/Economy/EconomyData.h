@@ -15,13 +15,29 @@ struct PROJECTMARS_API FEconomyData
 
 public:
 	FEconomyData();
-	FEconomyData(int32 MoneyVal);
+	~FEconomyData();
+
+public:
+	void SetPlayerTreasury(float aMoney);
 	
-	int32 GetMoney() const { return Money; }
-	void SetMoney(int32 aMoney) { Money = aMoney; }
-	float GetTaxRate() const { return TaxRate; }
-	void SetTaxRate(float aTaxRate) { TaxRate = aTaxRate; }
-	
-	int32 Money{};
-	float TaxRate{};	
+	void UpdatePlayerTreasury();
+
+	float GetPlayerTreasury() const;
+
+	float GetSumOfOutgoings() const;
+
+	float GetGrossIncomePerMonth() const;
+
+	float GetNetIncomePerMonth() const;
+
+	void CalculateNetIncomePerMonth();
+
+private:
+	float PlayerTreasury{};
+
+	float SumOfOutgoings{};
+
+	float GrossIncomePerMonth{};
+
+	float NetIncomePerMonth{};
 };

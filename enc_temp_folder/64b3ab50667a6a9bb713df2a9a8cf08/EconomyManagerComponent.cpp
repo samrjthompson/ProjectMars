@@ -20,8 +20,6 @@ UEconomyManagerComponent::UEconomyManagerComponent()
 	EconomyData = new FEconomyData;
 }
 
-
-
 // Called when the game starts
 void UEconomyManagerComponent::BeginPlay()
 {
@@ -32,6 +30,8 @@ void UEconomyManagerComponent::BeginPlay()
 	
 	ensure(InitialisePointers());
 	ensure(InitialiseDelegateManager());
+
+	NetIncomePerMonth = 1000.0f;
 
 	AddDelegates();	
 }
@@ -57,17 +57,22 @@ bool UEconomyManagerComponent::InitialisePointers()
 
 float UEconomyManagerComponent::GetSumOfOutgoings() const
 {
-	return EconomyData->GetSumOfOutgoings();
+	return SumOfOutgoings;
 }
 
 float UEconomyManagerComponent::GetGrossIncomePerMonth() const
 {
-	return EconomyData->GetGrossIncomePerMonth();
+	return GrossIncomePerMonth;
 }
 
 float UEconomyManagerComponent::GetNetIncomePerMonth() const
 {
-	return EconomyData->GetNetIncomePerMonth();
+	return NetIncomePerMonth;
+}
+
+void UEconomyManagerComponent::CalculateNetIncomePerMonth()
+{
+	NetIncomePerMonth = GrossIncomePerMonth - SumOfOutgoings;
 }
 
 // Called every frame
@@ -79,12 +84,18 @@ void UEconomyManagerComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 
 void UEconomyManagerComponent::UpdatePlayerTreasury()
 {
-	EconomyData->UpdatePlayerTreasury();
+	const float OldTreasury = GetPlayerTreasury();
+	EconomyData->SetMoney(OldTreasury + NetIncomePerMonth);
+	const float NewTreasury = GetPlayerTreasury();
+
+	const FString Treasury = FString::SanitizeFloat(NewTreasury);
+
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, "Current treasury: " + Treasury, true);
 }
 
 float UEconomyManagerComponent::GetPlayerTreasury() const
 {
-	return EconomyData->GetPlayerTreasury();
+	return EconomyData->GetMoney();
 }
 
 bool UEconomyManagerComponent::InitialiseDelegateManager()

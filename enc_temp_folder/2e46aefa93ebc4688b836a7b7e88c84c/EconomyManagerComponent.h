@@ -48,6 +48,9 @@ public:
 	UFUNCTION()
 	float GetNetIncomePerMonth() const;
 
+	UFUNCTION()
+	void CalculateNetIncomePerMonth();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -63,4 +66,13 @@ private:
 
 	UPROPERTY()
 	class ADelegateManager* DelegateManager{ nullptr };
+
+	UPROPERTY()
+		float SumOfOutgoings{};
+
+	UPROPERTY()
+		float GrossIncomePerMonth{};
+
+	UPROPERTY()
+		float NetIncomePerMonth{};
 };
