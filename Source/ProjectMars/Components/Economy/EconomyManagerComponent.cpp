@@ -31,8 +31,7 @@ void UEconomyManagerComponent::BeginPlay()
 	ensure(InitialisePointers());
 	ensure(InitialiseDelegateManager());
 
-	//AddDelegates();
-	DelegateManager->OnMonthlyUpdate.AddDynamic(this, &UEconomyManagerComponent::UpdatePlayerTreasury);
+	AddDelegates();	
 }
 
 bool UEconomyManagerComponent::InitialisePointers()
@@ -79,7 +78,6 @@ bool UEconomyManagerComponent::InitialiseDelegateManager()
 	DelegateManager = GameState->GetDelegateManager();
 	if(DelegateManager)
 	{
-		//AddDelegates();
 		return true;
 	}
 
