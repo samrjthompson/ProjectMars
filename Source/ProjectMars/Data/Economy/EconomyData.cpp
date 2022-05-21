@@ -3,6 +3,7 @@
 
 #include "../../Data/Economy/EconomyData.h"
 
+
 FEconomyData::FEconomyData()
 {
 	SumOfOutgoings = 1000.0f;
@@ -16,6 +17,8 @@ FEconomyData::~FEconomyData()
 void FEconomyData::SetPlayerTreasury(float aMoney)
 {
 	PlayerTreasury += aMoney;
+
+
 }
 
 void FEconomyData::UpdatePlayerTreasury()
