@@ -25,8 +25,6 @@ struct FEconomics
 	float NetIncome{};
 	float Expenses{};
 
-	// TEST
-
 
 /////////////////////////////////////////////////////////////////
 	// TAXES
