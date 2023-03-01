@@ -9,7 +9,7 @@
 #include "ProjectMars/Controllers/AIControllerBase.h"
 #include "ProjectMars/Military/Army.h"
 #include "../Framework/DelegateManager.h"
-#include "../Components/Time/TimeManagementComponent.h"
+#include "ProjectMars/TimeManagement/TimeManagementComponent.h"
 #include "ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
@@ -26,8 +26,7 @@ AProjectMarsPlayer* AMarsGameStateBase::GetPlayer()
 	return Player;
 }
 
-UTimeManagementComponent* AMarsGameStateBase::GetTimeManagementComponent() const
-{
+UTimeManagementComponent* AMarsGameStateBase::GetTimeManagementComponent() const {
 	return TimeManagementComponent;
 }
 
@@ -50,6 +49,7 @@ AActor* AMarsGameStateBase::PassActorToSelf(AActor* ActorToPass)
 void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
+	UE_LOG(LogTemp, Error, TEXT("TEST VS CODE!"));
 	
 }
 

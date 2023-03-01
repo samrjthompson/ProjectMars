@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "../../Components/Time/TimeManagementComponent.h"
+#include "ProjectMars/TimeManagement/TimeManagementComponent.h"
 
 #include "ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"

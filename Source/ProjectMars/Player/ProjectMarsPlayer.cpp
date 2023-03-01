@@ -14,7 +14,7 @@
 #include "ProjectMars/UI/Widgets/WidgetComponents/ArmyWidgetComponent.h"
 #include "../Framework/DelegateManager.h"
 #include "ProjectMars/Components/Economy/EconomyManagerComponent.h"
-#include "ProjectMars/Components/Time/TimeManagementComponent.h"
+#include "ProjectMars/TimeManagement/TimeManagementComponent.h"
 #include "ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h"
 #include "ProjectMars/Military/Army.h"
 
