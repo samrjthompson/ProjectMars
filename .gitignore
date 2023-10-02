@@ -2,6 +2,8 @@ Binaries
 DerivedDataCache
 Intermediate
 Saved
+Plugins
+.idea/
 .vscode
 .vs
 *.VC.db
@@ -17,3 +19,7 @@ Saved
 *.wav
 *.png
 .fake
+*.user
+*.xml
+*.idea
+.idea/.idea.ProjectMars/.idea/workspace.xml

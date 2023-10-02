@@ -6,7 +6,7 @@
 #include "Engine.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
-#include "ProjectMars/Components/Time/TimeManagementComponent.h"
+#include "ProjectMars/TimeManagement/TimeManagementComponent.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
