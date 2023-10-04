@@ -17,11 +17,18 @@ public:
 	UEconomyManager();
 	
 	FEconomyInfo* GetEconomyInfo() const;
-	
 	UEconomyManager* SetEconomyInfo(FEconomyInfo* EconomyInfoVar);
+	void UpdateTreasury() const;
+	void AddToListOfIncomeSources(int32 IncomeSourceVar);
 	
-	FEconomyInfo* EconomyInfo;
+	const TArray<int32>& GetListOfIncomeSources() const;
+	UEconomyManager* SetListOfIncomeSources(const TArray<int32>& ListOfIncomeSourcesVar);
+
 
 private:
+	FEconomyInfo* EconomyInfo{ nullptr };
+	TArray<int32> ListOfIncomeSources{};
 	
+	void CalculateSumOfIncome(const TArray<int32>& ListOfIncomeSourcesVar) const;
+	void CalculateNetIncome() const;
 };

@@ -9,14 +9,25 @@ USTRUCT()
 struct PROJECTMARS_API FEconomyInfo
 {
 	GENERATED_BODY()
-public:
+
 	FEconomyInfo();
 	~FEconomyInfo();
 
-	float GetTreasury() const;
-	FEconomyInfo* SetTreasury(float TreasuryVar);
+	int32 GetTreasury() const;
+	FEconomyInfo* SetTreasury(const int32 TreasuryVar);
+
+	int32 GetSumOfOutgoings() const;
+	FEconomyInfo* SetSumOfOutgoings(const int32 SumOfOutgoingsVar);
+
+	int32 GetSumOfIncome() const;
+	FEconomyInfo* SetSumOfIncome(const int32 SumOfIncomeVar);
+
+	int32 GetNetIncome() const;
+	FEconomyInfo* SetNetIncome(const int32 NetIncomeVar);
 
 private:
-	float Treasury{};
-
+	int32 Treasury{};
+	int32 SumOfOutgoings{};
+	int32 SumOfIncome{};
+	int32 NetIncome{};
 };
