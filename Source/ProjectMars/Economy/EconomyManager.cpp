@@ -4,13 +4,18 @@
 #include "EconomyManager.h"
 
 #include "IncomeCalculator.h"
+#include "OutgoingsCalculator.h"
 #include "ProjectMars/EconomyInfo.h"
 
 
 UEconomyManager::UEconomyManager()
 {
+	// Data structs
 	EconomyInfo = new FEconomyInfo;
+
+	// Calculators
 	IncomeCalculator = NewObject<UIncomeCalculator>();
+	OutgoingsCalculator = NewObject<UOutgoingsCalculator>();
 }
 
 FEconomyInfo* UEconomyManager::GetEconomyInfo() const
@@ -29,6 +34,10 @@ void UEconomyManager::UpdateTreasury() const
 	// Calculate sum of income
 	const int32 GrossIncome = IncomeCalculator->CalculateGrossIncome(MapOfIncomeSources);
 	EconomyInfo->SetGrossIncome(GrossIncome);
+
+	// Calculate sum of outgoings
+	const int32 Outgoings = OutgoingsCalculator->CalculateOutgoings(MapOfOutgoingSources);
+	EconomyInfo->SetGrossOutgoings(Outgoings);
 	
 	// Calculate net income
 	const int32 NetIncome = IncomeCalculator->CalculateNetIncome(
@@ -55,6 +64,28 @@ UEconomyManager* UEconomyManager::SetIncomeCalculator(UIncomeCalculator* IncomeC
 const TMap<EIncomeSourceType, int32>& UEconomyManager::GetMapOfIncomeSources() const
 {
 	return MapOfIncomeSources;
+}
+
+const TMap<EOutgoingsSourceType, int32>& UEconomyManager::GetMapOfOutgoingSources() const
+{
+	return MapOfOutgoingSources;
+}
+
+UEconomyManager* UEconomyManager::SetMapOfOutgoingSources(const TMap<EOutgoingsSourceType, int32>& MapOfOutgoingSourcesVar)
+{
+	this->MapOfOutgoingSources = MapOfOutgoingSourcesVar;
+	return this;
+}
+
+const UOutgoingsCalculator* UEconomyManager::GetOutgoingsCalculator() const
+{
+	return OutgoingsCalculator;
+}
+
+UEconomyManager* UEconomyManager::SetOutgoingsCalculator(UOutgoingsCalculator* OutgoingsCalculatorVar)
+{
+	this->OutgoingsCalculator = OutgoingsCalculatorVar;
+	return this;
 }
 
 UEconomyManager* UEconomyManager::SetMapOfIncomeSources(const TMap<EIncomeSourceType, int32>& MapOfIncomeSourcesVar)

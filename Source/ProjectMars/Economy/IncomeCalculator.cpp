@@ -3,10 +3,6 @@
 
 #include "ProjectMars/Economy/IncomeCalculator.h"
 
-UIncomeCalculator::UIncomeCalculator()
-{
-}
-
 int32 UIncomeCalculator::CalculateGrossIncome(const TMap<EIncomeSourceType, int32>& MapOfIncomeSourcesVar) const
 {
 	int32 TotalIncome{ 0 };
