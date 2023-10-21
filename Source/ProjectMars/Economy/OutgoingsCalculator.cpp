@@ -3,7 +3,7 @@
 
 #include "OutgoingsCalculator.h"
 
-int32 UOutgoingsCalculator::CalculateOutgoings(const TMap<EOutgoingsSourceType, int32>& MapOfOutgoingsSourcesVar)
+int32 UOutgoingsCalculator::CalculateOutgoings(const TMap<EExpenditureType, int32>& MapOfOutgoingsSourcesVar)
 {
 	int32 TotalOutgoings = 0;
 	for (const auto OutgoingsSource : MapOfOutgoingsSourcesVar)

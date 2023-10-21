@@ -3,14 +3,12 @@
 
 #include "ProjectMars/Economy/IncomeCalculator.h"
 
-#include "IncomeSource.h"
-
-int32 UIncomeCalculator::CalculateGrossIncome(const TMap<EIncomeSourceType, FIncomeSource*>& MapOfIncomeSourcesVar) const
+int32 UIncomeCalculator::CalculateGrossIncome(const TMap<EIncomeType, int32>& MapOfIncomeSourcesVar) const
 {
 	int32 TotalIncome{ 0 };
 	for (const auto IncomeSource : MapOfIncomeSourcesVar)
 	{
-		TotalIncome +=IncomeSource.Value->GetIncome();;
+		TotalIncome += IncomeSource.Value;;
 	}
 	return TotalIncome;
 }
