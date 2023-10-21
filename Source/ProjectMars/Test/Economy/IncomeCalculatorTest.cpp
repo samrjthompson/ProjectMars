@@ -1,6 +1,7 @@
 ﻿#include "Misc/AutomationTest.h"
 #include "ProjectMars/Economy/EconomyManager.h"
 #include "ProjectMars/Economy/IncomeCalculator.h"
+#include "ProjectMars/Economy/IncomeSource.h"
 
 UIncomeCalculator* IncomeCalculator = NewObject<UIncomeCalculator>();
 
@@ -28,10 +29,19 @@ bool FTestCalculateGrossIncome::RunTest(const FString& Parameters)
 {
 	{
 		// given
-		TMap<EIncomeSourceType, int32> MapOfIncomeSources;
-		MapOfIncomeSources.Add(EIncomeSourceType::TaxIncome, 200);
-		MapOfIncomeSources.Add(EIncomeSourceType::TradeIncome, 350);
-		constexpr int32 Expected = 200 + 350;
+		constexpr int32 TaxIncomeVal = 200;
+		constexpr int32 TradeIncomeVal = 350;
+		
+		FIncomeSource* TaxIncomeSource = new FIncomeSource;
+		TaxIncomeSource->SetIncome(TaxIncomeVal);
+		FIncomeSource* TradeIncomeSource = new FIncomeSource;
+		TradeIncomeSource->SetIncome(TradeIncomeVal);
+		
+		TMap<EIncomeSourceType, FIncomeSource*> MapOfIncomeSources;
+		MapOfIncomeSources.Add(EIncomeSourceType::TaxIncome, TaxIncomeSource);
+		MapOfIncomeSources.Add(EIncomeSourceType::TradeIncome, TradeIncomeSource);
+		
+		constexpr int32 Expected = TaxIncomeVal + TradeIncomeVal;
 
 		// when
 		const int32 Actual = IncomeCalculator->CalculateGrossIncome(MapOfIncomeSources);

@@ -4,6 +4,7 @@
 #include "EconomyManager.h"
 
 #include "IncomeCalculator.h"
+#include "IncomeSource.h"
 #include "OutgoingsCalculator.h"
 #include "ProjectMars/EconomyInfo.h"
 
@@ -12,10 +13,14 @@ UEconomyManager::UEconomyManager()
 {
 	// Data structs
 	EconomyInfo = new FEconomyInfo;
+	TradeIncomeSource = new FIncomeSource;
 
 	// Calculators
 	IncomeCalculator = NewObject<UIncomeCalculator>();
 	OutgoingsCalculator = NewObject<UOutgoingsCalculator>();
+
+	// Maps
+	MapOfIncomeSources.Add(EIncomeSourceType::TradeIncome, TradeIncomeSource);
 }
 
 FEconomyInfo* UEconomyManager::GetEconomyInfo() const
@@ -61,7 +66,7 @@ UEconomyManager* UEconomyManager::SetIncomeCalculator(UIncomeCalculator* IncomeC
 	return this;
 }
 
-const TMap<EIncomeSourceType, int32>& UEconomyManager::GetMapOfIncomeSources() const
+const TMap<EIncomeSourceType, FIncomeSource*>& UEconomyManager::GetMapOfIncomeSources() const
 {
 	return MapOfIncomeSources;
 }
@@ -88,7 +93,7 @@ UEconomyManager* UEconomyManager::SetOutgoingsCalculator(UOutgoingsCalculator* O
 	return this;
 }
 
-UEconomyManager* UEconomyManager::SetMapOfIncomeSources(const TMap<EIncomeSourceType, int32>& MapOfIncomeSourcesVar)
+UEconomyManager* UEconomyManager::SetMapOfIncomeSources(const TMap<EIncomeSourceType, FIncomeSource*>& MapOfIncomeSourcesVar)
 {
 	this->MapOfIncomeSources = MapOfIncomeSourcesVar;
 	return this;

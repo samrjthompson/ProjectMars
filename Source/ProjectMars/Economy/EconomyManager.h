@@ -7,6 +7,7 @@
 #include "EconomyManager.generated.h"
 
 struct FEconomyInfo;
+struct FIncomeSource;
 
 class UIncomeCalculator;
 class UOutgoingsCalculator;
@@ -46,13 +47,13 @@ public:
 	// Getters
 	const UIncomeCalculator* GetIncomeCalculator() const;
 	const UOutgoingsCalculator* GetOutgoingsCalculator() const;
-	const TMap<EIncomeSourceType, int32>& GetMapOfIncomeSources() const;
+	const TMap<EIncomeSourceType, FIncomeSource*>& GetMapOfIncomeSources() const;
 	const TMap<EOutgoingsSourceType, int32>& GetMapOfOutgoingSources() const;
 
 	// Setters
 	UEconomyManager* SetIncomeCalculator(UIncomeCalculator* IncomeCalculatorVar);
 	UEconomyManager* SetOutgoingsCalculator(UOutgoingsCalculator* OutgoingsCalculatorVar);
-	UEconomyManager* SetMapOfIncomeSources(const TMap<EIncomeSourceType, int32>& MapOfIncomeSourcesVar);
+	UEconomyManager* SetMapOfIncomeSources(const TMap<EIncomeSourceType, FIncomeSource*>& MapOfIncomeSourcesVar);
 	UEconomyManager* SetMapOfOutgoingSources(const  TMap<EOutgoingsSourceType, int32>& MapOfOutgoingSourcesVar);
 
 
@@ -61,10 +62,12 @@ private:
 	UIncomeCalculator* IncomeCalculator{ nullptr };
 	UPROPERTY()
 	UOutgoingsCalculator* OutgoingsCalculator{ nullptr };
-	
+
+	// Structs
+	FIncomeSource* TradeIncomeSource{ nullptr };
 	FEconomyInfo* EconomyInfo{ nullptr };
 
 	// TODO: In the future this will store objects of sources, not integers
-	TMap<EIncomeSourceType, int32> MapOfIncomeSources;
+	TMap<EIncomeSourceType, FIncomeSource*> MapOfIncomeSources;
 	TMap<EOutgoingsSourceType, int32> MapOfOutgoingSources;
 };
