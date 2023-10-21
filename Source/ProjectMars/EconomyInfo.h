@@ -17,17 +17,17 @@ struct PROJECTMARS_API FEconomyInfo
 	FEconomyInfo* SetTreasury(const int32 TreasuryVar);
 
 	int32 GetSumOfOutgoings() const;
-	FEconomyInfo* SetSumOfOutgoings(const int32 SumOfOutgoingsVar);
+	FEconomyInfo* SetGrossOutgoings(const int32 GrossOutgoingsVar);
 
 	int32 GetSumOfIncome() const;
-	FEconomyInfo* SetSumOfIncome(const int32 SumOfIncomeVar);
+	FEconomyInfo* SetGrossIncome(const int32 GrossIncomeVar);
 
 	int32 GetNetIncome() const;
 	FEconomyInfo* SetNetIncome(const int32 NetIncomeVar);
 
 private:
 	int32 Treasury{};
-	int32 SumOfOutgoings{};
-	int32 SumOfIncome{};
+	int32 GrossOutgoings{};
+	int32 GrossIncome{};
 	int32 NetIncome{};
 };
