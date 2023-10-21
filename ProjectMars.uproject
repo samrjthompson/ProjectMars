@@ -25,10 +25,6 @@
 				"Mac",
 				"Linux"
 			]
-		},
-		{
-			"Name": "RiderLink",
-			"Enabled": false
 		}
 	]
 }
