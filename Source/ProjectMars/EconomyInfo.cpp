@@ -6,6 +6,7 @@
 
 FEconomyInfo::FEconomyInfo()
 {
+	Treasury = 0;
 }
 
 FEconomyInfo::~FEconomyInfo()
@@ -25,23 +26,23 @@ FEconomyInfo* FEconomyInfo::SetTreasury(const int32 TreasuryVar)
 
 int32 FEconomyInfo::GetSumOfOutgoings() const
 {
-	return SumOfOutgoings;
+	return GrossOutgoings;
 }
 
-FEconomyInfo* FEconomyInfo::SetSumOfOutgoings(const int32 SumOfOutgoingsVar)
+FEconomyInfo* FEconomyInfo::SetGrossOutgoings(const int32 GrossOutgoingsVar)
 {
-	this->SumOfOutgoings = SumOfOutgoingsVar;
+	this->GrossOutgoings = GrossOutgoingsVar;
 	return this;
 }
 
 int32 FEconomyInfo::GetSumOfIncome() const
 {
-	return SumOfIncome;
+	return GrossIncome;
 }
 
-FEconomyInfo* FEconomyInfo::SetSumOfIncome(const int32 SumOfIncomeVar)
+FEconomyInfo* FEconomyInfo::SetGrossIncome(const int32 GrossIncomeVar)
 {
-	this->SumOfIncome = SumOfIncomeVar;
+	this->GrossIncome = GrossIncomeVar;
 	return this;
 }
 

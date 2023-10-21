@@ -3,12 +3,14 @@
 
 #include "EconomyManager.h"
 
+#include "IncomeCalculator.h"
 #include "ProjectMars/EconomyInfo.h"
 
 
 UEconomyManager::UEconomyManager()
 {
 	EconomyInfo = new FEconomyInfo;
+	IncomeCalculator = NewObject<UIncomeCalculator>();
 }
 
 FEconomyInfo* UEconomyManager::GetEconomyInfo() const
@@ -22,47 +24,43 @@ UEconomyManager* UEconomyManager::SetEconomyInfo(FEconomyInfo* EconomyInfoVar)
 	return this;
 }
 
-const TArray<int32>& UEconomyManager::GetListOfIncomeSources() const
-{
-	return ListOfIncomeSources;
-}
-
 void UEconomyManager::UpdateTreasury() const
 {
-	CalculateNetIncome();
-	int32 CurrentTreasury = EconomyInfo->GetTreasury();
-	const int32 UpdatedTreasury = CurrentTreasury += EconomyInfo->GetNetIncome();
+	// Calculate sum of income
+	const int32 GrossIncome = IncomeCalculator->CalculateGrossIncome(MapOfIncomeSources);
+	EconomyInfo->SetGrossIncome(GrossIncome);
+	
+	// Calculate net income
+	const int32 NetIncome = IncomeCalculator->CalculateNetIncome(
+		EconomyInfo->GetSumOfIncome(),
+		EconomyInfo->GetSumOfOutgoings());
+	EconomyInfo->SetNetIncome(NetIncome);
+
+	// Calculate treasury
+	const int32 UpdatedTreasury = EconomyInfo->GetTreasury() + EconomyInfo->GetNetIncome();
 	EconomyInfo->SetTreasury(UpdatedTreasury);
 }
 
-void UEconomyManager::AddToListOfIncomeSources(const int32 IncomeSourceVar)
+const UIncomeCalculator* UEconomyManager::GetIncomeCalculator() const
 {
-	ListOfIncomeSources.Add(IncomeSourceVar);
+	return IncomeCalculator;
 }
 
-UEconomyManager* UEconomyManager::SetListOfIncomeSources(const TArray<int32>& ListOfIncomeSourcesVar)
+UEconomyManager* UEconomyManager::SetIncomeCalculator(UIncomeCalculator* IncomeCalculatorVar)
 {
-	this->ListOfIncomeSources = ListOfIncomeSourcesVar;
+	this->IncomeCalculator = IncomeCalculatorVar;
 	return this;
 }
 
-void UEconomyManager::CalculateSumOfIncome(const TArray<int32>& ListOfIncomeSourcesVar) const
+const TMap<EIncomeSourceType, int32>& UEconomyManager::GetMapOfIncomeSources() const
 {
-	int32 TotalIncome{ 0 };
-	for (const int32 IncomeSource : ListOfIncomeSourcesVar)
-	{
-		TotalIncome += IncomeSource;
-	}
-	EconomyInfo->SetSumOfIncome(TotalIncome);
+	return MapOfIncomeSources;
 }
 
-void UEconomyManager::CalculateNetIncome() const
+UEconomyManager* UEconomyManager::SetMapOfIncomeSources(const TMap<EIncomeSourceType, int32>& MapOfIncomeSourcesVar)
 {
-	const int32 TotalIncome = EconomyInfo->GetSumOfIncome();
-	const int32 TotalOutgoings = EconomyInfo->GetSumOfOutgoings();
-	
-	CalculateSumOfIncome(ListOfIncomeSources);
-	EconomyInfo->SetNetIncome(TotalIncome - TotalOutgoings);
+	this->MapOfIncomeSources = MapOfIncomeSourcesVar;
+	return this;
 }
 
 
