@@ -15,8 +15,6 @@ class PROJECTMARS_API UIncomeCalculator : public UObject
 {
 	GENERATED_BODY()
 
-	UIncomeCalculator();
-
 public:
 	int32 CalculateGrossIncome(const TMap<EIncomeSourceType, int32>& MapOfIncomeSourcesVar) const;
 	int32 CalculateNetIncome(const int32 GrossIncome, const int32 GrossOutgoings) const;
