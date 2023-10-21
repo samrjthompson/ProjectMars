@@ -4,7 +4,6 @@
 #include "EconomyManager.h"
 
 #include "IncomeCalculator.h"
-#include "IncomeSource.h"
 #include "OutgoingsCalculator.h"
 #include "ProjectMars/EconomyInfo.h"
 
@@ -13,14 +12,13 @@ UEconomyManager::UEconomyManager()
 {
 	// Data structs
 	EconomyInfo = new FEconomyInfo;
-	TradeIncomeSource = new FIncomeSource;
 
 	// Calculators
 	IncomeCalculator = NewObject<UIncomeCalculator>();
 	OutgoingsCalculator = NewObject<UOutgoingsCalculator>();
 
 	// Maps
-	MapOfIncomeSources.Add(EIncomeSourceType::TradeIncome, TradeIncomeSource);
+	InitialiseMapOfIncomeSources();
 }
 
 FEconomyInfo* UEconomyManager::GetEconomyInfo() const
@@ -66,20 +64,30 @@ UEconomyManager* UEconomyManager::SetIncomeCalculator(UIncomeCalculator* IncomeC
 	return this;
 }
 
-const TMap<EIncomeSourceType, FIncomeSource*>& UEconomyManager::GetMapOfIncomeSources() const
+const TMap<EIncomeType, int32>& UEconomyManager::GetMapOfIncomeSources() const
 {
 	return MapOfIncomeSources;
 }
 
-const TMap<EOutgoingsSourceType, int32>& UEconomyManager::GetMapOfOutgoingSources() const
+const TMap<EExpenditureType, int32>& UEconomyManager::GetMapOfOutgoingSources() const
 {
 	return MapOfOutgoingSources;
 }
 
-UEconomyManager* UEconomyManager::SetMapOfOutgoingSources(const TMap<EOutgoingsSourceType, int32>& MapOfOutgoingSourcesVar)
+UEconomyManager* UEconomyManager::SetMapOfOutgoingSources(const TMap<EExpenditureType, int32>& MapOfOutgoingSourcesVar)
 {
 	this->MapOfOutgoingSources = MapOfOutgoingSourcesVar;
 	return this;
+}
+
+
+// Initialises map of income sources with enum keys and values set to 0 by default
+void UEconomyManager::InitialiseMapOfIncomeSources()
+{
+	for (EIncomeType Type : TEnumRange<EIncomeType>())
+	{
+		MapOfIncomeSources.Add(Type, 0);
+	}
 }
 
 const UOutgoingsCalculator* UEconomyManager::GetOutgoingsCalculator() const
@@ -93,7 +101,7 @@ UEconomyManager* UEconomyManager::SetOutgoingsCalculator(UOutgoingsCalculator* O
 	return this;
 }
 
-UEconomyManager* UEconomyManager::SetMapOfIncomeSources(const TMap<EIncomeSourceType, FIncomeSource*>& MapOfIncomeSourcesVar)
+UEconomyManager* UEconomyManager::SetMapOfIncomeSources(const TMap<EIncomeType, int32>& MapOfIncomeSourcesVar)
 {
 	this->MapOfIncomeSources = MapOfIncomeSourcesVar;
 	return this;

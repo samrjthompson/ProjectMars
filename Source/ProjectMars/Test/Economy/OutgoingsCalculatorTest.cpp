@@ -10,9 +10,9 @@ bool FTestCalculateOutgoings::RunTest(const FString& Parameters)
 {
 	{
 		// given
-		TMap<EOutgoingsSourceType, int32> MapOfOutgoingsSources;
-		MapOfOutgoingsSources.Add(EOutgoingsSourceType::ArmyExpenditure, 200);
-		MapOfOutgoingsSources.Add(EOutgoingsSourceType::TributeExpenditure, 350);
+		TMap<EExpenditureType, int32> MapOfOutgoingsSources;
+		MapOfOutgoingsSources.Add(EExpenditureType::Army, 200);
+		MapOfOutgoingsSources.Add(EExpenditureType::Tribute, 350);
 		constexpr int32 Expected = 200 + 350;
 
 		// when

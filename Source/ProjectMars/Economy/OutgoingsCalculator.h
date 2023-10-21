@@ -6,7 +6,7 @@
 #include "UObject/Object.h"
 #include "OutgoingsCalculator.generated.h"
 
-enum class EOutgoingsSourceType : uint8;
+enum class EExpenditureType : uint8;
 
 /**
  * 
@@ -17,7 +17,7 @@ class PROJECTMARS_API UOutgoingsCalculator : public UObject
 	GENERATED_BODY()
 
 public:
-	int32 CalculateOutgoings(const TMap<EOutgoingsSourceType, int32>& MapOfOutgoingsSourcesVar);
+	int32 CalculateOutgoings(const TMap<EExpenditureType, int32>& MapOfOutgoingsSourcesVar);
 	
 private:
 	

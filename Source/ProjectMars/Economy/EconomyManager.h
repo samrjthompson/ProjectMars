@@ -7,28 +7,34 @@
 #include "EconomyManager.generated.h"
 
 struct FEconomyInfo;
-struct FIncomeSource;
 
 class UIncomeCalculator;
 class UOutgoingsCalculator;
 
 UENUM()
-enum class EIncomeSourceType : uint8
+enum class EIncomeType : uint8
 {
-	TaxIncome = 0,
-	TradeIncome,
+	Tax,
+	Trade,
+	Production,
+	Loot,
+	Slaves,
 
-	Max
+	Max UMETA(Hidden)
 };
+ENUM_RANGE_BY_COUNT(EIncomeType, EIncomeType::Max);
 
 UENUM()
-enum class EOutgoingsSourceType : uint8
+enum class EExpenditureType : uint8
 {
-	ArmyExpenditure = 0,
-	TributeExpenditure,
+	Army,
+	Navy,
+	Tribute,
+	Corruption,
 
-	Max
+	Max UMETA(Hidden)
 };
+ENUM_RANGE_BY_COUNT(EExpenditureType, EExpenditureType::Max);
 
 UCLASS()
 class PROJECTMARS_API UEconomyManager : public UObject
@@ -47,14 +53,14 @@ public:
 	// Getters
 	const UIncomeCalculator* GetIncomeCalculator() const;
 	const UOutgoingsCalculator* GetOutgoingsCalculator() const;
-	const TMap<EIncomeSourceType, FIncomeSource*>& GetMapOfIncomeSources() const;
-	const TMap<EOutgoingsSourceType, int32>& GetMapOfOutgoingSources() const;
+	const TMap<EIncomeType, int32>& GetMapOfIncomeSources() const;
+	const TMap<EExpenditureType, int32>& GetMapOfOutgoingSources() const;
 
 	// Setters
 	UEconomyManager* SetIncomeCalculator(UIncomeCalculator* IncomeCalculatorVar);
 	UEconomyManager* SetOutgoingsCalculator(UOutgoingsCalculator* OutgoingsCalculatorVar);
-	UEconomyManager* SetMapOfIncomeSources(const TMap<EIncomeSourceType, FIncomeSource*>& MapOfIncomeSourcesVar);
-	UEconomyManager* SetMapOfOutgoingSources(const  TMap<EOutgoingsSourceType, int32>& MapOfOutgoingSourcesVar);
+	UEconomyManager* SetMapOfIncomeSources(const TMap<EIncomeType, int32>& MapOfIncomeSourcesVar);
+	UEconomyManager* SetMapOfOutgoingSources(const  TMap<EExpenditureType, int32>& MapOfOutgoingSourcesVar);
 
 
 private:
@@ -64,10 +70,11 @@ private:
 	UOutgoingsCalculator* OutgoingsCalculator{ nullptr };
 
 	// Structs
-	FIncomeSource* TradeIncomeSource{ nullptr };
 	FEconomyInfo* EconomyInfo{ nullptr };
 
-	// TODO: In the future this will store objects of sources, not integers
-	TMap<EIncomeSourceType, FIncomeSource*> MapOfIncomeSources;
-	TMap<EOutgoingsSourceType, int32> MapOfOutgoingSources;
+	// Maps
+	TMap<EIncomeType, int32> MapOfIncomeSources;
+	TMap<EExpenditureType, int32> MapOfOutgoingSources;
+
+	void InitialiseMapOfIncomeSources();
 };
