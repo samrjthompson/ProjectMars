@@ -3,8 +3,7 @@
 
 #include "EconomyManager.h"
 
-#include "IncomeCalculator.h"
-#include "OutgoingsCalculator.h"
+#include "FinanceCalculator.h"
 #include "ProjectMars/EconomyInfo.h"
 
 
@@ -14,16 +13,20 @@ UEconomyManager::UEconomyManager()
 	EconomyInfo = new FEconomyInfo;
 
 	// Calculators
-	IncomeCalculator = NewObject<UIncomeCalculator>();
-	OutgoingsCalculator = NewObject<UOutgoingsCalculator>();
+	FinanceCalculator = NewObject<UFinanceCalculator>();
 
 	// Maps
-	InitialiseMapOfIncomeSources();
+	InitialiseIncomeSources();
 }
 
 FEconomyInfo* UEconomyManager::GetEconomyInfo() const
 {
 	return EconomyInfo;
+}
+
+const TMap<EIncomeType, int32>* UEconomyManager::GetIncomeSources() const
+{
+	return &IncomeSources;
 }
 
 UEconomyManager* UEconomyManager::SetEconomyInfo(FEconomyInfo* EconomyInfoVar)
@@ -35,15 +38,15 @@ UEconomyManager* UEconomyManager::SetEconomyInfo(FEconomyInfo* EconomyInfoVar)
 void UEconomyManager::UpdateTreasury() const
 {
 	// Calculate sum of income
-	const int32 GrossIncome = IncomeCalculator->CalculateGrossIncome(MapOfIncomeSources);
+	const int32 GrossIncome = FinanceCalculator->CalculateGrossIncome(IncomeSources);
 	EconomyInfo->SetGrossIncome(GrossIncome);
 
 	// Calculate sum of outgoings
-	const int32 Outgoings = OutgoingsCalculator->CalculateOutgoings(MapOfOutgoingSources);
+	const int32 Outgoings = FinanceCalculator->CalculateExpenses(ExpenseSources);
 	EconomyInfo->SetGrossOutgoings(Outgoings);
 	
 	// Calculate net income
-	const int32 NetIncome = IncomeCalculator->CalculateNetIncome(
+	const int32 NetIncome = FinanceCalculator->CalculateNetIncome(
 		EconomyInfo->GetSumOfIncome(),
 		EconomyInfo->GetSumOfOutgoings());
 	EconomyInfo->SetNetIncome(NetIncome);
@@ -53,58 +56,13 @@ void UEconomyManager::UpdateTreasury() const
 	EconomyInfo->SetTreasury(UpdatedTreasury);
 }
 
-const UIncomeCalculator* UEconomyManager::GetIncomeCalculator() const
-{
-	return IncomeCalculator;
-}
-
-UEconomyManager* UEconomyManager::SetIncomeCalculator(UIncomeCalculator* IncomeCalculatorVar)
-{
-	this->IncomeCalculator = IncomeCalculatorVar;
-	return this;
-}
-
-const TMap<EIncomeType, int32>& UEconomyManager::GetMapOfIncomeSources() const
-{
-	return MapOfIncomeSources;
-}
-
-const TMap<EExpenditureType, int32>& UEconomyManager::GetMapOfOutgoingSources() const
-{
-	return MapOfOutgoingSources;
-}
-
-UEconomyManager* UEconomyManager::SetMapOfOutgoingSources(const TMap<EExpenditureType, int32>& MapOfOutgoingSourcesVar)
-{
-	this->MapOfOutgoingSources = MapOfOutgoingSourcesVar;
-	return this;
-}
-
-
 // Initialises map of income sources with enum keys and values set to 0 by default
-void UEconomyManager::InitialiseMapOfIncomeSources()
+void UEconomyManager::InitialiseIncomeSources()
 {
 	for (EIncomeType Type : TEnumRange<EIncomeType>())
 	{
-		MapOfIncomeSources.Add(Type, 0);
+		IncomeSources.Add(Type, 0);
 	}
-}
-
-const UOutgoingsCalculator* UEconomyManager::GetOutgoingsCalculator() const
-{
-	return OutgoingsCalculator;
-}
-
-UEconomyManager* UEconomyManager::SetOutgoingsCalculator(UOutgoingsCalculator* OutgoingsCalculatorVar)
-{
-	this->OutgoingsCalculator = OutgoingsCalculatorVar;
-	return this;
-}
-
-UEconomyManager* UEconomyManager::SetMapOfIncomeSources(const TMap<EIncomeType, int32>& MapOfIncomeSourcesVar)
-{
-	this->MapOfIncomeSources = MapOfIncomeSourcesVar;
-	return this;
 }
 
 

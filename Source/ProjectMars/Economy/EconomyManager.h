@@ -8,8 +8,7 @@
 
 struct FEconomyInfo;
 
-class UIncomeCalculator;
-class UOutgoingsCalculator;
+class UFinanceCalculator;
 
 UENUM()
 enum class EIncomeType : uint8
@@ -25,7 +24,7 @@ enum class EIncomeType : uint8
 ENUM_RANGE_BY_COUNT(EIncomeType, EIncomeType::Max);
 
 UENUM()
-enum class EExpenditureType : uint8
+enum class EExpenseType : uint8
 {
 	Army,
 	Navy,
@@ -34,7 +33,7 @@ enum class EExpenditureType : uint8
 
 	Max UMETA(Hidden)
 };
-ENUM_RANGE_BY_COUNT(EExpenditureType, EExpenditureType::Max);
+ENUM_RANGE_BY_COUNT(EExpenseType, EExpenseType::Max);
 
 UCLASS()
 class PROJECTMARS_API UEconomyManager : public UObject
@@ -43,38 +42,30 @@ class PROJECTMARS_API UEconomyManager : public UObject
 
 public:
 	UEconomyManager();
-	
+
+	// Getter
 	FEconomyInfo* GetEconomyInfo() const;
+	const TMap<EIncomeType, int32>* GetIncomeSources() const;
+
+	// Setter
 	UEconomyManager* SetEconomyInfo(FEconomyInfo* EconomyInfoVar);
 	
 	UFUNCTION()
 	void UpdateTreasury() const;
 
-	// Getters
-	const UIncomeCalculator* GetIncomeCalculator() const;
-	const UOutgoingsCalculator* GetOutgoingsCalculator() const;
-	const TMap<EIncomeType, int32>& GetMapOfIncomeSources() const;
-	const TMap<EExpenditureType, int32>& GetMapOfOutgoingSources() const;
-
-	// Setters
-	UEconomyManager* SetIncomeCalculator(UIncomeCalculator* IncomeCalculatorVar);
-	UEconomyManager* SetOutgoingsCalculator(UOutgoingsCalculator* OutgoingsCalculatorVar);
-	UEconomyManager* SetMapOfIncomeSources(const TMap<EIncomeType, int32>& MapOfIncomeSourcesVar);
-	UEconomyManager* SetMapOfOutgoingSources(const  TMap<EExpenditureType, int32>& MapOfOutgoingSourcesVar);
-
-
 private:
 	UPROPERTY()
-	UIncomeCalculator* IncomeCalculator{ nullptr };
-	UPROPERTY()
-	UOutgoingsCalculator* OutgoingsCalculator{ nullptr };
+	UFinanceCalculator* FinanceCalculator{ nullptr };
 
 	// Structs
 	FEconomyInfo* EconomyInfo{ nullptr };
 
 	// Maps
-	TMap<EIncomeType, int32> MapOfIncomeSources;
-	TMap<EExpenditureType, int32> MapOfOutgoingSources;
+	UPROPERTY()
+	TMap<EIncomeType, int32> IncomeSources;
+	UPROPERTY()
+	TMap<EExpenseType, int32> ExpenseSources;
 
-	void InitialiseMapOfIncomeSources();
+	UFUNCTION()
+	void InitialiseIncomeSources();
 };
