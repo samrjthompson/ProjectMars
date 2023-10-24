@@ -40,7 +40,7 @@ AProjectMarsPlayer::AProjectMarsPlayer()
 
 	// Economy Manager
 	State = NewObject<UState>();
-	EconomyManager = State->GetEconomyManager();
+	EconomyController = State->GetEconomyController();
 	
 	MovementSpeed = 500.f;
 

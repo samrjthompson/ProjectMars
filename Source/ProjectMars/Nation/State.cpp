@@ -3,21 +3,21 @@
 
 #include "ProjectMars/Nation/State.h"
 
-#include "ProjectMars/Economy/EconomyManager.h"
+#include "ProjectMars/Economy/EconomyController.h"
 
 UState::UState()
 {
 	// Constructor
-	EconomyManager = NewObject<UEconomyManager>();
+	EconomyController = NewObject<UEconomyController>();
 }
 
-UEconomyManager* UState::GetEconomyManager() const
+UEconomyController* UState::GetEconomyController() const
 {
-	return EconomyManager;
+	return EconomyController;
 }
 
-UState* UState::SetEconomyManager(UEconomyManager* EconomyManagerVar)
+UState* UState::SetEconomyController(UEconomyController* EconomyControllerVar)
 {
-	this->EconomyManager = EconomyManagerVar;
+	this->EconomyController = EconomyControllerVar;
 	return this;
 }

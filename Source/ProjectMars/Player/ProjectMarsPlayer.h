@@ -15,7 +15,7 @@ struct FFaction;
 struct FCampaignDateTime;
 class AArmy;
 
-class UEconomyManager;
+class UEconomyController;
 class UState;
 
 
@@ -55,7 +55,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere)
-	UEconomyManager* EconomyManager { nullptr };
+	UEconomyController* EconomyController { nullptr };
 
 	// Each player has a state they control e.g. the Roman Republic or Carthage
 	UPROPERTY(EditAnywhere)

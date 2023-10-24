@@ -1,13 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EconomyManager.h"
+#include "EconomyController.h"
 
 #include "FinanceCalculator.h"
 #include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Economy/Data/EconomyData.h"
 
-UEconomyManager::UEconomyManager()
+UEconomyController::UEconomyController()
 {
 	// Data structs
 	EconomyData = new FEconomyData;
@@ -20,28 +20,28 @@ UEconomyManager::UEconomyManager()
 	InitialiseDelegateEvents();
 }
 
-FEconomyData* UEconomyManager::GetEconomyData() const
+FEconomyData* UEconomyController::GetEconomyData() const
 {
 	return EconomyData;
 }
 
-const TMap<EIncomeType, int32>* UEconomyManager::GetIncomeSources() const
+const TMap<EIncomeType, int32>* UEconomyController::GetIncomeSources() const
 {
 	return &IncomeSources;
 }
 
-const TMap<EExpenseType, int32>* UEconomyManager::GetExpenseSources() const
+const TMap<EExpenseType, int32>* UEconomyController::GetExpenseSources() const
 {
 	return &ExpenseSources;
 }
 
-UEconomyManager* UEconomyManager::SetEconomyData(FEconomyData* EconomyDataVar)
+UEconomyController* UEconomyController::SetEconomyData(FEconomyData* EconomyDataVar)
 {
 	this->EconomyData = EconomyDataVar;
 	return this;
 }
 
-void UEconomyManager::UpdateTreasury()
+void UEconomyController::UpdateTreasury()
 {
 	// Calculate sum of income
 	const int32 GrossIncome = FinanceCalculator->CalculateGrossIncome(IncomeSources);
@@ -63,7 +63,7 @@ void UEconomyManager::UpdateTreasury()
 }
 
 // Initialises map of income sources with enum keys and values set to 0 by default
-void UEconomyManager::InitialiseMonetarySources()
+void UEconomyController::InitialiseMonetarySources()
 {
 	IncomeSources.Empty();
 	ExpenseSources.Empty();
@@ -78,7 +78,7 @@ void UEconomyManager::InitialiseMonetarySources()
 	}
 }
 
-void UEconomyManager::InitialiseDelegateEvents()
+void UEconomyController::InitialiseDelegateEvents()
 {
 	if (!DelegateController)
 	{
@@ -86,7 +86,7 @@ void UEconomyManager::InitialiseDelegateEvents()
 		return;
 	}
 	UE_LOG(LogTemp, Warning, TEXT("Delegate manager is INITIALISED!"));
-	DelegateController->OnMonthlyUpdate.AddDynamic(this, &UEconomyManager::UpdateTreasury);
+	DelegateController->OnMonthlyUpdate.AddDynamic(this, &UEconomyController::UpdateTreasury);
 }
 
 

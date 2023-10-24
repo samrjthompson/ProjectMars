@@ -6,7 +6,7 @@
 #include "UObject/NoExportTypes.h"
 #include "State.generated.h"
 
-class UEconomyManager;
+class UEconomyController;
 
 // A class to represent a state such as the Roman Republic or Carthage
 UCLASS()
@@ -18,14 +18,14 @@ public:
 	UState();
 
 	UFUNCTION()
-	UEconomyManager* GetEconomyManager() const;
+	UEconomyController* GetEconomyController() const;
 	
 	UFUNCTION()
-	UState* SetEconomyManager(UEconomyManager* EconomyManager);
+	UState* SetEconomyController(UEconomyController* EconomyController);
 
 private:
 	UPROPERTY()
-	UEconomyManager* EconomyManager;
+	UEconomyController* EconomyController;
 
 	/*UPROPERTY()
 	UTradeManager* TradeManager;*/

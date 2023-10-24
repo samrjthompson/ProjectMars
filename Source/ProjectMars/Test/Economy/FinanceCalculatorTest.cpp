@@ -1,5 +1,5 @@
 ﻿#include "Misc/AutomationTest.h"
-#include "ProjectMars/Economy/EconomyManager.h"
+#include "ProjectMars/Economy/EconomyController.h"
 #include "ProjectMars/Economy/FinanceCalculator.h"
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FTestCalculateNetIncome, "ProjectMars.ProjectMars.Test.Economy.TestCalculateNetIncome", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
