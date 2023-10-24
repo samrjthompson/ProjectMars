@@ -1,5 +1,5 @@
 ﻿#include "Misc/AutomationTest.h"
-#include "ProjectMars/Economy/EconomyManager.h"
+#include "ProjectMars/Economy/EconomyController.h"
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FInitialiseIncomeSourcesTest, "ProjectMars.ProjectMars.Test.Economy.InitialiseIncomeSourcesTest",
                                  EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
@@ -8,9 +8,9 @@ bool FInitialiseIncomeSourcesTest::RunTest(const FString& Parameters)
 {
 	{
 		// given
-		const UEconomyManager* EconomyManager = NewObject<UEconomyManager>();
-		const TMap<EIncomeType, int32>* IncomeSourcesMap = EconomyManager->GetIncomeSources();
-		const TMap<EExpenseType, int32>* ExpenseSources = EconomyManager->GetExpenseSources();
+		const UEconomyController* EconomyController = NewObject<UEconomyController>();
+		const TMap<EIncomeType, int32>* IncomeSourcesMap = EconomyController->GetIncomeSources();
+		const TMap<EExpenseType, int32>* ExpenseSources = EconomyController->GetExpenseSources();
 		
 		// when
 

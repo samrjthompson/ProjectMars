@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "EconomyManager.generated.h"
+#include "EconomyController.generated.h"
 
 struct FEconomyData;
 
@@ -37,12 +37,12 @@ enum class EExpenseType : uint8
 ENUM_RANGE_BY_COUNT(EExpenseType, EExpenseType::Max);
 
 UCLASS()
-class PROJECTMARS_API UEconomyManager : public UObject
+class PROJECTMARS_API UEconomyController : public UObject
 {
 	GENERATED_BODY()
 
 public:
-	UEconomyManager();
+	UEconomyController();
 
 	// Getter
 	FEconomyData* GetEconomyData() const;
@@ -50,7 +50,7 @@ public:
 	const TMap<EExpenseType, int32>* GetExpenseSources() const;
 
 	// Setter
-	UEconomyManager* SetEconomyData(FEconomyData* EconomyDataVar);
+	UEconomyController* SetEconomyData(FEconomyData* EconomyDataVar);
 	
 	UFUNCTION()
 	void UpdateTreasury();
