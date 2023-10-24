@@ -4,8 +4,8 @@
 #include "EconomyManager.h"
 
 #include "FinanceCalculator.h"
+#include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Economy/Data/EconomyData.h"
-
 
 UEconomyManager::UEconomyManager()
 {
@@ -17,6 +17,7 @@ UEconomyManager::UEconomyManager()
 
 	// Maps
 	InitialiseMonetarySources();
+	InitialiseDelegateEvents();
 }
 
 FEconomyData* UEconomyManager::GetEconomyData() const
@@ -40,7 +41,7 @@ UEconomyManager* UEconomyManager::SetEconomyData(FEconomyData* EconomyDataVar)
 	return this;
 }
 
-void UEconomyManager::UpdateTreasury() const
+void UEconomyManager::UpdateTreasury()
 {
 	// Calculate sum of income
 	const int32 GrossIncome = FinanceCalculator->CalculateGrossIncome(IncomeSources);
@@ -75,6 +76,17 @@ void UEconomyManager::InitialiseMonetarySources()
 	{
 		ExpenseSources.Add(Type, 0);
 	}
+}
+
+void UEconomyManager::InitialiseDelegateEvents()
+{
+	if (!DelegateController)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Delegate manager was null."));
+		return;
+	}
+	UE_LOG(LogTemp, Warning, TEXT("Delegate manager is INITIALISED!"));
+	DelegateController->OnMonthlyUpdate.AddDynamic(this, &UEconomyManager::UpdateTreasury);
 }
 
 

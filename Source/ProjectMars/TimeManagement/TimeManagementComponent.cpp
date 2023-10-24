@@ -7,7 +7,7 @@
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
-#include "ProjectMars/Framework/DelegateManager.h"
+#include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/UI/BaseHUD.h"
 
 
@@ -45,8 +45,8 @@ void UTimeManagementComponent::BeginPlay()
 	GameState = Cast<AMarsGameStateBase>(GetWorld()->GetGameState());
 	ensure(GameState);
 
-	DelegateManager = GameState->GetDelegateManager();
-	DelegateManager->OnPlayerInitialisation.AddDynamic(this, &UTimeManagementComponent::InitialiseRefs);
+	DelegateController = GameState->GetDelegateController();
+	DelegateController->OnPlayerInitialisation.AddDynamic(this, &UTimeManagementComponent::InitialiseRefs);
 	PlayerManagerComponent = GameState->GetPlayerManagerComponent();
 	
 	LastTickCheck = FPlatformTime::Seconds();
@@ -112,7 +112,7 @@ void UTimeManagementComponent::UpdateMonth()
 		MonthIndex = 1;	
 	}
 
-	if(MonthsInGame > 0) DelegateManager->OnMonthlyUpdate.Broadcast();
+	if(MonthsInGame > 0) DelegateController->OnMonthlyUpdate.Broadcast();
 }
 
 void UTimeManagementComponent::UpdateGameTime()
@@ -310,6 +310,7 @@ void UTimeManagementComponent::LogEveryXSeconds(double Val)
 
 void UTimeManagementComponent::InitialiseRefs()
 {
+	UE_LOG(LogTemp, Log, TEXT("Initialising TimeManagementComponent references"));
 	Player = GameState->GetPlayer();
 	PlayerController = GameState->GetPlayerController();
 	BaseHUD = GameState->GetBaseHUD();

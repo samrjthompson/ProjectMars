@@ -189,7 +189,7 @@ private:
 	class ABaseHUD* BaseHUD{ nullptr };
 
 	UPROPERTY()
-	class ADelegateManager* DelegateManager{ nullptr };
+	class UDelegateController* DelegateController{ nullptr };
 
 	UPROPERTY()
 	class UPlayerManagerComponent* PlayerManagerComponent{ nullptr };

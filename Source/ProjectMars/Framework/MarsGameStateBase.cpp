@@ -8,9 +8,9 @@
 #include "ProjectMars/UI/BaseHUD.h"
 #include "ProjectMars/Controllers/AIControllerBase.h"
 #include "ProjectMars/Military/Army.h"
-#include "../Framework/DelegateManager.h"
 #include "ProjectMars/TimeManagement/TimeManagementComponent.h"
 #include "ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h"
+#include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Nation/State.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
@@ -20,6 +20,8 @@ AMarsGameStateBase::AMarsGameStateBase()
 	
 	TimeManagementComponent = CreateDefaultSubobject<UTimeManagementComponent>(TEXT("Time Management Component"));
 	PlayerManagerComponent = CreateDefaultSubobject<UPlayerManagerComponent>(TEXT("Player Manager Component"));
+
+	DelegateController = NewObject<UDelegateController>();
 }
 
 AProjectMarsPlayer* AMarsGameStateBase::GetPlayer()
@@ -111,9 +113,9 @@ void AMarsGameStateBase::InitialiseReferences(AProjectMarsPlayer* InitPlayer)
 	}
 }
 
-ADelegateManager* AMarsGameStateBase::GetDelegateManager() const
+UDelegateController* AMarsGameStateBase::GetDelegateController() const
 {
-	return DelegateManager;
+	return DelegateController;
 }
 
 AFactionManager* AMarsGameStateBase::GetFactionManager() const
@@ -131,9 +133,9 @@ void AMarsGameStateBase::SetFactionManager(AFactionManager* FactionMan)
     FactionManager = FactionMan;
 }
 
-void AMarsGameStateBase::SetDelegateManager(ADelegateManager* ptr)
+void AMarsGameStateBase::SetDelegateManager(UDelegateController* DelegateControllerVar)
 {
-	DelegateManager = ptr;
+	DelegateController = DelegateControllerVar;
 }
 
 UPlayerManagerComponent* AMarsGameStateBase::GetPlayerManagerComponent() const

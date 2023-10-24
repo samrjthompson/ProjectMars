@@ -9,7 +9,7 @@
 
 class AProjectMarsPlayer;
 class AFactionBase;
-class ADelegateManager;
+class UDelegateController;
 class AFactionManager;
 
 enum class EMonthOfYear;
@@ -42,7 +42,7 @@ public:
 	static AActor* PassActorToSelf(AActor* ActorToPass);
 
 	UFUNCTION()
-	ADelegateManager* GetDelegateManager() const;
+	UDelegateController* GetDelegateController() const;
 
 	UFUNCTION()
 	AFactionManager* GetFactionManager() const;
@@ -54,7 +54,7 @@ public:
 	void SetFactionManager(AFactionManager* FactionMan);
 
 	UFUNCTION()
-	void SetDelegateManager(ADelegateManager* ptr);
+	void SetDelegateManager(UDelegateController* ptr);
 
 	UFUNCTION()
 	class UPlayerManagerComponent* GetPlayerManagerComponent() const;
@@ -95,9 +95,9 @@ private:
 	
 	TArray<AProjectMarsPlayer*> AllPlayers{ nullptr };
 	
-	// DelegateManager is initialised by ADelegateManager - see ADelegateManager::PassSelfToGameState()
+	// DelegateManager is initialised by UDelegateController - see UDelegateController::PassSelfToGameState()
 	UPROPERTY()
-	ADelegateManager* DelegateManager{ nullptr };
+	UDelegateController* DelegateController{ nullptr };
 
 	UPROPERTY()
 	AFactionManager* FactionManager{ nullptr };

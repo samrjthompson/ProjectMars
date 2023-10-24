@@ -11,6 +11,7 @@ class AProjectMarsPlayer;
 class ABasePlayerController;
 class AAIControllerBase;
 class AMarsGameStateBase;
+class UDelegateController;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECTMARS_API UPlayerManagerComponent : public UActorComponent
@@ -58,10 +59,10 @@ public:
 	TArray<AProjectMarsPlayer*>& GetAIPlayersArray();
 
 	UFUNCTION()
-	class ADelegateManager* GetDelegateManager() const;
+	UDelegateController* GetDelegateController() const;
 
 	UFUNCTION()
-	void SetDelegateManager(class ADelegateManager* DM);
+	void SetDelegateManager(UDelegateController* DelegateControllerVar);
 	
 protected:
 	// Called when the game starts
@@ -92,5 +93,5 @@ private:
 	TArray<AProjectMarsPlayer*> AIPlayersArray;
 
 	UPROPERTY()
-	class ADelegateManager* DelegateManager{ nullptr };
+	UDelegateController* DelegateController{ nullptr };
 };

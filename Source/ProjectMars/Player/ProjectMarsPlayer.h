@@ -8,7 +8,7 @@
 
 #include "ProjectMarsPlayer.generated.h"
 
-class ADelegateManager;
+class UDelegateController;
 
 enum class EFactionName : uint8;
 struct FFaction;
@@ -189,7 +189,7 @@ public:
 	class AArmy* TempArmyPtr{ nullptr };
 
 	UPROPERTY()
-	ADelegateManager* DelegateManager{ nullptr };
+	UDelegateController* DelegateController{ nullptr };
 
 	UFUNCTION()
 	void SetTimeManagementPointers(AProjectMarsPlayer* Player);

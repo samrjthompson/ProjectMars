@@ -8,6 +8,7 @@
 
 class UEconomyManager;
 
+// A class to represent a state such as the Roman Republic or Carthage
 UCLASS()
 class PROJECTMARS_API UState : public UObject
 {
