@@ -12,9 +12,11 @@ class ADelegateManager;
 
 enum class EFactionName : uint8;
 struct FFaction;
-struct FEconomics;
 struct FCampaignDateTime;
 class AArmy;
+
+class UEconomyManager;
+class UState;
 
 
 UCLASS()
@@ -37,9 +39,6 @@ public:
 	class USpringArmComponent* SpringArmComp{ nullptr };
 
 	UPROPERTY(EditAnywhere)
-	class UEconomyManagerComponent* EconomyManagerComponent{ nullptr };
-
-	UPROPERTY(EditAnywhere)
 	class UCameraComponent* Camera{ nullptr };
 
 	UPROPERTY(EditAnywhere, Category = "Faction")
@@ -53,6 +52,14 @@ public:
 	enum class EFactionName GetFactionName() const;
 
 	void SetFactionName(const EFactionName& FacName);
+
+private:
+	UPROPERTY(EditAnywhere)
+	UEconomyManager* EconomyManager { nullptr };
+
+	// Each player has a state they control e.g. the Roman Republic or Carthage
+	UPROPERTY(EditAnywhere)
+	UState* State { nullptr };
 	
 protected:
 	

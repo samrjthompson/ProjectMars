@@ -6,7 +6,7 @@
 #include "UObject/NoExportTypes.h"
 #include "EconomyManager.generated.h"
 
-struct FEconomyInfo;
+struct FEconomyData;
 
 class UFinanceCalculator;
 
@@ -44,11 +44,11 @@ public:
 	UEconomyManager();
 
 	// Getter
-	FEconomyInfo* GetEconomyInfo() const;
+	FEconomyData* GetEconomyData() const;
 	const TMap<EIncomeType, int32>* GetIncomeSources() const;
 
 	// Setter
-	UEconomyManager* SetEconomyInfo(FEconomyInfo* EconomyInfoVar);
+	UEconomyManager* SetEconomyData(FEconomyData* EconomyDataVar);
 	
 	UFUNCTION()
 	void UpdateTreasury() const;
@@ -58,7 +58,7 @@ private:
 	UFinanceCalculator* FinanceCalculator{ nullptr };
 
 	// Structs
-	FEconomyInfo* EconomyInfo{ nullptr };
+	FEconomyData* EconomyData{ nullptr };
 
 	// Maps
 	UPROPERTY()

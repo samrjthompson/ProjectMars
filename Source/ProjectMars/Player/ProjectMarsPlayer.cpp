@@ -13,10 +13,10 @@
 #include "DrawDebugHelpers.h"
 #include "ProjectMars/UI/Widgets/WidgetComponents/ArmyWidgetComponent.h"
 #include "../Framework/DelegateManager.h"
-#include "ProjectMars/Components/Economy/EconomyManagerComponent.h"
 #include "ProjectMars/TimeManagement/TimeManagementComponent.h"
 #include "ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h"
 #include "ProjectMars/Military/Army.h"
+#include "ProjectMars/Nation/State.h"
 
 
 // Sets default values
@@ -39,9 +39,9 @@ AProjectMarsPlayer::AProjectMarsPlayer()
 	Camera->SetupAttachment(SpringArmComp);
 
 	// Economy Manager
-	EconomyManagerComponent = CreateDefaultSubobject<UEconomyManagerComponent>(TEXT("Economy Component"));
-	ensure(EconomyManagerComponent);
-
+	State = NewObject<UState>();
+	EconomyManager = State->GetEconomyManager();
+	
 	MovementSpeed = 500.f;
 
 	bHasChosenFaction = false;
@@ -220,11 +220,7 @@ void AProjectMarsPlayer::UpdatePlayerIncome()
 {
 	if (PlayerFaction)
 	{
-		FEconomics& Obj = PlayerFaction->Economics;
-		FPopulation& PopObj = PlayerFaction->Population;
-		
-		Obj.CollectTaxes(PopObj);
-		Obj.ApplyNetIncomeToTreasury();
+		UE_LOG(LogTemp, Log, TEXT("Updating player income"));
 	}
 }
 

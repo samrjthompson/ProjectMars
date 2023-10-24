@@ -9,11 +9,9 @@
 #include "ProjectMars/Controllers/AIControllerBase.h"
 #include "ProjectMars/Military/Army.h"
 #include "../Framework/DelegateManager.h"
-#include "ProjectMars/EconomyInfo.h"
 #include "ProjectMars/TimeManagement/TimeManagementComponent.h"
 #include "ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h"
-#include "ProjectMars/Economy/EconomyManager.h"
-#include "ProjectMars/Nation/Nation.h"
+#include "ProjectMars/Nation/State.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
 {
@@ -53,12 +51,6 @@ void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Error, TEXT("TEST VS CODE!"));
-
-	constexpr float Input = 1066;
-	const UNation* Nation = NewObject<UNation>();
-	Nation->GetEconomyManager()->GetEconomyInfo()->SetTreasury(Input);
-	const float Num = Nation->GetEconomyManager()->GetEconomyInfo()->GetTreasury();
-	UE_LOG(LogTemp, Warning, TEXT("TREASURY VALUE: %f"), Num);
 	
 }
 

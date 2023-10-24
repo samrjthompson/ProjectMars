@@ -4,13 +4,13 @@
 #include "EconomyManager.h"
 
 #include "FinanceCalculator.h"
-#include "ProjectMars/EconomyInfo.h"
+#include "ProjectMars/Economy/Data/EconomyData.h"
 
 
 UEconomyManager::UEconomyManager()
 {
 	// Data structs
-	EconomyInfo = new FEconomyInfo;
+	EconomyData = new FEconomyData;
 
 	// Calculators
 	FinanceCalculator = NewObject<UFinanceCalculator>();
@@ -19,9 +19,9 @@ UEconomyManager::UEconomyManager()
 	InitialiseIncomeSources();
 }
 
-FEconomyInfo* UEconomyManager::GetEconomyInfo() const
+FEconomyData* UEconomyManager::GetEconomyData() const
 {
-	return EconomyInfo;
+	return EconomyData;
 }
 
 const TMap<EIncomeType, int32>* UEconomyManager::GetIncomeSources() const
@@ -29,9 +29,9 @@ const TMap<EIncomeType, int32>* UEconomyManager::GetIncomeSources() const
 	return &IncomeSources;
 }
 
-UEconomyManager* UEconomyManager::SetEconomyInfo(FEconomyInfo* EconomyInfoVar)
+UEconomyManager* UEconomyManager::SetEconomyData(FEconomyData* EconomyDataVar)
 {
-	this->EconomyInfo = EconomyInfoVar;
+	this->EconomyData = EconomyDataVar;
 	return this;
 }
 
@@ -39,21 +39,21 @@ void UEconomyManager::UpdateTreasury() const
 {
 	// Calculate sum of income
 	const int32 GrossIncome = FinanceCalculator->CalculateGrossIncome(IncomeSources);
-	EconomyInfo->SetGrossIncome(GrossIncome);
+	EconomyData->SetGrossIncome(GrossIncome);
 
 	// Calculate sum of outgoings
 	const int32 Outgoings = FinanceCalculator->CalculateExpenses(ExpenseSources);
-	EconomyInfo->SetGrossOutgoings(Outgoings);
+	EconomyData->SetGrossOutgoings(Outgoings);
 	
 	// Calculate net income
 	const int32 NetIncome = FinanceCalculator->CalculateNetIncome(
-		EconomyInfo->GetSumOfIncome(),
-		EconomyInfo->GetSumOfOutgoings());
-	EconomyInfo->SetNetIncome(NetIncome);
+		EconomyData->GetSumOfIncome(),
+		EconomyData->GetSumOfOutgoings());
+	EconomyData->SetNetIncome(NetIncome);
 
 	// Calculate treasury
-	const int32 UpdatedTreasury = EconomyInfo->GetTreasury() + EconomyInfo->GetNetIncome();
-	EconomyInfo->SetTreasury(UpdatedTreasury);
+	const int32 UpdatedTreasury = EconomyData->GetTreasury() + EconomyData->GetNetIncome();
+	EconomyData->SetTreasury(UpdatedTreasury);
 }
 
 // Initialises map of income sources with enum keys and values set to 0 by default
