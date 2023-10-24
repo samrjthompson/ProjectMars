@@ -20,14 +20,14 @@ FEconomyData* FEconomyData::SetTreasury(const int32 TreasuryVar)
 	return this;
 }
 
-int32 FEconomyData::GetSumOfOutgoings() const
+int32 FEconomyData::GetExpenses() const
 {
-	return GrossOutgoings;
+	return Expenses;
 }
 
-FEconomyData* FEconomyData::SetGrossOutgoings(const int32 GrossOutgoingsVar)
+FEconomyData* FEconomyData::SetExpenses(const int32 ExpensesVar)
 {
-	this->GrossOutgoings = GrossOutgoingsVar;
+	this->Expenses = ExpensesVar;
 	return this;
 }
 

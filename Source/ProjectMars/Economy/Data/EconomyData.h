@@ -15,8 +15,8 @@ struct PROJECTMARS_API FEconomyData
 	int32 GetTreasury() const;
 	FEconomyData* SetTreasury(const int32 TreasuryVar);
 
-	int32 GetSumOfOutgoings() const;
-	FEconomyData* SetGrossOutgoings(const int32 GrossOutgoingsVar);
+	int32 GetExpenses() const;
+	FEconomyData* SetExpenses(const int32 ExpensesVar);
 
 	int32 GetSumOfIncome() const;
 	FEconomyData* SetGrossIncome(const int32 GrossIncomeVar);
@@ -26,7 +26,7 @@ struct PROJECTMARS_API FEconomyData
 
 private:
 	int32 Treasury{};
-	int32 GrossOutgoings{};
+	int32 Expenses{};
 	int32 GrossIncome{};
 	int32 NetIncome{};
 };
