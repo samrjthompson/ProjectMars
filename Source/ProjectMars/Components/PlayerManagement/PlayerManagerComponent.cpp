@@ -3,10 +3,10 @@
 
 #include "../../Components/PlayerManagement/PlayerManagerComponent.h"
 
+#include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Factions/FactionBase.h"
-#include "ProjectMars/Framework/DelegateManager.h"
 
 // Sets default values for this component's properties
 UPlayerManagerComponent::UPlayerManagerComponent()
@@ -42,8 +42,8 @@ void UPlayerManagerComponent::InitialiseRefs()
 	ensure(GameState);
 	if(!GameState) return;
 
-	DelegateManager = GameState->GetDelegateManager();
-	ensure(DelegateManager);
+	DelegateController = GameState->GetDelegateController();
+	ensure(DelegateController);
 }
 
 AMarsGameStateBase* UPlayerManagerComponent::GetGameState() const
@@ -89,7 +89,7 @@ void UPlayerManagerComponent::AssignAIFactions()
 		FString FactionNameString = StaticEnum<EFactionName>()->GetValueAsString(AIPlayer->GetFactionName());
 		AvailableFactionsArray->Remove(Elem);
 	}
-	DelegateManager->OnAIFactionInitialisation.Broadcast();
+	DelegateController->OnAIFactionInitialisation.Broadcast();
 }
 
 void UPlayerManagerComponent::CreateArrayOfAvailableFactions()
@@ -125,13 +125,13 @@ TArray<AProjectMarsPlayer*>& UPlayerManagerComponent::GetAIPlayersArray()
 	return AIPlayersArray;
 }
 
-ADelegateManager* UPlayerManagerComponent::GetDelegateManager() const
+UDelegateController* UPlayerManagerComponent::GetDelegateController() const
 {
-	return DelegateManager;
+	return DelegateController;
 }
 
-void UPlayerManagerComponent::SetDelegateManager(ADelegateManager* DM)
+void UPlayerManagerComponent::SetDelegateManager(UDelegateController* DelegateControllerVar)
 {
-	DelegateManager = DM;
+	DelegateController = DelegateControllerVar;
 }
 

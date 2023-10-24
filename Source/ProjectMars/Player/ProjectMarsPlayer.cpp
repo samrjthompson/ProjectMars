@@ -12,9 +12,9 @@
 #include "ProjectMars/UI/BaseHUD.h"
 #include "DrawDebugHelpers.h"
 #include "ProjectMars/UI/Widgets/WidgetComponents/ArmyWidgetComponent.h"
-#include "../Framework/DelegateManager.h"
 #include "ProjectMars/TimeManagement/TimeManagementComponent.h"
 #include "ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h"
+#include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Military/Army.h"
 #include "ProjectMars/Nation/State.h"
 
@@ -104,8 +104,8 @@ void AProjectMarsPlayer::InitialiseGameStateRefs()
 	if (!MarsGameStateBase) return;
 	MarsGameStateBase->AddPlayerToPlayerArray(this);
 
-	DelegateManager = MarsGameStateBase->GetDelegateManager();
-	ensure(DelegateManager);
+	DelegateController = MarsGameStateBase->GetDelegateController();
+	ensure(DelegateController);
 		
 	// TODO: BUG: If I uncomment this out, I can control the game time. However, if we run this code when not controlled by player I cannot.
 	if (!IsPlayerControlled()) return;
@@ -114,7 +114,7 @@ void AProjectMarsPlayer::InitialiseGameStateRefs()
 	MarsGameStateBase->InitialiseReferences(this);
 
 	// Tells all listeners that it is safe to initialise Player ptrs from AMarsGameStateBase class
-	DelegateManager->OnPlayerInitialisation.Broadcast();
+	DelegateController->OnPlayerInitialisation.Broadcast();
 }
 
 void AProjectMarsPlayer::InitialisePlayerController()
