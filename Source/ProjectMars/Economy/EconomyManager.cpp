@@ -16,7 +16,7 @@ UEconomyManager::UEconomyManager()
 	FinanceCalculator = NewObject<UFinanceCalculator>();
 
 	// Maps
-	InitialiseIncomeSources();
+	InitialiseMonetarySources();
 }
 
 FEconomyData* UEconomyManager::GetEconomyData() const
@@ -27,6 +27,11 @@ FEconomyData* UEconomyManager::GetEconomyData() const
 const TMap<EIncomeType, int32>* UEconomyManager::GetIncomeSources() const
 {
 	return &IncomeSources;
+}
+
+const TMap<EExpenseType, int32>* UEconomyManager::GetExpenseSources() const
+{
+	return &ExpenseSources;
 }
 
 UEconomyManager* UEconomyManager::SetEconomyData(FEconomyData* EconomyDataVar)
@@ -41,14 +46,14 @@ void UEconomyManager::UpdateTreasury() const
 	const int32 GrossIncome = FinanceCalculator->CalculateGrossIncome(IncomeSources);
 	EconomyData->SetGrossIncome(GrossIncome);
 
-	// Calculate sum of outgoings
-	const int32 Outgoings = FinanceCalculator->CalculateExpenses(ExpenseSources);
-	EconomyData->SetGrossOutgoings(Outgoings);
+	// Calculate expenses
+	const int32 Expenses = FinanceCalculator->CalculateExpenses(ExpenseSources);
+	EconomyData->SetExpenses(Expenses);
 	
 	// Calculate net income
 	const int32 NetIncome = FinanceCalculator->CalculateNetIncome(
 		EconomyData->GetSumOfIncome(),
-		EconomyData->GetSumOfOutgoings());
+		EconomyData->GetExpenses());
 	EconomyData->SetNetIncome(NetIncome);
 
 	// Calculate treasury
@@ -57,11 +62,18 @@ void UEconomyManager::UpdateTreasury() const
 }
 
 // Initialises map of income sources with enum keys and values set to 0 by default
-void UEconomyManager::InitialiseIncomeSources()
+void UEconomyManager::InitialiseMonetarySources()
 {
+	IncomeSources.Empty();
+	ExpenseSources.Empty();
+	
 	for (EIncomeType Type : TEnumRange<EIncomeType>())
 	{
 		IncomeSources.Add(Type, 0);
+	}
+	for (EExpenseType Type :  TEnumRange<EExpenseType>())
+	{
+		ExpenseSources.Add(Type, 0);
 	}
 }
 

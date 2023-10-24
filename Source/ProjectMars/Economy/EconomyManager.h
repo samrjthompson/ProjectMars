@@ -46,6 +46,7 @@ public:
 	// Getter
 	FEconomyData* GetEconomyData() const;
 	const TMap<EIncomeType, int32>* GetIncomeSources() const;
+	const TMap<EExpenseType, int32>* GetExpenseSources() const;
 
 	// Setter
 	UEconomyManager* SetEconomyData(FEconomyData* EconomyDataVar);
@@ -67,5 +68,5 @@ private:
 	TMap<EExpenseType, int32> ExpenseSources;
 
 	UFUNCTION()
-	void InitialiseIncomeSources();
+	void InitialiseMonetarySources();
 };
