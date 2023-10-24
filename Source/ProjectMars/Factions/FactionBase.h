@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "ProjectMars/Factions/Cultures/CultureBase.h"
-#include "ProjectMars/Factions/Economy/Economy.h"
 #include "ProjectMars/Factions/Population/PopulationBase.h"
 #include "ProjectMars/Characters/GameCharacter.h"
 
@@ -19,7 +18,6 @@ enum class EPoliticalSystem : uint8;
 struct FFaction;
 struct FPopulation;
 struct FCultureGroup;
-struct FEconomics;
 
 class AArmy;
 
@@ -101,7 +99,6 @@ struct FFaction
 	
 	// Structs
 	FPopulation Population;
-	FEconomics Economics;
 	FCultureGroup CultureGroup;
 	FCultureData CultureData;
 	FPolitics Politics;
@@ -162,9 +159,6 @@ public:
 	// ECONOMY
 
 public:
-	
-	// This is a virtual function that returns a reference to an FEconomics object
-	virtual FEconomics& GetRefToEconomicsData();
 	
 	
 	//////////////////////////////////////////////////////

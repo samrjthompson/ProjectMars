@@ -3,27 +3,26 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "EconomyInfo.generated.h"
+#include "EconomyData.generated.h"
 
 USTRUCT()
-struct PROJECTMARS_API FEconomyInfo
+struct PROJECTMARS_API FEconomyData
 {
 	GENERATED_BODY()
 
-	FEconomyInfo();
-	~FEconomyInfo();
+	FEconomyData();
 
 	int32 GetTreasury() const;
-	FEconomyInfo* SetTreasury(const int32 TreasuryVar);
+	FEconomyData* SetTreasury(const int32 TreasuryVar);
 
 	int32 GetSumOfOutgoings() const;
-	FEconomyInfo* SetGrossOutgoings(const int32 GrossOutgoingsVar);
+	FEconomyData* SetGrossOutgoings(const int32 GrossOutgoingsVar);
 
 	int32 GetSumOfIncome() const;
-	FEconomyInfo* SetGrossIncome(const int32 GrossIncomeVar);
+	FEconomyData* SetGrossIncome(const int32 GrossIncomeVar);
 
 	int32 GetNetIncome() const;
-	FEconomyInfo* SetNetIncome(const int32 NetIncomeVar);
+	FEconomyData* SetNetIncome(const int32 NetIncomeVar);
 
 private:
 	int32 Treasury{};

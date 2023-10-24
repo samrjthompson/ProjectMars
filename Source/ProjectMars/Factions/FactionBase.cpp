@@ -69,11 +69,6 @@ void AFactionBase::Tick(float DeltaSeconds)
 	
 }
 
-FEconomics& AFactionBase::GetRefToEconomicsData()
-{
-	return Faction.Economics;
-}
-
 FPopulation& AFactionBase::GetRefToPopulationData()
 {
 	return Faction.Population;
@@ -87,17 +82,4 @@ FCultureGroup& AFactionBase::GetRefToCultureGroup()
 FCultureData& AFactionBase::GetRefToCultureData()
 {
 	return Faction.CultureData;
-}
-
-void FEconomics::ApplyNetIncomeToTreasury()
-{
-	Treasury += GetNetIncome();
-	if(Treasury < 0)
-	{
-		bHasADeficit = true;
-	}
-	else
-	{
-		bHasADeficit = false;
-	}
 }

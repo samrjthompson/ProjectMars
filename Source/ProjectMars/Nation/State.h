@@ -4,23 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "Nation.generated.h"
+#include "State.generated.h"
 
 class UEconomyManager;
 
 UCLASS()
-class PROJECTMARS_API UNation : public UObject
+class PROJECTMARS_API UState : public UObject
 {
 	GENERATED_BODY()
 
 public:
-	UNation();
+	UState();
 
 	UFUNCTION()
 	UEconomyManager* GetEconomyManager() const;
 	
 	UFUNCTION()
-	UNation* SetEconomyManager(UEconomyManager* EconomyManager);
+	UState* SetEconomyManager(UEconomyManager* EconomyManager);
 
 private:
 	UPROPERTY()
