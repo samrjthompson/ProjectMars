@@ -54,7 +54,7 @@ public:
 	void SetFactionManager(AFactionManager* FactionMan);
 
 	UFUNCTION()
-	void SetDelegateManager(UDelegateController* ptr);
+	void SetDelegateController(UDelegateController* ptr);
 
 	UFUNCTION()
 	class UPlayerManagerComponent* GetPlayerManagerComponent() const;

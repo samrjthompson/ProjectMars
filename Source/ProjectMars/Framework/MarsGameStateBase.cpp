@@ -22,6 +22,10 @@ AMarsGameStateBase::AMarsGameStateBase()
 	PlayerManagerComponent = CreateDefaultSubobject<UPlayerManagerComponent>(TEXT("Player Manager Component"));
 
 	DelegateController = NewObject<UDelegateController>();
+
+	// TODO: Remove - this is here for testing purposes
+	UState* Rome = NewObject<UState>();
+	Rome->SetupDelegateEvents(DelegateController);
 }
 
 AProjectMarsPlayer* AMarsGameStateBase::GetPlayer()
@@ -53,7 +57,6 @@ void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Error, TEXT("TEST VS CODE!"));
-	
 }
 
 void AMarsGameStateBase::Tick(float DeltaSeconds)
@@ -133,7 +136,7 @@ void AMarsGameStateBase::SetFactionManager(AFactionManager* FactionMan)
     FactionManager = FactionMan;
 }
 
-void AMarsGameStateBase::SetDelegateManager(UDelegateController* DelegateControllerVar)
+void AMarsGameStateBase::SetDelegateController(UDelegateController* DelegateControllerVar)
 {
 	DelegateController = DelegateControllerVar;
 }

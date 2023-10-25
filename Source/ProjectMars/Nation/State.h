@@ -7,6 +7,7 @@
 #include "State.generated.h"
 
 class UEconomyController;
+class UDelegateController;
 
 // A class to represent a state such as the Roman Republic or Carthage
 UCLASS()
@@ -18,14 +19,29 @@ public:
 	UState();
 
 	UFUNCTION()
+	void SetupDelegateEvents(UDelegateController* DelegateControllerVar);
+
+	UFUNCTION()
+	void OnMonthlyUpdate();
+
+	// Getters
+	UFUNCTION()
 	UEconomyController* GetEconomyController() const;
 	
+	// Setters
 	UFUNCTION()
 	UState* SetEconomyController(UEconomyController* EconomyController);
 
 private:
+	// Functions
+
+	
+	// Variables
 	UPROPERTY()
 	UEconomyController* EconomyController;
+
+	UPROPERTY()
+	class UStateDelegateController* StateDelegateController;
 
 	/*UPROPERTY()
 	UTradeManager* TradeManager;*/

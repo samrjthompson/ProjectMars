@@ -4,7 +4,8 @@
 #include "EconomyController.h"
 
 #include "FinanceCalculator.h"
-#include "ProjectMars/Delegates/DelegateController.h"
+#include "Logging/StructuredLog.h"
+#include "ProjectMars/Delegates/StateDelegateController.h"
 #include "ProjectMars/Economy/Data/EconomyData.h"
 
 UEconomyController::UEconomyController()
@@ -17,7 +18,9 @@ UEconomyController::UEconomyController()
 
 	// Maps
 	InitialiseMonetarySources();
-	InitialiseDelegateEvents();
+
+	// Events
+
 }
 
 FEconomyData* UEconomyController::GetEconomyData() const
@@ -60,6 +63,15 @@ void UEconomyController::UpdateTreasury()
 	// Calculate treasury
 	const int32 UpdatedTreasury = EconomyData->GetTreasury() + EconomyData->GetNetIncome();
 	EconomyData->SetTreasury(UpdatedTreasury);
+
+	UE_LOGFMT(LogTemp, Warning, "Treasury updated!");
+}
+
+void UEconomyController::SubscribeToDelegateEvents(UStateDelegateController* StateDelegateController)
+{
+	StateDelegateController->OnStateMonthlyUpdate.AddDynamic(this, &UEconomyController::UpdateTreasury);
+	
+	UE_LOGFMT(LogTemp, Warning, "Delegate manager is INITIALISED!");
 }
 
 // Initialises map of income sources with enum keys and values set to 0 by default
@@ -76,17 +88,6 @@ void UEconomyController::InitialiseMonetarySources()
 	{
 		ExpenseSources.Add(Type, 0);
 	}
-}
-
-void UEconomyController::InitialiseDelegateEvents()
-{
-	if (!DelegateController)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Delegate manager was null."));
-		return;
-	}
-	UE_LOG(LogTemp, Warning, TEXT("Delegate manager is INITIALISED!"));
-	DelegateController->OnMonthlyUpdate.AddDynamic(this, &UEconomyController::UpdateTreasury);
 }
 
 
