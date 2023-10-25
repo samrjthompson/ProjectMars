@@ -17,7 +17,7 @@ UState::UState()
 	EconomyController->SubscribeToDelegateEvents(StateDelegateController);
 }
 
-void UState::SetupDelegateEvents(UDelegateController* DelegateControllerVar)
+void UState::SubscribeToDelegateEvents(UDelegateController* DelegateControllerVar)
 {
 	DelegateControllerVar->OnMonthlyUpdate.AddDynamic(this, &UState::OnMonthlyUpdate);
 }
