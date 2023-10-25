@@ -64,15 +64,15 @@ void UEconomyController::UpdateTreasury()
 	// Calculate treasury
 	const int32 UpdatedTreasury = EconomyData->GetTreasury() + EconomyData->GetNetIncome();
 	EconomyData->SetTreasury(UpdatedTreasury);
-
-	UE_LOGFMT(LogTemp, Warning, "Treasury updated!");
+	
+	UE_LOGFMT(LogTemp, Display, "Treasury updated!");
 }
 
 void UEconomyController::SubscribeToDelegateEvents(UStateDelegateController* StateDelegateController)
 {
 	StateDelegateController->OnStateMonthlyUpdate.AddDynamic(this, &UEconomyController::UpdateTreasury);
 	
-	UE_LOGFMT(LogTemp, Warning, "Delegate manager is INITIALISED!");
+	UE_LOGFMT(LogTemp, Display, "Delegate manager is INITIALISED!");
 }
 
 // Initialises map of income sources with enum keys and values set to 0 by default

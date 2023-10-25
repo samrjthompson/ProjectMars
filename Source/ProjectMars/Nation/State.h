@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ProjectMars/Framework/CustomObject.h"
 #include "UObject/NoExportTypes.h"
 #include "State.generated.h"
 
@@ -11,18 +12,14 @@ class UDelegateController;
 
 // A class to represent a state such as the Roman Republic or Carthage
 UCLASS()
-class PROJECTMARS_API UState : public UObject
+class PROJECTMARS_API UState : public UCustomObject
 {
 	GENERATED_BODY()
 
 public:
 	UState();
-
-	UFUNCTION()
-	void SubscribeToDelegateEvents(UDelegateController* DelegateControllerVar);
-
-	UFUNCTION()
-	void OnMonthlyUpdate();
+	
+	virtual void OnMonthlyUpdate() override;
 
 	// Getters
 	UFUNCTION()
