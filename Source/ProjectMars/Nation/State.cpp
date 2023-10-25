@@ -17,11 +17,6 @@ UState::UState()
 	EconomyController->SubscribeToDelegateEvents(StateDelegateController);
 }
 
-void UState::SubscribeToDelegateEvents(UDelegateController* DelegateControllerVar)
-{
-	DelegateControllerVar->OnMonthlyUpdate.AddDynamic(this, &UState::OnMonthlyUpdate);
-}
-
 UEconomyController* UState::GetEconomyController() const
 {
 	return EconomyController;
@@ -36,5 +31,5 @@ UState* UState::SetEconomyController(UEconomyController* EconomyControllerVar)
 void UState::OnMonthlyUpdate()
 {
 	StateDelegateController->OnStateMonthlyUpdate.Broadcast();
-	UE_LOGFMT(LogTemp, Warning, "State monthly update");
+	UE_LOGFMT(LogTemp, Display, "State monthly update");
 }
