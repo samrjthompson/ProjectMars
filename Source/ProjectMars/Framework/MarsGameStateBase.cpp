@@ -3,6 +3,7 @@
 
 #include "MarsGameStateBase.h"
 
+#include "Logging/StructuredLog.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/UI/BaseHUD.h"
@@ -12,6 +13,7 @@
 #include "ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h"
 #include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Nation/State.h"
+#include "ProjectMars/Nation/StateBuilder.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
 {
@@ -23,9 +25,11 @@ AMarsGameStateBase::AMarsGameStateBase()
 
 	DelegateController = NewObject<UDelegateController>();
 
-	// TODO: Remove - this is here for testing purposes
-	UState* Rome = NewObject<UState>();
-	Rome->SetupDelegateEvents(DelegateController);
+	// TODO: May remove when needed - this is here for testing purposes
+	UStateBuilder* StateBuilder = NewObject<UStateBuilder>();
+	const TMap<FString, UState*>& States = StateBuilder->BuildStates();
+
+	UE_LOGFMT(LogTemp, Log, "Constructing MarsGameStateBase");
 }
 
 AProjectMarsPlayer* AMarsGameStateBase::GetPlayer()
