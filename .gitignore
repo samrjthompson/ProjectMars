@@ -5,6 +5,7 @@ Saved
 Plugins
 .idea/
 .vscode
+.vsconfig
 .vs
 *.VC.db
 *.opensdf
