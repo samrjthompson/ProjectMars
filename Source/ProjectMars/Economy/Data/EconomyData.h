@@ -1,28 +1,33 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
+#include "UObject/Object.h"
 #include "EconomyData.generated.h"
 
-USTRUCT()
-struct PROJECTMARS_API FEconomyData
+/**
+ * This class stores the data relating to a State's economy.
+ */
+UCLASS()
+class PROJECTMARS_API UEconomyData : public UObject
 {
 	GENERATED_BODY()
 
-	FEconomyData();
+public:
+	UEconomyData();
 
+	// Getters
 	int32 GetTreasury() const;
-	FEconomyData* SetTreasury(const int32 TreasuryVar);
-
 	int32 GetExpenses() const;
-	FEconomyData* SetExpenses(const int32 ExpensesVar);
-
 	int32 GetSumOfIncome() const;
-	FEconomyData* SetGrossIncome(const int32 GrossIncomeVar);
-
 	int32 GetNetIncome() const;
-	FEconomyData* SetNetIncome(const int32 NetIncomeVar);
+	
+	// Setters
+	UEconomyData* SetTreasury(const int32 TreasuryVar);
+	UEconomyData* SetExpenses(const int32 ExpensesVar);
+	UEconomyData* SetGrossIncome(const int32 GrossIncomeVar);
+	UEconomyData* SetNetIncome(const int32 NetIncomeVar);
 
 private:
 	int32 Treasury{};

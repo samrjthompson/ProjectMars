@@ -19,7 +19,7 @@ public:
 	UState();
 
 	UFUNCTION()
-	void SetupDelegateEvents(UDelegateController* DelegateControllerVar);
+	void SubscribeToDelegateEvents(UDelegateController* DelegateControllerVar);
 
 	UFUNCTION()
 	void OnMonthlyUpdate();

@@ -29,6 +29,11 @@ AMarsGameStateBase::AMarsGameStateBase()
 	UStateBuilder* StateBuilder = NewObject<UStateBuilder>();
 	const TMap<FString, UState*>& States = StateBuilder->BuildStates();
 
+	for (const auto& State : States)
+	{
+		State.Value->SubscribeToDelegateEvents(DelegateController);
+	}
+
 	UE_LOGFMT(LogTemp, Log, "Constructing MarsGameStateBase");
 }
 

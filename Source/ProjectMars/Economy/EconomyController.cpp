@@ -10,8 +10,9 @@
 
 UEconomyController::UEconomyController()
 {
+	EconomyData = NewObject<UEconomyData>();
+	
 	// Data structs
-	EconomyData = new FEconomyData;
 
 	// Calculators
 	FinanceCalculator = NewObject<UFinanceCalculator>();
@@ -23,22 +24,22 @@ UEconomyController::UEconomyController()
 
 }
 
-FEconomyData* UEconomyController::GetEconomyData() const
+UEconomyData* UEconomyController::GetEconomyData() const
 {
 	return EconomyData;
 }
 
-const TMap<EIncomeType, int32>* UEconomyController::GetIncomeSources() const
+const TMap<EIncomeType, int32>& UEconomyController::GetIncomeSources() const
 {
-	return &IncomeSources;
+	return IncomeSources;
 }
 
-const TMap<EExpenseType, int32>* UEconomyController::GetExpenseSources() const
+const TMap<EExpenseType, int32>& UEconomyController::GetExpenseSources() const
 {
-	return &ExpenseSources;
+	return ExpenseSources;
 }
 
-UEconomyController* UEconomyController::SetEconomyData(FEconomyData* EconomyDataVar)
+UEconomyController* UEconomyController::SetEconomyData(UEconomyData* EconomyDataVar)
 {
 	this->EconomyData = EconomyDataVar;
 	return this;
