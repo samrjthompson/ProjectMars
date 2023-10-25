@@ -9,7 +9,7 @@
 struct FEconomyData;
 
 class UFinanceCalculator;
-class UDelegateController;
+class UStateDelegateController;
 
 UENUM()
 enum class EIncomeType : uint8
@@ -55,12 +55,12 @@ public:
 	UFUNCTION()
 	void UpdateTreasury();
 
+	UFUNCTION()
+	void SubscribeToDelegateEvents(UStateDelegateController* StateDelegateController);
+
 private:
 	UPROPERTY()
 	UFinanceCalculator* FinanceCalculator{ nullptr };
-
-	UPROPERTY()
-	UDelegateController* DelegateController { nullptr };
 
 	// Structs
 	FEconomyData* EconomyData{ nullptr };
@@ -74,7 +74,4 @@ private:
 	// Functions
 	UFUNCTION()
 	void InitialiseMonetarySources();
-
-	UFUNCTION()
-	void InitialiseDelegateEvents();
 };
