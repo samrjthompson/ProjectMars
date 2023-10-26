@@ -39,6 +39,8 @@ void AProjectMarsPlayer::BeginPlay()
 	Super::BeginPlay();
 
 	InitialisePointers();
+	MarsGameStateBase->AddPlayerToPlayerArray(this);
+	
 	SubscribeToDelegateEvents();
 
 	/*UGameplayStatics::OpenLevel(GetWorld(), "ChooseFaction");

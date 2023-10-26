@@ -66,7 +66,7 @@ void ABasePlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	HUD = Cast<ABaseHUD>(GetHUD());
+	InitialisePointers();
 }
 
 void ABasePlayerController::Tick(float DeltaSeconds)
@@ -77,4 +77,10 @@ void ABasePlayerController::Tick(float DeltaSeconds)
 void ABasePlayerController::OnRMBClick()
 {
 	PlayerPawn->IssueMoveArmyOrder();
+}
+
+void ABasePlayerController::InitialisePointers()
+{
+	PlayerPawn = Cast<AProjectMarsPlayer>(GetPawn());
+	HUD = Cast<ABaseHUD>(GetHUD());
 }
