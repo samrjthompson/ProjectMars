@@ -40,9 +40,6 @@ private:
 	UFUNCTION()
 	void OnRMBClick();
 	
-	UFUNCTION()
-	void SelectionPressed();
-
 	// Properties
 	UPROPERTY(EditAnywhere)
 	AProjectMarsPlayer* PlayerPawn{ nullptr };

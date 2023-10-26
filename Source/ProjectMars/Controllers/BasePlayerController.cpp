@@ -24,8 +24,7 @@ ABasePlayerController::ABasePlayerController()
 void ABasePlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
-
-	InputComponent->BindAction("LeftMouseClick", IE_Pressed, this, &ABasePlayerController::SelectionPressed);
+	
 	InputComponent->BindAction("LeftMouseClick", IE_Released, this, &ABasePlayerController::OnLMBClick);
 	InputComponent->BindAction("RightMouseClick", IE_Pressed, this, &ABasePlayerController::OnRMBClick);
 
@@ -61,10 +60,6 @@ void ABasePlayerController::OnLMBClick()
 	{
 		PlayerPawn->FilterActorClickedOn(LeftClick.GetActor());
 	}
-	if(HUD)
-	{
-		HUD->bHasStartedSelecting = false;
-	}
 }
 
 void ABasePlayerController::BeginPlay()
@@ -77,18 +72,6 @@ void ABasePlayerController::BeginPlay()
 void ABasePlayerController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-}
-
-void ABasePlayerController::SelectionPressed()
-{
-	if(HUD)
-	{
-		HUD->ArmiesUnderSelectionBox.Empty();
-		HUD->ArmySelected = nullptr;
-		HUD->bHasStartedSelecting = true;
-		
-		HUD->InitialSelectionPoint = HUD->GetMousePosition2D();
-	}
 }
 
 void ABasePlayerController::OnRMBClick()

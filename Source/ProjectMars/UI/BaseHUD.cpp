@@ -9,7 +9,6 @@
 #include "Logging/StructuredLog.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
-#include "Widgets/ChooseFactionWidget.h"
 #include "Widgets/EconomyWidget.h"
 #include "Widgets/Events/EventPopupWidget.h"
 #include "ProjectMars/Military/Army.h"
@@ -30,8 +29,6 @@ void ABaseHUD::BeginPlay()
 	Super::BeginPlay();
 	
 	InitialisePointers();
-
-	CurrentEventPopupPos = StartingEventPopupPosition;
 }
 
 void ABaseHUD::DrawHUD()
@@ -45,7 +42,6 @@ void ABaseHUD::DrawHUD()
 	}
 	
 	DrawFPS();
-	DrawTooltip();
 	DrawEconomyData(EconomyData);
 
 	if(EventPopupWidget && EventPopupWidget->DecisionButton)
@@ -71,7 +67,7 @@ void ABaseHUD::InitialiseEconomyData(const UEconomyData* EconomyDataVar)
 
 FVector2D ABaseHUD::GetMonitorResolution()
 {
-	FVector2D MonitorRes{};
+	FVector2D MonitorRes;
 
 	MonitorRes.X = GSystemResolution.ResX;
 	MonitorRes.Y = GSystemResolution.ResY;
@@ -93,7 +89,7 @@ FVector2D ABaseHUD::GetViewportResolution()
 
 FVector2D ABaseHUD::GetCenterOfScreen()
 {
-	FVector2D ScreenCentre{};
+	FVector2D ScreenCentre;
 
 	ScreenCentre.X = GetViewportResolution().X / 2;
 	ScreenCentre.Y = GetViewportResolution().Y / 2;
@@ -122,14 +118,9 @@ void ABaseHUD::DrawSelectionBox()
 		ArmySelected = ArmiesUnderSelectionBox[0];
 		if (ArmySelected)
 		{
-			
+			// Do something with army selected
 		}
 	}
-}
-
-void ABaseHUD::InitialiseFactionBase(FFaction* InitFaction)
-{
-	FactionBase = InitFaction;
 }
 
 void ABaseHUD::InitialisePointers()
@@ -138,21 +129,9 @@ void ABaseHUD::InitialisePointers()
 
 	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(GetOwningPlayerController(), BaseGameplayWidgetClass);
 
-	ChooseFactionWidget = CreateWidget<UChooseFactionWidget>(GetOwningPlayerController(), ChooseFactionWidgetClass);
-	if (ChooseFactionWidget)
-	{
-		ChooseFactionWidget->AddToViewport();
-		//ChooseFactionWidget->OnChooseFaction.AddDynamic(this, &ABaseHUD::DrawMainGameUI);
-	}
-
 	EconomyWidget = CreateWidget<UEconomyWidget>(GetOwningPlayerController(), EconomyWidgetClass);
 
 	EventPopupWidget = CreateWidget<UEventPopupWidget>(GetOwningPlayerController(), EventPopupWidgetClass);
-}
-
-ABaseHUD* ABaseHUD::GetRefToBaseHUD()
-{
-	return this;
 }
 
 void ABaseHUD::DrawEconomyData(const UEconomyData* EconomyDataVar)
