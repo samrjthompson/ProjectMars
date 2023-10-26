@@ -39,6 +39,9 @@ private:
 
 	UFUNCTION()
 	void OnRMBClick();
+
+	UFUNCTION()
+	void InitialisePointers();
 	
 	// Properties
 	UPROPERTY(EditAnywhere)

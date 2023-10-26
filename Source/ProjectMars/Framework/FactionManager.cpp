@@ -49,8 +49,6 @@ void AFactionManager::Tick(float DeltaTime)
 void AFactionManager::PassSelfToGameStateBase()
 {
 	if(!GameStateBase) return;
-
-	GameStateBase->SetFactionManager(this);
 }
 
 TArray<FString>& AFactionManager::GetAllFactionNames()
