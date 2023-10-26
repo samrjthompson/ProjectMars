@@ -10,7 +10,7 @@ UStateBuilder::UStateBuilder()
 	
 }
 
-const TMap<FString, UState*>& UStateBuilder::BuildStates()
+TMap<FString, UState*>& UStateBuilder::BuildStates()
 {
 	// TODO: The list of states will be defined in a JSON file instead of this array
 	TArray<FString> StateNames { "Rome", "Etruria", "Samnium" };

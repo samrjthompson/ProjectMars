@@ -21,7 +21,7 @@ public:
 	UStateBuilder();
 	
 	UFUNCTION()
-	const TMap<FString, UState*>& BuildStates();
+	TMap<FString, UState*>& BuildStates();
 
 	UFUNCTION()
 	const TMap<FString, UState*>& AddState(FString StateName, UState* State);

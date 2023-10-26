@@ -45,6 +45,18 @@ private:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* FPSText{ nullptr };
 
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* Treasury{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* Expenses{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* GrossIncome{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* NetIncome{ nullptr };
+
 public:
 	void ShowTooltip(UUserWidget* Widget);
 };

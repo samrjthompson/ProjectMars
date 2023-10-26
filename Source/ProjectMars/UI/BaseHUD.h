@@ -4,11 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "ProjectMars/Economy/Data/EconomyData.h"
 #include "BaseHUD.generated.h"
 
 enum class EMonthOfYear;
 
 class AFactionBase;
+class UEconomyData;
 
 UCLASS()
 class PROJECTMARS_API ABaseHUD : public AHUD
@@ -25,8 +27,14 @@ public:
 	UFUNCTION()
 	void SetDateSuffix(const FString& SuffixVal);
 
+	UFUNCTION()
+	void InitialiseEconomyData(const UEconomyData* EconomyDataVar);
+
 private:
 	FString DateSuffix{};
+
+	UPROPERTY()
+	const UEconomyData* EconomyData{ nullptr };
 
 protected:
 	virtual void BeginPlay() override;
@@ -68,6 +76,8 @@ public:
 
 /* --- ECONOMY --- */
 	void DrawPlayerTreasury();
+
+	void DrawEconomyData(const UEconomyData* EconomyDataVar);
 	
 
 /* --- TIME ---*/

@@ -11,6 +11,7 @@ class AProjectMarsPlayer;
 class AFactionBase;
 class UDelegateController;
 class AFactionManager;
+class UState;
 
 enum class EMonthOfYear;
 
@@ -25,6 +26,12 @@ public:
 	AMarsGameStateBase();
 
 	virtual void BeginPlay() override;
+
+	UFUNCTION()
+	UState* GetStateForPlayer(FString StateName) const;
+
+	UPROPERTY()
+	TMap<FString, UState*> States;
 
 	UFUNCTION()
 	class AProjectMarsPlayer* GetPlayer();
