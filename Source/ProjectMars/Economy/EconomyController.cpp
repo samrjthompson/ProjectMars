@@ -68,9 +68,9 @@ void UEconomyController::UpdateTreasury()
 	UE_LOGFMT(LogTemp, Display, "Treasury updated!");
 }
 
-void UEconomyController::SubscribeToDelegateEvents(UStateDelegateController* StateDelegateController)
+void UEconomyController::SubscribeToDelegateEvents(UNationDelegateController* StateDelegateController)
 {
-	StateDelegateController->OnStateMonthlyUpdate.AddDynamic(this, &UEconomyController::UpdateTreasury);
+	StateDelegateController->OnNationMonthlyUpdate.AddDynamic(this, &UEconomyController::UpdateTreasury);
 	
 	UE_LOGFMT(LogTemp, Display, "Delegate manager is INITIALISED!");
 }

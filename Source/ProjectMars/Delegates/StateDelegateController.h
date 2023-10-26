@@ -6,18 +6,18 @@
 #include "DelegateController.h"
 #include "StateDelegateController.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnStateMonthlyUpdate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnNationMonthlyUpdate);
 
 /**
  * 
  */
 UCLASS()
-class PROJECTMARS_API UStateDelegateController : public UDelegateController
+class PROJECTMARS_API UNationDelegateController : public UDelegateController
 {
 	GENERATED_BODY()
 
 public:
-	UStateDelegateController();
+	UNationDelegateController();
 	
-	FOnStateMonthlyUpdate OnStateMonthlyUpdate;
+	FOnNationMonthlyUpdate OnNationMonthlyUpdate;
 };

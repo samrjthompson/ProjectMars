@@ -7,7 +7,7 @@
 #include "EconomyController.generated.h"
 
 class UFinanceCalculator;
-class UStateDelegateController;
+class UNationDelegateController;
 
 UENUM()
 enum class EIncomeType : uint8
@@ -69,7 +69,7 @@ public:
 	void UpdateTreasury();
 
 	UFUNCTION()
-	void SubscribeToDelegateEvents(UStateDelegateController* StateDelegateController);
+	void SubscribeToDelegateEvents(UNationDelegateController* StateDelegateController);
 
 private:
 	UPROPERTY()

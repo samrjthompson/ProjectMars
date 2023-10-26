@@ -4,35 +4,35 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
-#include "StateBuilder.generated.h"
+#include "NationBuilder.generated.h"
 
-class UState;
+class UNation;
 
 /**
  * This class is responsible for building all states in the game when the game starts.
  * There should only be one instance of this class per game.
  */
 UCLASS()
-class PROJECTMARS_API UStateBuilder : public UObject
+class PROJECTMARS_API UNationBuilder : public UObject
 {
 	GENERATED_BODY()
 
 public:
-	UStateBuilder();
+	UNationBuilder();
 	
 	UFUNCTION()
-	TMap<FString, UState*>& BuildStates();
+	TMap<FString, UNation*>& BuildNations();
 
 	UFUNCTION()
-	const TMap<FString, UState*>& AddState(FString StateName, UState* State);
+	const TMap<FString, UNation*>& AddNation(const FString& NationNameVar, UNation* NationVar);
 
 	// Getters
 	UFUNCTION()
-	const TMap<FString, UState*>& GetStates() const;
+	const TMap<FString, UNation*>& GetNations() const;
 
 	// Setters
 
 private:
 	UPROPERTY()
-	TMap<FString, UState*> States;
+	TMap<FString, UNation*> Nations;
 };

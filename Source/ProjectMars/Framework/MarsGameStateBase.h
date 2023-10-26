@@ -9,7 +9,7 @@
 
 class AProjectMarsPlayer;
 class UDelegateController;
-class UState;
+class UNation;
 
 UCLASS()
 class PROJECTMARS_API AMarsGameStateBase : public AGameStateBase
@@ -35,7 +35,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere)
-	TMap<FString, UState*> States;
+	TMap<FString, UNation*> Nations;
 	
 	UPROPERTY(EditAnywhere)
 	TArray<AProjectMarsPlayer*> AllPlayers;

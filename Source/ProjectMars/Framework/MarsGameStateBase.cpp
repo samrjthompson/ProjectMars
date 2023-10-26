@@ -6,8 +6,8 @@
 #include "Logging/StructuredLog.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Delegates/DelegateController.h"
-#include "ProjectMars/Nation/State.h"
-#include "ProjectMars/Nation/StateBuilder.h"
+#include "ProjectMars/Nation/Nation.h"
+#include "..\Nation\NationBuilder.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
 {
@@ -17,12 +17,12 @@ AMarsGameStateBase::AMarsGameStateBase()
 	DelegateController = NewObject<UDelegateController>();
 
 	// TODO: May remove when needed - this is here for testing purposes
-	UStateBuilder* StateBuilder = NewObject<UStateBuilder>();
-	States = StateBuilder->BuildStates();
+	UNationBuilder* NationBuilder = NewObject<UNationBuilder>();
+	Nations = NationBuilder->BuildNations();
 
-	for (const auto& State : States)
+	for (const auto& Nation : Nations)
 	{
-		State.Value->SubscribeToDelegateEvents(DelegateController);
+		Nation.Value->SubscribeToDelegateEvents(DelegateController);
 	}
 	
 	UE_LOGFMT(LogTemp, Log, "Constructing MarsGameStateBase");
