@@ -6,6 +6,7 @@
 #include "Engine.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
+#include "Logging/StructuredLog.h"
 #include "ProjectMars/TimeManagement/TimeManagementComponent.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
@@ -14,6 +15,7 @@
 #include "Widgets/EconomyWidget.h"
 #include "Widgets/Events/EventPopupWidget.h"
 #include "ProjectMars/Military/Army.h"
+#include "ProjectMars/Economy/Data/EconomyData.h"
 
 #define OUT
 
@@ -49,6 +51,7 @@ void ABaseHUD::DrawHUD()
 	DrawDate();
 	DrawFPS();
 	DrawTooltip();
+	DrawEconomyData(EconomyData);
 
 	if(EventPopupWidget && EventPopupWidget->DecisionButton)
 	{
@@ -64,6 +67,11 @@ void ABaseHUD::DrawHUD()
 void ABaseHUD::SetDateSuffix(const FString& SuffixVal)
 {
 	DateSuffix = SuffixVal;
+}
+
+void ABaseHUD::InitialiseEconomyData(const UEconomyData* EconomyDataVar)
+{
+	EconomyData = EconomyDataVar;
 }
 
 FVector2D ABaseHUD::GetMonitorResolution()
@@ -159,6 +167,24 @@ void ABaseHUD::DrawPlayerTreasury()
 		//BaseGameplayWidget->EconomyText->SetText(FText::FromString(FString::SanitizeFloat(Player->PlayerEconomy.Treasury)));
 		//BaseGameplayWidget->EconomyText->SetText(FText::AsNumber(Player->PlayerFaction->Economics.Treasury));
 	}
+}
+
+void ABaseHUD::DrawEconomyData(const UEconomyData* EconomyDataVar)
+{
+	if (!BaseGameplayWidget)
+	{
+		UE_LOGFMT(LogTemp, Error, "BaseGameplayeWidget is null!");
+	}
+	
+	FString TreasuryText = "Treasury: " + FString::FromInt(EconomyDataVar->GetTreasury());
+	FString ExpensesText = "Expenses: " + FString::FromInt(EconomyDataVar->GetExpenses());
+	FString GrossIncomeText = "GrossIncome: " + FString::FromInt(EconomyDataVar->GetSumOfIncome());
+	FString NetIncomeText = "NetIncome: " + FString::FromInt(EconomyDataVar->GetNetIncome());
+	
+	BaseGameplayWidget->Treasury->SetText(FText::FromString(TreasuryText));
+	BaseGameplayWidget->Expenses->SetText(FText::FromString(ExpensesText));
+	BaseGameplayWidget->GrossIncome->SetText(FText::FromString(GrossIncomeText));
+	BaseGameplayWidget->NetIncome->SetText(FText::FromString(NetIncomeText));
 }
 
 void ABaseHUD::DrawDate()

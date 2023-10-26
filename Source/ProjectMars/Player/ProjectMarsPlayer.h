@@ -33,6 +33,13 @@ public:
 	AProjectMarsPlayer();
 
 	UPROPERTY(EditAnywhere)
+	UEconomyController* EconomyController { nullptr };
+
+	// Each player has a state they control e.g. the Roman Republic or Carthage
+	UPROPERTY(EditAnywhere)
+	UState* State { nullptr };
+
+	UPROPERTY(EditAnywhere)
 	class USceneComponent* RootComp{ nullptr };
 
 	UPROPERTY(EditAnywhere)
@@ -54,12 +61,7 @@ public:
 	void SetFactionName(const EFactionName& FacName);
 
 private:
-	UPROPERTY(EditAnywhere)
-	UEconomyController* EconomyController { nullptr };
 
-	// Each player has a state they control e.g. the Roman Republic or Carthage
-	UPROPERTY(EditAnywhere)
-	UState* State { nullptr };
 	
 protected:
 	
@@ -172,6 +174,9 @@ private:
 	// Pointer to an army
 	UPROPERTY()
 	class AArmy* FactionArmy{ nullptr };
+
+	UFUNCTION()
+	void InitialisePlayerNation();
 public:
 	// Returns the AArmy object that player has clicked on
 	UFUNCTION()

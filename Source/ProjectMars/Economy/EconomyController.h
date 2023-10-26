@@ -42,6 +42,15 @@ class PROJECTMARS_API UEconomyController : public UObject
 public:
 	UEconomyController();
 
+	/*UPROPERTY()
+	int32 StartTreasury{1000};
+	UPROPERTY()
+	int32 StartExpenses{500};
+	UPROPERTY()
+	int32 StartGrossIncome{2000};
+	UPROPERTY()
+	int32 StartNetIncome{};*/
+	
 	// Getter
 	UFUNCTION()
 	UEconomyData* GetEconomyData() const;

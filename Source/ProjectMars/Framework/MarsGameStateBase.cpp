@@ -27,13 +27,13 @@ AMarsGameStateBase::AMarsGameStateBase()
 
 	// TODO: May remove when needed - this is here for testing purposes
 	UStateBuilder* StateBuilder = NewObject<UStateBuilder>();
-	const TMap<FString, UState*>& States = StateBuilder->BuildStates();
+	States = StateBuilder->BuildStates();
 
 	for (const auto& State : States)
 	{
 		State.Value->SubscribeToDelegateEvents(DelegateController);
 	}
-
+	
 	UE_LOGFMT(LogTemp, Log, "Constructing MarsGameStateBase");
 }
 
@@ -66,6 +66,20 @@ void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Error, TEXT("TEST VS CODE!"));
+}
+
+UState* AMarsGameStateBase::GetStateForPlayer(FString StateName) const
+{
+	for (const auto& State : States)
+	{
+		if (State.Key == StateName)
+		{
+			UE_LOGFMT(LogTemp, Warning, "State found matching the string string {0}", StateName);
+			return State.Value;
+		}
+	}
+	UE_LOGFMT(LogTemp, Error, "No states in the TMap matched the string {0}", StateName);
+	return nullptr;
 }
 
 void AMarsGameStateBase::Tick(float DeltaSeconds)

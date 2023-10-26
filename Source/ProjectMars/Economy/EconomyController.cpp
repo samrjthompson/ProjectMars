@@ -83,11 +83,11 @@ void UEconomyController::InitialiseMonetarySources()
 	
 	for (EIncomeType Type : TEnumRange<EIncomeType>())
 	{
-		IncomeSources.Add(Type, 0);
+		IncomeSources.Add(Type, 500);
 	}
 	for (EExpenseType Type :  TEnumRange<EExpenseType>())
 	{
-		ExpenseSources.Add(Type, 0);
+		ExpenseSources.Add(Type, 250);
 	}
 }
 

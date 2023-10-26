@@ -15,6 +15,7 @@
 #include "ProjectMars/TimeManagement/TimeManagementComponent.h"
 #include "ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h"
 #include "ProjectMars/Delegates/DelegateController.h"
+#include "ProjectMars/Economy/EconomyController.h"
 #include "ProjectMars/Military/Army.h"
 #include "ProjectMars/Nation/State.h"
 
@@ -67,6 +68,7 @@ void AProjectMarsPlayer::BeginPlay()
 
 	InitialiseGameStateRefs();
 	InitialisePlayerController();
+	InitialisePlayerNation();
 
 	/*UGameplayStatics::OpenLevel(GetWorld(), "ChooseFaction");
 	CurrentLevel = GetWorld()->GetMapName();*/
@@ -113,6 +115,11 @@ void AProjectMarsPlayer::InitialiseGameStateRefs()
 		
 	MarsGameStateBase->InitialiseReferences(this);
 
+	// TODO: Test code to be removed - The player will get their state from the list created by the Game State
+	UState* PlayersState = NewObject<UState>();
+	PlayersState->SubscribeToDelegateEvents(DelegateController);
+	State = PlayersState;
+
 	// Tells all listeners that it is safe to initialise Player ptrs from AMarsGameStateBase class
 	DelegateController->OnPlayerInitialisation.Broadcast();
 }
@@ -127,6 +134,10 @@ void AProjectMarsPlayer::InitialisePlayerController()
 		{
 			BaseHUD = Cast<ABaseHUD>(BasePlayerController->GetHUD());
 			BasePlayerController->OnRMBPressed.AddDynamic(this, &AProjectMarsPlayer::IssueMoveArmyOrder);
+			if (BaseHUD)
+			{
+				BaseHUD->InitialiseEconomyData(State->GetEconomyController()->GetEconomyData());
+			}
 		}
 		else if (!BasePlayerController)
 		{
@@ -254,6 +265,11 @@ void AProjectMarsPlayer::UpdatePlayerPopulationData()
 		FPopulation& Pop = PlayerFaction->Population;
 		Pop.UpdateMonthlyPopulation();
 	}
+}
+
+void AProjectMarsPlayer::InitialisePlayerNation()
+{
+	State = MarsGameStateBase->GetStateForPlayer("Rome");
 }
 
 void AProjectMarsPlayer::SetArmyClickedOn()
