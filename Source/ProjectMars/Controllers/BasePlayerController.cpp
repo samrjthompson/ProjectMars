@@ -3,10 +3,36 @@
 
 #include "ProjectMars/Controllers/BasePlayerController.h"
 
-
 #include "Logging/StructuredLog.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/BaseHUD.h"
+
+ABasePlayerController::ABasePlayerController()
+{
+	bShowMouseCursor = true;
+	bEnableMouseOverEvents = true;
+	bEnableClickEvents = true;
+
+	// This is experimental, I think this sets a new HUD for the player
+	if (false)
+	{
+		const TSubclassOf<ABaseHUD> ClientHUD;
+		ClientSetHUD(ClientHUD);
+	}
+}
+
+void ABasePlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+
+	InputComponent->BindAction("LeftMouseClick", IE_Pressed, this, &ABasePlayerController::SelectionPressed);
+	InputComponent->BindAction("LeftMouseClick", IE_Released, this, &ABasePlayerController::OnLMBClick);
+	InputComponent->BindAction("RightMouseClick", IE_Pressed, this, &ABasePlayerController::OnRMBClick);
+
+	// Player Pawn Movement
+	InputComponent->BindAxis("MoveForward", this, &ABasePlayerController::MovePlayerPawnForwardOrBack);
+	InputComponent->BindAxis("GameSpeed", this, &ABasePlayerController::MovePlayerPawnRightOrLeft);
+}
 
 void ABasePlayerController::MovePlayerPawnForwardOrBack(float Val)
 {
@@ -41,47 +67,6 @@ void ABasePlayerController::OnLMBClick()
 	}
 }
 
-ABasePlayerController::ABasePlayerController()
-{
-	bShowMouseCursor = true;
-	bEnableMouseOverEvents = true;
-	bGameIsPaused = true;
-	bEnableClickEvents = true;
-
-	// This is experimental, I think this sets a new HUD for the player
-	if (false)
-	{
-		const TSubclassOf<ABaseHUD> ClientHUD;
-		ClientSetHUD(ClientHUD);
-	}
-}
-
-void ABasePlayerController::SetupInputComponent()
-{
-	Super::SetupInputComponent();
-
-	InputComponent->BindAction("LeftMouseClick", IE_Pressed, this, &ABasePlayerController::SelectionPressed);
-	InputComponent->BindAction("LeftMouseClick", IE_Released, this, &ABasePlayerController::OnLMBClick);
-	InputComponent->BindAction("RightMouseClick", IE_Pressed, this, &ABasePlayerController::RMBPressed);
-	InputComponent->BindAction("PauseGame", IE_Pressed, this, &ABasePlayerController::PauseGame);
-
-	// Player Pawn Movement
-	InputComponent->BindAxis("MoveForward", this, &ABasePlayerController::MovePlayerPawnForwardOrBack);
-	InputComponent->BindAxis("GameSpeed", this, &ABasePlayerController::MovePlayerPawnRightOrLeft);
-}
-
-void ABasePlayerController::PauseGame()
-{
-	switch (bGameIsPaused)
-	{
-		case true : bGameIsPaused = false;
-		break;
-
-		case false : bGameIsPaused = true;
-		break;
-	}
-}
-
 void ABasePlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -92,7 +77,6 @@ void ABasePlayerController::BeginPlay()
 void ABasePlayerController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	
 }
 
 void ABasePlayerController::SelectionPressed()
@@ -107,12 +91,7 @@ void ABasePlayerController::SelectionPressed()
 	}
 }
 
-void ABasePlayerController::SelectionReleased()
+void ABasePlayerController::OnRMBClick()
 {
-
-}
-
-void ABasePlayerController::RMBPressed()
-{
-	OnRMBPressed.Broadcast();
+	PlayerPawn->IssueMoveArmyOrder();
 }
