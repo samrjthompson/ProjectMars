@@ -76,7 +76,7 @@ void AProjectMarsPlayer::InitialisePointers()
 
 void AProjectMarsPlayer::SubscribeToDelegateEvents()
 {
-	BasePlayerController->OnRMBPressed.AddDynamic(this, &AProjectMarsPlayer::IssueMoveArmyOrder);
+	// Subscribe to delegate events
 }
 
 void AProjectMarsPlayer::MovePlayerPawn(float DeltaTime)

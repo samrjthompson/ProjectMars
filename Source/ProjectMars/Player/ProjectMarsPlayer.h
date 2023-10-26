@@ -43,6 +43,9 @@ public:
 	UFUNCTION()
 	void FilterActorClickedOn(AActor* ActorVar);
 
+	UFUNCTION()
+	void IssueMoveArmyOrder();
+
 private:
 	// Properties
 	UPROPERTY(EditAnywhere)
@@ -91,8 +94,7 @@ private:
 protected:
 	virtual void BeginPlay() override;
 
-	UFUNCTION()
-	void IssueMoveArmyOrder();
+
 
 	int32 ClickCounter = 0;
 };

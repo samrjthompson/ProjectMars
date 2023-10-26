@@ -7,6 +7,7 @@
 #include "BasePlayerController.generated.h"
 
 class AProjectMarsPlayer;
+class ABaseHUD;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnRMBPressed);
 
@@ -16,39 +17,39 @@ class PROJECTMARS_API ABasePlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
-private:
-	void MovePlayerPawnForwardOrBack(float Val);
-	void MovePlayerPawnRightOrLeft(float Val);
-
-	void OnLMBClick();
-
-	UPROPERTY()
-	AProjectMarsPlayer* PlayerPawn{ nullptr };
-
-public:
 	ABasePlayerController();
 
+	// Functions
 	virtual void Tick(float DeltaSeconds) override;
-
 	virtual void SetupInputComponent() override;
 
-	bool bGameIsPaused = true;
+	// Properties
+	FOnRMBPressed OnRMBPressed;
+	
+private:
+	// Functions
+	UFUNCTION()
+	void MovePlayerPawnForwardOrBack(float Val);
 
-	void PauseGame();
+	UFUNCTION()
+	void MovePlayerPawnRightOrLeft(float Val);
+	
+	UFUNCTION()
+	void OnLMBClick();
+
+	UFUNCTION()
+	void OnRMBClick();
+	
+	UFUNCTION()
+	void SelectionPressed();
+
+	// Properties
+	UPROPERTY(EditAnywhere)
+	AProjectMarsPlayer* PlayerPawn{ nullptr };
+	
+	UPROPERTY(EditAnywhere)
+	ABaseHUD* HUD{ nullptr };
 
 protected:
 	virtual void BeginPlay() override;
-
-private:
-	void SelectionPressed();
-	void SelectionReleased();
-
-public:
-	FOnRMBPressed OnRMBPressed;
-
-	UFUNCTION()
-	void RMBPressed();
-
-	UPROPERTY()
-	class ABaseHUD* HUD{ nullptr };
 };
