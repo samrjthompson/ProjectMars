@@ -7,10 +7,8 @@
 #include "ProjectMars/Economy/Data/EconomyData.h"
 #include "BaseHUD.generated.h"
 
-enum class EMonthOfYear;
-
-class AFactionBase;
 class UEconomyData;
+class AArmy;
 
 UCLASS()
 class PROJECTMARS_API ABaseHUD : public AHUD
@@ -22,125 +20,109 @@ public:
 
 	virtual void DrawHUD() override;
 
-	FString HUDName = "Bob";
-
 	UFUNCTION()
 	void SetDateSuffix(const FString& SuffixVal);
 
 	UFUNCTION()
 	void InitialiseEconomyData(const UEconomyData* EconomyDataVar);
 
-private:
-	FString DateSuffix{};
-
-	UPROPERTY()
-	const UEconomyData* EconomyData{ nullptr };
-
-protected:
-	virtual void BeginPlay() override;
-
-	UPROPERTY()
-	class AProjectMarsPlayer* Player{ nullptr };
-
-public:
+	UFUNCTION()
 	static FVector2D GetMonitorResolution();
+
+	UFUNCTION()
 	static FVector2D GetViewportResolution();
+
+	UFUNCTION()
 	static FVector2D GetCenterOfScreen();
 	
+	UFUNCTION()
 	FVector2D GetMousePosition2D() const;
 
-	FVector2D InitialSelectionPoint{};
-	FVector2D CurrentSelectionPoint{};
-
+	UFUNCTION()
 	void DrawSelectionBox();
+
+	UFUNCTION()
+	void InitialisePointers();
+	
+	UFUNCTION()
+	void DrawEconomyData(const UEconomyData* EconomyDataVar);
+	
+	UFUNCTION()
+	void DrawTooltip();
+	
+	UFUNCTION()
+	void GetActorsUnderSelectionBox();
+
+	UFUNCTION()
+	void DrawEventPopup();
+
+	UFUNCTION()
+	void MoveWidgetInViewportWithMouse(class UUserWidget* EventPopupWidgetToMove);
+
+private:
+	// Functions
+	UFUNCTION()
+	void DrawFPS();
+
+	// Properties
+	UPROPERTY(EditAnywhere)
+	int32 FPSNum{};
+
+	UPROPERTY(EditAnywhere)
+	FString DateSuffix{};
+
+	UPROPERTY(EditAnywhere)
+	const UEconomyData* EconomyData{ nullptr };
+
+	UPROPERTY(EditAnywhere)
+	class AProjectMarsPlayer* Player{ nullptr };
+
+	UPROPERTY(EditAnywhere)
+	FVector2D InitialSelectionPoint{};
+	
+	UPROPERTY(EditAnywhere)
+	FVector2D CurrentSelectionPoint{};
+	
+	UPROPERTY(EditAnywhere)
 	bool bHasStartedSelecting;
 
 	UPROPERTY(EditAnywhere, Category = "SelectionBox")
 	FLinearColor SelectionBoxColor{};
 
-/* --- WIDGETS --- */
-public:
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TSubclassOf<class UBaseGameplayWidget> BaseGameplayWidgetClass;
-	
-	UPROPERTY()
+
+	UPROPERTY(EditAnywhere)
 	class UBaseGameplayWidget* BaseGameplayWidget{ nullptr };
-	
-	struct FFaction* FactionBase{ nullptr };
-
-	void InitialiseFactionBase(struct FFaction* InitFaction);
-
-	virtual void InitialisePointers();
-
-	virtual ABaseHUD* GetRefToBaseHUD();
-
-/* --- ECONOMY --- */
-	void DrawPlayerTreasury();
-
-	void DrawEconomyData(const UEconomyData* EconomyDataVar);
-	
-
-/* --- TIME ---*/
-
-	void DrawDate();
-	
-
-/* --- FPS --- */
-	void DrawFPS();
-	int32 FPSNum{};
-
-/* --- CHOOSE FACTION LEVEL --- */
-	// void DrawChooseFaction();
-
-	UPROPERTY(EditAnywhere, Category = "Widgets")
-	TSubclassOf<class UChooseFactionWidget> ChooseFactionWidgetClass;
-
-	UPROPERTY()
-	class UChooseFactionWidget* ChooseFactionWidget{ nullptr };
-
-	UFUNCTION()
-	void DrawMainGameUI();
-
-	
-	/***********************************************************************/
-
-	/* DRAW TOOLTIP */
 
 	UPROPERTY(EditAnywhere)
 	class UEconomyWidget* EconomyWidget{ nullptr };
+	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UEconomyWidget> EconomyWidgetClass;
-
-	void DrawTooltip();
-
-/////////////////////////////////////////////////////////////////////
-// POPULATION
-
-	void DrawPopulationNum();
 	
-
-/////////////////////////////////////////////////////////////////////
-// EVENTS
-
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	class UEventPopupWidget* EventPopupWidget{ nullptr };
-	
+
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TSubclassOf<class UEventPopupWidget> EventPopupWidgetClass;
-
+	
+	UPROPERTY(EditAnywhere)
 	FVector2D StartingEventPopupPosition = FVector2D(660, 115);
 
-	FVector2D CurrentEventPopupPos;
+	UPROPERTY(EditAnywhere)
+	AArmy* ArmySelected{ nullptr };
 
-	FVector2D DistanceBetweenMouseAndLeftSideOfWidget;
-
-	void DrawEventPopup();
-
-	void MoveWidgetInViewportWithMouse(class UUserWidget* EventPopupWidgetToMove);
-
-	void GetActorsUnderSelectionBox();
+	UPROPERTY(EditAnywhere)
 	TArray<class AArmy*> ArmiesUnderSelectionBox;
 
-	UPROPERTY()
-	class AArmy* ArmySelected{ nullptr };
+	UPROPERTY(EditAnywhere)
+	FVector2D CurrentEventPopupPos;
+
+	UPROPERTY(EditAnywhere)
+	FVector2D DistanceBetweenMouseAndLeftSideOfWidget;
+
+protected:
+	virtual void BeginPlay() override;
+		
 };

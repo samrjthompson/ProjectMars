@@ -162,6 +162,9 @@ public:
 	// Sets default values for this actor's properties
 	AArmy();
 
+	UFUNCTION()
+	AArmy* SetTargetLocation(FVector LocationVar);
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -251,9 +254,6 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Widget Component")
 	TSubclassOf<class UUserWidget> ArmyWidgetComponentClass;
-	
-	UFUNCTION()
-	void ShowArmyWidget();
 	
 	UFUNCTION()
 	void HideArmyWidget();

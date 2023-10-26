@@ -1,35 +1,35 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ProjectMars/Nation/State.h"
+#include "Nation.h"
 
 #include "Logging/StructuredLog.h"
 #include "ProjectMars/Delegates/StateDelegateController.h"
 #include "ProjectMars/Economy/EconomyController.h"
 
-UState::UState()
+UNation::UNation()
 {
 	// StateDelegateController
-	StateDelegateController = NewObject<UStateDelegateController>();
+	NationDelegateController = NewObject<UNationDelegateController>();
 
 	// EconomyController
 	EconomyController = NewObject<UEconomyController>();
-	EconomyController->SubscribeToDelegateEvents(StateDelegateController);
+	EconomyController->SubscribeToDelegateEvents(NationDelegateController);
 }
 
-UEconomyController* UState::GetEconomyController() const
+UEconomyController* UNation::GetEconomyController() const
 {
 	return EconomyController;
 }
 
-UState* UState::SetEconomyController(UEconomyController* EconomyControllerVar)
+UNation* UNation::SetEconomyController(UEconomyController* EconomyControllerVar)
 {
 	this->EconomyController = EconomyControllerVar;
 	return this;
 }
 
-void UState::OnMonthlyUpdate()
+void UNation::OnMonthlyUpdate()
 {
-	StateDelegateController->OnStateMonthlyUpdate.Broadcast();
+	NationDelegateController->OnNationMonthlyUpdate.Broadcast();
 	UE_LOGFMT(LogTemp, Display, "State monthly update");
 }

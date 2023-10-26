@@ -3,7 +3,7 @@
 
 #include "ProjectMars/Controllers/BasePlayerController.h"
 
-
+#include "Logging/StructuredLog.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/BaseHUD.h"
 
@@ -11,29 +11,54 @@ ABasePlayerController::ABasePlayerController()
 {
 	bShowMouseCursor = true;
 	bEnableMouseOverEvents = true;
-	bGameIsPaused = true;
 	bEnableClickEvents = true;
+
+	// This is experimental, I think this sets a new HUD for the player
+	if (false)
+	{
+		const TSubclassOf<ABaseHUD> ClientHUD;
+		ClientSetHUD(ClientHUD);
+	}
 }
 
 void ABasePlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
+	
+	InputComponent->BindAction("LeftMouseClick", IE_Released, this, &ABasePlayerController::OnLMBClick);
+	InputComponent->BindAction("RightMouseClick", IE_Pressed, this, &ABasePlayerController::OnRMBClick);
 
-	InputComponent->BindAction("LeftMouseClick", IE_Pressed, this, &ABasePlayerController::SelectionPressed);
-	InputComponent->BindAction("LeftMouseClick", IE_Released, this, &ABasePlayerController::SelectionReleased);
-	InputComponent->BindAction("RightMouseClick", IE_Pressed, this, &ABasePlayerController::RMBPressed);
-	InputComponent->BindAction("PauseGame", IE_Pressed, this, &ABasePlayerController::PauseGame);
+	// Player Pawn Movement
+	InputComponent->BindAxis("MoveForward", this, &ABasePlayerController::MovePlayerPawnForwardOrBack);
+	InputComponent->BindAxis("GameSpeed", this, &ABasePlayerController::MovePlayerPawnRightOrLeft);
 }
 
-void ABasePlayerController::PauseGame()
+void ABasePlayerController::MovePlayerPawnForwardOrBack(float Val)
 {
-	switch (bGameIsPaused)
+	if (!PlayerPawn)
 	{
-		case true : bGameIsPaused = false;
-		break;
+		UE_LOGFMT(LogTemp, Error, "Player pawn is null");
+		return;
+	}
+	PlayerPawn->MoveForwardOrBack(Val);
+}
 
-		case false : bGameIsPaused = true;
-		break;
+void ABasePlayerController::MovePlayerPawnRightOrLeft(float Val)
+{
+	if (!PlayerPawn)
+	{
+		UE_LOGFMT(LogTemp, Error, "Player pawn is null");
+		return;
+	}
+	PlayerPawn->MoveRightOrLeft(Val);
+}
+
+void ABasePlayerController::OnLMBClick()
+{
+	FHitResult LeftClick;
+	if (GetHitResultUnderCursor(ECC_Visibility, false, LeftClick))
+	{
+		PlayerPawn->FilterActorClickedOn(LeftClick.GetActor());
 	}
 }
 
@@ -41,36 +66,21 @@ void ABasePlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	HUD = Cast<ABaseHUD>(GetHUD());
+	InitialisePointers();
 }
 
 void ABasePlayerController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	
 }
 
-void ABasePlayerController::SelectionPressed()
+void ABasePlayerController::OnRMBClick()
 {
-	if(HUD)
-	{
-		HUD->ArmiesUnderSelectionBox.Empty();
-		HUD->ArmySelected = nullptr;
-		HUD->bHasStartedSelecting = true;
-		
-		HUD->InitialSelectionPoint = HUD->GetMousePosition2D();
-	}
+	PlayerPawn->IssueMoveArmyOrder();
 }
 
-void ABasePlayerController::SelectionReleased()
+void ABasePlayerController::InitialisePointers()
 {
-	if(HUD)
-	{
-		HUD->bHasStartedSelecting = false;
-	}
-}
-
-void ABasePlayerController::RMBPressed()
-{
-	OnRMBPressed.Broadcast();
+	PlayerPawn = Cast<AProjectMarsPlayer>(GetPawn());
+	HUD = Cast<ABaseHUD>(GetHUD());
 }

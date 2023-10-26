@@ -5,19 +5,19 @@
 #include "CoreMinimal.h"
 #include "ProjectMars/Framework/CustomObject.h"
 #include "UObject/NoExportTypes.h"
-#include "State.generated.h"
+#include "Nation.generated.h"
 
 class UEconomyController;
 class UDelegateController;
 
 // A class to represent a state such as the Roman Republic or Carthage
 UCLASS()
-class PROJECTMARS_API UState : public UCustomObject
+class PROJECTMARS_API UNation : public UCustomObject
 {
 	GENERATED_BODY()
 
 public:
-	UState();
+	UNation();
 	
 	virtual void OnMonthlyUpdate() override;
 
@@ -27,7 +27,7 @@ public:
 	
 	// Setters
 	UFUNCTION()
-	UState* SetEconomyController(UEconomyController* EconomyController);
+	UNation* SetEconomyController(UEconomyController* EconomyController);
 
 private:
 	// Functions
@@ -38,7 +38,7 @@ private:
 	UEconomyController* EconomyController;
 
 	UPROPERTY()
-	class UStateDelegateController* StateDelegateController;
+	class UNationDelegateController* NationDelegateController;
 
 	/*UPROPERTY()
 	UTradeManager* TradeManager;*/

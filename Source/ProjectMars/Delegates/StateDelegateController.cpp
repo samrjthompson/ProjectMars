@@ -3,6 +3,6 @@
 
 #include "StateDelegateController.h"
 
-UStateDelegateController::UStateDelegateController()
+UNationDelegateController::UNationDelegateController()
 {
 }

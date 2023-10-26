@@ -8,14 +8,8 @@
 #include "MarsGameStateBase.generated.h"
 
 class AProjectMarsPlayer;
-class AFactionBase;
 class UDelegateController;
-class AFactionManager;
-class UState;
-
-enum class EMonthOfYear;
-
-struct FCampaignDateTime;
+class UNation;
 
 UCLASS()
 class PROJECTMARS_API AMarsGameStateBase : public AGameStateBase
@@ -25,91 +19,30 @@ class PROJECTMARS_API AMarsGameStateBase : public AGameStateBase
 public:
 	AMarsGameStateBase();
 
+	// Functions
 	virtual void BeginPlay() override;
-
-	UFUNCTION()
-	UState* GetStateForPlayer(FString StateName) const;
-
-	UPROPERTY()
-	TMap<FString, UState*> States;
-
-	UFUNCTION()
-	class AProjectMarsPlayer* GetPlayer();
-
-	UFUNCTION()
-	class UTimeManagementComponent* GetTimeManagementComponent() const;
-
-	UFUNCTION()
-	class ABasePlayerController* GetPlayerController() const;
 
 	UFUNCTION()
 	void AddPlayerToPlayerArray(AProjectMarsPlayer* ProjectMarsPlayer);
 
-	UFUNCTION()
-	static AActor* PassActorToSelf(AActor* ActorToPass);
-
+	// Getters
 	UFUNCTION()
 	UDelegateController* GetDelegateController() const;
 
-	UFUNCTION()
-	AFactionManager* GetFactionManager() const;
-
-	UFUNCTION()
-	class ABaseHUD* GetBaseHUD() const;
-
-	UFUNCTION()
-	void SetFactionManager(AFactionManager* FactionMan);
-
+	// Setters
 	UFUNCTION()
 	void SetDelegateController(UDelegateController* ptr);
 
-	UFUNCTION()
-	class UPlayerManagerComponent* GetPlayerManagerComponent() const;
-	
-	/* Function that initialises pointers by being called from the player class and having the player class 'this'
-	 pointer being passed as the argument. */
-	void InitialiseReferences(AProjectMarsPlayer* InitPlayer);
-
-	// Returns the time since the passed parameter (in seconds)
-	static double GetTimeSince(double StartTime);
-	
-	// Initialises the passed argument with a start time in seconds
-	static void SetStartTime(double& StartTime);
-
-	void LogEveryFiveSeconds();
-	
-protected:
-	virtual void Tick(float DeltaSeconds) override;
-
 private:
-	UPROPERTY()
-	class ABasePlayerController* PlayerController{ nullptr };
-
-	UPROPERTY()
-	class AAIControllerBase* AIController{ nullptr };
-
-	UPROPERTY()
-	AProjectMarsPlayer* Player{ nullptr };
-
-	UPROPERTY()
-	class ABaseHUD* BaseHUD{ nullptr };
-
-	UPROPERTY()
-	class UTimeManagementComponent* TimeManagementComponent{ nullptr };
-
-	UPROPERTY()
-	class UPlayerManagerComponent* PlayerManagerComponent{ nullptr };
+	UPROPERTY(EditAnywhere)
+	TMap<FString, UNation*> Nations;
 	
-	TArray<AProjectMarsPlayer*> AllPlayers{ nullptr };
+	UPROPERTY(EditAnywhere)
+	TArray<AProjectMarsPlayer*> AllPlayers;
 	
-	// DelegateManager is initialised by UDelegateController - see UDelegateController::PassSelfToGameState()
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	UDelegateController* DelegateController{ nullptr };
 
-	UPROPERTY()
-	AFactionManager* FactionManager{ nullptr };
-
-	double LogTickCheck{};
-
-
+protected:
+	virtual void Tick(float DeltaSeconds) override;
 };
