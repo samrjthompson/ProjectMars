@@ -44,9 +44,6 @@ public:
 	AAIControllerBase* GetAIController() const;
 
 	UFUNCTION()
-	void AssignAIFactions();
-
-	UFUNCTION()
 	void CreateArrayOfAvailableFactions();
 
 	UFUNCTION()

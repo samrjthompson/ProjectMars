@@ -75,14 +75,11 @@ public:
 	virtual ABaseHUD* GetRefToBaseHUD();
 
 /* --- ECONOMY --- */
-	void DrawPlayerTreasury();
 
 	void DrawEconomyData(const UEconomyData* EconomyDataVar);
 	
 
 /* --- TIME ---*/
-
-	void DrawDate();
 	
 
 /* --- FPS --- */
@@ -98,9 +95,6 @@ public:
 	UPROPERTY()
 	class UChooseFactionWidget* ChooseFactionWidget{ nullptr };
 
-	UFUNCTION()
-	void DrawMainGameUI();
-
 	
 	/***********************************************************************/
 
@@ -115,8 +109,6 @@ public:
 
 /////////////////////////////////////////////////////////////////////
 // POPULATION
-
-	void DrawPopulationNum();
 	
 
 /////////////////////////////////////////////////////////////////////

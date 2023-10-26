@@ -7,8 +7,6 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "Logging/StructuredLog.h"
-#include "ProjectMars/TimeManagement/TimeManagementComponent.h"
-#include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
 #include "Widgets/ChooseFactionWidget.h"
@@ -45,10 +43,7 @@ void ABaseHUD::DrawHUD()
 		CurrentSelectionPoint = GetMousePosition2D();
 		DrawSelectionBox();
 	}
-
-	DrawPlayerTreasury();
-	DrawPopulationNum();
-	DrawDate();
+	
 	DrawFPS();
 	DrawTooltip();
 	DrawEconomyData(EconomyData);
@@ -147,7 +142,7 @@ void ABaseHUD::InitialisePointers()
 	if (ChooseFactionWidget)
 	{
 		ChooseFactionWidget->AddToViewport();
-		ChooseFactionWidget->OnChooseFaction.AddDynamic(this, &ABaseHUD::DrawMainGameUI);
+		//ChooseFactionWidget->OnChooseFaction.AddDynamic(this, &ABaseHUD::DrawMainGameUI);
 	}
 
 	EconomyWidget = CreateWidget<UEconomyWidget>(GetOwningPlayerController(), EconomyWidgetClass);
@@ -160,15 +155,6 @@ ABaseHUD* ABaseHUD::GetRefToBaseHUD()
 	return this;
 }
 
-void ABaseHUD::DrawPlayerTreasury()
-{
-	if(BaseGameplayWidget && Player && Player->PlayerFaction)
-	{
-		//BaseGameplayWidget->EconomyText->SetText(FText::FromString(FString::SanitizeFloat(Player->PlayerEconomy.Treasury)));
-		//BaseGameplayWidget->EconomyText->SetText(FText::AsNumber(Player->PlayerFaction->Economics.Treasury));
-	}
-}
-
 void ABaseHUD::DrawEconomyData(const UEconomyData* EconomyDataVar)
 {
 	if (!BaseGameplayWidget)
@@ -176,7 +162,7 @@ void ABaseHUD::DrawEconomyData(const UEconomyData* EconomyDataVar)
 		UE_LOGFMT(LogTemp, Error, "BaseGameplayeWidget is null!");
 	}
 	
-	FString TreasuryText = "Treasury: " + FString::FromInt(EconomyDataVar->GetTreasury());
+	/*FString TreasuryText = "Treasury: " + FString::FromInt(EconomyDataVar->GetTreasury());
 	FString ExpensesText = "Expenses: " + FString::FromInt(EconomyDataVar->GetExpenses());
 	FString GrossIncomeText = "GrossIncome: " + FString::FromInt(EconomyDataVar->GetSumOfIncome());
 	FString NetIncomeText = "NetIncome: " + FString::FromInt(EconomyDataVar->GetNetIncome());
@@ -184,22 +170,7 @@ void ABaseHUD::DrawEconomyData(const UEconomyData* EconomyDataVar)
 	BaseGameplayWidget->Treasury->SetText(FText::FromString(TreasuryText));
 	BaseGameplayWidget->Expenses->SetText(FText::FromString(ExpensesText));
 	BaseGameplayWidget->GrossIncome->SetText(FText::FromString(GrossIncomeText));
-	BaseGameplayWidget->NetIncome->SetText(FText::FromString(NetIncomeText));
-}
-
-void ABaseHUD::DrawDate()
-{	
-	if(BaseGameplayWidget && Player && Player->MarsGameStateBase)
-	{
-		const UTimeManagementComponent* TimeManagementComponent = Player->GetMarsGameStateBase()->GetTimeManagementComponent();
-		if(!TimeManagementComponent) return;
-		
-		BaseGameplayWidget->DayText->SetText(FText::AsNumber(TimeManagementComponent->GetCurrentDisplayDay()));
-		BaseGameplayWidget->MonthText->SetText(FText::FromString(TimeManagementComponent->ConvertCurrentMonthToString()));
-		BaseGameplayWidget->YearText->SetText(FText::AsNumber(TimeManagementComponent->GetCurrentDisplayYear()));
-		
-		BaseGameplayWidget->DateSuffixText->SetText(FText::FromString(DateSuffix));
-	}
+	BaseGameplayWidget->NetIncome->SetText(FText::FromString(NetIncomeText));*/
 }
 
 void ABaseHUD::DrawFPS()
@@ -207,29 +178,6 @@ void ABaseHUD::DrawFPS()
 	if(BaseGameplayWidget)
 	{
 		BaseGameplayWidget->FPSText->SetText(FText::AsNumber(FPSNum));
-	}
-}
-
-// TODO: Currently set up so that any button we click will choose Rome - need to make out faction choice relate to the button we press
-void ABaseHUD::DrawMainGameUI()
-{
-	if(ChooseFactionWidget && BaseGameplayWidget && Player)
-	{		
-		if(ChooseFactionWidget->RomeButton->IsHovered())
-		{
-			Player->ChooseRome();
-
-			ChooseFactionWidget->RemoveFromParent();
-			BaseGameplayWidget->AddToViewport();
-		}
-		if(ChooseFactionWidget->EtruriaButton->IsHovered())
-		{
-			Player->ChooseEtruria();
-			ChooseFactionWidget->RemoveFromParent();
-			BaseGameplayWidget->AddToViewport();
-		}
-		
-		DrawEventPopup();
 	}
 }
 
@@ -248,14 +196,6 @@ void ABaseHUD::DrawTooltip()
 		GetMousePosition2D().X + 100, GetMousePosition2D().Y + 50);	*/
 
 	BaseGameplayWidget->SetToolTip(EconomyWidget);
-}
-
-void ABaseHUD::DrawPopulationNum()
-{
-	if (BaseGameplayWidget && Player && Player->PlayerFaction)
-	{
-		BaseGameplayWidget->PopText->SetText(FText::AsNumber(Player->PlayerFaction->Population.Manpower));
-	}
 }
 
 void ABaseHUD::DrawEventPopup()

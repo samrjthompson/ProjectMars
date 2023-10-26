@@ -44,6 +44,12 @@ AArmy::AArmy()
 	NumOfLegions = Army.Num();
 }
 
+AArmy* AArmy::SetTargetLocation(FVector LocationVar)
+{
+	TargetLocation = LocationVar;
+	return this;
+}
+
 // Called when the game starts or when spawned
 void AArmy::BeginPlay()
 {
@@ -74,19 +80,7 @@ void AArmy::MoveArmy()
 
 	// Makes movement speed relative to game speed
 	CurrentMovementSpeed = DefaultMovementSpeed; // Resets movement speed to the default - if we don't do this, CurrentMovementSpeed will infinitely increase
-	CurrentMovementSpeed *= OwnerOfArmy->GameSpeed;	
-	
-	// This prevents the army from moving when the game is paused but retains the TargetLocation ready for when we un-pause
-	if(OwnerOfArmy->BasePlayerController && OwnerOfArmy->BasePlayerController->bGameIsPaused == true)
-	{
-		bCanMoveArmy = false;
-	}
-	else
-	{
-		bCanMoveArmy = true;
-	}
-	
-	if (!bCanMoveArmy) return;
+	CurrentMovementSpeed *= 3;	
 
 	FVector Location = GetActorLocation();
 
@@ -106,16 +100,6 @@ void AArmy::MoveArmy()
 void AArmy::SetPlayerOwnerOfArmy(AProjectMarsPlayer* PlayerOwner)
 {
 	OwnerOfArmy = PlayerOwner;
-}
-
-void AArmy::ShowArmyWidget()
-{
-	OnArmyClicked.Broadcast();
-
-	if(OwnerOfArmy)
-	{
-		ArmyRosterWidget = CreateWidget<UArmyRoster>(OwnerOfArmy->BasePlayerController, ArmyRosterClass);
-	}
 }
 
 void AArmy::HideArmyWidget()

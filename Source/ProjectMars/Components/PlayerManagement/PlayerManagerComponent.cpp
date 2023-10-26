@@ -8,7 +8,6 @@
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Factions/FactionBase.h"
 
-// Sets default values for this component's properties
 UPlayerManagerComponent::UPlayerManagerComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -69,27 +68,6 @@ ABasePlayerController* UPlayerManagerComponent::GetPlayerController() const
 AAIControllerBase* UPlayerManagerComponent::GetAIController() const
 {
 	return AIController;
-}
-
-void UPlayerManagerComponent::AssignAIFactions()
-{
-	if (!AvailableFactionsArray) return;
-
-	TArray<EFactionName> TempFactionsArray = *AvailableFactionsArray;
-
-	for(auto& Elem : TempFactionsArray)
-	{
-		AProjectMarsPlayer* AIPlayer{ nullptr };
-		AIPlayer = GetWorld()->SpawnActor<AProjectMarsPlayer>(AProjectMarsPlayer::StaticClass());
-		AIPlayer->SpawnDefaultController();
-		AIPlayer->SetFactionName(Elem);
-		
-		AIPlayersArray.Emplace(AIPlayer);
-
-		FString FactionNameString = StaticEnum<EFactionName>()->GetValueAsString(AIPlayer->GetFactionName());
-		AvailableFactionsArray->Remove(Elem);
-	}
-	DelegateController->OnAIFactionInitialisation.Broadcast();
 }
 
 void UPlayerManagerComponent::CreateArrayOfAvailableFactions()

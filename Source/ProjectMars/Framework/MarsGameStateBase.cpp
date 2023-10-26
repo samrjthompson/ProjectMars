@@ -7,9 +7,6 @@
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/UI/BaseHUD.h"
-#include "ProjectMars/Controllers/AIControllerBase.h"
-#include "ProjectMars/Military/Army.h"
-#include "ProjectMars/TimeManagement/TimeManagementComponent.h"
 #include "ProjectMars/Components/PlayerManagement/PlayerManagerComponent.h"
 #include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Nation/State.h"
@@ -20,7 +17,6 @@ AMarsGameStateBase::AMarsGameStateBase()
 	PrimaryActorTick.bStartWithTickEnabled = true;
 	PrimaryActorTick.bCanEverTick = true;
 	
-	TimeManagementComponent = CreateDefaultSubobject<UTimeManagementComponent>(TEXT("Time Management Component"));
 	PlayerManagerComponent = CreateDefaultSubobject<UPlayerManagerComponent>(TEXT("Player Manager Component"));
 
 	DelegateController = NewObject<UDelegateController>();
@@ -40,10 +36,6 @@ AMarsGameStateBase::AMarsGameStateBase()
 AProjectMarsPlayer* AMarsGameStateBase::GetPlayer()
 {
 	return Player;
-}
-
-UTimeManagementComponent* AMarsGameStateBase::GetTimeManagementComponent() const {
-	return TimeManagementComponent;
 }
 
 ABasePlayerController* AMarsGameStateBase::GetPlayerController() const

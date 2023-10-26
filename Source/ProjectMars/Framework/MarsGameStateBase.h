@@ -37,9 +37,6 @@ public:
 	class AProjectMarsPlayer* GetPlayer();
 
 	UFUNCTION()
-	class UTimeManagementComponent* GetTimeManagementComponent() const;
-
-	UFUNCTION()
 	class ABasePlayerController* GetPlayerController() const;
 
 	UFUNCTION()
@@ -93,9 +90,6 @@ private:
 
 	UPROPERTY()
 	class ABaseHUD* BaseHUD{ nullptr };
-
-	UPROPERTY()
-	class UTimeManagementComponent* TimeManagementComponent{ nullptr };
 
 	UPROPERTY()
 	class UPlayerManagerComponent* PlayerManagerComponent{ nullptr };
