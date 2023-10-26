@@ -6,12 +6,24 @@
 #include "GameFramework/PlayerController.h"
 #include "BasePlayerController.generated.h"
 
+class AProjectMarsPlayer;
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnRMBPressed);
 
 UCLASS()
 class PROJECTMARS_API ABasePlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+public:
+private:
+	void MovePlayerPawnForwardOrBack(float Val);
+	void MovePlayerPawnRightOrLeft(float Val);
+
+	void OnLMBClick();
+
+	UPROPERTY()
+	AProjectMarsPlayer* PlayerPawn{ nullptr };
 
 public:
 	ABasePlayerController();
