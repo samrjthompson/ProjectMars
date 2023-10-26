@@ -7,7 +7,7 @@
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Nation/Nation.h"
-#include "..\Nation\NationBuilder.h"
+#include "ProjectMars/Nation/NationBuilder.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
 {
