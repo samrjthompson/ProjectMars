@@ -12,6 +12,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAIFactionInitialisation);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEndTurn);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChangeTurnOwner, const FString&, CurrentTurnOwner);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStartNewTurn, const int32, TurnNumber);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnFirstTurn);
 
 /**
  * 
@@ -28,6 +29,7 @@ public:
 	FOnEndTurn OnEndTurn;
 	FOnStartNewTurn OnStartNewTurn;
 	FOnChangeTurnOwner OnChangeTurnOwner;
+	FOnFirstTurn OnFirstTurn;
 
 private:
 	

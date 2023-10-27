@@ -19,6 +19,9 @@ class PROJECTMARS_API UTurnController : public UObject
 
 public:
 	UTurnController();
+
+	UFUNCTION()
+	void BroadcastFirstTurn();
 	
 	UFUNCTION()
 	void EndTurn();

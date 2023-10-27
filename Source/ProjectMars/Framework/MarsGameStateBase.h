@@ -26,6 +26,9 @@ public:
 	UFUNCTION()
 	void AddPlayerToPlayerArray(AProjectMarsPlayer* ProjectMarsPlayer);
 
+	UFUNCTION()
+	void LoadFirstTurn();
+
 	// Getters
 	UFUNCTION()
 	UDelegateController* GetDelegateController() const;

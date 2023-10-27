@@ -4,14 +4,11 @@
 #include "DevInfoWidget.h"
 
 #include "Components/TextBlock.h"
+#include "Logging/StructuredLog.h"
 
 UDevInfoWidget::UDevInfoWidget(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	TurnNumberText = NewObject<UTextBlock>();
-	SeasonText = NewObject<UTextBlock>();
-	YearText = NewObject<UTextBlock>();
-	CurrentTurnOwnerText = NewObject<UTextBlock>();
 }
 
 void UDevInfoWidget::NativeConstruct()
