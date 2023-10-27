@@ -62,6 +62,7 @@ UTurnController* UTurnController::SetFactionTags(const TArray<FString>& FactionT
 void UTurnController::SubscribeToDelegates(UDelegateController* DelegateControllerVar)
 {
 	DelegateControllerVar->OnEndTurn.AddDynamic(this, &UTurnController::EndTurn);
+	DelegateControllerVar->OnStartNewGame.AddDynamic(this, &UTurnController::BroadcastFirstTurn);
 }
 
 // Returns the tag of the current turn owner

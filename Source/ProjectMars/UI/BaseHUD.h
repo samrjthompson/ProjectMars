@@ -10,6 +10,7 @@
 class UEconomyData;
 class AArmy;
 class UDevInfoWidget;
+class UStartButtonWidget;
 
 UCLASS()
 class PROJECTMARS_API ABaseHUD : public AHUD
@@ -62,6 +63,9 @@ public:
 
 	UFUNCTION()
 	UDevInfoWidget* GetDevInfoWidget() const;
+
+	UFUNCTION()
+	void BroadcastStartButton();
 
 private:
 	// Functions
@@ -135,6 +139,12 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	UDevInfoWidget* DevInfoWidget{ nullptr };
+
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<UStartButtonWidget> StartButtonWidgetClass;
+
+	UPROPERTY(EditAnywhere)
+	UStartButtonWidget* StartButtonWidget{ nullptr };
 
 protected:
 	virtual void BeginPlay() override;

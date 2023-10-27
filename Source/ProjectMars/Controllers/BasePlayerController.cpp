@@ -51,6 +51,12 @@ void ABasePlayerController::SubscribeToDelegates(UDelegateController* DelegateCo
 	DelegateControllerVar->OnStartNewTurn.AddDynamic(this, &ABasePlayerController::StartNewTurn);
 }
 
+void ABasePlayerController::StartGame()
+{
+	UE_LOGFMT(LogTemp, Warning, "GAME STARTED");
+	DelegateController->OnStartNewGame.Broadcast();
+}
+
 ABasePlayerController* ABasePlayerController::SetDelegateController(UDelegateController* DelegateControllerVar)
 {
 	DelegateController = DelegateControllerVar;

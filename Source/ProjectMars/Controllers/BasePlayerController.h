@@ -29,6 +29,9 @@ public:
 	UFUNCTION()
 	void SubscribeToDelegates(UDelegateController* DelegateControllerVar);
 
+	UFUNCTION()
+	void StartGame();
+
 	// Getters
 
 	// Setters

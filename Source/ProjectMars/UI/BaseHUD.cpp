@@ -7,6 +7,7 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "Logging/StructuredLog.h"
+#include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
 #include "ProjectMars/UI/Widgets/DevInfo/DevInfoWidget.h"
@@ -14,6 +15,7 @@
 #include "Widgets/Events/EventPopupWidget.h"
 #include "ProjectMars/Military/Army.h"
 #include "ProjectMars/Economy/Data/EconomyData.h"
+#include "Widgets/DevInfo/StartButtonWidget.h"
 
 #define OUT
 
@@ -30,33 +32,39 @@ void ABaseHUD::BeginPlay()
 	Super::BeginPlay();
 	
 	InitialisePointers();
+	
 	DevInfoWidget->TurnNumberText->SetText(FText::AsNumber(1));
 	DevInfoWidget->CurrentTurnOwnerText->SetText(FText::FromString("ROM"));
+	DevInfoWidget->AddToViewport();
+	
+	StartButtonWidget->StartText->SetText(FText::FromString("START"));
+	StartButtonWidget->StartButton->OnReleased.AddDynamic(this, &ABaseHUD::BroadcastStartButton);
+	StartButtonWidget->AddToViewport();
 }
 
 void ABaseHUD::DrawHUD()
 {
 	Super::DrawHUD();
 
-	if(bHasStartedSelecting)
+	/*if(bHasStartedSelecting)
 	{
 		CurrentSelectionPoint = GetMousePosition2D();
 		DrawSelectionBox();
-	}
+	}*/
 	
-	DrawFPS();
-	DrawEconomyData(EconomyData);
+	//DrawFPS();
+	//DrawEconomyData(EconomyData);
 	DrawDevInfo();
 
-	if(EventPopupWidget && EventPopupWidget->DecisionButton)
+	/*if(EventPopupWidget && EventPopupWidget->DecisionButton)
 	{
 		if(EventPopupWidget->DecisionButton->IsPressed())
 		{
 			EventPopupWidget->CloseEventPopup();
 		}
-	}
+	}*/
 
-	MoveWidgetInViewportWithMouse(EventPopupWidget);
+	//MoveWidgetInViewportWithMouse(EventPopupWidget);
 }
 
 void ABaseHUD::SetDateSuffix(const FString& SuffixVal)
@@ -135,6 +143,7 @@ void ABaseHUD::InitialisePointers()
 	EconomyWidget = CreateWidget<UEconomyWidget>(GetOwningPlayerController(), EconomyWidgetClass);
 	EventPopupWidget = CreateWidget<UEventPopupWidget>(GetOwningPlayerController(), EventPopupWidgetClass);
 	DevInfoWidget = CreateWidget<UDevInfoWidget>(GetOwningPlayerController(), DevInfoWidgetClass);
+	StartButtonWidget = CreateWidget<UStartButtonWidget>(GetOwningPlayerController(), StartButtonWidgetClass);
 }
 
 void ABaseHUD::DrawEconomyData(const UEconomyData* EconomyDataVar)
@@ -174,7 +183,6 @@ void ABaseHUD::DrawDevInfo()
 	DevInfoWidget->SeasonText->SetText(FText::FromString("Season Text"));
 	DevInfoWidget->YearText->SetText(FText::FromString("Year Text"));
 	// DevInfoWidget->CurrentTurnOwnerText->SetText(FText::FromString("Current Turn Owner Text"));
-	DevInfoWidget->AddToViewport(1);
 }
 
 void ABaseHUD::DrawTooltip()
@@ -226,6 +234,13 @@ void ABaseHUD::MoveWidgetInViewportWithMouse(UUserWidget* EventPopupWidgetToMove
 UDevInfoWidget* ABaseHUD::GetDevInfoWidget() const
 {
 	return DevInfoWidget;
+}
+
+void ABaseHUD::BroadcastStartButton()
+{
+	StartButtonWidget->RemoveFromParent();
+	ABasePlayerController* Controller = Cast<ABasePlayerController>(GetOwningPlayerController());
+	Controller->StartGame();
 }
 
 void ABaseHUD::GetActorsUnderSelectionBox()

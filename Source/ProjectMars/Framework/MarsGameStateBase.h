@@ -11,6 +11,7 @@ class AProjectMarsPlayer;
 class UDelegateController;
 class UNation;
 class UTurnController;
+class USeasonController;
 
 UCLASS()
 class PROJECTMARS_API AMarsGameStateBase : public AGameStateBase
@@ -60,6 +61,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	TArray<FString> FactionTags;
+
+	UPROPERTY(EditAnywhere)
+	USeasonController* SeasonController{ nullptr };
 
 protected:
 	virtual void Tick(float DeltaSeconds) override;

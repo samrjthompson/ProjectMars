@@ -13,6 +13,9 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEndTurn);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChangeTurnOwner, const FString&, CurrentTurnOwner);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStartNewTurn, const int32, TurnNumber);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnFirstTurn);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnNewYear);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnNewSeason, const FString&, CurrentSeason);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnStartNewGame);
 
 /**
  * 
@@ -30,6 +33,9 @@ public:
 	FOnStartNewTurn OnStartNewTurn;
 	FOnChangeTurnOwner OnChangeTurnOwner;
 	FOnFirstTurn OnFirstTurn;
+	FOnNewYear OnNewYear;
+	FOnNewSeason OnNewSeason;
+	FOnStartNewGame OnStartNewGame;
 
 private:
 	
