@@ -61,7 +61,6 @@ ABasePlayerController* ABasePlayerController::SetNation(UNation* NationVar)
 {
 	Nation = NationVar;
 	Nation->SetFactionTag("ROM");
-	UE_LOGFMT(LogTemp, Warning, "Player nation: ROM");
 	return this;
 }
 

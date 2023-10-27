@@ -31,6 +31,7 @@ void ABaseHUD::BeginPlay()
 	
 	InitialisePointers();
 	DevInfoWidget->TurnNumberText->SetText(FText::AsNumber(1));
+	DevInfoWidget->CurrentTurnOwnerText->SetText(FText::FromString("ROM"));
 }
 
 void ABaseHUD::DrawHUD()

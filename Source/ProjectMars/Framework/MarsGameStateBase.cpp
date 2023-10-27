@@ -41,12 +41,15 @@ void AMarsGameStateBase::AddPlayerToPlayerArray(AProjectMarsPlayer* ProjectMarsP
 	UE_LOGFMT(LogTemp, Display, "Added player to player array");
 }
 
+void AMarsGameStateBase::LoadFirstTurn()
+{
+	TurnController->BroadcastFirstTurn();
+}
+
 // BeginPlay in the game state is called before BeginPlay in the player class. References will therefore not be initialised in BeginPlay here.
 void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Error, TEXT("TEST VS CODE!"));
-	// TODO: For development purposes - gives the developer a nation
 }
 
 void AMarsGameStateBase::Tick(float DeltaSeconds)

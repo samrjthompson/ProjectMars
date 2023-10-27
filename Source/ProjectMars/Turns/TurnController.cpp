@@ -5,12 +5,16 @@
 
 #include "Logging/StructuredLog.h"
 #include "ProjectMars/Delegates/DelegateController.h"
-#include "ProjectMars/Framework/MarsGameStateBase.h"
 
 UTurnController::UTurnController()
 {
-	CurrentTurnOwnerIndex = 0;
+	CurrentTurnOwnerIndex = 1;
 	TurnNumber = 1;
+}
+
+void UTurnController::BroadcastFirstTurn()
+{
+	DelegateController->OnFirstTurn.Broadcast();
 }
 
 void UTurnController::EndTurn()
@@ -27,7 +31,7 @@ void UTurnController::StartNewTurn(const int32 TurnNumberVar)
 
 int32 UTurnController::UpdateTurnNumber()
 {
-	const int32 NewTurnNumber = TurnNumber++;
+	const int32 NewTurnNumber = ++TurnNumber;
 	StartNewTurn(NewTurnNumber);
 	return NewTurnNumber;
 }
