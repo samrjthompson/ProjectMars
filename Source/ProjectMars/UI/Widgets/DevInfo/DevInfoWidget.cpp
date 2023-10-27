@@ -3,9 +3,6 @@
 
 #include "DevInfoWidget.h"
 
-#include "Components/TextBlock.h"
-#include "Logging/StructuredLog.h"
-
 UDevInfoWidget::UDevInfoWidget(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {

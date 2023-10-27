@@ -9,6 +9,7 @@
 #include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Nation/Nation.h"
 #include "ProjectMars/Nation/NationBuilder.h"
+#include "ProjectMars/Season/SeasonController.h"
 #include "ProjectMars/Turns/TurnController.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
@@ -23,6 +24,11 @@ AMarsGameStateBase::AMarsGameStateBase()
 	TurnController->SetMarsGameStateBase(this);
 	TurnController->SetDelegateController(DelegateController);
 	TurnController->SubscribeToDelegates(DelegateController);
+
+	// Season Controller
+	SeasonController = NewObject<USeasonController>();
+	SeasonController->SetDelegateController(DelegateController);
+	SeasonController->SubscribeToDelegateEvents(DelegateController);
 	
 	InitialiseFactionTags();
 	BuildNations();
