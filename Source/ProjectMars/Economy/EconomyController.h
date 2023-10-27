@@ -69,7 +69,7 @@ public:
 	void UpdateTreasury();
 
 	UFUNCTION()
-	void SubscribeToDelegateEvents(UNationDelegateController* StateDelegateController);
+	void SubscribeToDelegateEvents(UNationDelegateController* NationDelegateControllerVar);
 
 private:
 	UPROPERTY()

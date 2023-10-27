@@ -10,16 +10,16 @@ UNationBuilder::UNationBuilder()
 	
 }
 
-TMap<FString, UNation*>& UNationBuilder::BuildNations()
+TMap<FString, UNation*>& UNationBuilder::BuildNations(const TArray<FString>& FactionTagsVar)
 {
 	// TODO: The list of nations will be defined in a JSON file instead of this array
-	TArray<FString> NationNames { "Rome", "Etruria", "Samnium" };
-
-	constexpr int32 NumOfNations = 3;
-	for (int32 i = 0; i < NumOfNations; i++)
+	int32 Index = 0;
+	for (const auto Tag : FactionTagsVar)
 	{
 		UNation* Nation = NewObject<UNation>();
-		Nations.Add(NationNames[i], Nation);
+		Nation->SetFactionTag(Tag);
+		Nations.Add(FactionTagsVar[Index], Nation);
+		Index++;
 	}
 	return Nations;
 }

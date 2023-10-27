@@ -5,7 +5,7 @@
 
 #include "FinanceCalculator.h"
 #include "Logging/StructuredLog.h"
-#include "ProjectMars/Delegates/StateDelegateController.h"
+#include "..\Delegates\NationDelegateController.h"
 #include "ProjectMars/Economy/Data/EconomyData.h"
 
 UEconomyController::UEconomyController()
@@ -68,11 +68,9 @@ void UEconomyController::UpdateTreasury()
 	UE_LOGFMT(LogTemp, Display, "Treasury updated!");
 }
 
-void UEconomyController::SubscribeToDelegateEvents(UNationDelegateController* StateDelegateController)
+void UEconomyController::SubscribeToDelegateEvents(UNationDelegateController* NationDelegateControllerVar)
 {
-	StateDelegateController->OnNationMonthlyUpdate.AddDynamic(this, &UEconomyController::UpdateTreasury);
-	
-	UE_LOGFMT(LogTemp, Display, "Delegate manager is INITIALISED!");
+	// Subscribe to delegates
 }
 
 // Initialises map of income sources with enum keys and values set to 0 by default

@@ -8,6 +8,9 @@
 
 class AProjectMarsPlayer;
 class ABaseHUD;
+class UNation;
+class UDelegateController;
+class UNationDelegateController;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnRMBPressed);
 
@@ -23,8 +26,22 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupInputComponent() override;
 
+	UFUNCTION()
+	void SubscribeToDelegates(UDelegateController* DelegateControllerVar);
+
+	// Getters
+
+	// Setters
+	UFUNCTION()
+	ABasePlayerController* SetDelegateController(UDelegateController* DelegateControllerVar);
+
+	UFUNCTION()
+	ABasePlayerController* SetNation(UNation* NationVar);
+
 	// Properties
 	FOnRMBPressed OnRMBPressed;
+	
+	const bool bIsPlayerController { true };
 	
 private:
 	// Functions
@@ -41,7 +58,16 @@ private:
 	void OnRMBClick();
 
 	UFUNCTION()
+	void OnEnter();
+
+	UFUNCTION()
 	void InitialisePointers();
+
+	UFUNCTION()
+	void CheckForMyTurn(const FString& CurrentTurnOwnerTag);
+
+	UFUNCTION()
+	void StartNewTurn(const int32 TurnNumberVar);
 	
 	// Properties
 	UPROPERTY(EditAnywhere)
@@ -50,6 +76,20 @@ private:
 	UPROPERTY(EditAnywhere)
 	ABaseHUD* HUD{ nullptr };
 
+	UPROPERTY(EditAnywhere)
+	bool bMyTurn;
+
+	UPROPERTY(EditAnywhere)
+	UNation* Nation{ nullptr };
+
+	UPROPERTY(EditAnywhere)
+	UDelegateController* DelegateController{ nullptr };
+
+	UPROPERTY(EditAnywhere)
+	UNationDelegateController* NationDelegateController{ nullptr };
+
+	UPROPERTY()
+	int32 TurnNumber;
 protected:
 	virtual void BeginPlay() override;
 };

@@ -21,7 +21,7 @@ public:
 	UNationBuilder();
 	
 	UFUNCTION()
-	TMap<FString, UNation*>& BuildNations();
+	TMap<FString, UNation*>& BuildNations(const TArray<FString>& FactionTagsVar);
 
 	UFUNCTION()
 	const TMap<FString, UNation*>& AddNation(const FString& NationNameVar, UNation* NationVar);

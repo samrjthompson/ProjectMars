@@ -10,6 +10,7 @@
 class AProjectMarsPlayer;
 class UDelegateController;
 class UNation;
+class UTurnController;
 
 UCLASS()
 class PROJECTMARS_API AMarsGameStateBase : public AGameStateBase
@@ -34,6 +35,14 @@ public:
 	void SetDelegateController(UDelegateController* ptr);
 
 private:
+	// Functions
+	UFUNCTION()
+	void InitialiseFactionTags();
+
+	UFUNCTION()
+	void BuildNations();
+	
+	// Properties
 	UPROPERTY(EditAnywhere)
 	TMap<FString, UNation*> Nations;
 	
@@ -42,6 +51,12 @@ private:
 	
 	UPROPERTY(EditAnywhere)
 	UDelegateController* DelegateController{ nullptr };
+
+	UPROPERTY(EditAnywhere)
+	UTurnController* TurnController{ nullptr };
+
+	UPROPERTY(EditAnywhere)
+	TArray<FString> FactionTags;
 
 protected:
 	virtual void Tick(float DeltaSeconds) override;
