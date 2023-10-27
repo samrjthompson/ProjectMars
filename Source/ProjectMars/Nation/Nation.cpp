@@ -4,7 +4,7 @@
 #include "Nation.h"
 
 #include "Logging/StructuredLog.h"
-#include "ProjectMars/Delegates/StateDelegateController.h"
+#include "..\Delegates\NationDelegateController.h"
 #include "ProjectMars/Economy/EconomyController.h"
 
 UNation::UNation()
@@ -15,11 +15,24 @@ UNation::UNation()
 	// EconomyController
 	EconomyController = NewObject<UEconomyController>();
 	EconomyController->SubscribeToDelegateEvents(NationDelegateController);
+	
+	FactionTag = "NONE";
 }
 
 UEconomyController* UNation::GetEconomyController() const
 {
 	return EconomyController;
+}
+
+AProjectMarsPlayer* UNation::GetOwningPlayer() const
+{
+	return OwningPlayer;
+}
+
+UNation* UNation::SetOwningPlayer(AProjectMarsPlayer* PlayerVar)
+{
+	OwningPlayer = PlayerVar;
+	return this;
 }
 
 UNation* UNation::SetEconomyController(UEconomyController* EconomyControllerVar)
@@ -28,8 +41,13 @@ UNation* UNation::SetEconomyController(UEconomyController* EconomyControllerVar)
 	return this;
 }
 
-void UNation::OnMonthlyUpdate()
+UNation* UNation::SetFactionTag(const FString& FactionTagVar)
 {
-	NationDelegateController->OnNationMonthlyUpdate.Broadcast();
-	UE_LOGFMT(LogTemp, Display, "State monthly update");
+	FactionTag = FactionTagVar;
+	return this;
+}
+
+const FString& UNation::GetFactionTag() const
+{
+	return FactionTag;
 }

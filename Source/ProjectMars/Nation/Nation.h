@@ -9,6 +9,7 @@
 
 class UEconomyController;
 class UDelegateController;
+class AProjectMarsPlayer;
 
 // A class to represent a state such as the Roman Republic or Carthage
 UCLASS()
@@ -18,27 +19,44 @@ class PROJECTMARS_API UNation : public UCustomObject
 
 public:
 	UNation();
-	
-	virtual void OnMonthlyUpdate() override;
+
+	// Functions
+	UFUNCTION()
+	UNation* SetFactionTag(const FString& FactionTagVar);
+
+	UFUNCTION()
+	const FString& GetFactionTag() const;
 
 	// Getters
 	UFUNCTION()
 	UEconomyController* GetEconomyController() const;
+
+	UFUNCTION()
+	AProjectMarsPlayer* GetOwningPlayer() const;
 	
 	// Setters
 	UFUNCTION()
 	UNation* SetEconomyController(UEconomyController* EconomyController);
+
+	UFUNCTION()
+	UNation* SetOwningPlayer(AProjectMarsPlayer* PlayerVar);
 
 private:
 	// Functions
 
 	
 	// Variables
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	UEconomyController* EconomyController;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	class UNationDelegateController* NationDelegateController;
+
+	UPROPERTY(EditAnywhere)
+	FString FactionTag;
+
+	UPROPERTY(EditAnywhere)
+	AProjectMarsPlayer* OwningPlayer{ nullptr };
 
 	/*UPROPERTY()
 	UTradeManager* TradeManager;*/

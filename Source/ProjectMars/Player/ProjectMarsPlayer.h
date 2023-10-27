@@ -46,6 +46,10 @@ public:
 	UFUNCTION()
 	void IssueMoveArmyOrder();
 
+	// Getters
+
+	// Setters
+
 private:
 	// Properties
 	UPROPERTY(EditAnywhere)

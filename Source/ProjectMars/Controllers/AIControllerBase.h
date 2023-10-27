@@ -13,5 +13,8 @@ UCLASS()
 class PROJECTMARS_API AAIControllerBase : public AAIController
 {
 	GENERATED_BODY()
+
+public:
+	const bool bIsPlayerController{ false };
 	
 };

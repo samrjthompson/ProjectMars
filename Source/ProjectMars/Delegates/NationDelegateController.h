@@ -4,9 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "DelegateController.h"
-#include "StateDelegateController.generated.h"
+#include "NationDelegateController.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnNationMonthlyUpdate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnNewTurn);
 
 /**
  * 
@@ -19,5 +19,5 @@ class PROJECTMARS_API UNationDelegateController : public UDelegateController
 public:
 	UNationDelegateController();
 	
-	FOnNationMonthlyUpdate OnNationMonthlyUpdate;
+	FOnNewTurn OnNewTurn;
 };
