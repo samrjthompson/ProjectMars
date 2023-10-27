@@ -3,12 +3,14 @@
 
 #include "BasePlayerController.h"
 
+#include "Components/TextBlock.h"
 #include "Logging/StructuredLog.h"
 #include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Delegates/NationDelegateController.h"
 #include "ProjectMars/Nation/Nation.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/BaseHUD.h"
+#include "ProjectMars/UI/Widgets/DevInfo/DevInfoWidget.h"
 
 ABasePlayerController::ABasePlayerController()
 {
@@ -26,7 +28,7 @@ ABasePlayerController::ABasePlayerController()
 	}
 	
 	bMyTurn = false;
-	TurnNumber = 0;
+	TurnNumber = 1;
 }
 
 void ABasePlayerController::SetupInputComponent()
@@ -128,7 +130,8 @@ void ABasePlayerController::CheckForMyTurn(const FString& CurrentTurnOwnerTag)
 		UE_LOGFMT(LogTemp, Error, "Nation is null");
 	} 
 
-	UE_LOGFMT(LogTemp, Warning, "Current turn owner: {0}", CurrentTurnOwnerTag);
+	const UDevInfoWidget* Widget = HUD->GetDevInfoWidget();
+	Widget->CurrentTurnOwnerText->SetText(FText::FromString(CurrentTurnOwnerTag));
 	if (CurrentTurnOwnerTag == Nation->GetFactionTag())
 	{
 		bMyTurn = true;
@@ -140,4 +143,6 @@ void ABasePlayerController::CheckForMyTurn(const FString& CurrentTurnOwnerTag)
 void ABasePlayerController::StartNewTurn(const int32 TurnNumberVar)
 {
 	TurnNumber = TurnNumberVar;
+	const UDevInfoWidget* Widget = HUD->GetDevInfoWidget();
+	Widget->TurnNumberText->SetText(FText::AsNumber(TurnNumberVar));
 }

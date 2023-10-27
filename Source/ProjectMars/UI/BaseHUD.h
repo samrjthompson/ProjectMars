@@ -9,6 +9,7 @@
 
 class UEconomyData;
 class AArmy;
+class UDevInfoWidget;
 
 UCLASS()
 class PROJECTMARS_API ABaseHUD : public AHUD
@@ -59,10 +60,16 @@ public:
 	UFUNCTION()
 	void MoveWidgetInViewportWithMouse(class UUserWidget* EventPopupWidgetToMove);
 
+	UFUNCTION()
+	UDevInfoWidget* GetDevInfoWidget() const;
+
 private:
 	// Functions
 	UFUNCTION()
 	void DrawFPS();
+
+	UFUNCTION()
+	void DrawDevInfo();
 
 	// Properties
 	UPROPERTY(EditAnywhere)
@@ -88,15 +95,6 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "SelectionBox")
 	FLinearColor SelectionBoxColor{};
-
-	UPROPERTY(EditAnywhere, Category = "Widgets")
-	TSubclassOf<class UBaseGameplayWidget> BaseGameplayWidgetClass;
-
-	UPROPERTY(EditAnywhere)
-	class UBaseGameplayWidget* BaseGameplayWidget{ nullptr };
-
-	UPROPERTY(EditAnywhere)
-	class UEconomyWidget* EconomyWidget{ nullptr };
 	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UEconomyWidget> EconomyWidgetClass;
@@ -121,6 +119,22 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	FVector2D DistanceBetweenMouseAndLeftSideOfWidget;
+
+	// Widgets
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<class UBaseGameplayWidget> BaseGameplayWidgetClass;
+
+	UPROPERTY(EditAnywhere)
+	class UBaseGameplayWidget* BaseGameplayWidget{ nullptr };
+
+	UPROPERTY(EditAnywhere)
+	class UEconomyWidget* EconomyWidget{ nullptr };
+	
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<UDevInfoWidget> DevInfoWidgetClass;
+
+	UPROPERTY(EditAnywhere)
+	UDevInfoWidget* DevInfoWidget{ nullptr };
 
 protected:
 	virtual void BeginPlay() override;

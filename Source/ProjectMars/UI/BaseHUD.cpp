@@ -9,6 +9,7 @@
 #include "Logging/StructuredLog.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
+#include "ProjectMars/UI/Widgets/DevInfo/DevInfoWidget.h"
 #include "Widgets/EconomyWidget.h"
 #include "Widgets/Events/EventPopupWidget.h"
 #include "ProjectMars/Military/Army.h"
@@ -29,6 +30,7 @@ void ABaseHUD::BeginPlay()
 	Super::BeginPlay();
 	
 	InitialisePointers();
+	DevInfoWidget->TurnNumberText->SetText(FText::AsNumber(1));
 }
 
 void ABaseHUD::DrawHUD()
@@ -43,6 +45,7 @@ void ABaseHUD::DrawHUD()
 	
 	DrawFPS();
 	DrawEconomyData(EconomyData);
+	DrawDevInfo();
 
 	if(EventPopupWidget && EventPopupWidget->DecisionButton)
 	{
@@ -126,12 +129,11 @@ void ABaseHUD::DrawSelectionBox()
 void ABaseHUD::InitialisePointers()
 {
 	Player = Cast<AProjectMarsPlayer>(GetOwningPlayerController()->GetPawn());
-
+	
 	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(GetOwningPlayerController(), BaseGameplayWidgetClass);
-
 	EconomyWidget = CreateWidget<UEconomyWidget>(GetOwningPlayerController(), EconomyWidgetClass);
-
 	EventPopupWidget = CreateWidget<UEventPopupWidget>(GetOwningPlayerController(), EventPopupWidgetClass);
+	DevInfoWidget = CreateWidget<UDevInfoWidget>(GetOwningPlayerController(), DevInfoWidgetClass);
 }
 
 void ABaseHUD::DrawEconomyData(const UEconomyData* EconomyDataVar)
@@ -158,6 +160,20 @@ void ABaseHUD::DrawFPS()
 	{
 		BaseGameplayWidget->FPSText->SetText(FText::AsNumber(FPSNum));
 	}
+}
+
+void ABaseHUD::DrawDevInfo()
+{
+	if (!DevInfoWidget)
+	{
+		UE_LOGFMT(LogTemp, Error, "Dev Info Widget is null");
+		return;
+	}
+	// DevInfoWidget->TurnNumberText->SetText(FText::FromString("Turn Number Text"));
+	DevInfoWidget->SeasonText->SetText(FText::FromString("Season Text"));
+	DevInfoWidget->YearText->SetText(FText::FromString("Year Text"));
+	// DevInfoWidget->CurrentTurnOwnerText->SetText(FText::FromString("Current Turn Owner Text"));
+	DevInfoWidget->AddToViewport(1);
 }
 
 void ABaseHUD::DrawTooltip()
@@ -204,6 +220,11 @@ void ABaseHUD::MoveWidgetInViewportWithMouse(UUserWidget* EventPopupWidgetToMove
 		CurrentEventPopupPos = GetMousePosition2D() - DistanceBetweenMouseAndLeftSideOfWidget;
 		EventPopupWidgetToMove->SetPositionInViewport(CurrentEventPopupPos);
 	}
+}
+
+UDevInfoWidget* ABaseHUD::GetDevInfoWidget() const
+{
+	return DevInfoWidget;
 }
 
 void ABaseHUD::GetActorsUnderSelectionBox()
