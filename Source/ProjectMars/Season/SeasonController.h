@@ -19,9 +19,11 @@ class PROJECTMARS_API USeasonController : public UObject
 public:
 	USeasonController();
 	
-	// Function
+	// Functions
+	
+	// Broadcasts a new season with the current season as a parameter
 	UFUNCTION()
-	void CalculateCurrentSeason(const int32 TurnNumberVar);
+	void BroadcastNewSeasonEvent(const int32 TurnNumberVar);
 
 	UFUNCTION()
 	void PopulateListOfSeasons();
@@ -41,6 +43,12 @@ public:
 	USeasonController* SetDelegateController(UDelegateController* DelegateControllerVar);
 
 private:
+	// Functions
+	UFUNCTION()
+	void SetStartTurnSeason();
+
+	// Properties
+	
 	UPROPERTY(EditAnywhere)
 	FString CurrentSeason;
 
