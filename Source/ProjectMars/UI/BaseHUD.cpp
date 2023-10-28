@@ -25,6 +25,8 @@ ABaseHUD::ABaseHUD()
 	bHasStartedSelecting = false;
 	SelectionBoxColor = FLinearColor(0.f, 1.f, 0.2f, 0.15f);
 
+	CurrentYear = 0;
+	CurrentDate = "";
 	DateSuffix = "BCE";
 	CurrentSeason = "NO_SEASON_SET";
 }
@@ -183,8 +185,13 @@ void ABaseHUD::DrawDevInfo()
 	}
 	// DevInfoWidget->TurnNumberText->SetText(FText::FromString("Turn Number Text"));
 	DevInfoWidget->SeasonText->SetText(FText::FromString(CurrentSeason));
-	DevInfoWidget->YearText->SetText(FText::FromString("Year Text"));
+	DevInfoWidget->YearText->SetText(FText::FromString(CurrentDate));
 	// DevInfoWidget->CurrentTurnOwnerText->SetText(FText::FromString("Current Turn Owner Text"));
+}
+
+void ABaseHUD::SetYearText(const FString& CurrentDateVar)
+{
+	CurrentDate = CurrentDateVar;
 }
 
 void ABaseHUD::DrawTooltip()
@@ -248,6 +255,7 @@ void ABaseHUD::BroadcastStartButton()
 void ABaseHUD::SubscribeToEvents(UDelegateController* DelegateControllerVar)
 {
 	DelegateControllerVar->OnNewSeason.AddDynamic(this, &ABaseHUD::UpdateSeasonText);
+	DelegateControllerVar->OnUpdateDate.AddDynamic(this, &ABaseHUD::SetYearText);
 }
 
 ABaseHUD* ABaseHUD::SetDelegateController(UDelegateController* DelegateControllerVar)

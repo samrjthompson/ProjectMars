@@ -88,7 +88,13 @@ private:
 	UFUNCTION()
 	void DrawDevInfo();
 
+	UFUNCTION()
+	void SetYearText(const FString& CurrentDateVar);
+
 	// Properties
+	UPROPERTY()
+	FString CurrentDate;
+	
 	UPROPERTY(EditAnywhere)
 	UDelegateController* DelegateController{ nullptr };
 	
@@ -164,6 +170,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	FString CurrentSeason;
+
+	UPROPERTY(EditAnywhere)
+	int32 CurrentYear;
 
 protected:
 	virtual void BeginPlay() override;

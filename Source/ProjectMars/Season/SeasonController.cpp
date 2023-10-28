@@ -15,13 +15,19 @@ USeasonController::USeasonController()
 
 void USeasonController::BroadcastNewSeasonEvent(const int32 TurnNumberVar)
 {
-	CurrentSeason = ListOfSeasons[SeasonIndex++];
+	CurrentSeason = ListOfSeasons[SeasonIndex];
+	DelegateController->OnNewSeason.Broadcast(CurrentSeason);
+	if (SeasonIndex == 0)
+	{
+		BroadcastNewYear();
+	}
+	SeasonIndex++;
 	if (SeasonIndex > MaxSeasonIndex)
 	{
 		// Reset SeasonIndex
 		SeasonIndex = 0;
 	}
-	DelegateController->OnNewSeason.Broadcast(CurrentSeason);
+	
 }
 
 void USeasonController::PopulateListOfSeasons()

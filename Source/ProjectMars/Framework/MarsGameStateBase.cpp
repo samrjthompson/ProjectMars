@@ -3,7 +3,6 @@
 
 #include "MarsGameStateBase.h"
 
-#include "Logging/StructuredLog.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Delegates/DelegateController.h"
@@ -11,6 +10,7 @@
 #include "ProjectMars/Nation/NationBuilder.h"
 #include "ProjectMars/Season/SeasonController.h"
 #include "ProjectMars/Turns/TurnController.h"
+#include "ProjectMars/Turns/YearController.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
 {
@@ -29,11 +29,14 @@ AMarsGameStateBase::AMarsGameStateBase()
 	SeasonController = NewObject<USeasonController>();
 	SeasonController->SetDelegateController(DelegateController);
 	SeasonController->SubscribeToDelegateEvents(DelegateController);
+
+	// Year Controller
+	YearController = NewObject<UYearController>();
+	YearController->SetDelegateController(DelegateController);
+	YearController->SubToEvents(DelegateController);
 	
 	InitialiseFactionTags();
 	BuildNations();
-	
-	UE_LOGFMT(LogTemp, Log, "Constructing MarsGameStateBase");
 }
 
 void AMarsGameStateBase::AddPlayerToPlayerArray(AProjectMarsPlayer* ProjectMarsPlayer)
@@ -44,7 +47,6 @@ void AMarsGameStateBase::AddPlayerToPlayerArray(AProjectMarsPlayer* ProjectMarsP
 	PlayerController->SetDelegateController(DelegateController);
 	PlayerController->SubscribeToDelegates(DelegateController);
 	PlayerController->SetNation(*Nations.Find("ROM"));
-	UE_LOGFMT(LogTemp, Display, "Added player to player array");
 }
 
 void AMarsGameStateBase::LoadFirstTurn()
