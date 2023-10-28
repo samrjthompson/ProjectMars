@@ -8,7 +8,7 @@ public class ProjectMars : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "UnrealEd" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "UnrealEd", "Json" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { "AITestSuite", "AITestSuite" });
 
