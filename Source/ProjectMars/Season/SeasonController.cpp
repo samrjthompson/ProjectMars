@@ -11,10 +11,9 @@ USeasonController::USeasonController()
 	SeasonIndex = 0;
 	PopulateListOfSeasons();
 	CurrentSeason = StartingSeason;
-	UE_LOGFMT(LogTemp, Warning, "Creating season controller");
 }
 
-void USeasonController::CalculateCurrentSeason(const int32 TurnNumberVar)
+void USeasonController::BroadcastNewSeasonEvent(const int32 TurnNumberVar)
 {
 	CurrentSeason = ListOfSeasons[SeasonIndex++];
 	if (SeasonIndex > MaxSeasonIndex)
@@ -36,7 +35,8 @@ void USeasonController::PopulateListOfSeasons()
 
 void USeasonController::SubscribeToDelegateEvents(UDelegateController* DelegateControllerVar)
 {
-	DelegateController->OnStartNewTurn.AddDynamic(this, &USeasonController::CalculateCurrentSeason);
+	DelegateController->OnFirstTurn.AddDynamic(this, &USeasonController::SetStartTurnSeason);
+	DelegateController->OnStartNewTurn.AddDynamic(this, &USeasonController::BroadcastNewSeasonEvent);
 }
 
 void USeasonController::BroadcastNewYear()
@@ -53,4 +53,9 @@ USeasonController* USeasonController::SetDelegateController(UDelegateController*
 {
 	DelegateController = DelegateControllerVar;
 	return this;
+}
+
+void USeasonController::SetStartTurnSeason()
+{
+	BroadcastNewSeasonEvent(0);
 }

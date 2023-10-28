@@ -49,6 +49,10 @@ void ABasePlayerController::SubscribeToDelegates(UDelegateController* DelegateCo
 {
 	DelegateControllerVar->OnChangeTurnOwner.AddDynamic(this, &ABasePlayerController::CheckForMyTurn);
 	DelegateControllerVar->OnStartNewTurn.AddDynamic(this, &ABasePlayerController::StartNewTurn);
+
+	// HUD
+	HUD->SetDelegateController(DelegateControllerVar);
+	HUD->SubscribeToEvents(DelegateControllerVar);
 }
 
 void ABasePlayerController::StartGame()
@@ -104,6 +108,7 @@ void ABasePlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	InitialisePointers();
+
 }
 
 void ABasePlayerController::Tick(float DeltaSeconds)

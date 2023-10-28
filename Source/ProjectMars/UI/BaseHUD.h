@@ -11,6 +11,7 @@ class UEconomyData;
 class AArmy;
 class UDevInfoWidget;
 class UStartButtonWidget;
+class UDelegateController;
 
 UCLASS()
 class PROJECTMARS_API ABaseHUD : public AHUD
@@ -67,8 +68,20 @@ public:
 	UFUNCTION()
 	void BroadcastStartButton();
 
+	UFUNCTION()
+	void SubscribeToEvents(UDelegateController* DelegateControllerVar);
+
+	// Setters
+	
+	UFUNCTION()
+	ABaseHUD* SetDelegateController(UDelegateController* DelegateControllerVar);
+
 private:
 	// Functions
+	
+	UFUNCTION()
+	void UpdateSeasonText(const FString& NewSeasonVar);
+	
 	UFUNCTION()
 	void DrawFPS();
 
@@ -76,6 +89,9 @@ private:
 	void DrawDevInfo();
 
 	// Properties
+	UPROPERTY(EditAnywhere)
+	UDelegateController* DelegateController{ nullptr };
+	
 	UPROPERTY(EditAnywhere)
 	int32 FPSNum{};
 
@@ -145,6 +161,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	UStartButtonWidget* StartButtonWidget{ nullptr };
+
+	UPROPERTY(EditAnywhere)
+	FString CurrentSeason;
 
 protected:
 	virtual void BeginPlay() override;

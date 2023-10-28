@@ -8,6 +8,7 @@
 #include "Components/TextBlock.h"
 #include "Logging/StructuredLog.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
+#include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
 #include "ProjectMars/UI/Widgets/DevInfo/DevInfoWidget.h"
@@ -25,6 +26,7 @@ ABaseHUD::ABaseHUD()
 	SelectionBoxColor = FLinearColor(0.f, 1.f, 0.2f, 0.15f);
 
 	DateSuffix = "BCE";
+	CurrentSeason = "NO_SEASON_SET";
 }
 
 void ABaseHUD::BeginPlay()
@@ -180,7 +182,7 @@ void ABaseHUD::DrawDevInfo()
 		return;
 	}
 	// DevInfoWidget->TurnNumberText->SetText(FText::FromString("Turn Number Text"));
-	DevInfoWidget->SeasonText->SetText(FText::FromString("Season Text"));
+	DevInfoWidget->SeasonText->SetText(FText::FromString(CurrentSeason));
 	DevInfoWidget->YearText->SetText(FText::FromString("Year Text"));
 	// DevInfoWidget->CurrentTurnOwnerText->SetText(FText::FromString("Current Turn Owner Text"));
 }
@@ -241,6 +243,22 @@ void ABaseHUD::BroadcastStartButton()
 	StartButtonWidget->RemoveFromParent();
 	ABasePlayerController* Controller = Cast<ABasePlayerController>(GetOwningPlayerController());
 	Controller->StartGame();
+}
+
+void ABaseHUD::SubscribeToEvents(UDelegateController* DelegateControllerVar)
+{
+	DelegateControllerVar->OnNewSeason.AddDynamic(this, &ABaseHUD::UpdateSeasonText);
+}
+
+ABaseHUD* ABaseHUD::SetDelegateController(UDelegateController* DelegateControllerVar)
+{
+	DelegateController = DelegateControllerVar;
+	return this;
+}
+
+void ABaseHUD::UpdateSeasonText(const FString& NewSeasonVar)
+{
+	CurrentSeason = NewSeasonVar;
 }
 
 void ABaseHUD::GetActorsUnderSelectionBox()
