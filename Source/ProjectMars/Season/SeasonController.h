@@ -48,7 +48,6 @@ private:
 	void SetStartTurnSeason();
 
 	// Properties
-	
 	UPROPERTY(EditAnywhere)
 	FString CurrentSeason;
 

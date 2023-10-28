@@ -10,15 +10,21 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMonthlyUpdate);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerInitialisation);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAIFactionInitialisation);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnNewYear);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnNewSeason, const FString&, CurrentSeason);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnStartNewGame);
 
-// Turn-based delegates
+// Turn-based Events
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnFirstTurn);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEndTurn);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChangeTurnOwner, const FString&, CurrentTurnOwner);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStartNewTurn, const int32, TurnNumber);
+
+// Year Events
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnNewYear);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSetStartYearSuffix, const FString&, StartSuffixVar);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUpdateYearSuffix, const FString&, UpdateSuffixVar);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUpdateDate, const FString&, DateVar);
 
 /**
  * 
@@ -39,6 +45,9 @@ public:
 	FOnNewYear OnNewYear;
 	FOnNewSeason OnNewSeason;
 	FOnStartNewGame OnStartNewGame;
+	FOnUpdateDate OnUpdateDate;
+	FOnSetStartYearSuffix OnSetStartYearSuffix;
+	FOnUpdateYearSuffix OnUpdateYearSuffix;
 
 private:
 	

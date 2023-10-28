@@ -12,6 +12,7 @@ class UDelegateController;
 class UNation;
 class UTurnController;
 class USeasonController;
+class UYearController;
 
 UCLASS()
 class PROJECTMARS_API AMarsGameStateBase : public AGameStateBase
@@ -64,6 +65,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	USeasonController* SeasonController{ nullptr };
+
+	UPROPERTY(EditAnywhere)
+	UYearController* YearController{ nullptr };
 
 protected:
 	virtual void Tick(float DeltaSeconds) override;
