@@ -7,6 +7,8 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "Logging/StructuredLog.h"
+#include "ProjectMars/Civic/Population/PopulationController.h"
+#include "ProjectMars/Civic/Population/PopulationData.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
@@ -187,6 +189,23 @@ void ABaseHUD::DrawDevInfo()
 	DevInfoWidget->SeasonText->SetText(FText::FromString(CurrentSeason));
 	DevInfoWidget->YearText->SetText(FText::FromString(CurrentDate));
 	// DevInfoWidget->CurrentTurnOwnerText->SetText(FText::FromString("Current Turn Owner Text"));
+
+	// Population
+	const UPopulationData* PopData = PopulationController->GetPopulationData();
+
+	const FString TotalPop = FString::Printf(TEXT("Total pop num: %d"), PopData->GetCurrentTotalPopNum());
+	const FString CitizenPop = FString::Printf(TEXT("Citizen pop num: %d"), PopData->GetCurrentCitizenPopNum());
+	const FString NonCitizenPop = FString::Printf(TEXT("Non-Citizen pop num: %d"), PopData->GetCurrentNonCitizenPopNum());
+	const FString AlliedClientPop = FString::Printf(TEXT("Allied/Client pop num: %d"), PopData->GetCurrentAlliedClientPopNum());
+	const FString SlavePop = FString::Printf(TEXT("Slave pop num: %d"), PopData->GetCurrentSlavePopNum());
+	const FString ForeignerPop = FString::Printf(TEXT("Foreigner pop num: %d"), PopData->GetCurrentForeignerPopNum());
+	
+	DevInfoWidget->CurrentTotalPopNum->SetText(FText::FromString(TotalPop));
+	DevInfoWidget->CurrentCitizenPopNum->SetText(FText::FromString(CitizenPop));
+	DevInfoWidget->CurrentNonCitizenPopNum->SetText(FText::FromString(NonCitizenPop));
+	DevInfoWidget->CurrentAlliedClientPopNum->SetText(FText::FromString(AlliedClientPop));
+	DevInfoWidget->CurrentSlavePopNum->SetText(FText::FromString(SlavePop));
+	DevInfoWidget->CurrentForeignerPopNum->SetText(FText::FromString(ForeignerPop));
 }
 
 void ABaseHUD::SetYearText(const FString& CurrentDateVar)
@@ -261,6 +280,12 @@ void ABaseHUD::SubscribeToEvents(UDelegateController* DelegateControllerVar)
 ABaseHUD* ABaseHUD::SetDelegateController(UDelegateController* DelegateControllerVar)
 {
 	DelegateController = DelegateControllerVar;
+	return this;
+}
+
+ABaseHUD* ABaseHUD::SetPopulationController(const UPopulationController* PopulationControllerVar)
+{
+	PopulationController = PopulationControllerVar;
 	return this;
 }
 

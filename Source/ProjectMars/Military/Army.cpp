@@ -107,7 +107,7 @@ void AArmy::HideArmyWidget()
 	OnArmyUnClicked.Broadcast();
 	if (ArmyRosterWidget)
 	{
-		ArmyRosterWidget->RemoveFromViewport();
+		ArmyRosterWidget->RemoveFromParent();
 	}
 }
 

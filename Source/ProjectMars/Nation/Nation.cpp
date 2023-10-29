@@ -5,9 +5,12 @@
 
 #include "Logging/StructuredLog.h"
 #include "..\Delegates\NationDelegateController.h"
+#include "ProjectMars/Civic/Population/PopulationController.h"
 #include "ProjectMars/Economy/EconomyController.h"
 
 UNation::UNation()
+	:
+PopulationController(NewObject<UPopulationController>())
 {
 	// StateDelegateController
 	NationDelegateController = NewObject<UNationDelegateController>();
@@ -27,6 +30,11 @@ UEconomyController* UNation::GetEconomyController() const
 AProjectMarsPlayer* UNation::GetOwningPlayer() const
 {
 	return OwningPlayer;
+}
+
+const UPopulationController* UNation::GetPopulationController() const
+{
+	return PopulationController;
 }
 
 UNation* UNation::SetOwningPlayer(AProjectMarsPlayer* PlayerVar)

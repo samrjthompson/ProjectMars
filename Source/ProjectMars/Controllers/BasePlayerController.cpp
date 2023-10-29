@@ -71,6 +71,9 @@ ABasePlayerController* ABasePlayerController::SetNation(UNation* NationVar)
 {
 	Nation = NationVar;
 	Nation->SetFactionTag("ROM");
+
+	// TODO: Refactor this into own method - Maybe add a delegate event here to set all required properties relating to nation
+	HUD->SetPopulationController(Nation->GetPopulationController());
 	return this;
 }
 
@@ -131,6 +134,7 @@ void ABasePlayerController::InitialisePointers()
 {
 	PlayerPawn = Cast<AProjectMarsPlayer>(GetPawn());
 	HUD = Cast<ABaseHUD>(GetHUD());
+
 }
 
 void ABasePlayerController::CheckForMyTurn(const FString& CurrentTurnOwnerTag)

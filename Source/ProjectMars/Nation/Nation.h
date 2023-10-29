@@ -10,6 +10,7 @@
 class UEconomyController;
 class UDelegateController;
 class AProjectMarsPlayer;
+class UPopulationController;
 
 // A class to represent a state such as the Roman Republic or Carthage
 UCLASS()
@@ -33,6 +34,9 @@ public:
 
 	UFUNCTION()
 	AProjectMarsPlayer* GetOwningPlayer() const;
+
+	UFUNCTION()
+	const UPopulationController* GetPopulationController() const;
 	
 	// Setters
 	UFUNCTION()
@@ -57,6 +61,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	AProjectMarsPlayer* OwningPlayer{ nullptr };
+
+	UPROPERTY()
+	const UPopulationController* PopulationController{ nullptr };
 
 	/*UPROPERTY()
 	UTradeManager* TradeManager;*/
