@@ -3,6 +3,7 @@
 
 #include "MarsGameStateBase.h"
 
+#include "Logging/StructuredLog.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Delegates/DelegateController.h"
@@ -11,6 +12,7 @@
 #include "ProjectMars/Season/SeasonController.h"
 #include "ProjectMars/Turns/TurnController.h"
 #include "ProjectMars/Turns/YearController.h"
+#include "ProjectMars/Utils/ReadWriteJsonFile.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
 {
@@ -79,10 +81,21 @@ void AMarsGameStateBase::SetDelegateController(UDelegateController* DelegateCont
 void AMarsGameStateBase::InitialiseFactionTags()
 {
 	// TODO: Have array populated by JSON file of all faction tags
+	bool bSuccess;
+	FString Output;
+	const FString GameContentDirectory = FPaths::GameSourceDir();
+	const FString JsonPath = GameContentDirectory + "ProjectMars/TempJson/Nations/Nations.json";
+	const TSharedPtr<FJsonObject> Json = UReadWriteJsonFile::ReadJson(JsonPath, bSuccess, Output);
+
+	if (!bSuccess)
+	{
+		UE_LOGFMT(LogTemp, Fatal, "Initialising faction tags failed with the following output: {0}", Output);
+	}
 	
-	FactionTags.Add("ROM");
-	FactionTags.Add("SAM");
-	FactionTags.Add("CAR");
+	for (const auto& Elem : Json->Values)
+	{
+		FactionTags.Add(Elem.Key);
+	}
 	TurnController->SetFactionTags(FactionTags);
 }
 

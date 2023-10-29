@@ -12,6 +12,7 @@ class AArmy;
 class UDevInfoWidget;
 class UStartButtonWidget;
 class UDelegateController;
+class UPopulationController;
 
 UCLASS()
 class PROJECTMARS_API ABaseHUD : public AHUD
@@ -75,6 +76,9 @@ public:
 	
 	UFUNCTION()
 	ABaseHUD* SetDelegateController(UDelegateController* DelegateControllerVar);
+
+	UFUNCTION()
+	ABaseHUD* SetPopulationController(const UPopulationController* PopulationControllerVar);
 
 private:
 	// Functions
@@ -173,6 +177,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	int32 CurrentYear;
+
+	UPROPERTY()
+	const UPopulationController* PopulationController{ nullptr };
 
 protected:
 	virtual void BeginPlay() override;

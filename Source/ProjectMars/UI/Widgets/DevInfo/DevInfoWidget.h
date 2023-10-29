@@ -34,6 +34,24 @@ public:
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	UTextBlock* CurrentTurnOwnerText{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UTextBlock* CurrentTotalPopNum{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UTextBlock* CurrentCitizenPopNum{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UTextBlock* CurrentNonCitizenPopNum{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UTextBlock* CurrentAlliedClientPopNum{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UTextBlock* CurrentSlavePopNum{ nullptr };
+	
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UTextBlock* CurrentForeignerPopNum{ nullptr };
 	
 private:
 	
