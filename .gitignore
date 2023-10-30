@@ -15,10 +15,6 @@ Plugins
 *.suo
 *.xcodeproj
 *.xcworkspace
-*.uasset
-*.umap
-*.wav
-*.png
 .fake
 *.user
 *.xml
