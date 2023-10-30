@@ -15,6 +15,8 @@ class UDelegateController;
 class UPopulationController;
 class ABasePlayerController;
 class UMainMenuWidget;
+class UChooseFactionWidget;
+class UMainMenu2Widget;
 
 class UNation;
 class UPopulationData;
@@ -28,6 +30,9 @@ public:
 	ABaseHUD();
 
 	// Functions
+	UFUNCTION()
+	void DrawFactionInfo();
+	
 	void PopulateDataObjects();
 
 	UFUNCTION()
@@ -41,6 +46,12 @@ public:
 
 	UFUNCTION()
 	void RemoveMainMenuFromParent();
+
+	UFUNCTION()
+	void RemoveMainMenu2FromParent();
+
+	UFUNCTION()
+	void LoadMainWorld();
 
 	// Getters
 
@@ -181,6 +192,18 @@ private:
 	FVector2D DistanceBetweenMouseAndLeftSideOfWidget;
 
 	// Widgets
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<UMainMenu2Widget> MainMenu2WidgetClass;
+	
+	UPROPERTY(EditAnywhere)
+	UMainMenu2Widget* MainMenu2Widget{ nullptr };
+	
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<UChooseFactionWidget> ChooseFactionWidgetClass;
+
+	UPROPERTY(EditAnywhere)
+	UChooseFactionWidget* ChooseFactionWidget{ nullptr };
+	
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TSubclassOf<UMainMenuWidget> MainMenuWidgetClass;
 

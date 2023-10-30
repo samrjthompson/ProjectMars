@@ -6,7 +6,13 @@
 #include "Blueprint/UserWidget.h"
 #include "ChooseFactionWidget.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnChooseFaction);
+class UCanvasPanel;
+class UVerticalBox;
+
+class UDelegateController;
+class UButton;
+class UFactionButton;
+class UFactionInfoWidget;
 
 UCLASS()
 class PROJECTMARS_API UChooseFactionWidget : public UUserWidget
@@ -16,22 +22,47 @@ class PROJECTMARS_API UChooseFactionWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	UChooseFactionWidget(const FObjectInitializer& ObjectInitializer);
+	explicit UChooseFactionWidget(const FObjectInitializer& ObjectInitializer);
 
 	virtual void NativeConstruct() override;
 
 	virtual void NativeOnInitialized() override;
 
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	class UButton* EtruriaButton{ nullptr };
+	void SubscribeToEvents(UDelegateController* DelegateControllerVar);
+
+	void ShowFactionInfoWidget(UFactionButton* ButtonHovered);
+
+	void InitialiseFactionButtonsWithSelf();
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	class UButton* RomeButton{ nullptr };
-
-	UFUNCTION()
-	void CloseWidget();
-
-	UPROPERTY()
-	FOnChooseFaction OnChooseFaction;
+	class UFactionButton* FactionButton_Rome{ nullptr };
 	
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UFactionButton* FactionButton_Carthage{ nullptr };
+	
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UFactionButton* FactionButton_Samnium{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UFactionInfoWidget* FactionInfoWidget{ nullptr };
+
+	void BuildWidgets();
+
+	/*UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UCanvasPanel* CanvasPanelMain{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UCanvasPanel* CanvasPanelSecond{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UVerticalBox* VerticalBoxMain{ nullptr };*/
+
+	/*UPROPERTY(EditAnywhere)
+	class UButton* FactionButton2{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* FactionButtonText{ nullptr };*/
+
+	/*UPROPERTY()
+	TArray<UButton*> ListOfButtons;*/
 };

@@ -37,7 +37,7 @@ ABasePlayerController::ABasePlayerController()
 void ABasePlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
-
+	
 	InputComponent->BindAction("Enter", IE_Released, this, &ABasePlayerController::OnEnter);
 	
 	InputComponent->BindAction("LeftMouseClick", IE_Released, this, &ABasePlayerController::OnLMBClick);
@@ -45,7 +45,7 @@ void ABasePlayerController::SetupInputComponent()
 
 	// Player Pawn Movement
 	InputComponent->BindAxis("MoveForward", this, &ABasePlayerController::MovePlayerPawnForwardOrBack);
-	InputComponent->BindAxis("GameSpeed", this, &ABasePlayerController::MovePlayerPawnRightOrLeft);
+	InputComponent->BindAxis("MoveRight", this, &ABasePlayerController::MovePlayerPawnRightOrLeft);
 }
 
 void ABasePlayerController::SubscribeToDelegates(UDelegateController* DelegateControllerVar)

@@ -11,9 +11,8 @@
 #include "ProjectMars/Civic/Population/PopulationData.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Delegates/DelegateController.h"
-#include "ProjectMars/Economy/EconomyService.h"
-#include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
+#include "ProjectMars/UI/Widgets/ChooseFactionWidget.h"
 #include "ProjectMars/UI/Widgets/DevInfo/DevInfoWidget.h"
 #include "Widgets/EconomyWidget.h"
 #include "Widgets/Events/EventPopupWidget.h"
@@ -24,6 +23,8 @@
 #include "Widgets/MainMenuWidget.h"
 #include "Widgets/DevInfo/StartButtonWidget.h"
 #include "Kismet/GameplayStatics.h"
+#include "Widgets/MainMenu2Widget.h"
+#include "Widgets/WidgetComponents/FactionButton.h"
 
 #define OUT
 
@@ -40,42 +41,6 @@ ABaseHUD::ABaseHUD()
 	UE_LOGFMT(LogTemp, Warning, "HUD has been built");
 }
 
-void ABaseHUD::PopulateDataObjects()
-{
-	ensure(Nation);
-	PopulationData = Nation->GetNationService()->GetCivicService()->GetPopulationService()->GetPopulationData();
-}
-
-void ABaseHUD::DrawMainMenu()
-{
-	
-}
-
-void ABaseHUD::AddToViewport(UUserWidget* Widget)
-{
-	Widget->AddToViewport();
-}
-
-void ABaseHUD::RemoveFromParent(UUserWidget* Widget)
-{
-	Widget->RemoveFromParent();
-}
-
-void ABaseHUD::RemoveMainMenuFromParent()
-{
-	RemoveFromParent(MainMenuWidget);
-	//MainMenuWidget->GetParent()->ClearChildren();
-	UGameplayStatics::OpenLevel(GetWorld(), TEXT("DefaultMap"));
-	
-	UE_LOGFMT(LogTemp, Warning, "Opening DefaultMap");
-}
-
-ABaseHUD* ABaseHUD::SetNation(const UNation* NationVar)
-{
-	Nation = NationVar;
-	return this;
-}
-
 void ABaseHUD::BeginPlay()
 {
 	Super::BeginPlay();
@@ -84,7 +49,11 @@ void ABaseHUD::BeginPlay()
 	if (UGameplayStatics::GetCurrentLevelName(GetWorld()) == "MainMenu")
 	{
 		MainMenuWidget->StartButton->OnReleased.AddDynamic(this, &ABaseHUD::RemoveMainMenuFromParent);
+		MainMenu2Widget->StartNewGameButton_1->OnReleased.AddDynamic(this, &ABaseHUD::RemoveMainMenu2FromParent);
+		ChooseFactionWidget->FactionButton_Rome->OnReleased.AddDynamic(this, &ABaseHUD::LoadMainWorld);
 		MainMenuWidget->AddToViewport();
+		
+		//ChooseFactionWidget->AddToViewport();
 	}
 	else if (UGameplayStatics::GetCurrentLevelName(GetWorld()) == "DefaultMap")
 	{
@@ -122,6 +91,57 @@ void ABaseHUD::DrawHUD()
 	}*/
 
 	//MoveWidgetInViewportWithMouse(EventPopupWidget);
+}
+
+void ABaseHUD::DrawFactionInfo()
+{
+	
+}
+
+void ABaseHUD::PopulateDataObjects()
+{
+	ensure(Nation);
+	PopulationData = Nation->GetNationService()->GetCivicService()->GetPopulationService()->GetPopulationData();
+}
+
+void ABaseHUD::DrawMainMenu()
+{
+	
+}
+
+void ABaseHUD::AddToViewport(UUserWidget* Widget)
+{
+	Widget->AddToViewport();
+}
+
+void ABaseHUD::RemoveFromParent(UUserWidget* Widget)
+{
+	Widget->RemoveFromParent();
+}
+
+void ABaseHUD::RemoveMainMenuFromParent()
+{
+	RemoveFromParent(MainMenuWidget);
+	//MainMenuWidget->GetParent()->ClearChildren();
+	MainMenu2Widget->AddToViewport();
+}
+
+void ABaseHUD::RemoveMainMenu2FromParent()
+{
+	MainMenu2Widget->RemoveFromParent();
+	ChooseFactionWidget->AddToViewport();
+}
+
+void ABaseHUD::LoadMainWorld()
+{
+	UGameplayStatics::OpenLevel(GetWorld(), TEXT("DefaultMap"));
+	ChooseFactionWidget->RemoveFromParent();
+}
+
+ABaseHUD* ABaseHUD::SetNation(const UNation* NationVar)
+{
+	Nation = NationVar;
+	return this;
 }
 
 void ABaseHUD::SetDateSuffix(const FString& SuffixVal)
@@ -195,6 +215,9 @@ void ABaseHUD::DrawSelectionBox()
 void ABaseHUD::InitialisePointers()
 {
 	MainMenuWidget = CreateWidget<UMainMenuWidget>(GetOwningPlayerController(), MainMenuWidgetClass);
+	MainMenu2Widget = CreateWidget<UMainMenu2Widget>(GetOwningPlayerController(), MainMenu2WidgetClass);
+	ChooseFactionWidget = CreateWidget<UChooseFactionWidget>(GetOwningPlayerController(), ChooseFactionWidgetClass);
+	ChooseFactionWidget->InitialiseFactionButtonsWithSelf();
 	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(GetOwningPlayerController(), BaseGameplayWidgetClass);
 	EconomyWidget = CreateWidget<UEconomyWidget>(GetOwningPlayerController(), EconomyWidgetClass);
 	EventPopupWidget = CreateWidget<UEventPopupWidget>(GetOwningPlayerController(), EventPopupWidgetClass);
