@@ -14,6 +14,7 @@ class UStartButtonWidget;
 class UDelegateController;
 class UPopulationController;
 class ABasePlayerController;
+class UMainMenuWidget;
 
 class UNation;
 class UPopulationData;
@@ -28,6 +29,18 @@ public:
 
 	// Functions
 	void PopulateDataObjects();
+
+	UFUNCTION()
+	void DrawMainMenu();
+
+	UFUNCTION()
+	void AddToViewport(UUserWidget* Widget);
+
+	UFUNCTION()
+	void RemoveFromParent(UUserWidget* Widget);
+
+	UFUNCTION()
+	void RemoveMainMenuFromParent();
 
 	// Getters
 
@@ -168,6 +181,12 @@ private:
 	FVector2D DistanceBetweenMouseAndLeftSideOfWidget;
 
 	// Widgets
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<UMainMenuWidget> MainMenuWidgetClass;
+
+	UPROPERTY(EditAnywhere)
+	UMainMenuWidget* MainMenuWidget{ nullptr };
+	
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TSubclassOf<class UBaseGameplayWidget> BaseGameplayWidgetClass;
 

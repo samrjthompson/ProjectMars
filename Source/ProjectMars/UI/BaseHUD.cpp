@@ -21,7 +21,9 @@
 #include "ProjectMars/Economy/Data/EconomyData.h"
 #include "ProjectMars/Nation/Nation.h"
 #include "ProjectMars/Nation/NationService.h"
+#include "Widgets/MainMenuWidget.h"
 #include "Widgets/DevInfo/StartButtonWidget.h"
+#include "Kismet/GameplayStatics.h"
 
 #define OUT
 
@@ -44,6 +46,30 @@ void ABaseHUD::PopulateDataObjects()
 	PopulationData = Nation->GetNationService()->GetCivicService()->GetPopulationService()->GetPopulationData();
 }
 
+void ABaseHUD::DrawMainMenu()
+{
+	
+}
+
+void ABaseHUD::AddToViewport(UUserWidget* Widget)
+{
+	Widget->AddToViewport();
+}
+
+void ABaseHUD::RemoveFromParent(UUserWidget* Widget)
+{
+	Widget->RemoveFromParent();
+}
+
+void ABaseHUD::RemoveMainMenuFromParent()
+{
+	RemoveFromParent(MainMenuWidget);
+	//MainMenuWidget->GetParent()->ClearChildren();
+	UGameplayStatics::OpenLevel(GetWorld(), TEXT("DefaultMap"));
+	
+	UE_LOGFMT(LogTemp, Warning, "Opening DefaultMap");
+}
+
 ABaseHUD* ABaseHUD::SetNation(const UNation* NationVar)
 {
 	Nation = NationVar;
@@ -55,14 +81,22 @@ void ABaseHUD::BeginPlay()
 	Super::BeginPlay();
 	
 	InitialisePointers();
+	if (UGameplayStatics::GetCurrentLevelName(GetWorld()) == "MainMenu")
+	{
+		MainMenuWidget->StartButton->OnReleased.AddDynamic(this, &ABaseHUD::RemoveMainMenuFromParent);
+		MainMenuWidget->AddToViewport();
+	}
+	else if (UGameplayStatics::GetCurrentLevelName(GetWorld()) == "DefaultMap")
+	{
+		DevInfoWidget->TurnNumberText->SetText(FText::AsNumber(1));
+		DevInfoWidget->CurrentTurnOwnerText->SetText(FText::FromString("ROM"));
+		DevInfoWidget->AddToViewport();
 	
-	DevInfoWidget->TurnNumberText->SetText(FText::AsNumber(1));
-	DevInfoWidget->CurrentTurnOwnerText->SetText(FText::FromString("ROM"));
-	DevInfoWidget->AddToViewport();
-	
-	StartButtonWidget->StartText->SetText(FText::FromString("START"));
-	StartButtonWidget->StartButton->OnReleased.AddDynamic(this, &ABaseHUD::BroadcastStartButton);
-	StartButtonWidget->AddToViewport();
+		StartButtonWidget->StartText->SetText(FText::FromString("START"));
+		StartButtonWidget->StartButton->OnReleased.AddDynamic(this, &ABaseHUD::BroadcastStartButton);
+		StartButtonWidget->AddToViewport();
+
+	}
 }
 
 void ABaseHUD::DrawHUD()
@@ -160,6 +194,7 @@ void ABaseHUD::DrawSelectionBox()
 
 void ABaseHUD::InitialisePointers()
 {
+	MainMenuWidget = CreateWidget<UMainMenuWidget>(GetOwningPlayerController(), MainMenuWidgetClass);
 	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(GetOwningPlayerController(), BaseGameplayWidgetClass);
 	EconomyWidget = CreateWidget<UEconomyWidget>(GetOwningPlayerController(), EconomyWidgetClass);
 	EventPopupWidget = CreateWidget<UEventPopupWidget>(GetOwningPlayerController(), EventPopupWidgetClass);
