@@ -13,6 +13,7 @@ class UNation;
 class UTurnController;
 class USeasonController;
 class UYearController;
+class ABasePlayerController;
 
 UCLASS()
 class PROJECTMARS_API AMarsGameStateBase : public AGameStateBase
@@ -27,6 +28,9 @@ public:
 
 	UFUNCTION()
 	void AddPlayerToPlayerArray(AProjectMarsPlayer* ProjectMarsPlayer);
+
+	UFUNCTION()
+	void AddToPlayerControllersList(ABasePlayerController* PlayerController);
 
 	UFUNCTION()
 	void LoadFirstTurn();
@@ -50,6 +54,9 @@ private:
 	// Properties
 	UPROPERTY(EditAnywhere)
 	TMap<FString, UNation*> Nations;
+
+	UPROPERTY()
+	TArray<ABasePlayerController*> AllPlayerControllers;
 	
 	UPROPERTY(EditAnywhere)
 	TArray<AProjectMarsPlayer*> AllPlayers;

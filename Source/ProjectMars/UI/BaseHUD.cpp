@@ -7,10 +7,11 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "Logging/StructuredLog.h"
-#include "ProjectMars/Civic/Population/PopulationController.h"
+#include "ProjectMars/Civic/CivicService.h"
 #include "ProjectMars/Civic/Population/PopulationData.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Delegates/DelegateController.h"
+#include "ProjectMars/Economy/EconomyService.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/Widgets/BaseGameplayWidget.h"
 #include "ProjectMars/UI/Widgets/DevInfo/DevInfoWidget.h"
@@ -18,6 +19,8 @@
 #include "Widgets/Events/EventPopupWidget.h"
 #include "ProjectMars/Military/Army.h"
 #include "ProjectMars/Economy/Data/EconomyData.h"
+#include "ProjectMars/Nation/Nation.h"
+#include "ProjectMars/Nation/NationService.h"
 #include "Widgets/DevInfo/StartButtonWidget.h"
 
 #define OUT
@@ -31,6 +34,20 @@ ABaseHUD::ABaseHUD()
 	CurrentDate = "";
 	DateSuffix = "BCE";
 	CurrentSeason = "NO_SEASON_SET";
+
+	UE_LOGFMT(LogTemp, Warning, "HUD has been built");
+}
+
+void ABaseHUD::PopulateDataObjects()
+{
+	ensure(Nation);
+	PopulationData = Nation->GetNationService()->GetCivicService()->GetPopulationService()->GetPopulationData();
+}
+
+ABaseHUD* ABaseHUD::SetNation(const UNation* NationVar)
+{
+	Nation = NationVar;
+	return this;
 }
 
 void ABaseHUD::BeginPlay()
@@ -143,8 +160,6 @@ void ABaseHUD::DrawSelectionBox()
 
 void ABaseHUD::InitialisePointers()
 {
-	Player = Cast<AProjectMarsPlayer>(GetOwningPlayerController()->GetPawn());
-	
 	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(GetOwningPlayerController(), BaseGameplayWidgetClass);
 	EconomyWidget = CreateWidget<UEconomyWidget>(GetOwningPlayerController(), EconomyWidgetClass);
 	EventPopupWidget = CreateWidget<UEventPopupWidget>(GetOwningPlayerController(), EventPopupWidgetClass);
@@ -180,25 +195,18 @@ void ABaseHUD::DrawFPS()
 
 void ABaseHUD::DrawDevInfo()
 {
-	if (!DevInfoWidget)
-	{
-		UE_LOGFMT(LogTemp, Error, "Dev Info Widget is null");
-		return;
-	}
 	// DevInfoWidget->TurnNumberText->SetText(FText::FromString("Turn Number Text"));
 	DevInfoWidget->SeasonText->SetText(FText::FromString(CurrentSeason));
 	DevInfoWidget->YearText->SetText(FText::FromString(CurrentDate));
 	// DevInfoWidget->CurrentTurnOwnerText->SetText(FText::FromString("Current Turn Owner Text"));
 
 	// Population
-	const UPopulationData* PopData = PopulationController->GetPopulationData();
-
-	const FString TotalPop = FString::Printf(TEXT("Total pop num: %d"), PopData->GetCurrentTotalPopNum());
-	const FString CitizenPop = FString::Printf(TEXT("Citizen pop num: %d"), PopData->GetCurrentCitizenPopNum());
-	const FString NonCitizenPop = FString::Printf(TEXT("Non-Citizen pop num: %d"), PopData->GetCurrentNonCitizenPopNum());
-	const FString AlliedClientPop = FString::Printf(TEXT("Allied/Client pop num: %d"), PopData->GetCurrentAlliedClientPopNum());
-	const FString SlavePop = FString::Printf(TEXT("Slave pop num: %d"), PopData->GetCurrentSlavePopNum());
-	const FString ForeignerPop = FString::Printf(TEXT("Foreigner pop num: %d"), PopData->GetCurrentForeignerPopNum());
+	const FString TotalPop = FString::Printf(TEXT("Total pop num: %s"), *FString::FormatAsNumber(PopulationData->GetCurrentTotalPopNum()));
+	const FString CitizenPop = FString::Printf(TEXT("Citizen pop num: %s"), *FString::FormatAsNumber(PopulationData->GetCurrentCitizenPopNum()));
+	const FString NonCitizenPop = FString::Printf(TEXT("Non-Citizen pop num: %s"), *FString::FormatAsNumber(PopulationData->GetCurrentNonCitizenPopNum()));
+	const FString AlliedClientPop = FString::Printf(TEXT("Allied/Client pop num: %s"), *FString::FormatAsNumber(PopulationData->GetCurrentAlliedClientPopNum()));
+	const FString SlavePop = FString::Printf(TEXT("Slave pop num: %s"), *FString::FormatAsNumber(PopulationData->GetCurrentSlavePopNum()));
+	const FString ForeignerPop = FString::Printf(TEXT("Foreigner pop num: %s"), *FString::FormatAsNumber(PopulationData->GetCurrentForeignerPopNum()));
 	
 	DevInfoWidget->CurrentTotalPopNum->SetText(FText::FromString(TotalPop));
 	DevInfoWidget->CurrentCitizenPopNum->SetText(FText::FromString(CitizenPop));
@@ -280,12 +288,6 @@ void ABaseHUD::SubscribeToEvents(UDelegateController* DelegateControllerVar)
 ABaseHUD* ABaseHUD::SetDelegateController(UDelegateController* DelegateControllerVar)
 {
 	DelegateController = DelegateControllerVar;
-	return this;
-}
-
-ABaseHUD* ABaseHUD::SetPopulationController(const UPopulationController* PopulationControllerVar)
-{
-	PopulationController = PopulationControllerVar;
 	return this;
 }
 

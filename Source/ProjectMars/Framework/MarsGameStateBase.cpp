@@ -12,6 +12,7 @@
 #include "ProjectMars/Season/SeasonController.h"
 #include "ProjectMars/Turns/TurnController.h"
 #include "ProjectMars/Turns/YearController.h"
+#include "ProjectMars/UI/BaseHUD.h"
 #include "ProjectMars/Utils/ReadWriteJsonFile.h"
 
 AMarsGameStateBase::AMarsGameStateBase()
@@ -39,6 +40,8 @@ AMarsGameStateBase::AMarsGameStateBase()
 	
 	InitialiseFactionTags();
 	BuildNations();
+
+	UE_LOGFMT(LogTemp, Warning, "Game state has been built");
 }
 
 void AMarsGameStateBase::AddPlayerToPlayerArray(AProjectMarsPlayer* ProjectMarsPlayer)
@@ -46,9 +49,19 @@ void AMarsGameStateBase::AddPlayerToPlayerArray(AProjectMarsPlayer* ProjectMarsP
 	AllPlayers.Add(ProjectMarsPlayer);
 	ABasePlayerController* PlayerController = Cast<ABasePlayerController>(ProjectMarsPlayer->GetController());
 	ensure(PlayerController);
+	// PlayerController->SetNation(*Nations.Find("ROM"));
+	//PlayerController->InitialisePointers();
+	//PlayerController->GetHUD()->SetNation(*Nations.Find("ROM"));
+}
+
+void AMarsGameStateBase::AddToPlayerControllersList(ABasePlayerController* PlayerController)
+{
+	ensure(PlayerController);
+	AllPlayerControllers.Add(PlayerController);
 	PlayerController->SetDelegateController(DelegateController);
 	PlayerController->SubscribeToDelegates(DelegateController);
 	PlayerController->SetNation(*Nations.Find("ROM"));
+	PlayerController->InitialisePointers();
 }
 
 void AMarsGameStateBase::LoadFirstTurn()
@@ -106,6 +119,6 @@ void AMarsGameStateBase::BuildNations()
 	Nations = NationBuilder->BuildNations(FactionTags);
 	for (const auto& Nation : Nations)
 	{
-		Nation.Value->SubscribeToDelegateEvents(DelegateController);
+		Nation.Value->SubscribeToEvents(DelegateController);
 	}
 }

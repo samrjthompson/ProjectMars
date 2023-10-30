@@ -7,6 +7,7 @@
 #include "Logging/StructuredLog.h"
 #include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Delegates/NationDelegateController.h"
+#include "ProjectMars/Framework/MarsGameStateBase.h"
 #include "ProjectMars/Nation/Nation.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/UI/BaseHUD.h"
@@ -29,6 +30,8 @@ ABasePlayerController::ABasePlayerController()
 	
 	bMyTurn = false;
 	TurnNumber = 1;
+	
+	UE_LOGFMT(LogTemp, Warning, "Player Controller has been built");
 }
 
 void ABasePlayerController::SetupInputComponent()
@@ -49,16 +52,18 @@ void ABasePlayerController::SubscribeToDelegates(UDelegateController* DelegateCo
 {
 	DelegateControllerVar->OnChangeTurnOwner.AddDynamic(this, &ABasePlayerController::CheckForMyTurn);
 	DelegateControllerVar->OnStartNewTurn.AddDynamic(this, &ABasePlayerController::StartNewTurn);
-
-	// HUD
-	HUD->SetDelegateController(DelegateControllerVar);
-	HUD->SubscribeToEvents(DelegateControllerVar);
+	
 }
 
 void ABasePlayerController::StartGame()
 {
 	UE_LOGFMT(LogTemp, Warning, "GAME STARTED");
 	DelegateController->OnStartNewGame.Broadcast();
+}
+
+UNation* ABasePlayerController::GetNation() const
+{
+	return Nation;
 }
 
 ABasePlayerController* ABasePlayerController::SetDelegateController(UDelegateController* DelegateControllerVar)
@@ -71,9 +76,6 @@ ABasePlayerController* ABasePlayerController::SetNation(UNation* NationVar)
 {
 	Nation = NationVar;
 	Nation->SetFactionTag("ROM");
-
-	// TODO: Refactor this into own method - Maybe add a delegate event here to set all required properties relating to nation
-	HUD->SetPopulationController(Nation->GetPopulationController());
 	return this;
 }
 
@@ -109,9 +111,8 @@ void ABasePlayerController::OnLMBClick()
 void ABasePlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
-	InitialisePointers();
-
+	GameState = Cast<AMarsGameStateBase>(GetWorld()->GetGameState());
+	GameState->AddToPlayerControllersList(this);
 }
 
 void ABasePlayerController::Tick(float DeltaSeconds)
@@ -134,7 +135,12 @@ void ABasePlayerController::InitialisePointers()
 {
 	PlayerPawn = Cast<AProjectMarsPlayer>(GetPawn());
 	HUD = Cast<ABaseHUD>(GetHUD());
+	HUD->SetNation(Nation);
+	HUD->PopulateDataObjects();
 
+	// BUG: The HUD is not currently updating the season
+	/*HUD->SetDelegateController(DelegateControllerVar);
+	HUD->SubscribeToEvents(DelegateControllerVar);*/
 }
 
 void ABasePlayerController::CheckForMyTurn(const FString& CurrentTurnOwnerTag)

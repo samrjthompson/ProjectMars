@@ -13,6 +13,10 @@ class UDevInfoWidget;
 class UStartButtonWidget;
 class UDelegateController;
 class UPopulationController;
+class ABasePlayerController;
+
+class UNation;
+class UPopulationData;
 
 UCLASS()
 class PROJECTMARS_API ABaseHUD : public AHUD
@@ -22,6 +26,15 @@ class PROJECTMARS_API ABaseHUD : public AHUD
 public:
 	ABaseHUD();
 
+	// Functions
+	void PopulateDataObjects();
+
+	// Getters
+
+	// Setters
+	UFUNCTION()
+	ABaseHUD* SetNation(const UNation* NationVar);
+	
 	virtual void DrawHUD() override;
 
 	UFUNCTION()
@@ -77,9 +90,6 @@ public:
 	UFUNCTION()
 	ABaseHUD* SetDelegateController(UDelegateController* DelegateControllerVar);
 
-	UFUNCTION()
-	ABaseHUD* SetPopulationController(const UPopulationController* PopulationControllerVar);
-
 private:
 	// Functions
 	
@@ -94,6 +104,13 @@ private:
 
 	UFUNCTION()
 	void SetYearText(const FString& CurrentDateVar);
+
+	// Components
+	UPROPERTY()
+	const UNation* Nation{ nullptr };
+
+	UPROPERTY()
+	const UPopulationData* PopulationData{ nullptr };
 
 	// Properties
 	UPROPERTY()
@@ -177,9 +194,6 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	int32 CurrentYear;
-
-	UPROPERTY()
-	const UPopulationController* PopulationController{ nullptr };
 
 protected:
 	virtual void BeginPlay() override;
