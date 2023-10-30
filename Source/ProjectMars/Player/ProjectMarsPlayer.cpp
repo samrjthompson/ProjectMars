@@ -31,6 +31,8 @@ AProjectMarsPlayer::AProjectMarsPlayer()
 	Camera->SetupAttachment(SpringArmComp);
 	
 	MovementSpeed = 500.f;
+
+	UE_LOGFMT(LogTemp, Warning, "Player Pawn has been built");
 }
 
 // Called when the game starts or when spawned
@@ -38,8 +40,12 @@ void AProjectMarsPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	InitialisePointers();
+	// MarsGameStateBase
+	MarsGameStateBase = Cast<AMarsGameStateBase>(GetWorld()->GetGameState());
+	ensure(MarsGameStateBase);
+
 	MarsGameStateBase->AddPlayerToPlayerArray(this);
+	InitialisePointers();
 	
 	SubscribeToDelegateEvents();
 
@@ -59,9 +65,6 @@ void AProjectMarsPlayer::InitialisePointers()
 {
 	 // Initialise MarsGameStateBase, PlayerState, PlayerController and HUD here. 
 
-	// MarsGameStateBase
-	MarsGameStateBase = Cast<AMarsGameStateBase>(GetWorld()->GetGameState());
-	ensure(MarsGameStateBase);
 
 	// PlayerState
 	MyPlayerState = GetPlayerState();

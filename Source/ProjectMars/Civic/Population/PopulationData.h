@@ -35,8 +35,9 @@ public:
 	UFUNCTION()
 	int32 GetCurrentForeignerPopNum() const;
 
+	// Getters
+
 	// Setters
-	
 
 private:
 	const int32 StartingTotalPopNum{};

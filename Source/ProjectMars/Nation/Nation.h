@@ -3,25 +3,29 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ProjectMars/Framework/CustomObject.h"
 #include "UObject/NoExportTypes.h"
 #include "Nation.generated.h"
 
-class UEconomyController;
 class UDelegateController;
 class AProjectMarsPlayer;
-class UPopulationController;
+class UNationService;
 
 // A class to represent a state such as the Roman Republic or Carthage
 UCLASS()
-class PROJECTMARS_API UNation : public UCustomObject
+class PROJECTMARS_API UNation : public UObject
 {
 	GENERATED_BODY()
 
 public:
-	UNation();
+	explicit UNation(const FObjectInitializer& ObjectInitializer);
 
 	// Functions
+	UFUNCTION()
+	void SubscribeToEvents(UDelegateController* DelegateControllerVar);
+
+	UFUNCTION()
+	void UpdateIncome(const int32 TurnNumberVar);
+	
 	UFUNCTION()
 	UNation* SetFactionTag(const FString& FactionTagVar);
 
@@ -30,18 +34,12 @@ public:
 
 	// Getters
 	UFUNCTION()
-	UEconomyController* GetEconomyController() const;
-
+	UNationService* GetNationService() const;
+	
 	UFUNCTION()
 	AProjectMarsPlayer* GetOwningPlayer() const;
-
-	UFUNCTION()
-	const UPopulationController* GetPopulationController() const;
 	
 	// Setters
-	UFUNCTION()
-	UNation* SetEconomyController(UEconomyController* EconomyController);
-
 	UFUNCTION()
 	UNation* SetOwningPlayer(AProjectMarsPlayer* PlayerVar);
 
@@ -51,19 +49,14 @@ private:
 	
 	// Variables
 	UPROPERTY(EditAnywhere)
-	UEconomyController* EconomyController;
-
-	UPROPERTY(EditAnywhere)
-	class UNationDelegateController* NationDelegateController;
-
-	UPROPERTY(EditAnywhere)
 	FString FactionTag;
 
 	UPROPERTY(EditAnywhere)
 	AProjectMarsPlayer* OwningPlayer{ nullptr };
-
+	
 	UPROPERTY()
-	const UPopulationController* PopulationController{ nullptr };
+	UNationService* NationService{ nullptr };
+
 
 	/*UPROPERTY()
 	UTradeManager* TradeManager;*/

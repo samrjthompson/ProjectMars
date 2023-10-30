@@ -11,6 +11,7 @@ class ABaseHUD;
 class UNation;
 class UDelegateController;
 class UNationDelegateController;
+class AMarsGameStateBase;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnRMBPressed);
 
@@ -27,13 +28,17 @@ public:
 	virtual void SetupInputComponent() override;
 
 	UFUNCTION()
+	void InitialisePointers();
+
+	UFUNCTION()
 	void SubscribeToDelegates(UDelegateController* DelegateControllerVar);
 
 	UFUNCTION()
 	void StartGame();
 
 	// Getters
-
+	UNation* GetNation() const;
+	
 	// Setters
 	UFUNCTION()
 	ABasePlayerController* SetDelegateController(UDelegateController* DelegateControllerVar);
@@ -63,8 +68,7 @@ private:
 	UFUNCTION()
 	void OnEnter();
 
-	UFUNCTION()
-	void InitialisePointers();
+
 
 	UFUNCTION()
 	void CheckForMyTurn(const FString& CurrentTurnOwnerTag);
@@ -73,6 +77,9 @@ private:
 	void StartNewTurn(const int32 TurnNumberVar);
 	
 	// Properties
+	UPROPERTY(EditAnywhere)
+	AMarsGameStateBase* GameState{ nullptr };
+	
 	UPROPERTY(EditAnywhere)
 	AProjectMarsPlayer* PlayerPawn{ nullptr };
 	
