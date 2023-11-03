@@ -17,6 +17,7 @@ class ABasePlayerController;
 class UMainMenuWidget;
 class UChooseFactionWidget;
 class UMainMenu2Widget;
+class UMainGameWidget;
 
 class UNation;
 class UPopulationData;
@@ -192,6 +193,12 @@ private:
 	FVector2D DistanceBetweenMouseAndLeftSideOfWidget;
 
 	// Widgets
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<UMainGameWidget> MainGameWidgetClass;
+	
+	UPROPERTY(EditAnywhere)
+	UMainGameWidget* MainGameWidget{ nullptr };
+	
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TSubclassOf<UMainMenu2Widget> MainMenu2WidgetClass;
 	
