@@ -24,6 +24,7 @@
 #include "Widgets/DevInfo/StartButtonWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Widgets/MainMenu2Widget.h"
+#include "Widgets/MainGame/MainGameWidget.h"
 #include "Widgets/WidgetComponents/FactionButton.h"
 
 #define OUT
@@ -57,9 +58,11 @@ void ABaseHUD::BeginPlay()
 	}
 	else if (UGameplayStatics::GetCurrentLevelName(GetWorld()) == "DefaultMap")
 	{
-		DevInfoWidget->TurnNumberText->SetText(FText::AsNumber(1));
+		/*DevInfoWidget->TurnNumberText->SetText(FText::AsNumber(1));
 		DevInfoWidget->CurrentTurnOwnerText->SetText(FText::FromString("ROM"));
-		DevInfoWidget->AddToViewport();
+		DevInfoWidget->AddToViewport();*/
+
+		MainGameWidget->AddToViewport();
 	
 		StartButtonWidget->StartText->SetText(FText::FromString("START"));
 		StartButtonWidget->StartButton->OnReleased.AddDynamic(this, &ABaseHUD::BroadcastStartButton);
@@ -214,15 +217,18 @@ void ABaseHUD::DrawSelectionBox()
 
 void ABaseHUD::InitialisePointers()
 {
-	MainMenuWidget = CreateWidget<UMainMenuWidget>(GetOwningPlayerController(), MainMenuWidgetClass);
-	MainMenu2Widget = CreateWidget<UMainMenu2Widget>(GetOwningPlayerController(), MainMenu2WidgetClass);
-	ChooseFactionWidget = CreateWidget<UChooseFactionWidget>(GetOwningPlayerController(), ChooseFactionWidgetClass);
+	APlayerController* OwningPlayerController = GetOwningPlayerController();
+	
+	MainMenuWidget = CreateWidget<UMainMenuWidget>(OwningPlayerController, MainMenuWidgetClass);
+	MainMenu2Widget = CreateWidget<UMainMenu2Widget>(OwningPlayerController, MainMenu2WidgetClass);
+	ChooseFactionWidget = CreateWidget<UChooseFactionWidget>(OwningPlayerController, ChooseFactionWidgetClass);
 	ChooseFactionWidget->InitialiseFactionButtonsWithSelf();
-	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(GetOwningPlayerController(), BaseGameplayWidgetClass);
-	EconomyWidget = CreateWidget<UEconomyWidget>(GetOwningPlayerController(), EconomyWidgetClass);
-	EventPopupWidget = CreateWidget<UEventPopupWidget>(GetOwningPlayerController(), EventPopupWidgetClass);
-	DevInfoWidget = CreateWidget<UDevInfoWidget>(GetOwningPlayerController(), DevInfoWidgetClass);
-	StartButtonWidget = CreateWidget<UStartButtonWidget>(GetOwningPlayerController(), StartButtonWidgetClass);
+	MainGameWidget = CreateWidget<UMainGameWidget>(OwningPlayerController, MainGameWidgetClass);
+	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(OwningPlayerController, BaseGameplayWidgetClass);
+	EconomyWidget = CreateWidget<UEconomyWidget>(OwningPlayerController, EconomyWidgetClass);
+	EventPopupWidget = CreateWidget<UEventPopupWidget>(OwningPlayerController, EventPopupWidgetClass);
+	DevInfoWidget = CreateWidget<UDevInfoWidget>(OwningPlayerController, DevInfoWidgetClass);
+	StartButtonWidget = CreateWidget<UStartButtonWidget>(OwningPlayerController, StartButtonWidgetClass);
 }
 
 void ABaseHUD::DrawEconomyData(const UEconomyData* EconomyDataVar)
