@@ -18,12 +18,5 @@ void UEventPopupWidget::NativeConstruct()
 
 void UEventPopupWidget::NativeOnInitialized()
 {
-	Super::NativeOnInitialized();
-
-	
-}
-
-void UEventPopupWidget::CloseEventPopup()
-{
-	this->RemoveFromParent();
+	Super::NativeOnInitialized();	
 }
