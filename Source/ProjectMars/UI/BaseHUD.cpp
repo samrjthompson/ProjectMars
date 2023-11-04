@@ -63,6 +63,7 @@ void ABaseHUD::BeginPlay()
 		DevInfoWidget->AddToViewport();*/
 
 		MainGameWidget->AddToViewport();
+		EventPopupWidget->AddToViewport();
 	
 		StartButtonWidget->StartText->SetText(FText::FromString("START"));
 		StartButtonWidget->StartButton->OnReleased.AddDynamic(this, &ABaseHUD::BroadcastStartButton);
@@ -224,7 +225,6 @@ void ABaseHUD::InitialisePointers()
 	ChooseFactionWidget = CreateWidget<UChooseFactionWidget>(OwningPlayerController, ChooseFactionWidgetClass);
 	ChooseFactionWidget->InitialiseFactionButtonsWithSelf();
 	MainGameWidget = CreateWidget<UMainGameWidget>(OwningPlayerController, MainGameWidgetClass);
-	BaseGameplayWidget = CreateWidget<UBaseGameplayWidget>(OwningPlayerController, BaseGameplayWidgetClass);
 	EconomyWidget = CreateWidget<UEconomyWidget>(OwningPlayerController, EconomyWidgetClass);
 	EventPopupWidget = CreateWidget<UEventPopupWidget>(OwningPlayerController, EventPopupWidgetClass);
 	DevInfoWidget = CreateWidget<UDevInfoWidget>(OwningPlayerController, DevInfoWidgetClass);

@@ -9,6 +9,8 @@
 
 class UEconomyData;
 class AArmy;
+
+// Widgets
 class UDevInfoWidget;
 class UStartButtonWidget;
 class UDelegateController;
@@ -18,6 +20,7 @@ class UMainMenuWidget;
 class UChooseFactionWidget;
 class UMainMenu2Widget;
 class UMainGameWidget;
+class UEventPopupWidget;
 
 class UNation;
 class UPopulationData;
@@ -172,12 +175,6 @@ private:
 	TSubclassOf<class UEconomyWidget> EconomyWidgetClass;
 	
 	UPROPERTY(EditAnywhere)
-	class UEventPopupWidget* EventPopupWidget{ nullptr };
-
-	UPROPERTY(EditAnywhere, Category = "Widgets")
-	TSubclassOf<class UEventPopupWidget> EventPopupWidgetClass;
-	
-	UPROPERTY(EditAnywhere)
 	FVector2D StartingEventPopupPosition = FVector2D(660, 115);
 
 	UPROPERTY(EditAnywhere)
@@ -193,6 +190,12 @@ private:
 	FVector2D DistanceBetweenMouseAndLeftSideOfWidget;
 
 	// Widgets
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<UEventPopupWidget> EventPopupWidgetClass;
+	
+	UPROPERTY(EditAnywhere)
+	UEventPopupWidget* EventPopupWidget{ nullptr };
+	
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TSubclassOf<UMainGameWidget> MainGameWidgetClass;
 	

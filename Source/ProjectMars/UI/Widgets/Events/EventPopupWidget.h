@@ -16,14 +16,19 @@ class PROJECTMARS_API UEventPopupWidget : public UUserWidget
 
 public:
 
-	UEventPopupWidget(const FObjectInitializer& ObjectInitializer);
+	explicit UEventPopupWidget(const FObjectInitializer& ObjectInitializer);
 
 	virtual void NativeConstruct() override;
 
 	virtual void NativeOnInitialized() override;
 
+private:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UButton* DecisionButton{ nullptr };
 
-	void CloseEventPopup();
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* EventTitle{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* EventText{ nullptr };
 };
