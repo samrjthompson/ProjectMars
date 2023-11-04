@@ -26,6 +26,20 @@ public:
 	virtual void NativeConstruct() override;
 
 	virtual void NativeOnInitialized() override;
+
+	virtual void PostInitProperties() override;
+
+	UFUNCTION()
+	void ShowConstruction();
+
+	UFUNCTION()
+	void InitialiseEvents();
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UConstructionButtonWidget* ConstructionButtonWidget{ nullptr };
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UConstructionWidget* ConstructionWidget{ nullptr };
 	
 private:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
@@ -42,4 +56,8 @@ private:
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	UDateWidget* DateWidget{ nullptr };
+
+
+
+	bool bIsConstructionOpen;
 };

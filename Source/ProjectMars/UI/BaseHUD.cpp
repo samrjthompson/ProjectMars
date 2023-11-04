@@ -63,7 +63,8 @@ void ABaseHUD::BeginPlay()
 		DevInfoWidget->AddToViewport();*/
 
 		MainGameWidget->AddToViewport();
-		EventPopupWidget->AddToViewport();
+		//EventPopupWidget->AddToViewport();
+		MainGameWidget->InitialiseEvents();
 	
 		StartButtonWidget->StartText->SetText(FText::FromString("START"));
 		StartButtonWidget->StartButton->OnReleased.AddDynamic(this, &ABaseHUD::BroadcastStartButton);
