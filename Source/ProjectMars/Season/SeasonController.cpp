@@ -35,7 +35,7 @@ void USeasonController::PopulateListOfSeasons()
 {
 	bool bSuccess;
 	FString Output;
-	const FString SeasonsJsonPath = "E:/Unreal/Unreal Projects/ProjectMars 5.0/Source/ProjectMars/TempJson/Seasons/seasons.json";
+	const FString SeasonsJsonPath = "E:/Unreal/Unreal Projects/ProjectMars/Source/ProjectMars/TempJson/Seasons/seasons.json";
 	const TSharedPtr<FJsonObject> SeasonsJson = UReadWriteJsonFile::ReadJson(SeasonsJsonPath, bSuccess, Output);
 
 	if (!bSuccess)
