@@ -3,10 +3,15 @@ DerivedDataCache
 Intermediate
 Saved
 Plugins
+
+# IntelliJ IDEA #
 .idea/
+
+# VS Code #
 .vscode
 .vsconfig
 .vs
+
 *.VC.db
 *.opensdf
 *.opendb
@@ -18,5 +23,3 @@ Plugins
 .fake
 *.user
 *.xml
-*.idea
-.idea/.idea.ProjectMars/.idea/workspace.xml
