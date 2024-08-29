@@ -5,6 +5,7 @@
 
 #include "Logging/StructuredLog.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
+#include "ProjectMars/Data/FNationsData.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Nation/Nation.h"
@@ -73,6 +74,7 @@ void AMarsGameStateBase::LoadFirstTurn()
 void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
+	FNationsData NationData;
 }
 
 void AMarsGameStateBase::Tick(float DeltaSeconds)
@@ -96,8 +98,9 @@ void AMarsGameStateBase::InitialiseFactionTags()
 	// TODO: Have array populated by JSON file of all faction tags
 	bool bSuccess;
 	FString Output;
-	const FString GameContentDirectory = FPaths::GameSourceDir();
-	const FString JsonPath = GameContentDirectory + "ProjectMars/TempJson/Nations/Nations.json";
+	const FString GameContentDirectory = FPaths::ProjectContentDir();
+	const FString JsonPath = FString::Printf(TEXT("%sTempJson/Nations/Nations.json"), *GameContentDirectory);
+	UE_LOGFMT(LogTemp, Error, "JSON PATH: {0}", JsonPath);
 	const TSharedPtr<FJsonObject> Json = UReadWriteJsonFile::ReadJson(JsonPath, bSuccess, Output);
 
 	if (!bSuccess)

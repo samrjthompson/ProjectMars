@@ -33,9 +33,11 @@ void USeasonController::BroadcastNewSeasonEvent(const int32 TurnNumberVar)
 
 void USeasonController::PopulateListOfSeasons()
 {
-	bool bSuccess;
+	/*bool bSuccess;
 	FString Output;
-	const FString SeasonsJsonPath = "E:/Unreal/Unreal Projects/ProjectMars/Source/ProjectMars/TempJson/Seasons/seasons.json";
+	const FString GameContentDirPath = FPaths::ProjectContentDir();
+	const FString SeasonsJsonPath = FString::Printf(TEXT("%sTempJson/Seasons/seasons.json"), *GameContentDirPath);
+	UE_LOGFMT(LogTemp, Error, "JSON PATH: {0}", SeasonsJsonPath);
 	const TSharedPtr<FJsonObject> SeasonsJson = UReadWriteJsonFile::ReadJson(SeasonsJsonPath, bSuccess, Output);
 
 	if (!bSuccess)
@@ -51,7 +53,7 @@ void USeasonController::PopulateListOfSeasons()
 	
 	StartingSeason = ListOfSeasons[0];
 	MaxNumberOfSeasons = ListOfSeasons.Num();
-	MaxSeasonIndex = MaxNumberOfSeasons - 1;
+	MaxSeasonIndex = MaxNumberOfSeasons - 1;*/
 }
 
 void USeasonController::SubscribeToDelegateEvents(UDelegateController* DelegateControllerVar)
