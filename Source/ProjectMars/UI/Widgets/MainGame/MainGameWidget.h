@@ -11,6 +11,7 @@ class UMiniMapWidget;
 class UFactionButtonWidget;
 class UMainMenuButtonWidget;
 class UDateWidget;
+class ASettlement;
 
 /**
  * 
@@ -34,6 +35,9 @@ public:
 
 	UFUNCTION()
 	void InitialiseEvents();
+
+	UFUNCTION()
+	void ShowConstructionButton(const ASettlement* Settlement);
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UConstructionButtonWidget* ConstructionButtonWidget{ nullptr };

@@ -6,6 +6,9 @@
 #include "Components/Button.h"
 #include "Construction/ConstructionButtonWidget.h"
 #include "Construction/ConstructionWidget.h"
+#include "Logging/StructuredLog.h"
+#include "ProjectMars/Civic/Settlement.h"
+#include "ProjectMars/Delegates/DelegateController.h"
 
 UMainGameWidget::UMainGameWidget(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -41,11 +44,23 @@ void UMainGameWidget::ShowConstruction()
 	}
 }
 
+void UMainGameWidget::ShowConstructionButton(const ASettlement* Settlement)
+{
+	UE_LOGFMT(LogTemp, Display, "SHOWING CONSTRUCTION BUTTON");
+	this->ConstructionButtonWidget->SetVisibility(ESlateVisibility::Visible);
+}
+
 void UMainGameWidget::InitialiseEvents()
 {
 	this->ConstructionButtonWidget->AddToViewport();
+	this->ConstructionButtonWidget->SetVisibility(ESlateVisibility::Hidden);
 	this->ConstructionWidget->AddToViewport();
 	this->ConstructionWidget->SetVisibility(ESlateVisibility::Hidden);
-	
+
+	UDelegateController* DC = NewObject<UDelegateController>();
+	//FOnSettlementClick OnSettlementClick;
+	DC->OnSettlementClick.AddDynamic(this, &UMainGameWidget::ShowConstructionButton);
 	this->ConstructionButtonWidget->MainButton->OnClicked.AddDynamic(this, &UMainGameWidget::ShowConstruction);
 }
+
+

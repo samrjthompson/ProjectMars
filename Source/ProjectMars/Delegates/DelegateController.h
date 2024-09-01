@@ -6,6 +6,8 @@
 #include "UObject/Object.h"
 #include "DelegateController.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSettlementClick, const ASettlement*, Settlement);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMonthlyUpdate);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerInitialisation);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAIFactionInitialisation);
@@ -48,6 +50,7 @@ public:
 	FOnUpdateDate OnUpdateDate;
 	FOnSetStartYearSuffix OnSetStartYearSuffix;
 	FOnUpdateYearSuffix OnUpdateYearSuffix;
+	FOnSettlementClick OnSettlementClick;
 
 private:
 	

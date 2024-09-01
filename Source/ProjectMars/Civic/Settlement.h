@@ -6,10 +6,22 @@
 #include "GameFramework/Actor.h"
 #include "Settlement.generated.h"
 
+class UDelegateController;
+
 UCLASS()
 class PROJECTMARS_API ASettlement : public AActor
 {
 	GENERATED_BODY()
+
+public:
+
+	UFUNCTION()
+	ASettlement* SetDelegateController(UDelegateController* DelegateController);
+
+private:
+	UPROPERTY()
+	UDelegateController* DelegateController{ nullptr };
+
 	
 public:	
 	// Sets default values for this actor's properties
@@ -30,19 +42,16 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Root")
 	class USceneComponent* Root{ nullptr };
 
-	UPROPERTY(EditAnywhere, Category = "Mesh")
-	class UStaticMeshComponent* Mesh{ nullptr };
-
-	UPROPERTY(EditAnywhere, Category = "Trigger Box")
-	class UBoxComponent* TriggerBox{ nullptr };
+	UPROPERTY(EditAnywhere, Category = "StaticMesh")
+	class UStaticMeshComponent* StaticMesh{ nullptr };
 
 	UFUNCTION()
-	void SettlementClicked(UPrimitiveComponent* ClickedComponent, FKey ButtonPressed);
+	void SettlementClicked(UPrimitiveComponent* PrimComp, FKey InKey);
 
-public:
+public:	
 	UPROPERTY(EditAnywhere, Category = "Widget Component")
 	class USettlementWidgetComponent* SettlementWidgetComponent{ nullptr };
-
+	
 	UPROPERTY(EditAnywhere, Category = "Widget Component")
 	TSubclassOf<class UUserWidget> SettlementWidgetComponentClass;
 	

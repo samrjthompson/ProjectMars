@@ -5,6 +5,7 @@
 
 #include "Components/TextBlock.h"
 #include "Logging/StructuredLog.h"
+#include "ProjectMars/Civic/Settlement.h"
 #include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/Delegates/NationDelegateController.h"
 #include "ProjectMars/Framework/MarsGameStateBase.h"
@@ -102,9 +103,22 @@ void ABasePlayerController::MovePlayerPawnRightOrLeft(float Val)
 void ABasePlayerController::OnLMBClick()
 {
 	FHitResult LeftClick;
-	if (GetHitResultUnderCursor(ECC_Visibility, false, LeftClick))
+	if (GetHitResultUnderCursor(ECC_Visibility, true, LeftClick))
 	{
-		PlayerPawn->FilterActorClickedOn(LeftClick.GetActor());
+		const AActor* Actor = LeftClick.GetActor();
+		
+		if (!Actor) return;
+		
+		// PlayerPawn->FilterActorClickedOn(Actor);
+
+		if (Actor->IsA(ASettlement::StaticClass()))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("SETTLEMENT CLICKED"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("SOMETHING ELSE CLICKED"));
+		}
 	}
 }
 

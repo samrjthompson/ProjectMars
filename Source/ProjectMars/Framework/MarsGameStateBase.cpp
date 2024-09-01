@@ -3,7 +3,9 @@
 
 #include "MarsGameStateBase.h"
 
+#include "SettlementFactory.h"
 #include "Logging/StructuredLog.h"
+#include "ProjectMars/Civic/Settlement.h"
 #include "ProjectMars/Controllers/BasePlayerController.h"
 #include "ProjectMars/Player/ProjectMarsPlayer.h"
 #include "ProjectMars/Delegates/DelegateController.h"
@@ -37,6 +39,9 @@ AMarsGameStateBase::AMarsGameStateBase()
 	YearController = NewObject<UYearController>();
 	YearController->SetDelegateController(DelegateController);
 	YearController->SubToEvents(DelegateController);
+
+	// Settlements
+	SettlementFactory = NewObject<USettlementFactory>();
 	
 	InitialiseFactionTags();
 	BuildNations();
@@ -52,6 +57,8 @@ void AMarsGameStateBase::AddPlayerToPlayerArray(AProjectMarsPlayer* ProjectMarsP
 	// PlayerController->SetNation(*Nations.Find("ROM"));
 	//PlayerController->InitialisePointers();
 	//PlayerController->GetHUD()->SetNation(*Nations.Find("ROM"));
+
+	//SettlementFactory->BuildSettlements(DelegateController);
 }
 
 void AMarsGameStateBase::AddToPlayerControllersList(ABasePlayerController* PlayerController)
@@ -73,6 +80,19 @@ void AMarsGameStateBase::LoadFirstTurn()
 void AMarsGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// const FVector Location = FVector(610.000000f,70.000000f,20.000000f);
+	// const FRotator Rotation = FRotator(0, 0, 0);
+	//
+	// GetWorld()->SpawnActor<ASettlement>(Location, Rotation);
+
+	const FVector Location = FVector(610.000000f,70.000000f,20.000000f);
+	const FRotator Rotation = FRotator(0, 0, 0);
+	
+	SettlementFactory = NewObject<USettlementFactory>();
+	SettlementFactory->SetWorld(GetWorld());
+	SettlementFactory->SetDelegateController(DelegateController);
+	SettlementFactory->Create(Location, Rotation);
 }
 
 void AMarsGameStateBase::Tick(float DeltaSeconds)
