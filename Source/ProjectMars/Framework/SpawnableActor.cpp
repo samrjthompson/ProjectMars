@@ -24,3 +24,14 @@ void ASpawnableActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+ASpawnableActor* ASpawnableActor::SetDelegateController(UDelegateController* DelegateControllerVar)
+{
+	DelegateController = DelegateControllerVar;
+	return this;
+}
+
+UDelegateController* ASpawnableActor::GetDelegateController()
+{
+	return DelegateController;
+}
+

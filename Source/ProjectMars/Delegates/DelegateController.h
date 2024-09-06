@@ -28,6 +28,9 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSetStartYearSuffix, const FString
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUpdateYearSuffix, const FString&, UpdateSuffixVar);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUpdateDate, const FString&, DateVar);
 
+// Initialising Events
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerSetupComplete);
+
 /**
  * 
  */
@@ -51,6 +54,7 @@ public:
 	FOnSetStartYearSuffix OnSetStartYearSuffix;
 	FOnUpdateYearSuffix OnUpdateYearSuffix;
 	FOnSettlementClick OnSettlementClick;
+	FOnPlayerSetupComplete OnPlayerSetupComplete;
 
 private:
 	

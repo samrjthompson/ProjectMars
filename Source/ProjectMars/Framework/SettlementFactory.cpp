@@ -27,8 +27,15 @@
 // }
 
 
-ASettlement* USettlementFactory::Create(const FVector& Location, const FRotator& Rotation)
+ASettlement* USettlementFactory::Create(const FVector& Location, const FRotator& Rotation) const
 {
+	ensure(World);
+	ensure(DelegateController);
+	
 	const FActorSpawnParameters SpawnParameters;
-	return World->SpawnActor<ASettlement>(Location, Rotation, SpawnParameters);
+	
+	ASettlement* Settlement = World->SpawnActor<ASettlement>(Location, Rotation, SpawnParameters);
+	Settlement->SetDelegateController(DelegateController);
+	
+	return Settlement;
 }

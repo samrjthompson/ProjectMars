@@ -7,12 +7,6 @@
 #include "ProjectMars/Delegates/DelegateController.h"
 #include "ProjectMars/UI/Widgets/WidgetComponents/SettlementWidgetComponent.h"
 
-ASettlement* ASettlement::SetDelegateController(UDelegateController* DelegateControllerVar)
-{
-	this->DelegateController = DelegateControllerVar;
-	return this;
-}
-
 // Sets default values
 ASettlement::ASettlement()
 {
@@ -42,11 +36,11 @@ void ASettlement::BeginPlay()
 	Super::BeginPlay();
 }
 
-void ASettlement::SettlementClicked(UPrimitiveComponent* PrimComp, FKey InKey)
+void ASettlement::SettlementClicked()
 {
-	//UE_LOG(LogTemp, Error, TEXT("Settlement CLICKED"));
-	/*UDelegateController* DC = NewObject<UDelegateController>();
-	DC->OnSettlementClick.Broadcast(this);*/
+	ensure(DelegateController);
+	
+	DelegateController->OnSettlementClick.Broadcast(this);
 }
 
 // Called every frame
@@ -54,4 +48,9 @@ void ASettlement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ASettlement::InitialiseEvents()
+{
+	ensure(DelegateController);
 }

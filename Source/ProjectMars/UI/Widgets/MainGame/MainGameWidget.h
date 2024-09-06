@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "MainGameWidget.generated.h"
 
+class UDelegateController;
 class UFactionStatsWidget;
 class UMiniMapWidget;
 class UFactionButtonWidget;
@@ -39,6 +40,12 @@ public:
 	UFUNCTION()
 	void ShowConstructionButton(const ASettlement* Settlement);
 
+	UFUNCTION()
+	UMainGameWidget* SetDelegateController(UDelegateController* DelegateControllerVar);
+
+	UFUNCTION()
+	UDelegateController* GetDelegateController();
+
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UConstructionButtonWidget* ConstructionButtonWidget{ nullptr };
 
@@ -61,7 +68,8 @@ private:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	UDateWidget* DateWidget{ nullptr };
 
-
-
+	UPROPERTY(EditAnywhere)
+	UDelegateController* DelegateController{ nullptr };
+	
 	bool bIsConstructionOpen;
 };

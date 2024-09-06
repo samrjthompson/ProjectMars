@@ -50,16 +50,27 @@ void UMainGameWidget::ShowConstructionButton(const ASettlement* Settlement)
 	this->ConstructionButtonWidget->SetVisibility(ESlateVisibility::Visible);
 }
 
+UMainGameWidget* UMainGameWidget::SetDelegateController(UDelegateController* DelegateControllerVar)
+{
+	DelegateController = DelegateControllerVar;
+	return this;
+}
+
+UDelegateController* UMainGameWidget::GetDelegateController()
+{
+	return DelegateController;
+}
+
 void UMainGameWidget::InitialiseEvents()
 {
+	ensure(DelegateController);
+	
 	this->ConstructionButtonWidget->AddToViewport();
 	this->ConstructionButtonWidget->SetVisibility(ESlateVisibility::Hidden);
 	this->ConstructionWidget->AddToViewport();
 	this->ConstructionWidget->SetVisibility(ESlateVisibility::Hidden);
-
-	UDelegateController* DC = NewObject<UDelegateController>();
-	//FOnSettlementClick OnSettlementClick;
-	DC->OnSettlementClick.AddDynamic(this, &UMainGameWidget::ShowConstructionButton);
+	
+	DelegateController->OnSettlementClick.AddDynamic(this, &UMainGameWidget::ShowConstructionButton);
 	this->ConstructionButtonWidget->MainButton->OnClicked.AddDynamic(this, &UMainGameWidget::ShowConstruction);
 }
 

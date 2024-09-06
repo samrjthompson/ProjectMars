@@ -51,6 +51,9 @@ private:
 
 	UFUNCTION()
 	void BuildNations();
+
+	UFUNCTION()
+	void SetupPlayerControllers();
 	
 	// Properties
 	UPROPERTY(EditAnywhere)

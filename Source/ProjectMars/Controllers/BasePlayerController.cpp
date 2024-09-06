@@ -3,6 +3,7 @@
 
 #include "BasePlayerController.h"
 
+#include "PlayerHUDProcessor.h"
 #include "Components/TextBlock.h"
 #include "Logging/StructuredLog.h"
 #include "ProjectMars/Civic/Settlement.h"
@@ -19,6 +20,8 @@ ABasePlayerController::ABasePlayerController()
 	bShowMouseCursor = true;
 	bEnableMouseOverEvents = true;
 	bEnableClickEvents = true;
+
+	UE_LOG(LogTemp, Warning, TEXT("ABasePlayerController::CONSTRUCTOR"));
 
 	NationDelegateController = NewObject<UNationDelegateController>();
 
@@ -47,6 +50,21 @@ void ABasePlayerController::SetupInputComponent()
 	// Player Pawn Movement
 	InputComponent->BindAxis("MoveForward", this, &ABasePlayerController::MovePlayerPawnForwardOrBack);
 	InputComponent->BindAxis("MoveRight", this, &ABasePlayerController::MovePlayerPawnRightOrLeft);
+}
+
+void ABasePlayerController::SetupHUD()
+{
+	NewObject<UPlayerHUDProcessor>()
+		->SetBaseHUD(Cast<ABaseHUD>(GetHUD()))
+		->SetDelegateController(DelegateController)
+		->Main();
+}
+
+ABasePlayerController* ABasePlayerController::InitialisePawn()
+{
+	PlayerPawn = Cast<AProjectMarsPlayer>(GetPawn());
+	ensure(PlayerPawn);
+	return this;
 }
 
 void ABasePlayerController::SubscribeToDelegates(UDelegateController* DelegateControllerVar)
@@ -105,7 +123,7 @@ void ABasePlayerController::OnLMBClick()
 	FHitResult LeftClick;
 	if (GetHitResultUnderCursor(ECC_Visibility, true, LeftClick))
 	{
-		const AActor* Actor = LeftClick.GetActor();
+		AActor* Actor = LeftClick.GetActor();
 		
 		if (!Actor) return;
 		
@@ -114,6 +132,8 @@ void ABasePlayerController::OnLMBClick()
 		if (Actor->IsA(ASettlement::StaticClass()))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("SETTLEMENT CLICKED"));
+			ASettlement* Settlement = Cast<ASettlement>(Actor);
+			Settlement->SettlementClicked();
 		}
 		else
 		{
@@ -125,6 +145,7 @@ void ABasePlayerController::OnLMBClick()
 void ABasePlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+
 	GameState = Cast<AMarsGameStateBase>(GetWorld()->GetGameState());
 	GameState->AddToPlayerControllersList(this);
 }
@@ -143,18 +164,6 @@ void ABasePlayerController::OnEnter()
 {
 	// TODO: Add if-statement to check if player is owner of turn
 	DelegateController->OnEndTurn.Broadcast();
-}
-
-void ABasePlayerController::InitialisePointers()
-{
-	PlayerPawn = Cast<AProjectMarsPlayer>(GetPawn());
-	HUD = Cast<ABaseHUD>(GetHUD());
-	HUD->SetNation(Nation);
-	HUD->PopulateDataObjects();
-
-	// BUG: The HUD is not currently updating the season
-	/*HUD->SetDelegateController(DelegateControllerVar);
-	HUD->SubscribeToEvents(DelegateControllerVar);*/
 }
 
 void ABasePlayerController::CheckForMyTurn(const FString& CurrentTurnOwnerTag)

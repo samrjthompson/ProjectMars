@@ -24,5 +24,5 @@ private:
 
 public:
 	UFUNCTION()
-	ASettlement* Create(const FVector& Location, const FRotator& Rotation);
+	ASettlement* Create(const FVector& Location, const FRotator& Rotation) const;
 };
